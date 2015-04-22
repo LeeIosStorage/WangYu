@@ -420,6 +420,7 @@
 				073DBD011AE7492A009B49EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		073DBD021AE7492A009B49EB /* Build configuration list for PBXNativeTarget "WangYuTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +429,7 @@
 				073DBD041AE7492A009B49EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
