@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XETabBarViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (readwrite, nonatomic) XETabBarViewController* mainTabViewController;
 
+- (void)signIn;
+- (void)signOut;
 
 @end
 

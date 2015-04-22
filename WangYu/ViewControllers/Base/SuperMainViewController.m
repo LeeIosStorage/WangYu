@@ -19,7 +19,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.view setBackgroundColor:UIColorRGB(240, 240, 240)];
-//    [self setTilteLeftViewHide:YES];
+    [self setTilteLeftViewHide:YES];
     
 }
 

@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "MineTabViewController.h"
+#import "XENavigationController.h"
 
 @interface AppDelegate ()
 
@@ -14,10 +16,53 @@
 
 @implementation AppDelegate
 
+void uncaughtExceptionHandler(NSException *exception) {
+    
+    NSLog(@"CRASH: %@", exception);
+    NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
+    
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    
+    application.statusBarHidden = NO;
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor clearColor];
+    
+    [self signIn];
+    
+    [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)signIn{
+    NSLog(@"signIn");
+    XETabBarViewController* tabViewController = [[XETabBarViewController alloc] init];
+    tabViewController.viewControllers = [NSArray arrayWithObjects:
+                                         [[MineTabViewController alloc] init],
+                                         [[MineTabViewController alloc] init],
+                                         [[MineTabViewController alloc] init],
+                                         [[MineTabViewController alloc] init],
+                                         nil];
+    
+    _mainTabViewController = tabViewController;
+    
+    XENavigationController* tabNavVc = [[XENavigationController alloc] initWithRootViewController:tabViewController];
+    tabNavVc.navigationBarHidden = YES;
+    
+    _mainTabViewController.initialIndex = 0;
+    
+    self.window.rootViewController = tabNavVc;
+    
+}
+
+- (void)signOut{
+    NSLog(@"signOut");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
