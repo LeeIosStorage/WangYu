@@ -7,7 +7,7 @@
 //
 
 #import "WYCommonUtils.h"
-#import "XEAlertView.h"
+#import "WYAlertView.h"
 #import "SDImageCache.h"
 
 @implementation WYCommonUtils
@@ -124,7 +124,7 @@
     if (phone.length == 0 || !phone) {
         return;
     }
-    XEAlertView *alertView = [[XEAlertView alloc] initWithTitle:nil message:phone cancelButtonTitle:@"取消" cancelBlock:nil okButtonTitle:@"呼叫" okBlock:^{
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:phone cancelButtonTitle:@"取消" cancelBlock:nil okButtonTitle:@"呼叫" okBlock:^{
         NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", phone]];
         [[UIApplication sharedApplication] openURL:URL];
     }];

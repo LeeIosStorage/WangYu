@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "XETabBarViewController.h"
+#import "WYTabBarViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (readwrite, nonatomic) XETabBarViewController* mainTabViewController;
+@property (readwrite, nonatomic) WYTabBarViewController* mainTabViewController;
 
 - (void)signIn;
 - (void)signOut;

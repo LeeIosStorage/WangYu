@@ -24,6 +24,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)initNormalTitleNavBarSubviews{
+    [self setTitle:@"我的"];
+}
+
 /*
 #pragma mark - Navigation
 

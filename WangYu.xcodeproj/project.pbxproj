@@ -14,8 +14,6 @@
 		073DBCED1AE7492A009B49EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 073DBCEC1AE7492A009B49EB /* Images.xcassets */; };
 		073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 073DBCEE1AE7492A009B49EB /* LaunchScreen.xib */; };
 		073DBCFC1AE7492A009B49EB /* WangYuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCFB1AE7492A009B49EB /* WangYuTests.m */; };
-		073DBD101AE77058009B49EB /* XEActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD0C1AE77058009B49EB /* XEActionSheet.m */; };
-		073DBD111AE77058009B49EB /* XEAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD0F1AE77058009B49EB /* XEAlertView.m */; };
 		073DBD421AE7712F009B49EB /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD1A1AE7712F009B49EB /* MKAnnotationView+WebCache.m */; };
 		073DBD431AE7712F009B49EB /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD1C1AE7712F009B49EB /* NSData+GIF.m */; };
 		073DBD441AE7712F009B49EB /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD1E1AE7712F009B49EB /* NSData+ImageContentType.m */; };
@@ -45,17 +43,6 @@
 		073DBD7C1AE779C4009B49EB /* SuperMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD7B1AE779C4009B49EB /* SuperMainViewController.m */; };
 		073DBD801AE77A3C009B49EB /* MineTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD7E1AE77A3C009B49EB /* MineTabViewController.m */; };
 		073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 073DBD7F1AE77A3C009B49EB /* MineTabViewController.xib */; };
-		073DBD911AE792B9009B49EB /* XEBaseSuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD891AE792B9009B49EB /* XEBaseSuperViewController.m */; };
-		073DBD921AE792B9009B49EB /* XENavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD8B1AE792B9009B49EB /* XENavigationController.m */; };
-		073DBD931AE792B9009B49EB /* XESuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD8D1AE792B9009B49EB /* XESuperViewController.m */; };
-		073DBD941AE792B9009B49EB /* XETitleNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD8F1AE792B9009B49EB /* XETitleNavBarView.m */; };
-		073DBD951AE792B9009B49EB /* XETitleNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 073DBD901AE792B9009B49EB /* XETitleNavBarView.xib */; };
-		073DBD981AE792E5009B49EB /* XECommonVcTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD971AE792E5009B49EB /* XECommonVcTransition.m */; };
-		073DBDA21AE79343009B49EB /* XETabBarItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD9B1AE79343009B49EB /* XETabBarItemView.m */; };
-		073DBDA31AE79343009B49EB /* XETabBarItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 073DBD9C1AE79343009B49EB /* XETabBarItemView.xib */; };
-		073DBDA41AE79343009B49EB /* XETabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD9E1AE79343009B49EB /* XETabBarView.m */; };
-		073DBDA51AE79343009B49EB /* XETabBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 073DBD9F1AE79343009B49EB /* XETabBarView.xib */; };
-		073DBDA61AE79343009B49EB /* XETabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDA11AE79343009B49EB /* XETabBarViewController.m */; };
 		073DBDA91AE7939C009B49EB /* WYCommonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDA81AE7939C009B49EB /* WYCommonUtils.m */; };
 		073DBDAC1AE79457009B49EB /* WYUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDAB1AE79457009B49EB /* WYUIUtils.m */; };
 		073DBDB41AE794C4009B49EB /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 073DBDAE1AE794C4009B49EB /* arrow.png */; };
@@ -75,6 +62,19 @@
 		073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF01AE7A1B0009B49EB /* UIImage+Resize.m */; };
 		073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF21AE7A1B0009B49EB /* UIImage+RoundedCorner.m */; };
 		073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */; };
+		0791AB051AE8889D0009A5A7 /* WYTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB041AE8889D0009A5A7 /* WYTabBarViewController.m */; };
+		0791AB091AE88AB10009A5A7 /* WYTabBarItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB071AE88AB10009A5A7 /* WYTabBarItemView.m */; };
+		0791AB0A1AE88AB10009A5A7 /* WYTabBarItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0791AB081AE88AB10009A5A7 /* WYTabBarItemView.xib */; };
+		0791AB0E1AE897EA0009A5A7 /* WYTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB0C1AE897EA0009A5A7 /* WYTabBarView.m */; };
+		0791AB0F1AE897EA0009A5A7 /* WYTabBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0791AB0D1AE897EA0009A5A7 /* WYTabBarView.xib */; };
+		0791AB121AE898550009A5A7 /* WYCommonVcTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB111AE898550009A5A7 /* WYCommonVcTransition.m */; };
+		0791AB151AE898DA0009A5A7 /* WYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB141AE898DA0009A5A7 /* WYNavigationController.m */; };
+		0791AB181AE8994A0009A5A7 /* WYBaseSuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB171AE8994A0009A5A7 /* WYBaseSuperViewController.m */; };
+		0791AB1E1AE899D10009A5A7 /* WYSuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB1A1AE899D10009A5A7 /* WYSuperViewController.m */; };
+		0791AB1F1AE899D10009A5A7 /* WYTitleNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB1C1AE899D10009A5A7 /* WYTitleNavBarView.m */; };
+		0791AB201AE899D10009A5A7 /* WYTitleNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0791AB1D1AE899D10009A5A7 /* WYTitleNavBarView.xib */; };
+		0791AB2D1AE89B960009A5A7 /* WYActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB291AE89B960009A5A7 /* WYActionSheet.m */; };
+		0791AB2E1AE89B960009A5A7 /* WYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB2C1AE89B960009A5A7 /* WYAlertView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,10 +101,6 @@
 		073DBCF51AE7492A009B49EB /* WangYuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WangYuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		073DBCFA1AE7492A009B49EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		073DBCFB1AE7492A009B49EB /* WangYuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WangYuTests.m; sourceTree = "<group>"; };
-		073DBD0B1AE77058009B49EB /* XEActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEActionSheet.h; sourceTree = "<group>"; };
-		073DBD0C1AE77058009B49EB /* XEActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEActionSheet.m; sourceTree = "<group>"; };
-		073DBD0E1AE77058009B49EB /* XEAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEAlertView.h; sourceTree = "<group>"; };
-		073DBD0F1AE77058009B49EB /* XEAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEAlertView.m; sourceTree = "<group>"; };
 		073DBD191AE7712F009B49EB /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		073DBD1A1AE7712F009B49EB /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		073DBD1B1AE7712F009B49EB /* NSData+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+GIF.h"; sourceTree = "<group>"; };
@@ -164,25 +160,6 @@
 		073DBD7E1AE77A3C009B49EB /* MineTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTabViewController.m; sourceTree = "<group>"; };
 		073DBD7F1AE77A3C009B49EB /* MineTabViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MineTabViewController.xib; sourceTree = "<group>"; };
 		073DBD821AE77BED009B49EB /* WYUIKitMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYUIKitMacro.h; sourceTree = "<group>"; };
-		073DBD881AE792B9009B49EB /* XEBaseSuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEBaseSuperViewController.h; sourceTree = "<group>"; };
-		073DBD891AE792B9009B49EB /* XEBaseSuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEBaseSuperViewController.m; sourceTree = "<group>"; };
-		073DBD8A1AE792B9009B49EB /* XENavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XENavigationController.h; sourceTree = "<group>"; };
-		073DBD8B1AE792B9009B49EB /* XENavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XENavigationController.m; sourceTree = "<group>"; };
-		073DBD8C1AE792B9009B49EB /* XESuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XESuperViewController.h; sourceTree = "<group>"; };
-		073DBD8D1AE792B9009B49EB /* XESuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XESuperViewController.m; sourceTree = "<group>"; };
-		073DBD8E1AE792B9009B49EB /* XETitleNavBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XETitleNavBarView.h; sourceTree = "<group>"; };
-		073DBD8F1AE792B9009B49EB /* XETitleNavBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XETitleNavBarView.m; sourceTree = "<group>"; };
-		073DBD901AE792B9009B49EB /* XETitleNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XETitleNavBarView.xib; sourceTree = "<group>"; };
-		073DBD961AE792E5009B49EB /* XECommonVcTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XECommonVcTransition.h; sourceTree = "<group>"; };
-		073DBD971AE792E5009B49EB /* XECommonVcTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XECommonVcTransition.m; sourceTree = "<group>"; };
-		073DBD9A1AE79343009B49EB /* XETabBarItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XETabBarItemView.h; sourceTree = "<group>"; };
-		073DBD9B1AE79343009B49EB /* XETabBarItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XETabBarItemView.m; sourceTree = "<group>"; };
-		073DBD9C1AE79343009B49EB /* XETabBarItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XETabBarItemView.xib; sourceTree = "<group>"; };
-		073DBD9D1AE79343009B49EB /* XETabBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XETabBarView.h; sourceTree = "<group>"; };
-		073DBD9E1AE79343009B49EB /* XETabBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XETabBarView.m; sourceTree = "<group>"; };
-		073DBD9F1AE79343009B49EB /* XETabBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XETabBarView.xib; sourceTree = "<group>"; };
-		073DBDA01AE79343009B49EB /* XETabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XETabBarViewController.h; sourceTree = "<group>"; };
-		073DBDA11AE79343009B49EB /* XETabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XETabBarViewController.m; sourceTree = "<group>"; };
 		073DBDA71AE7939C009B49EB /* WYCommonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYCommonUtils.h; sourceTree = "<group>"; };
 		073DBDA81AE7939C009B49EB /* WYCommonUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYCommonUtils.m; sourceTree = "<group>"; };
 		073DBDAA1AE79456009B49EB /* WYUIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYUIUtils.h; sourceTree = "<group>"; };
@@ -211,6 +188,29 @@
 		073DBDF21AE7A1B0009B49EB /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		073DBDF31AE7A1B0009B49EB /* UIImageExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageExtras.h; sourceTree = "<group>"; };
 		073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageExtras.m; sourceTree = "<group>"; };
+		0791AB031AE8889D0009A5A7 /* WYTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarViewController.h; sourceTree = "<group>"; };
+		0791AB041AE8889D0009A5A7 /* WYTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTabBarViewController.m; sourceTree = "<group>"; };
+		0791AB061AE88AB10009A5A7 /* WYTabBarItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarItemView.h; sourceTree = "<group>"; };
+		0791AB071AE88AB10009A5A7 /* WYTabBarItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTabBarItemView.m; sourceTree = "<group>"; };
+		0791AB081AE88AB10009A5A7 /* WYTabBarItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYTabBarItemView.xib; sourceTree = "<group>"; };
+		0791AB0B1AE897EA0009A5A7 /* WYTabBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarView.h; sourceTree = "<group>"; };
+		0791AB0C1AE897EA0009A5A7 /* WYTabBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTabBarView.m; sourceTree = "<group>"; };
+		0791AB0D1AE897EA0009A5A7 /* WYTabBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYTabBarView.xib; sourceTree = "<group>"; };
+		0791AB101AE898550009A5A7 /* WYCommonVcTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYCommonVcTransition.h; sourceTree = "<group>"; };
+		0791AB111AE898550009A5A7 /* WYCommonVcTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYCommonVcTransition.m; sourceTree = "<group>"; };
+		0791AB131AE898DA0009A5A7 /* WYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYNavigationController.h; sourceTree = "<group>"; };
+		0791AB141AE898DA0009A5A7 /* WYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYNavigationController.m; sourceTree = "<group>"; };
+		0791AB161AE8994A0009A5A7 /* WYBaseSuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYBaseSuperViewController.h; sourceTree = "<group>"; };
+		0791AB171AE8994A0009A5A7 /* WYBaseSuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYBaseSuperViewController.m; sourceTree = "<group>"; };
+		0791AB191AE899D10009A5A7 /* WYSuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYSuperViewController.h; sourceTree = "<group>"; };
+		0791AB1A1AE899D10009A5A7 /* WYSuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYSuperViewController.m; sourceTree = "<group>"; };
+		0791AB1B1AE899D10009A5A7 /* WYTitleNavBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTitleNavBarView.h; sourceTree = "<group>"; };
+		0791AB1C1AE899D10009A5A7 /* WYTitleNavBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTitleNavBarView.m; sourceTree = "<group>"; };
+		0791AB1D1AE899D10009A5A7 /* WYTitleNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYTitleNavBarView.xib; sourceTree = "<group>"; };
+		0791AB281AE89B960009A5A7 /* WYActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYActionSheet.h; sourceTree = "<group>"; };
+		0791AB291AE89B960009A5A7 /* WYActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYActionSheet.m; sourceTree = "<group>"; };
+		0791AB2B1AE89B960009A5A7 /* WYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYAlertView.h; sourceTree = "<group>"; };
+		0791AB2C1AE89B960009A5A7 /* WYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,28 +312,10 @@
 		073DBD091AE77058009B49EB /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				073DBD0A1AE77058009B49EB /* XEActionSheetWithBlock */,
-				073DBD0D1AE77058009B49EB /* XEAlertViewWithBlock */,
+				0791AB271AE89B960009A5A7 /* WYActionSheetWithBlock */,
+				0791AB2A1AE89B960009A5A7 /* WYAlertViewWithBlock */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		073DBD0A1AE77058009B49EB /* XEActionSheetWithBlock */ = {
-			isa = PBXGroup;
-			children = (
-				073DBD0B1AE77058009B49EB /* XEActionSheet.h */,
-				073DBD0C1AE77058009B49EB /* XEActionSheet.m */,
-			);
-			path = XEActionSheetWithBlock;
-			sourceTree = "<group>";
-		};
-		073DBD0D1AE77058009B49EB /* XEAlertViewWithBlock */ = {
-			isa = PBXGroup;
-			children = (
-				073DBD0E1AE77058009B49EB /* XEAlertView.h */,
-				073DBD0F1AE77058009B49EB /* XEAlertView.m */,
-			);
-			path = XEAlertViewWithBlock;
 			sourceTree = "<group>";
 		};
 		073DBD121AE770A2009B49EB /* Engine */ = {
@@ -464,15 +446,15 @@
 			children = (
 				073DBD7A1AE779C4009B49EB /* SuperMainViewController.h */,
 				073DBD7B1AE779C4009B49EB /* SuperMainViewController.m */,
-				073DBD881AE792B9009B49EB /* XEBaseSuperViewController.h */,
-				073DBD891AE792B9009B49EB /* XEBaseSuperViewController.m */,
-				073DBD8A1AE792B9009B49EB /* XENavigationController.h */,
-				073DBD8B1AE792B9009B49EB /* XENavigationController.m */,
-				073DBD8C1AE792B9009B49EB /* XESuperViewController.h */,
-				073DBD8D1AE792B9009B49EB /* XESuperViewController.m */,
-				073DBD8E1AE792B9009B49EB /* XETitleNavBarView.h */,
-				073DBD8F1AE792B9009B49EB /* XETitleNavBarView.m */,
-				073DBD901AE792B9009B49EB /* XETitleNavBarView.xib */,
+				0791AB161AE8994A0009A5A7 /* WYBaseSuperViewController.h */,
+				0791AB171AE8994A0009A5A7 /* WYBaseSuperViewController.m */,
+				0791AB131AE898DA0009A5A7 /* WYNavigationController.h */,
+				0791AB141AE898DA0009A5A7 /* WYNavigationController.m */,
+				0791AB191AE899D10009A5A7 /* WYSuperViewController.h */,
+				0791AB1A1AE899D10009A5A7 /* WYSuperViewController.m */,
+				0791AB1B1AE899D10009A5A7 /* WYTitleNavBarView.h */,
+				0791AB1C1AE899D10009A5A7 /* WYTitleNavBarView.m */,
+				0791AB1D1AE899D10009A5A7 /* WYTitleNavBarView.xib */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -490,8 +472,8 @@
 		073DBD841AE7919D009B49EB /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				073DBD961AE792E5009B49EB /* XECommonVcTransition.h */,
-				073DBD971AE792E5009B49EB /* XECommonVcTransition.m */,
+				0791AB101AE898550009A5A7 /* WYCommonVcTransition.h */,
+				0791AB111AE898550009A5A7 /* WYCommonVcTransition.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -499,14 +481,14 @@
 		073DBD991AE79343009B49EB /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				073DBD9A1AE79343009B49EB /* XETabBarItemView.h */,
-				073DBD9B1AE79343009B49EB /* XETabBarItemView.m */,
-				073DBD9C1AE79343009B49EB /* XETabBarItemView.xib */,
-				073DBD9D1AE79343009B49EB /* XETabBarView.h */,
-				073DBD9E1AE79343009B49EB /* XETabBarView.m */,
-				073DBD9F1AE79343009B49EB /* XETabBarView.xib */,
-				073DBDA01AE79343009B49EB /* XETabBarViewController.h */,
-				073DBDA11AE79343009B49EB /* XETabBarViewController.m */,
+				0791AB061AE88AB10009A5A7 /* WYTabBarItemView.h */,
+				0791AB071AE88AB10009A5A7 /* WYTabBarItemView.m */,
+				0791AB081AE88AB10009A5A7 /* WYTabBarItemView.xib */,
+				0791AB0B1AE897EA0009A5A7 /* WYTabBarView.h */,
+				0791AB0C1AE897EA0009A5A7 /* WYTabBarView.m */,
+				0791AB0D1AE897EA0009A5A7 /* WYTabBarView.xib */,
+				0791AB031AE8889D0009A5A7 /* WYTabBarViewController.h */,
+				0791AB041AE8889D0009A5A7 /* WYTabBarViewController.m */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -552,6 +534,24 @@
 				073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */,
 			);
 			path = "UIImage-Categories-master";
+			sourceTree = "<group>";
+		};
+		0791AB271AE89B960009A5A7 /* WYActionSheetWithBlock */ = {
+			isa = PBXGroup;
+			children = (
+				0791AB281AE89B960009A5A7 /* WYActionSheet.h */,
+				0791AB291AE89B960009A5A7 /* WYActionSheet.m */,
+			);
+			path = WYActionSheetWithBlock;
+			sourceTree = "<group>";
+		};
+		0791AB2A1AE89B960009A5A7 /* WYAlertViewWithBlock */ = {
+			isa = PBXGroup;
+			children = (
+				0791AB2B1AE89B960009A5A7 /* WYAlertView.h */,
+				0791AB2C1AE89B960009A5A7 /* WYAlertView.m */,
+			);
+			path = WYAlertViewWithBlock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -634,13 +634,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0791AB201AE899D10009A5A7 /* WYTitleNavBarView.xib in Resources */,
+				0791AB0F1AE897EA0009A5A7 /* WYTabBarView.xib in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
-				073DBDA51AE79343009B49EB /* XETabBarView.xib in Resources */,
-				073DBDA31AE79343009B49EB /* XETabBarItemView.xib in Resources */,
+				0791AB0A1AE88AB10009A5A7 /* WYTabBarItemView.xib in Resources */,
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
 				073DBCED1AE7492A009B49EB /* Images.xcassets in Resources */,
-				073DBD951AE792B9009B49EB /* XETitleNavBarView.xib in Resources */,
 				073DBDB41AE794C4009B49EB /* arrow.png in Resources */,
 				073DBDB51AE794C4009B49EB /* arrow@2x.png in Resources */,
 			);
@@ -665,47 +665,47 @@
 				073DBD741AE778CF009B49EB /* WYUserInfo.m in Sources */,
 				073DBD611AE7717D009B49EB /* NSDictionary+ObjectForKey.m in Sources */,
 				073DBD631AE7717D009B49EB /* PathHelper.m in Sources */,
+				0791AB1F1AE899D10009A5A7 /* WYTitleNavBarView.m in Sources */,
 				073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */,
+				0791AB2D1AE89B960009A5A7 /* WYActionSheet.m in Sources */,
 				073DBD451AE7712F009B49EB /* SDImageCache.m in Sources */,
 				073DBD661AE7717D009B49EB /* URLHelper.m in Sources */,
 				073DBD6D1AE771AC009B49EB /* JSONKit.m in Sources */,
 				073DBD491AE7712F009B49EB /* SDWebImageDownloaderOperation.m in Sources */,
 				073DBD521AE7712F009B49EB /* UIView+WebCacheOperation.m in Sources */,
+				0791AB1E1AE899D10009A5A7 /* WYSuperViewController.m in Sources */,
 				073DBD711AE77211009B49EB /* HotUpButton.m in Sources */,
-				073DBD921AE792B9009B49EB /* XENavigationController.m in Sources */,
 				073DBD651AE7717D009B49EB /* UIImage+ProportionalFill.m in Sources */,
+				0791AB121AE898550009A5A7 /* WYCommonVcTransition.m in Sources */,
 				073DBCE51AE7492A009B49EB /* AppDelegate.m in Sources */,
-				073DBD931AE792B9009B49EB /* XESuperViewController.m in Sources */,
+				0791AB0E1AE897EA0009A5A7 /* WYTabBarView.m in Sources */,
 				073DBD4C1AE7712F009B49EB /* UIButton+WebCache.m in Sources */,
+				0791AB2E1AE89B960009A5A7 /* WYAlertView.m in Sources */,
 				073DBD441AE7712F009B49EB /* NSData+ImageContentType.m in Sources */,
 				073DBD4B1AE7712F009B49EB /* SDWebImagePrefetcher.m in Sources */,
 				073DBD771AE77929009B49EB /* WYEngine.m in Sources */,
 				073DBD481AE7712F009B49EB /* SDWebImageDownloader.m in Sources */,
 				073DBDA91AE7939C009B49EB /* WYCommonUtils.m in Sources */,
-				073DBD111AE77058009B49EB /* XEAlertView.m in Sources */,
+				0791AB151AE898DA0009A5A7 /* WYNavigationController.m in Sources */,
 				073DBD4F1AE7712F009B49EB /* UIImage+WebP.m in Sources */,
 				073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */,
 				073DBDAC1AE79457009B49EB /* WYUIUtils.m in Sources */,
-				073DBD911AE792B9009B49EB /* XEBaseSuperViewController.m in Sources */,
 				073DBD511AE7712F009B49EB /* UIImageView+WebCache.m in Sources */,
 				073DBD471AE7712F009B49EB /* SDWebImageDecoder.m in Sources */,
-				073DBD101AE77058009B49EB /* XEActionSheet.m in Sources */,
 				073DBD431AE7712F009B49EB /* NSData+GIF.m in Sources */,
 				073DBD461AE7712F009B49EB /* SDWebImageCompat.m in Sources */,
-				073DBDA61AE79343009B49EB /* XETabBarViewController.m in Sources */,
 				073DBCE21AE7492A009B49EB /* main.m in Sources */,
 				073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */,
 				073DBDB71AE794C4009B49EB /* PullToRefreshView.m in Sources */,
-				073DBD941AE792B9009B49EB /* XETitleNavBarView.m in Sources */,
 				073DBD421AE7712F009B49EB /* MKAnnotationView+WebCache.m in Sources */,
-				073DBDA21AE79343009B49EB /* XETabBarItemView.m in Sources */,
-				073DBD981AE792E5009B49EB /* XECommonVcTransition.m in Sources */,
 				073DBD641AE7717D009B49EB /* UIColor+bit.m in Sources */,
 				073DBDF51AE7A1B0009B49EB /* UIImage+Alpha.m in Sources */,
 				073DBD4E1AE7712F009B49EB /* UIImage+MultiFormat.m in Sources */,
+				0791AB181AE8994A0009A5A7 /* WYBaseSuperViewController.m in Sources */,
 				073DBD801AE77A3C009B49EB /* MineTabViewController.m in Sources */,
+				0791AB051AE8889D0009A5A7 /* WYTabBarViewController.m in Sources */,
+				0791AB091AE88AB10009A5A7 /* WYTabBarItemView.m in Sources */,
 				073DBD7C1AE779C4009B49EB /* SuperMainViewController.m in Sources */,
-				073DBDA41AE79343009B49EB /* XETabBarView.m in Sources */,
 				073DBD501AE7712F009B49EB /* UIImageView+HighlightedWebCache.m in Sources */,
 				073DBD4D1AE7712F009B49EB /* UIImage+GIF.m in Sources */,
 			);
@@ -843,6 +843,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -857,6 +858,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

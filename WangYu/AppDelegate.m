@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MineTabViewController.h"
-#import "XENavigationController.h"
+#import "WYNavigationController.h"
 
 @interface AppDelegate ()
 
@@ -42,7 +42,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)signIn{
     NSLog(@"signIn");
-    XETabBarViewController* tabViewController = [[XETabBarViewController alloc] init];
+    WYTabBarViewController* tabViewController = [[WYTabBarViewController alloc] init];
     tabViewController.viewControllers = [NSArray arrayWithObjects:
                                          [[MineTabViewController alloc] init],
                                          [[MineTabViewController alloc] init],
@@ -52,7 +52,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     _mainTabViewController = tabViewController;
     
-    XENavigationController* tabNavVc = [[XENavigationController alloc] initWithRootViewController:tabViewController];
+    WYNavigationController* tabNavVc = [[WYNavigationController alloc] initWithRootViewController:tabViewController];
     tabNavVc.navigationBarHidden = YES;
     
     _mainTabViewController.initialIndex = 0;

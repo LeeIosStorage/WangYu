@@ -7,7 +7,7 @@
 //
 
 #import "WYUIUtils.h"
-#import "XEAlertView.h"
+#import "WYAlertView.h"
 #import "WYSystem.h"
 #import "UIImage+Resize.h"
 
@@ -81,7 +81,7 @@
 
 +(void)showAlertWithMsg:(NSString *)msg title:(NSString *) title
 {
-    XEAlertView *alert = [[XEAlertView alloc] initWithTitle:title message:msg cancelButtonTitle:@"确定"];
+    WYAlertView *alert = [[WYAlertView alloc] initWithTitle:title message:msg cancelButtonTitle:@"确定"];
     [alert show];
 }
 
