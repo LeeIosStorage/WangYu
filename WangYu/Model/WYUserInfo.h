@@ -10,4 +10,9 @@
 
 @interface WYUserInfo : NSObject
 
+@property(nonatomic, strong) NSString* uid;
+
+@property(nonatomic, strong) NSDictionary* userInfoByJsonDic;
+@property(nonatomic, strong) NSString* jsonString;
+
 @end
