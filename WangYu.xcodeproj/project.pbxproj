@@ -75,6 +75,8 @@
 		0791AB201AE899D10009A5A7 /* WYTitleNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0791AB1D1AE899D10009A5A7 /* WYTitleNavBarView.xib */; };
 		0791AB2D1AE89B960009A5A7 /* WYActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB291AE89B960009A5A7 /* WYActionSheet.m */; };
 		0791AB2E1AE89B960009A5A7 /* WYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB2C1AE89B960009A5A7 /* WYAlertView.m */; };
+		0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB311AE8B7DD0009A5A7 /* AboutViewController.m */; };
+		0791AB341AE8B7DD0009A5A7 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0791AB321AE8B7DD0009A5A7 /* AboutViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +213,9 @@
 		0791AB291AE89B960009A5A7 /* WYActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYActionSheet.m; sourceTree = "<group>"; };
 		0791AB2B1AE89B960009A5A7 /* WYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYAlertView.h; sourceTree = "<group>"; };
 		0791AB2C1AE89B960009A5A7 /* WYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYAlertView.m; sourceTree = "<group>"; };
+		0791AB301AE8B7DD0009A5A7 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		0791AB311AE8B7DD0009A5A7 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		0791AB321AE8B7DD0009A5A7 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,6 +337,7 @@
 			children = (
 				073DBD991AE79343009B49EB /* TabBar */,
 				073DBD781AE77982009B49EB /* Base */,
+				0791AB2F1AE8B7A10009A5A7 /* Setting */,
 				073DBD791AE77982009B49EB /* Main */,
 				073DBD841AE7919D009B49EB /* Common */,
 			);
@@ -554,6 +560,16 @@
 			path = WYAlertViewWithBlock;
 			sourceTree = "<group>";
 		};
+		0791AB2F1AE8B7A10009A5A7 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				0791AB301AE8B7DD0009A5A7 /* AboutViewController.h */,
+				0791AB311AE8B7DD0009A5A7 /* AboutViewController.m */,
+				0791AB321AE8B7DD0009A5A7 /* AboutViewController.xib */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -638,6 +654,7 @@
 				0791AB0F1AE897EA0009A5A7 /* WYTabBarView.xib in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
+				0791AB341AE8B7DD0009A5A7 /* AboutViewController.xib in Resources */,
 				0791AB0A1AE88AB10009A5A7 /* WYTabBarItemView.xib in Resources */,
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
 				073DBCED1AE7492A009B49EB /* Images.xcassets in Resources */,
@@ -684,6 +701,7 @@
 				073DBD441AE7712F009B49EB /* NSData+ImageContentType.m in Sources */,
 				073DBD4B1AE7712F009B49EB /* SDWebImagePrefetcher.m in Sources */,
 				073DBD771AE77929009B49EB /* WYEngine.m in Sources */,
+				0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */,
 				073DBD481AE7712F009B49EB /* SDWebImageDownloader.m in Sources */,
 				073DBDA91AE7939C009B49EB /* WYCommonUtils.m in Sources */,
 				0791AB151AE898DA0009A5A7 /* WYNavigationController.m in Sources */,

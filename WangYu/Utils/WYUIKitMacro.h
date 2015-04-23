@@ -10,7 +10,7 @@
 #define WangYu_WYUIKitMacro_h
 
 #define STAUTTAR_DEFAULT_HEIGHT 20
-#define WY_Default_TitleNavBar_Height 47
+#define WY_Default_TitleNavBar_Height 64
 
 //将16进制颜色转换为uicolor
 #define UIColorToRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]

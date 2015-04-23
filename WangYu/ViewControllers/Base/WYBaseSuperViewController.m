@@ -55,21 +55,12 @@
     }
     
     //ios7.0以上的系统都要改变下位置
-    BOOL isNeedOffset = YES;
     for (UIView *subview in [self.view subviews]) {
         if ([self.titleNavBar isEqual:subview]) {
             [self.view bringSubviewToFront:self.titleNavBar];
-            if (isNeedOffset) {
-                [WYUIUtils updateFrameWithView:subview superView:self.view isAddHeight:YES];
-            }
+            [WYUIUtils updateFrameWithView:subview superView:self.view isAddHeight:YES];
         }else{
-            BOOL isChange = YES;
-            if (isNeedOffset) {
-                isChange = [WYUIUtils updateFrameWithView:subview superView:self.view isAddHeight:NO];
-            }else{
-                //7.0以前的只要判断size是否跟父view 一样
-                isChange = !(subview.frame.size.height >= self.view.frame.size.height || (isAddTitleNavBar && subview.frame.origin.y < self.titleNavBar.frame.size.height));
-            }
+            BOOL isChange = [WYUIUtils updateFrameWithView:subview superView:self.view isAddHeight:NO];
             
             //如果view是tableview或其子view的时候设置contentInset
             if (!isChange && [subview isKindOfClass:[UIScrollView class]]){

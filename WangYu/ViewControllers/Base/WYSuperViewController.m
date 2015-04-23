@@ -30,23 +30,14 @@
     //默认都有返回
     [self setLeftButtonWithSelector:@selector(backAction:)];
     
-    //ios7以前的就用自定义的手势
-    if (!self.navigationController || ![self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        UISwipeGestureRecognizer* rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)] ;
-        rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-        [self.view addGestureRecognizer:rightSwipeGestureRecognizer];
-    }else{
-        if (!_disablePan) {
+    if (!_disablePan) {
 #ifdef USE_SYS_PAN_GESTURE
 #else
-            _popRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePopRecognizer:)];
-            _popRecognizer.delegate = self;
-            _popRecognizer.cancelsTouchesInView = YES;
-            [self.view addGestureRecognizer:_popRecognizer];
+        _popRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePopRecognizer:)];
+        _popRecognizer.delegate = self;
+        _popRecognizer.cancelsTouchesInView = YES;
+        [self.view addGestureRecognizer:_popRecognizer];
 #endif
-        }else{
-            
-        }
     }
 }
 
@@ -114,11 +105,6 @@
         self.interactivePopTransition = nil;
     }
     
-}
-
-- (void)swipeRight:(UISwipeGestureRecognizer *)recognizer
-{
-    [self backAction:nil];
 }
 
 - (IBAction)backAction:(id)sender{

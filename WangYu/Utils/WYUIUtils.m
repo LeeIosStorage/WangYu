@@ -62,12 +62,6 @@
         if (view.frame.origin.y <= 0 && [view isKindOfClass:[UIScrollView class]]) {
             return NO;
         }
-        
-        viewFrame.origin.y += height;
-        //随父view的大小变而改变的都变大小
-        if ((resizeMask & UIViewAutoresizingFlexibleHeight)) {
-            viewFrame.size.height -= height;
-        }
     }
     view.frame = viewFrame;
     

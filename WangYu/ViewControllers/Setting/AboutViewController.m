@@ -1,21 +1,18 @@
 //
-//  MineTabViewController.m
+//  AboutViewController.m
 //  WangYu
 //
-//  Created by KID on 15/4/22.
+//  Created by KID on 15/4/23.
 //  Copyright (c) 2015年 KID. All rights reserved.
 //
 
-#import "MineTabViewController.h"
-#import "WYTabBarViewController.h"
 #import "AboutViewController.h"
 
-@interface MineTabViewController ()
+@interface AboutViewController ()
 
-- (IBAction)settingAction:(id)sender;
 @end
 
-@implementation MineTabViewController
+@implementation AboutViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,14 +25,7 @@
 }
 
 -(void)initNormalTitleNavBarSubviews{
-    [self setTitle:@"我的"];
-}
-
-- (UINavigationController *)navigationController{
-    if ([super navigationController]) {
-        return [super navigationController];
-    }
-    return self.tabController.navigationController;
+    [self setTitle:@"关于"];
 }
 
 /*
@@ -47,10 +37,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-#pragma mark - IBAction
-- (IBAction)settingAction:(id)sender {
-    AboutViewController *vc = [[AboutViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
 
 @end
