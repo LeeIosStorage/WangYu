@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1315CA44-BC42-446D-BAE9-CE28B05F16DB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ASIHTTPRequestLib</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B2DEA4CA66C3D67B107FCCE0629BF6F0E5F7D4A5</key>
+		<string>https://github.com/LeeIosStorage/WangYu.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>WangYu/External/ASIHTTPRequest/ASIHTTPRequestLib/ASIHTTPRequestLib.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B2DEA4CA66C3D67B107FCCE0629BF6F0E5F7D4A5</key>
+		<string>../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/LeeIosStorage/WangYu.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B2DEA4CA66C3D67B107FCCE0629BF6F0E5F7D4A5</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B2DEA4CA66C3D67B107FCCE0629BF6F0E5F7D4A5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>WangYu</string>
+		</dict>
+	</array>
+</dict>
+</plist>
