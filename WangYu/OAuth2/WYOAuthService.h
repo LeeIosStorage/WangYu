@@ -9,17 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "WYService.h"
 
-@class WYAuthService;
+@class WYOAuthService;
 @protocol WYAuthServiceDelegate<NSObject>
 
 @required
 
-- (void)OAuthClient:(WYAuthService *)client didAcquireSuccessDictionary:(NSDictionary *)dic;
-- (void)OAuthClient:(WYAuthService *)client didFailWithError:(NSError *)error;
+- (void)OAuthClient:(WYOAuthService *)client didAcquireSuccessDictionary:(NSDictionary *)dic;
+- (void)OAuthClient:(WYOAuthService *)client didFailWithError:(NSError *)error;
 
 @end
 
-@interface WYAuthService : NSObject
+@interface WYOAuthService : NSObject
 
 @property (nonatomic, assign) id<WYAuthServiceDelegate> delegate;
 @property (nonatomic, strong) NSString *clientId;

@@ -71,8 +71,8 @@
 		078EDBDD1AEF1EF800E93EE8 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBD11AEF1EF800E93EE8 /* ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBD31AEF1EF800E93EE8 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		078EDBDF1AEF1EF800E93EE8 /* LSReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBD61AEF1EF800E93EE8 /* LSReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		0790493E1AE9DF3000E46795 /* WYAuthStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0790493D1AE9DF3000E46795 /* WYAuthStore.m */; };
-		079049411AE9DF5A00E46795 /* WYAuthService.m in Sources */ = {isa = PBXBuildFile; fileRef = 079049401AE9DF5A00E46795 /* WYAuthService.m */; };
+		0790493E1AE9DF3000E46795 /* WYOAuthStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0790493D1AE9DF3000E46795 /* WYOAuthStore.m */; };
+		079049411AE9DF5A00E46795 /* WYOAuthService.m in Sources */ = {isa = PBXBuildFile; fileRef = 079049401AE9DF5A00E46795 /* WYOAuthService.m */; };
 		079049461AEA15EB00E46795 /* WYQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 079049451AEA15EB00E46795 /* WYQuery.m */; };
 		0790494A1AEA226B00E46795 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 079049491AEA226B00E46795 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0790494D1AEA236100E46795 /* WYService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0790494C1AEA236100E46795 /* WYService.m */; };
@@ -240,11 +240,11 @@
 		078EDBD41AEF1EF800E93EE8 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
 		078EDBD51AEF1EF800E93EE8 /* LSReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSReachability.h; sourceTree = "<group>"; };
 		078EDBD61AEF1EF800E93EE8 /* LSReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSReachability.m; sourceTree = "<group>"; };
-		0790493C1AE9DF3000E46795 /* WYAuthStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYAuthStore.h; path = OAuth2/WYAuthStore.h; sourceTree = "<group>"; };
-		0790493D1AE9DF3000E46795 /* WYAuthStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYAuthStore.m; path = OAuth2/WYAuthStore.m; sourceTree = "<group>"; };
-		0790493F1AE9DF5A00E46795 /* WYAuthService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYAuthService.h; path = OAuth2/WYAuthService.h; sourceTree = "<group>"; };
-		079049401AE9DF5A00E46795 /* WYAuthService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYAuthService.m; path = OAuth2/WYAuthService.m; sourceTree = "<group>"; };
-		079049421AE9DF7300E46795 /* WYAuth2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WYAuth2.h; path = OAuth2/WYAuth2.h; sourceTree = "<group>"; };
+		0790493C1AE9DF3000E46795 /* WYOAuthStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYOAuthStore.h; path = OAuth2/WYOAuthStore.h; sourceTree = "<group>"; };
+		0790493D1AE9DF3000E46795 /* WYOAuthStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYOAuthStore.m; path = OAuth2/WYOAuthStore.m; sourceTree = "<group>"; };
+		0790493F1AE9DF5A00E46795 /* WYOAuthService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYOAuthService.h; path = OAuth2/WYOAuthService.h; sourceTree = "<group>"; };
+		079049401AE9DF5A00E46795 /* WYOAuthService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYOAuthService.m; path = OAuth2/WYOAuthService.m; sourceTree = "<group>"; };
+		079049421AE9DF7300E46795 /* WYOAuth2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WYOAuth2.h; path = OAuth2/WYOAuth2.h; sourceTree = "<group>"; };
 		079049441AEA15EB00E46795 /* WYQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYQuery.h; path = NetWork/WYQuery.h; sourceTree = "<group>"; };
 		079049451AEA15EB00E46795 /* WYQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYQuery.m; path = NetWork/WYQuery.m; sourceTree = "<group>"; };
 		079049481AEA226B00E46795 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
@@ -673,11 +673,11 @@
 		0790493B1AE9DC3A00E46795 /* OAuth2 */ = {
 			isa = PBXGroup;
 			children = (
-				0790493C1AE9DF3000E46795 /* WYAuthStore.h */,
-				0790493D1AE9DF3000E46795 /* WYAuthStore.m */,
-				0790493F1AE9DF5A00E46795 /* WYAuthService.h */,
-				079049401AE9DF5A00E46795 /* WYAuthService.m */,
-				079049421AE9DF7300E46795 /* WYAuth2.h */,
+				0790493C1AE9DF3000E46795 /* WYOAuthStore.h */,
+				0790493D1AE9DF3000E46795 /* WYOAuthStore.m */,
+				0790493F1AE9DF5A00E46795 /* WYOAuthService.h */,
+				079049401AE9DF5A00E46795 /* WYOAuthService.m */,
+				079049421AE9DF7300E46795 /* WYOAuth2.h */,
 			);
 			name = OAuth2;
 			sourceTree = "<group>";
@@ -895,7 +895,7 @@
 				073DBD631AE7717D009B49EB /* PathHelper.m in Sources */,
 				0790494D1AEA236100E46795 /* WYService.m in Sources */,
 				078EDBD91AEF1EF800E93EE8 /* ASIDataDecompressor.m in Sources */,
-				0790493E1AE9DF3000E46795 /* WYAuthStore.m in Sources */,
+				0790493E1AE9DF3000E46795 /* WYOAuthStore.m in Sources */,
 				0791AB1F1AE899D10009A5A7 /* WYTitleNavBarView.m in Sources */,
 				078EDBDD1AEF1EF800E93EE8 /* ASIInputStream.m in Sources */,
 				073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */,
@@ -959,7 +959,7 @@
 				0791AB091AE88AB10009A5A7 /* WYTabBarItemView.m in Sources */,
 				073DBD7C1AE779C4009B49EB /* SuperMainViewController.m in Sources */,
 				0791AB5C1AE8DE260009A5A7 /* AFURLResponseSerialization.m in Sources */,
-				079049411AE9DF5A00E46795 /* WYAuthService.m in Sources */,
+				079049411AE9DF5A00E46795 /* WYOAuthService.m in Sources */,
 				073DBD501AE7712F009B49EB /* UIImageView+HighlightedWebCache.m in Sources */,
 				073DBD4D1AE7712F009B49EB /* UIImage+GIF.m in Sources */,
 			);

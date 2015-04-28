@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WYAuthStore : NSObject
+@interface WYOAuthStore : NSObject
 
 @property (nonatomic, copy) NSString *accessToken;
 @property (nonatomic, copy) NSString *refreshToken;

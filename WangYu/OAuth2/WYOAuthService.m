@@ -6,23 +6,23 @@
 //  Copyright (c) 2015年 KID. All rights reserved.
 //
 
-#import "WYAuthService.h"
+#import "WYOAuthService.h"
 #import "ASIFormDataRequest.h"
-#import "WYAuth2.h"
-#import "WYAuthStore.h"
+#import "WYOAuth2.h"
+#import "WYOAuthStore.h"
 
-@interface WYAuthService () <ASIHTTPRequestDelegate>
+@interface WYOAuthService () <ASIHTTPRequestDelegate>
 
 @end
 
-@implementation WYAuthService
+@implementation WYOAuthService
 
-static WYAuthService *myInstance = nil;
+static WYOAuthService *myInstance = nil;
 
-+ (WYAuthService *)sharedInstance {
++ (WYOAuthService *)sharedInstance {
     @synchronized(self) {
         if (myInstance == nil) {
-            myInstance = [[WYAuthService alloc] init];
+            myInstance = [[WYOAuthService alloc] init];
         }
     }
     return myInstance;
@@ -66,7 +66,7 @@ static WYAuthService *myInstance = nil;
     ASIFormDataRequest *req = [self formRequest];
     [req setPostValue:kGrantTypeRefreshToken forKey:kGrantTypeKey];
     
-    WYAuthStore *store = [WYAuthStore sharedInstance];
+    WYOAuthStore *store = [WYOAuthStore sharedInstance];
     NSString *refreshToken = store.refreshToken;
     [req setPostValue:refreshToken forKey:kOAuth2ResponseTypeToken];
     [req startSynchronous];
@@ -76,7 +76,7 @@ static WYAuthService *myInstance = nil;
         NSString* responseStr = [req responseString];
         NSData* jsonData = [responseStr dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:nil];
-        WYAuthStore *store = [WYAuthStore sharedInstance];
+        WYOAuthStore *store = [WYOAuthStore sharedInstance];
         [store updateWithSuccessDictionary:dic];
     }
     
@@ -138,7 +138,7 @@ static WYAuthService *myInstance = nil;
     NSLog(@"login success:%@", response);
     NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:nil];
-    WYAuthStore *store = [WYAuthStore sharedInstance];
+    WYOAuthStore *store = [WYOAuthStore sharedInstance];
     [store updateWithSuccessDictionary:dic];
     
     if ([self.delegate respondsToSelector:@selector(OAuthClient:didAcquireSuccessDictionary:)]) {
@@ -173,7 +173,7 @@ static WYAuthService *myInstance = nil;
 }
 
 - (void)logout {
-    WYAuthStore *store = [WYAuthStore sharedInstance];
+    WYOAuthStore *store = [WYOAuthStore sharedInstance];
     [store clear];
 }
 

@@ -6,11 +6,11 @@
 //  Copyright (c) 2015年 KID. All rights reserved.
 //
 
-#import "WYAuthStore.h"
-#import "WYAuth2.h"
+#import "WYOAuthStore.h"
+#import "WYOAuth2.h"
 #import "JSONKit.h"
 
-@implementation WYAuthStore
+@implementation WYOAuthStore
 
 static NSString *kUserDefaultsAccessTokenKey = @"wangyu_userdefaults_access_token";
 static NSString *kUserDefaultsRefreshTokenKey = @"wangyu_userdefaults_refresh_token";
@@ -19,12 +19,12 @@ static NSString *kUserDefaultsUserIdKey = @"wangyu_userdefaults_user_id";
 
 #pragma mark - Singleton
 
-static WYAuthStore *myInstance = nil;
+static WYOAuthStore *myInstance = nil;
 
-+ (WYAuthStore *)sharedInstance {
++ (WYOAuthStore *)sharedInstance {
     @synchronized(self) {
         if (myInstance == nil) {
-            myInstance = [[WYAuthStore alloc] init];
+            myInstance = [[WYOAuthStore alloc] init];
         }
     }
     return myInstance;
