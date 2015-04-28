@@ -7,7 +7,7 @@
 //
 
 #import "WYAuthService.h"
-#import <ASIHTTPRequestLib/ASIFormDataRequest.h>
+#import "ASIFormDataRequest.h"
 #import "WYAuth2.h"
 #import "WYAuthStore.h"
 

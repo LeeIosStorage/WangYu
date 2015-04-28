@@ -62,13 +62,21 @@
 		073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF01AE7A1B0009B49EB /* UIImage+Resize.m */; };
 		073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF21AE7A1B0009B49EB /* UIImage+RoundedCorner.m */; };
 		073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */; };
+		078EDBD71AEF1EF800E93EE8 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBC21AEF1EF800E93EE8 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		078EDBD81AEF1EF800E93EE8 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBC51AEF1EF800E93EE8 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		078EDBD91AEF1EF800E93EE8 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBC71AEF1EF800E93EE8 /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		078EDBDA1AEF1EF800E93EE8 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBC91AEF1EF800E93EE8 /* ASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		078EDBDB1AEF1EF800E93EE8 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBCB1AEF1EF800E93EE8 /* ASIFormDataRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		078EDBDC1AEF1EF800E93EE8 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBCD1AEF1EF800E93EE8 /* ASIHTTPRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		078EDBDD1AEF1EF800E93EE8 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBD11AEF1EF800E93EE8 /* ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBD31AEF1EF800E93EE8 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		078EDBDF1AEF1EF800E93EE8 /* LSReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBD61AEF1EF800E93EE8 /* LSReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0790493E1AE9DF3000E46795 /* WYAuthStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0790493D1AE9DF3000E46795 /* WYAuthStore.m */; };
 		079049411AE9DF5A00E46795 /* WYAuthService.m in Sources */ = {isa = PBXBuildFile; fileRef = 079049401AE9DF5A00E46795 /* WYAuthService.m */; };
 		079049461AEA15EB00E46795 /* WYQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 079049451AEA15EB00E46795 /* WYQuery.m */; };
 		0790494A1AEA226B00E46795 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 079049491AEA226B00E46795 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0790494D1AEA236100E46795 /* WYService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0790494C1AEA236100E46795 /* WYService.m */; };
 		079049501AEA28E100E46795 /* WYHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0790494F1AEA28E100E46795 /* WYHttpRequest.m */; };
-		079049741AEA349800E46795 /* ASIHTTPRequestLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079049731AEA349800E46795 /* ASIHTTPRequestLib.framework */; };
 		0791AB051AE8889D0009A5A7 /* WYTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB041AE8889D0009A5A7 /* WYTabBarViewController.m */; };
 		0791AB091AE88AB10009A5A7 /* WYTabBarItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB071AE88AB10009A5A7 /* WYTabBarItemView.m */; };
 		0791AB0A1AE88AB10009A5A7 /* WYTabBarItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0791AB081AE88AB10009A5A7 /* WYTabBarItemView.xib */; };
@@ -210,6 +218,28 @@
 		073DBDF21AE7A1B0009B49EB /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		073DBDF31AE7A1B0009B49EB /* UIImageExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageExtras.h; sourceTree = "<group>"; };
 		073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageExtras.m; sourceTree = "<group>"; };
+		078EDBC11AEF1EF800E93EE8 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
+		078EDBC21AEF1EF800E93EE8 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
+		078EDBC31AEF1EF800E93EE8 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
+		078EDBC41AEF1EF800E93EE8 /* ASIDataCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDataCompressor.h; sourceTree = "<group>"; };
+		078EDBC51AEF1EF800E93EE8 /* ASIDataCompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDataCompressor.m; sourceTree = "<group>"; };
+		078EDBC61AEF1EF800E93EE8 /* ASIDataDecompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDataDecompressor.h; sourceTree = "<group>"; };
+		078EDBC71AEF1EF800E93EE8 /* ASIDataDecompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDataDecompressor.m; sourceTree = "<group>"; };
+		078EDBC81AEF1EF800E93EE8 /* ASIDownloadCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDownloadCache.h; sourceTree = "<group>"; };
+		078EDBC91AEF1EF800E93EE8 /* ASIDownloadCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDownloadCache.m; sourceTree = "<group>"; };
+		078EDBCA1AEF1EF800E93EE8 /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIFormDataRequest.h; sourceTree = "<group>"; };
+		078EDBCB1AEF1EF800E93EE8 /* ASIFormDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIFormDataRequest.m; sourceTree = "<group>"; };
+		078EDBCC1AEF1EF800E93EE8 /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequest.h; sourceTree = "<group>"; };
+		078EDBCD1AEF1EF800E93EE8 /* ASIHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIHTTPRequest.m; sourceTree = "<group>"; };
+		078EDBCE1AEF1EF800E93EE8 /* ASIHTTPRequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestConfig.h; sourceTree = "<group>"; };
+		078EDBCF1AEF1EF800E93EE8 /* ASIHTTPRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestDelegate.h; sourceTree = "<group>"; };
+		078EDBD01AEF1EF800E93EE8 /* ASIInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIInputStream.h; sourceTree = "<group>"; };
+		078EDBD11AEF1EF800E93EE8 /* ASIInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIInputStream.m; sourceTree = "<group>"; };
+		078EDBD21AEF1EF800E93EE8 /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASINetworkQueue.h; sourceTree = "<group>"; };
+		078EDBD31AEF1EF800E93EE8 /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASINetworkQueue.m; sourceTree = "<group>"; };
+		078EDBD41AEF1EF800E93EE8 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
+		078EDBD51AEF1EF800E93EE8 /* LSReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSReachability.h; sourceTree = "<group>"; };
+		078EDBD61AEF1EF800E93EE8 /* LSReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSReachability.m; sourceTree = "<group>"; };
 		0790493C1AE9DF3000E46795 /* WYAuthStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYAuthStore.h; path = OAuth2/WYAuthStore.h; sourceTree = "<group>"; };
 		0790493D1AE9DF3000E46795 /* WYAuthStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYAuthStore.m; path = OAuth2/WYAuthStore.m; sourceTree = "<group>"; };
 		0790493F1AE9DF5A00E46795 /* WYAuthService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYAuthService.h; path = OAuth2/WYAuthService.h; sourceTree = "<group>"; };
@@ -223,7 +253,6 @@
 		0790494C1AEA236100E46795 /* WYService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYService.m; path = NetWork/WYService.m; sourceTree = "<group>"; };
 		0790494E1AEA28E100E46795 /* WYHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYHttpRequest.h; path = NetWork/WYHttpRequest.h; sourceTree = "<group>"; };
 		0790494F1AEA28E100E46795 /* WYHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYHttpRequest.m; path = NetWork/WYHttpRequest.m; sourceTree = "<group>"; };
-		079049731AEA349800E46795 /* ASIHTTPRequestLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ASIHTTPRequestLib.framework; path = WangYu/External/ASIHTTPRequest/ASIHTTPRequestLib.framework; sourceTree = "<group>"; };
 		0791AB031AE8889D0009A5A7 /* WYTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarViewController.h; sourceTree = "<group>"; };
 		0791AB041AE8889D0009A5A7 /* WYTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTabBarViewController.m; sourceTree = "<group>"; };
 		0791AB061AE88AB10009A5A7 /* WYTabBarItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarItemView.h; sourceTree = "<group>"; };
@@ -284,7 +313,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				079049741AEA349800E46795 /* ASIHTTPRequestLib.framework in Frameworks */,
 				073DBDEA1AE7A023009B49EB /* UIKit.framework in Frameworks */,
 				073DBDE61AE79F93009B49EB /* AssetsLibrary.framework in Frameworks */,
 				073DBDE41AE79F8B009B49EB /* SystemConfiguration.framework in Frameworks */,
@@ -455,6 +483,7 @@
 			isa = PBXGroup;
 			children = (
 				079049471AEA226B00E46795 /* Base64 */,
+				078EDBC01AEF1EF800E93EE8 /* ASIHTTPRequest */,
 				0791AB3C1AE8DE260009A5A7 /* AFNetworking */,
 				0791AB501AE8DE260009A5A7 /* HQ */,
 				0791AB351AE8CF4C0009A5A7 /* EGOCache */,
@@ -583,7 +612,6 @@
 		073DBDE81AE79FF3009B49EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				079049731AEA349800E46795 /* ASIHTTPRequestLib.framework */,
 				073DBDE91AE7A023009B49EB /* UIKit.framework */,
 				073DBDE51AE79F93009B49EB /* AssetsLibrary.framework */,
 				073DBDE31AE79F8B009B49EB /* SystemConfiguration.framework */,
@@ -611,6 +639,35 @@
 				073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */,
 			);
 			path = "UIImage-Categories-master";
+			sourceTree = "<group>";
+		};
+		078EDBC01AEF1EF800E93EE8 /* ASIHTTPRequest */ = {
+			isa = PBXGroup;
+			children = (
+				078EDBC11AEF1EF800E93EE8 /* ASIAuthenticationDialog.h */,
+				078EDBC21AEF1EF800E93EE8 /* ASIAuthenticationDialog.m */,
+				078EDBC31AEF1EF800E93EE8 /* ASICacheDelegate.h */,
+				078EDBC41AEF1EF800E93EE8 /* ASIDataCompressor.h */,
+				078EDBC51AEF1EF800E93EE8 /* ASIDataCompressor.m */,
+				078EDBC61AEF1EF800E93EE8 /* ASIDataDecompressor.h */,
+				078EDBC71AEF1EF800E93EE8 /* ASIDataDecompressor.m */,
+				078EDBC81AEF1EF800E93EE8 /* ASIDownloadCache.h */,
+				078EDBC91AEF1EF800E93EE8 /* ASIDownloadCache.m */,
+				078EDBCA1AEF1EF800E93EE8 /* ASIFormDataRequest.h */,
+				078EDBCB1AEF1EF800E93EE8 /* ASIFormDataRequest.m */,
+				078EDBCC1AEF1EF800E93EE8 /* ASIHTTPRequest.h */,
+				078EDBCD1AEF1EF800E93EE8 /* ASIHTTPRequest.m */,
+				078EDBCE1AEF1EF800E93EE8 /* ASIHTTPRequestConfig.h */,
+				078EDBCF1AEF1EF800E93EE8 /* ASIHTTPRequestDelegate.h */,
+				078EDBD01AEF1EF800E93EE8 /* ASIInputStream.h */,
+				078EDBD11AEF1EF800E93EE8 /* ASIInputStream.m */,
+				078EDBD21AEF1EF800E93EE8 /* ASINetworkQueue.h */,
+				078EDBD31AEF1EF800E93EE8 /* ASINetworkQueue.m */,
+				078EDBD41AEF1EF800E93EE8 /* ASIProgressDelegate.h */,
+				078EDBD51AEF1EF800E93EE8 /* LSReachability.h */,
+				078EDBD61AEF1EF800E93EE8 /* LSReachability.m */,
+			);
+			path = ASIHTTPRequest;
 			sourceTree = "<group>";
 		};
 		0790493B1AE9DC3A00E46795 /* OAuth2 */ = {
@@ -832,15 +889,19 @@
 				073DBCE81AE7492A009B49EB /* ViewController.m in Sources */,
 				073DBD4A1AE7712F009B49EB /* SDWebImageManager.m in Sources */,
 				073DBD741AE778CF009B49EB /* WYUserInfo.m in Sources */,
+				078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */,
 				0791AB5A1AE8DE260009A5A7 /* AFURLConnectionOperation.m in Sources */,
 				073DBD611AE7717D009B49EB /* NSDictionary+ObjectForKey.m in Sources */,
 				073DBD631AE7717D009B49EB /* PathHelper.m in Sources */,
 				0790494D1AEA236100E46795 /* WYService.m in Sources */,
+				078EDBD91AEF1EF800E93EE8 /* ASIDataDecompressor.m in Sources */,
 				0790493E1AE9DF3000E46795 /* WYAuthStore.m in Sources */,
 				0791AB1F1AE899D10009A5A7 /* WYTitleNavBarView.m in Sources */,
+				078EDBDD1AEF1EF800E93EE8 /* ASIInputStream.m in Sources */,
 				073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */,
 				0791AB2D1AE89B960009A5A7 /* WYActionSheet.m in Sources */,
 				073DBD451AE7712F009B49EB /* SDImageCache.m in Sources */,
+				078EDBDA1AEF1EF800E93EE8 /* ASIDownloadCache.m in Sources */,
 				073DBD661AE7717D009B49EB /* URLHelper.m in Sources */,
 				073DBD6D1AE771AC009B49EB /* JSONKit.m in Sources */,
 				073DBD491AE7712F009B49EB /* SDWebImageDownloaderOperation.m in Sources */,
@@ -855,9 +916,11 @@
 				073DBD4C1AE7712F009B49EB /* UIButton+WebCache.m in Sources */,
 				0791AB571AE8DE260009A5A7 /* AFHTTPSessionManager.m in Sources */,
 				0791AB2E1AE89B960009A5A7 /* WYAlertView.m in Sources */,
+				078EDBDC1AEF1EF800E93EE8 /* ASIHTTPRequest.m in Sources */,
 				073DBD441AE7712F009B49EB /* NSData+ImageContentType.m in Sources */,
 				073DBD4B1AE7712F009B49EB /* SDWebImagePrefetcher.m in Sources */,
 				073DBD771AE77929009B49EB /* WYEngine.m in Sources */,
+				078EDBD81AEF1EF800E93EE8 /* ASIDataCompressor.m in Sources */,
 				0791AB5F1AE8DE260009A5A7 /* UIImage+HQ.m in Sources */,
 				0791AB381AE8CF4C0009A5A7 /* EGOCache.m in Sources */,
 				0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */,
@@ -865,6 +928,7 @@
 				0791AB561AE8DE260009A5A7 /* AFHTTPRequestOperationManager.m in Sources */,
 				073DBD481AE7712F009B49EB /* SDWebImageDownloader.m in Sources */,
 				073DBDA91AE7939C009B49EB /* WYCommonUtils.m in Sources */,
+				078EDBDF1AEF1EF800E93EE8 /* LSReachability.m in Sources */,
 				0791AB151AE898DA0009A5A7 /* WYNavigationController.m in Sources */,
 				073DBD4F1AE7712F009B49EB /* UIImage+WebP.m in Sources */,
 				073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */,
@@ -880,6 +944,7 @@
 				073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */,
 				073DBDB71AE794C4009B49EB /* PullToRefreshView.m in Sources */,
 				0791AB5D1AE8DE260009A5A7 /* AFURLSessionManager.m in Sources */,
+				078EDBD71AEF1EF800E93EE8 /* ASIAuthenticationDialog.m in Sources */,
 				0791AB581AE8DE260009A5A7 /* AFNetworkReachabilityManager.m in Sources */,
 				0791AB3B1AE8D8600009A5A7 /* WYSettingConfig.m in Sources */,
 				073DBD421AE7712F009B49EB /* MKAnnotationView+WebCache.m in Sources */,
@@ -888,6 +953,7 @@
 				073DBD4E1AE7712F009B49EB /* UIImage+MultiFormat.m in Sources */,
 				0791AB181AE8994A0009A5A7 /* WYBaseSuperViewController.m in Sources */,
 				079049501AEA28E100E46795 /* WYHttpRequest.m in Sources */,
+				078EDBDB1AEF1EF800E93EE8 /* ASIFormDataRequest.m in Sources */,
 				073DBD801AE77A3C009B49EB /* MineTabViewController.m in Sources */,
 				0791AB051AE8889D0009A5A7 /* WYTabBarViewController.m in Sources */,
 				0791AB091AE88AB10009A5A7 /* WYTabBarItemView.m in Sources */,
@@ -1026,10 +1092,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/WangYu/External/ASIHTTPRequest",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "WangYu/WangYu-Prefx.pch";
 				INFOPLIST_FILE = WangYu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1045,10 +1108,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/WangYu/External/ASIHTTPRequest",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "WangYu/WangYu-Prefx.pch";
 				INFOPLIST_FILE = WangYu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

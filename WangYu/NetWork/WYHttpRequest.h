@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <ASIHTTPRequestLib/ASIHTTPRequest.h>
+#import "ASIHTTPRequest.h"
 
 extern NSUInteger const kDefaultTimeoutSeconds;
 extern NSString * const WYHTTPRequestErrorDomain;
