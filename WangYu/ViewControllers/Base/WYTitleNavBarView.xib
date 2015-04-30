@@ -17,7 +17,7 @@
                     <color key="backgroundColor" red="0.10588235294117647" green="0.65490196078431373" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RTC-8c-yMk">
-                    <rect key="frame" x="63" y="-1" width="194" height="47"/>
+                    <rect key="frame" x="63" y="0.0" width="194" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
