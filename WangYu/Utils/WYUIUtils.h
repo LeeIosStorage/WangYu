@@ -57,4 +57,7 @@
 
 +(CGRect)getAssetViewFrame;
 
+//自定义冬青字体
++ (UIFont*)customFontWithPath:(NSString*)path size:(CGFloat)size;
+
 @end

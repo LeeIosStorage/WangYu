@@ -11,14 +11,20 @@
 
 #import "WYUIKitMacro.h"
 #import "NSDictionary+ObjectForKey.h"
+#import "WYUIUtils.h"
 
 #define SINGLE_CELL_HEIGHT 44.f
 #define SINGLE_HEADER_HEADER 6.f
 
 #define WY_IMAGE_COMPRESSION_QUALITY 0.4
 
-#define SKIN_COLOR [UIColor colorWithRed:(1.0*0x1b/0xff) green:(1.0*0xb9/0xff) blue:(1.0*0xe8/0xff) alpha:1]
-#define SKIN_TEXT_COLOR [UIColor colorWithRed:(1.0*0x3b/0xff) green:(1.0*0x3b/0xff) blue:(1.0*0x3b/0xff) alpha:1]
+#define SKIN_COLOR [UIColor colorWithRed:(1.0*0xfd/0xff) green:(1.0*0xd6/0xff) blue:(1.0*0x44/0xff) alpha:1]
+
+#define SKIN_TEXT_COLOR1 [UIColor colorWithRed:(1.0*0x33/0xff) green:(1.0*0x33/0xff) blue:(1.0*0x33/0xff) alpha:1]
+#define SKIN_TEXT_COLOR2 [UIColor colorWithRed:(1.0*0xd2/0xff) green:(1.0*0xd2/0xff) blue:(1.0*0xd2/0xff) alpha:1]
+
+#define FONT_PATH [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"dqw3.otf"]
+#define SKIN_FONT(X) [WYUIUtils customFontWithPath:FONT_PATH size:X];
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 

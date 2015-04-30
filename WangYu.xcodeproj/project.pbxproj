@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07203A0E1AF1CE460056A74B /* NetbarTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07203A0C1AF1CE460056A74B /* NetbarTabViewController.m */; };
+		07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07203A0D1AF1CE460056A74B /* NetbarTabViewController.xib */; };
+		07203A141AF1D63B0056A74B /* NetbarTabCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07203A121AF1D63B0056A74B /* NetbarTabCell.m */; };
+		07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07203A131AF1D63B0056A74B /* NetbarTabCell.xib */; };
+		07203A171AF1F7710056A74B /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07203A161AF1F7710056A74B /* CoreText.framework */; };
+		07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */ = {isa = PBXBuildFile; fileRef = 07203A191AF1FE8C0056A74B /* dqw3.otf */; };
 		073DBCE21AE7492A009B49EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE11AE7492A009B49EB /* main.m */; };
 		073DBCE51AE7492A009B49EB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE41AE7492A009B49EB /* AppDelegate.m */; };
 		073DBCE81AE7492A009B49EB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE71AE7492A009B49EB /* ViewController.m */; };
@@ -118,6 +124,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07203A0B1AF1CE460056A74B /* NetbarTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetbarTabViewController.h; sourceTree = "<group>"; };
+		07203A0C1AF1CE460056A74B /* NetbarTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetbarTabViewController.m; sourceTree = "<group>"; };
+		07203A0D1AF1CE460056A74B /* NetbarTabViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetbarTabViewController.xib; sourceTree = "<group>"; };
+		07203A111AF1D63B0056A74B /* NetbarTabCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetbarTabCell.h; path = Main/NetbarTabCell.h; sourceTree = "<group>"; };
+		07203A121AF1D63B0056A74B /* NetbarTabCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetbarTabCell.m; path = Main/NetbarTabCell.m; sourceTree = "<group>"; };
+		07203A131AF1D63B0056A74B /* NetbarTabCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarTabCell.xib; path = Main/NetbarTabCell.xib; sourceTree = "<group>"; };
+		07203A161AF1F7710056A74B /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		07203A191AF1FE8C0056A74B /* dqw3.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dqw3.otf; path = Assets/dqw3.otf; sourceTree = "<group>"; };
 		073DBCDC1AE7492A009B49EB /* WangYu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WangYu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		073DBCE01AE7492A009B49EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		073DBCE11AE7492A009B49EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -313,6 +327,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07203A171AF1F7710056A74B /* CoreText.framework in Frameworks */,
 				073DBDEA1AE7A023009B49EB /* UIKit.framework in Frameworks */,
 				073DBDE61AE79F93009B49EB /* AssetsLibrary.framework in Frameworks */,
 				073DBDE41AE79F8B009B49EB /* SystemConfiguration.framework in Frameworks */,
@@ -336,6 +351,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07203A101AF1D5EE0056A74B /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				07203A111AF1D63B0056A74B /* NetbarTabCell.h */,
+				07203A121AF1D63B0056A74B /* NetbarTabCell.m */,
+				07203A131AF1D63B0056A74B /* NetbarTabCell.xib */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		07203A181AF1FE270056A74B /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				07203A191AF1FE8C0056A74B /* dqw3.otf */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 		073DBCD31AE7492A009B49EB = {
 			isa = PBXGroup;
 			children = (
@@ -369,6 +402,7 @@
 				073DBD091AE77058009B49EB /* Common */,
 				073DBD161AE770E9009B49EB /* Utils */,
 				073DBD171AE770F1009B49EB /* External */,
+				07203A181AF1FE270056A74B /* Assets */,
 				073DBCE61AE7492A009B49EB /* ViewController.h */,
 				073DBCE71AE7492A009B49EB /* ViewController.m */,
 				073DBCE91AE7492A009B49EB /* Main.storyboard */,
@@ -441,6 +475,7 @@
 		073DBD141AE770C0009B49EB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				07203A101AF1D5EE0056A74B /* Main */,
 				073DBD6F1AE77211009B49EB /* HotUpButton.h */,
 				073DBD701AE77211009B49EB /* HotUpButton.m */,
 			);
@@ -567,6 +602,9 @@
 		073DBD791AE77982009B49EB /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				07203A0B1AF1CE460056A74B /* NetbarTabViewController.h */,
+				07203A0C1AF1CE460056A74B /* NetbarTabViewController.m */,
+				07203A0D1AF1CE460056A74B /* NetbarTabViewController.xib */,
 				073DBD7D1AE77A3C009B49EB /* MineTabViewController.h */,
 				073DBD7E1AE77A3C009B49EB /* MineTabViewController.m */,
 				073DBD7F1AE77A3C009B49EB /* MineTabViewController.xib */,
@@ -612,6 +650,7 @@
 		073DBDE81AE79FF3009B49EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				07203A161AF1F7710056A74B /* CoreText.framework */,
 				073DBDE91AE7A023009B49EB /* UIKit.framework */,
 				073DBDE51AE79F93009B49EB /* AssetsLibrary.framework */,
 				073DBDE31AE79F8B009B49EB /* SystemConfiguration.framework */,
@@ -866,8 +905,11 @@
 				0791AB0A1AE88AB10009A5A7 /* WYTabBarItemView.xib in Resources */,
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
 				073DBCED1AE7492A009B49EB /* Images.xcassets in Resources */,
+				07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */,
+				07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */,
 				073DBDB41AE794C4009B49EB /* arrow.png in Resources */,
 				073DBDB51AE794C4009B49EB /* arrow@2x.png in Resources */,
+				07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -919,6 +961,7 @@
 				078EDBDC1AEF1EF800E93EE8 /* ASIHTTPRequest.m in Sources */,
 				073DBD441AE7712F009B49EB /* NSData+ImageContentType.m in Sources */,
 				073DBD4B1AE7712F009B49EB /* SDWebImagePrefetcher.m in Sources */,
+				07203A141AF1D63B0056A74B /* NetbarTabCell.m in Sources */,
 				073DBD771AE77929009B49EB /* WYEngine.m in Sources */,
 				078EDBD81AEF1EF800E93EE8 /* ASIDataCompressor.m in Sources */,
 				0791AB5F1AE8DE260009A5A7 /* UIImage+HQ.m in Sources */,
@@ -941,6 +984,7 @@
 				073DBD461AE7712F009B49EB /* SDWebImageCompat.m in Sources */,
 				073DBCE21AE7492A009B49EB /* main.m in Sources */,
 				0790494A1AEA226B00E46795 /* NSData+Base64.m in Sources */,
+				07203A0E1AF1CE460056A74B /* NetbarTabViewController.m in Sources */,
 				073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */,
 				073DBDB71AE794C4009B49EB /* PullToRefreshView.m in Sources */,
 				0791AB5D1AE8DE260009A5A7 /* AFURLSessionManager.m in Sources */,

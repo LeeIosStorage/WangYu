@@ -40,7 +40,8 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    return UIStatusBarStyleLightContent;
+//    return UIStatusBarStyleLightContent;
+    return UIStatusBarStyleDefault;
 }
 
 - (void)viewDidLoad {
@@ -107,20 +108,20 @@
         WYTabBarItemView *tabItem = [[[NSBundle mainBundle] loadNibNamed:@"WYTabBarItemView" owner:nil options:nil] objectAtIndex:0];
         
         if (tagIndex == 0) {
-            tabItem.itemIconImageView.image = [UIImage imageNamed:@"main_tabbar_icon"];
-            tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"main_tabbar_icon_hover"];
-            tabItem.itemLabel.text = @"首页";
-        }else if (tagIndex == 1){
-            tabItem.itemIconImageView.image = [UIImage imageNamed:@"evaluations_tabbar_icon"];
-            tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"evaluations_tabbar_icon_hover"];
-            tabItem.itemLabel.text = @"竞赛";
-        }else if (tagIndex == 2){
-            tabItem.itemIconImageView.image = [UIImage imageNamed:@"chat_tabbar_icon"];
-            tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"chat_tabbar_icon_hover"];
+            tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_netbar_icon"];
+            tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_netbar_icon_hover"];
             tabItem.itemLabel.text = @"网吧";
+        }else if (tagIndex == 1){
+            tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_activity_icon"];
+            tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_activity_icon_hover"];
+            tabItem.itemLabel.text = @"活动";
+        }else if (tagIndex == 2){
+            tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_recomm_icon"];
+            tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_recomm_icon_hover"];
+            tabItem.itemLabel.text = @"手游推荐";
         }else if (tagIndex == 3){
-            tabItem.itemIconImageView.image = [UIImage imageNamed:@"mine_tabbar_icon"];
-            tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"mine_tabbar_icon_hover"];
+            tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_mine_icon"];
+            tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_mine_icon_hover"];
             tabItem.itemLabel.text = @"我的";
         }
         

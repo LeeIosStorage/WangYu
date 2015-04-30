@@ -65,13 +65,13 @@
         }
         tab.selected = NO;
         //[tab.bkImageView setBackgroundColor:[UIColor whiteColor]];
-        tab.itemLabel.textColor = [UIColor lightGrayColor];
+        tab.itemLabel.textColor = SKIN_TEXT_COLOR1;
     }
     if (!sender.selected) {
         sender.selected = YES;
         self.selectedTabBarItem = sender;
 //        [self.selectedTabBarItem.bkImageView setBackgroundColor:SKIN_COLOR];
-        self.selectedTabBarItem.itemLabel.textColor = SKIN_COLOR;
+        self.selectedTabBarItem.itemLabel.textColor = SKIN_TEXT_COLOR1;
     }
     
     [self.delegate tabBar:self didSelectTabAtIndex:[self.items indexOfObject:sender]];
@@ -110,7 +110,7 @@
     
     [self.selectedTabBarItem setSelected:YES];
 //    [self.selectedTabBarItem.bkImageView setBackgroundColor:SKIN_COLOR];
-    self.selectedTabBarItem.itemLabel.textColor = SKIN_COLOR;
+    self.selectedTabBarItem.itemLabel.textColor = SKIN_TEXT_COLOR1;
 }
 
 -(void) setFrame:(CGRect)aFrame {

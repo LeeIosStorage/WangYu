@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MineTabViewController.h"
+#import "NetbarTabViewController.h"
 #import "WYNavigationController.h"
 
 @interface AppDelegate ()
@@ -29,7 +30,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
     application.statusBarHidden = NO;
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
@@ -44,7 +45,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSLog(@"signIn");
     WYTabBarViewController* tabViewController = [[WYTabBarViewController alloc] init];
     tabViewController.viewControllers = [NSArray arrayWithObjects:
-                                         [[MineTabViewController alloc] init],
+                                         [[NetbarTabViewController alloc] init],
                                          [[MineTabViewController alloc] init],
                                          [[MineTabViewController alloc] init],
                                          [[MineTabViewController alloc] init],

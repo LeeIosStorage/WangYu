@@ -20,6 +20,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        _itemLabel.font = SKIN_FONT(11);
     }
     return self;
 }
