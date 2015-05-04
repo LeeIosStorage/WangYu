@@ -13,6 +13,7 @@
 		07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07203A131AF1D63B0056A74B /* NetbarTabCell.xib */; };
 		07203A171AF1F7710056A74B /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07203A161AF1F7710056A74B /* CoreText.framework */; };
 		07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */ = {isa = PBXBuildFile; fileRef = 07203A191AF1FE8C0056A74B /* dqw3.otf */; };
+		07358A931AF713FE00D546E5 /* NewIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07358A921AF713FE00D546E5 /* NewIntroViewController.m */; };
 		073DBCE21AE7492A009B49EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE11AE7492A009B49EB /* main.m */; };
 		073DBCE51AE7492A009B49EB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE41AE7492A009B49EB /* AppDelegate.m */; };
 		073DBCE81AE7492A009B49EB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE71AE7492A009B49EB /* ViewController.m */; };
@@ -138,6 +139,8 @@
 		07203A131AF1D63B0056A74B /* NetbarTabCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarTabCell.xib; path = Main/NetbarTabCell.xib; sourceTree = "<group>"; };
 		07203A161AF1F7710056A74B /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		07203A191AF1FE8C0056A74B /* dqw3.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dqw3.otf; path = Assets/dqw3.otf; sourceTree = "<group>"; };
+		07358A911AF713FE00D546E5 /* NewIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewIntroViewController.h; path = Login/NewIntroViewController.h; sourceTree = "<group>"; };
+		07358A921AF713FE00D546E5 /* NewIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewIntroViewController.m; path = Login/NewIntroViewController.m; sourceTree = "<group>"; };
 		073DBCDC1AE7492A009B49EB /* WangYu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WangYu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		073DBCE01AE7492A009B49EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		073DBCE11AE7492A009B49EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -385,6 +388,15 @@
 			name = Assets;
 			sourceTree = "<group>";
 		};
+		07358A8D1AF7133B00D546E5 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				07358A911AF713FE00D546E5 /* NewIntroViewController.h */,
+				07358A921AF713FE00D546E5 /* NewIntroViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		073DBCD31AE7492A009B49EB = {
 			isa = PBXGroup;
 			children = (
@@ -412,6 +424,7 @@
 				073DBD121AE770A2009B49EB /* Engine */,
 				079049431AEA112900E46795 /* NetWork */,
 				0790493B1AE9DC3A00E46795 /* OAuth2 */,
+				073DBD781AE77982009B49EB /* Base */,
 				073DBD151AE770CE009B49EB /* Model */,
 				073DBD131AE770C0009B49EB /* ViewControllers */,
 				073DBD141AE770C0009B49EB /* Views */,
@@ -479,11 +492,9 @@
 		073DBD131AE770C0009B49EB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				073DBD991AE79343009B49EB /* TabBar */,
-				073DBD781AE77982009B49EB /* Base */,
+				07358A8D1AF7133B00D546E5 /* Login */,
 				0791AB2F1AE8B7A10009A5A7 /* Setting */,
 				073DBD791AE77982009B49EB /* Main */,
-				073DBD841AE7919D009B49EB /* Common */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -604,6 +615,8 @@
 		073DBD781AE77982009B49EB /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				073DBD841AE7919D009B49EB /* Common */,
+				073DBD991AE79343009B49EB /* TabBar */,
 				073DBD7A1AE779C4009B49EB /* SuperMainViewController.h */,
 				073DBD7B1AE779C4009B49EB /* SuperMainViewController.m */,
 				0791AB161AE8994A0009A5A7 /* WYBaseSuperViewController.h */,
@@ -616,7 +629,8 @@
 				0791AB1C1AE899D10009A5A7 /* WYTitleNavBarView.m */,
 				0791AB1D1AE899D10009A5A7 /* WYTitleNavBarView.xib */,
 			);
-			path = Base;
+			name = Base;
+			path = ViewControllers/Base;
 			sourceTree = "<group>";
 		};
 		073DBD791AE77982009B49EB /* Main */ = {
@@ -641,7 +655,8 @@
 				0791AB101AE898550009A5A7 /* WYCommonVcTransition.h */,
 				0791AB111AE898550009A5A7 /* WYCommonVcTransition.m */,
 			);
-			path = Common;
+			name = Common;
+			path = ../Common;
 			sourceTree = "<group>";
 		};
 		073DBD991AE79343009B49EB /* TabBar */ = {
@@ -656,7 +671,8 @@
 				0791AB031AE8889D0009A5A7 /* WYTabBarViewController.h */,
 				0791AB041AE8889D0009A5A7 /* WYTabBarViewController.m */,
 			);
-			path = TabBar;
+			name = TabBar;
+			path = ../TabBar;
 			sourceTree = "<group>";
 		};
 		073DBDAD1AE794C4009B49EB /* PullToRefresh */ = {
@@ -1031,6 +1047,7 @@
 				078EDBD71AEF1EF800E93EE8 /* ASIAuthenticationDialog.m in Sources */,
 				0791AB581AE8DE260009A5A7 /* AFNetworkReachabilityManager.m in Sources */,
 				0791AB3B1AE8D8600009A5A7 /* WYSettingConfig.m in Sources */,
+				07358A931AF713FE00D546E5 /* NewIntroViewController.m in Sources */,
 				073DBD421AE7712F009B49EB /* MKAnnotationView+WebCache.m in Sources */,
 				073DBD641AE7717D009B49EB /* UIColor+bit.m in Sources */,
 				073DBDF51AE7A1B0009B49EB /* UIImage+Alpha.m in Sources */,
