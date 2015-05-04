@@ -14,6 +14,8 @@
 		07203A171AF1F7710056A74B /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07203A161AF1F7710056A74B /* CoreText.framework */; };
 		07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */ = {isa = PBXBuildFile; fileRef = 07203A191AF1FE8C0056A74B /* dqw3.otf */; };
 		07358A931AF713FE00D546E5 /* NewIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07358A921AF713FE00D546E5 /* NewIntroViewController.m */; };
+		07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 07358A961AF760D000D546E5 /* SKSplashIcon.m */; };
+		07358A9A1AF760D000D546E5 /* SKSplashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07358A981AF760D000D546E5 /* SKSplashView.m */; };
 		073DBCE21AE7492A009B49EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE11AE7492A009B49EB /* main.m */; };
 		073DBCE51AE7492A009B49EB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE41AE7492A009B49EB /* AppDelegate.m */; };
 		073DBCE81AE7492A009B49EB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE71AE7492A009B49EB /* ViewController.m */; };
@@ -141,6 +143,10 @@
 		07203A191AF1FE8C0056A74B /* dqw3.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dqw3.otf; path = Assets/dqw3.otf; sourceTree = "<group>"; };
 		07358A911AF713FE00D546E5 /* NewIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewIntroViewController.h; path = Login/NewIntroViewController.h; sourceTree = "<group>"; };
 		07358A921AF713FE00D546E5 /* NewIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewIntroViewController.m; path = Login/NewIntroViewController.m; sourceTree = "<group>"; };
+		07358A951AF760D000D546E5 /* SKSplashIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSplashIcon.h; sourceTree = "<group>"; };
+		07358A961AF760D000D546E5 /* SKSplashIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSplashIcon.m; sourceTree = "<group>"; };
+		07358A971AF760D000D546E5 /* SKSplashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSplashView.h; sourceTree = "<group>"; };
+		07358A981AF760D000D546E5 /* SKSplashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSplashView.m; sourceTree = "<group>"; };
 		073DBCDC1AE7492A009B49EB /* WangYu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WangYu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		073DBCE01AE7492A009B49EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		073DBCE11AE7492A009B49EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -397,6 +403,17 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
+		07358A941AF760D000D546E5 /* SKSplashView */ = {
+			isa = PBXGroup;
+			children = (
+				07358A951AF760D000D546E5 /* SKSplashIcon.h */,
+				07358A961AF760D000D546E5 /* SKSplashIcon.m */,
+				07358A971AF760D000D546E5 /* SKSplashView.h */,
+				07358A981AF760D000D546E5 /* SKSplashView.m */,
+			);
+			path = SKSplashView;
+			sourceTree = "<group>";
+		};
 		073DBCD31AE7492A009B49EB = {
 			isa = PBXGroup;
 			children = (
@@ -547,6 +564,7 @@
 		073DBD171AE770F1009B49EB /* External */ = {
 			isa = PBXGroup;
 			children = (
+				07358A941AF760D000D546E5 /* SKSplashView */,
 				0799C8B11AF1D8C800E407BB /* ZLSwipeableView */,
 				079049471AEA226B00E46795 /* Base64 */,
 				078EDBC01AEF1EF800E93EE8 /* ASIHTTPRequest */,
@@ -1010,6 +1028,7 @@
 				073DBD4C1AE7712F009B49EB /* UIButton+WebCache.m in Sources */,
 				0791AB571AE8DE260009A5A7 /* AFHTTPSessionManager.m in Sources */,
 				0791AB2E1AE89B960009A5A7 /* WYAlertView.m in Sources */,
+				07358A9A1AF760D000D546E5 /* SKSplashView.m in Sources */,
 				078EDBDC1AEF1EF800E93EE8 /* ASIHTTPRequest.m in Sources */,
 				073DBD441AE7712F009B49EB /* NSData+ImageContentType.m in Sources */,
 				073DBD4B1AE7712F009B49EB /* SDWebImagePrefetcher.m in Sources */,
@@ -1019,6 +1038,7 @@
 				0791AB5F1AE8DE260009A5A7 /* UIImage+HQ.m in Sources */,
 				0791AB381AE8CF4C0009A5A7 /* EGOCache.m in Sources */,
 				0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */,
+				07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */,
 				0791AB591AE8DE260009A5A7 /* AFSecurityPolicy.m in Sources */,
 				0791AB561AE8DE260009A5A7 /* AFHTTPRequestOperationManager.m in Sources */,
 				073DBD481AE7712F009B49EB /* SDWebImageDownloader.m in Sources */,
@@ -1190,7 +1210,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1207,7 +1226,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "WangYu/WangYu-Prefx.pch";
