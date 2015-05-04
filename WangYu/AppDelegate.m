@@ -41,18 +41,18 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
     
-   // [self signIn];
+    [self signIn];
     
-    if ([[WYEngine shareInstance] hasAccoutLoggedin] || ![WYEngine shareInstance].firstLogin) {
-        if ([WYSettingConfig isFirstEnterVersion]) {
-            [self showNewIntro];
-        } else {
-            [self signIn];
-        }
-    }else{
-        NSLog(@"signOut for accout miss");
-        [self signOut];
-    }
+//    if ([[WYEngine shareInstance] hasAccoutLoggedin] || ![WYEngine shareInstance].firstLogin) {
+//        if ([WYSettingConfig isFirstEnterVersion]) {
+//            [self showNewIntro];
+//        } else {
+//            [self signIn];
+//        }
+//    }else{
+//        NSLog(@"signOut for accout miss");
+//        [self signOut];
+//    }
 
     [self.window makeKeyAndVisible];
     return YES;
@@ -71,6 +71,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.introView.didSelectedEnter = ^() {
         [weakSelf.introView.view removeFromSuperview];
         weakSelf.introView = nil;
+        [weakSelf signOut];
     };
 }
 
@@ -92,7 +93,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     _mainTabViewController.initialIndex = 0;
     
     self.window.rootViewController = tabNavVc;
-    
 }
 
 - (void)signOut{
