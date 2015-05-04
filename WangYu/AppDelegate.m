@@ -11,8 +11,13 @@
 #import "NetbarTabViewController.h"
 #import "GameCommendViewController.h"
 #import "WYNavigationController.h"
+#import "WYSettingConfig.h"
+#import "WYEngine.h"
+#import "NewIntroViewController.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic, strong) NewIntroViewController *introView;
 
 @end
 
@@ -36,10 +41,37 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
     
-    [self signIn];
+   // [self signIn];
     
+    if ([[WYEngine shareInstance] hasAccoutLoggedin] || ![WYEngine shareInstance].firstLogin) {
+        if ([WYSettingConfig isFirstEnterVersion]) {
+            [self showNewIntro];
+        } else {
+            [self signIn];
+        }
+    }else{
+        NSLog(@"signOut for accout miss");
+        [self signOut];
+    }
+
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+//新手引导
+-(void)showNewIntro{
+    NSArray *coverImageNames = @[@"img_index_01txt", @"img_index_02txt", @"img_index_03txt",@"img_index_01txt"];
+    NSArray *backgroundImageNames = @[@"welcome_index1_bg", @"welcome_index2_bg", @"welcome_index3_bg",@"welcome_index4_bg"];
+    self.introView = [[NewIntroViewController alloc] initWithCoverImageNames:coverImageNames backgroundImageNames:backgroundImageNames];
+    
+//    [self.window addSubview:self.introView.view];
+    self.window.rootViewController = self.introView;
+    
+    __weak AppDelegate *weakSelf = self;
+    self.introView.didSelectedEnter = ^() {
+        [weakSelf.introView.view removeFromSuperview];
+        weakSelf.introView = nil;
+    };
 }
 
 - (void)signIn{
