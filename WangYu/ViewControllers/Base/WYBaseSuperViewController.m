@@ -105,6 +105,13 @@
     }
 }
 
+-(void) setBarBackgroundColor:(UIColor *)bgColor showLine:(BOOL)showLine{
+    
+    if ([_titleNavBar isMemberOfClass:[WYTitleNavBarView class]]) {
+        [((WYTitleNavBarView *) _titleNavBar) setBarBackgroundColor:bgColor showLine:showLine];
+    }
+}
+
 //title
 -(void) setTitle:(NSString *) title
 {

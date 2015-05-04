@@ -14,6 +14,7 @@
 #import "WYSettingConfig.h"
 #import "WYEngine.h"
 #import "NewIntroViewController.h"
+#import "WelcomeViewController.h"
 
 @interface AppDelegate ()
 
@@ -55,6 +56,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 ////    }
 //
 //    [self.window makeKeyAndVisible];
+
     return YES;
 }
 
@@ -97,6 +99,20 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)signOut{
     NSLog(@"signOut");
+    
+    if([WYSettingConfig isFirstEnterVersion]){
+        [self showNewIntro];
+        return;
+    }
+    
+    WelcomeViewController* welcomeViewController = [[WelcomeViewController alloc] init];
+    WYNavigationController* navigationController = [[WYNavigationController alloc] initWithRootViewController:welcomeViewController];
+    navigationController.navigationBarHidden = YES;
+    self.window.rootViewController = navigationController;
+    
+    _mainTabViewController = nil;
+    
+    [[WYEngine shareInstance] logout];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

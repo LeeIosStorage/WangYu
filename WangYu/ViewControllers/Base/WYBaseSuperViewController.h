@@ -28,6 +28,8 @@
 @property (nonatomic, strong) PullToRefreshView *pullRefreshView;
 @property (nonatomic, strong) PullToRefreshView *pullRefreshView2;
 
+-(void) setBarBackgroundColor:(UIColor *)bgColor showLine:(BOOL)showLine;
+
 //title
 -(void) setTitle:(NSString *) title;
 -(void) setTitle:(NSString *) title font:(UIFont *) font;

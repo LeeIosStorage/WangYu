@@ -22,6 +22,6 @@
 -(id)init:(id)owner;
 -(id) setTitle:(NSString *) title;
 -(id) setTitle:(NSString *) title font:(UIFont *) font;
-
+-(void) setBarBackgroundColor:(UIColor *)bgColor showLine:(BOOL)showLine;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "WYTitleNavBarView.h"
+#import "WYUIUtils.h"
 
 @interface WYTitleNavBarView ()
 
@@ -15,6 +16,8 @@
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 //background image
 @property (nonatomic, strong) IBOutlet UIImageView *backgroundImageView;
+//line image
+@property (nonatomic, strong) IBOutlet UIImageView *lineImageView;
 
 @end
 
@@ -35,6 +38,7 @@
         //load view
         _owner = owner;
         self.backgroundImageView.backgroundColor = SKIN_COLOR;
+        self.lineImageView.hidden = YES;
     }
     return self;
 }
@@ -51,4 +55,9 @@
     return _titleLabel;
 }
 
+-(void) setBarBackgroundColor:(UIColor *)bgColor showLine:(BOOL)showLine{
+    self.backgroundImageView.backgroundColor = bgColor;
+    self.lineImageView.hidden = !showLine;
+    self.lineImageView.backgroundColor = UIColorToRGB(0xadadad);
+}
 @end

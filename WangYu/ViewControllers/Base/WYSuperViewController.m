@@ -29,6 +29,7 @@
     
     //默认都有返回
     [self setLeftButtonWithSelector:@selector(backAction:)];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     
     if (!_disablePan) {
 #ifdef USE_SYS_PAN_GESTURE

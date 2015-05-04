@@ -16,6 +16,10 @@
 #import "URLHelper.h"
 #import "NSDictionary+objectForKey.h"
 #import "QHQnetworkingTool.h"
+#import "WYAlertView.h"
+#import "AppDelegate.h"
+#import "WelcomeViewController.h"
+#import "WYNavigationController.h"
 
 #define CONNECT_TIMEOUT 20
 
@@ -276,6 +280,37 @@ static WYEngine* s_ShareInstance = nil;
 - (BOOL)hasAccoutLoggedin{
     NSLog(@"_account=%@, _userPassword=%@, _uid=%@", _account, _userPassword, _uid);
     return (_account && _userPassword && _uid);
+}
+
+
+#pragma mark - Visitor
+- (void)visitorLogin{
+    _uid = nil;
+    _account = nil;
+    _userPassword = nil;
+    [self removeAccount];
+    _userInfo = [[WYUserInfo alloc] init];
+}
+- (BOOL)needUserLogin:(NSString *)message{
+    if (![self hasAccoutLoggedin]) {
+        if (message == nil) {
+            message = @"请登录";
+        }
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:message cancelButtonTitle:@"取消" cancelBlock:^{
+        } okButtonTitle:@"登录" okBlock:^{
+            AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            WelcomeViewController *welcomeVc = [[WelcomeViewController alloc] init];
+            welcomeVc.showBackButton = YES;
+            WYNavigationController* navigationController = [[WYNavigationController alloc] initWithRootViewController:welcomeVc];
+            navigationController.navigationBarHidden = YES;
+            [appDelegate.mainTabViewController.navigationController presentViewController:navigationController animated:YES completion:^{
+                
+            }];
+        }];
+        [alertView show];
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark - request

@@ -49,6 +49,10 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (void)refreshUserInfo;
 - (BOOL)hasAccoutLoggedin;
 
+#pragma mark - Visitor
+- (void)visitorLogin;
+- (BOOL)needUserLogin:(NSString *)message;
+
 #pragma mark - request
 - (int)getConnectTag;
 - (void)addOnAppServiceBlock:(onAppServiceBlock)block tag:(int)tag;

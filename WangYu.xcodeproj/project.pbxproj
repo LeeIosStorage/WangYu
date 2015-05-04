@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		071923CF1AF74D8400432531 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923C81AF74D8400432531 /* LoginViewController.m */; };
+		071923D01AF74D8400432531 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071923C91AF74D8400432531 /* LoginViewController.xib */; };
+		071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923CB1AF74D8400432531 /* NewIntroViewController.m */; };
+		071923D21AF74D8400432531 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923CD1AF74D8400432531 /* WelcomeViewController.m */; };
+		071923D31AF74D8400432531 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071923CE1AF74D8400432531 /* WelcomeViewController.xib */; };
+		071923D71AF76C6C00432531 /* RetrievePwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923D51AF76C6C00432531 /* RetrievePwdViewController.m */; };
+		071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071923D61AF76C6C00432531 /* RetrievePwdViewController.xib */; };
+		071923DC1AF7738900432531 /* SetPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923DA1AF7738900432531 /* SetPwdViewController.m */; };
+		071923DD1AF7738900432531 /* SetPwdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071923DB1AF7738900432531 /* SetPwdViewController.xib */; };
+		071923E11AF7771A00432531 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923DF1AF7771A00432531 /* RegisterViewController.m */; };
+		071923E21AF7771A00432531 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071923E01AF7771A00432531 /* RegisterViewController.xib */; };
 		07203A0E1AF1CE460056A74B /* NetbarTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07203A0C1AF1CE460056A74B /* NetbarTabViewController.m */; };
 		07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07203A0D1AF1CE460056A74B /* NetbarTabViewController.xib */; };
 		07203A141AF1D63B0056A74B /* NetbarTabCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07203A121AF1D63B0056A74B /* NetbarTabCell.m */; };
@@ -133,6 +144,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		071923C71AF74D8400432531 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		071923C81AF74D8400432531 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		071923C91AF74D8400432531 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		071923CA1AF74D8400432531 /* NewIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewIntroViewController.h; sourceTree = "<group>"; };
+		071923CB1AF74D8400432531 /* NewIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewIntroViewController.m; sourceTree = "<group>"; };
+		071923CC1AF74D8400432531 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
+		071923CD1AF74D8400432531 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
+		071923CE1AF74D8400432531 /* WelcomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeViewController.xib; sourceTree = "<group>"; };
+		071923D41AF76C6C00432531 /* RetrievePwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetrievePwdViewController.h; sourceTree = "<group>"; };
+		071923D51AF76C6C00432531 /* RetrievePwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RetrievePwdViewController.m; sourceTree = "<group>"; };
+		071923D61AF76C6C00432531 /* RetrievePwdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetrievePwdViewController.xib; sourceTree = "<group>"; };
+		071923D91AF7738900432531 /* SetPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPwdViewController.h; sourceTree = "<group>"; };
+		071923DA1AF7738900432531 /* SetPwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPwdViewController.m; sourceTree = "<group>"; };
+		071923DB1AF7738900432531 /* SetPwdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetPwdViewController.xib; sourceTree = "<group>"; };
+		071923DE1AF7771A00432531 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		071923DF1AF7771A00432531 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		071923E01AF7771A00432531 /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
 		07203A0B1AF1CE460056A74B /* NetbarTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetbarTabViewController.h; sourceTree = "<group>"; };
 		07203A0C1AF1CE460056A74B /* NetbarTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetbarTabViewController.m; sourceTree = "<group>"; };
 		07203A0D1AF1CE460056A74B /* NetbarTabViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetbarTabViewController.xib; sourceTree = "<group>"; };
@@ -376,6 +404,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		071923C61AF74D8400432531 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				071923CA1AF74D8400432531 /* NewIntroViewController.h */,
+				071923CB1AF74D8400432531 /* NewIntroViewController.m */,
+				071923CC1AF74D8400432531 /* WelcomeViewController.h */,
+				071923CD1AF74D8400432531 /* WelcomeViewController.m */,
+				071923CE1AF74D8400432531 /* WelcomeViewController.xib */,
+				071923C71AF74D8400432531 /* LoginViewController.h */,
+				071923C81AF74D8400432531 /* LoginViewController.m */,
+				071923C91AF74D8400432531 /* LoginViewController.xib */,
+				071923DE1AF7771A00432531 /* RegisterViewController.h */,
+				071923DF1AF7771A00432531 /* RegisterViewController.m */,
+				071923E01AF7771A00432531 /* RegisterViewController.xib */,
+				071923D41AF76C6C00432531 /* RetrievePwdViewController.h */,
+				071923D51AF76C6C00432531 /* RetrievePwdViewController.m */,
+				071923D61AF76C6C00432531 /* RetrievePwdViewController.xib */,
+				071923D91AF7738900432531 /* SetPwdViewController.h */,
+				071923DA1AF7738900432531 /* SetPwdViewController.m */,
+				071923DB1AF7738900432531 /* SetPwdViewController.xib */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		07203A101AF1D5EE0056A74B /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -509,7 +561,7 @@
 		073DBD131AE770C0009B49EB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				07358A8D1AF7133B00D546E5 /* Login */,
+				071923C61AF74D8400432531 /* Login */,
 				0791AB2F1AE8B7A10009A5A7 /* Setting */,
 				073DBD791AE77982009B49EB /* Main */,
 			);
@@ -965,14 +1017,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				071923D01AF74D8400432531 /* LoginViewController.xib in Resources */,
 				0791AB201AE899D10009A5A7 /* WYTitleNavBarView.xib in Resources */,
+				071923D31AF74D8400432531 /* WelcomeViewController.xib in Resources */,
 				0791AB0F1AE897EA0009A5A7 /* WYTabBarView.xib in Resources */,
 				0799C8B01AF1D88E00E407BB /* GameCommendViewController.xib in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
+				071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
 				0791AB341AE8B7DD0009A5A7 /* AboutViewController.xib in Resources */,
 				0799C8BC1AF1EB5800E407BB /* GameCommendCardView.xib in Resources */,
 				0791AB0A1AE88AB10009A5A7 /* WYTabBarItemView.xib in Resources */,
+				071923E21AF7771A00432531 /* RegisterViewController.xib in Resources */,
+				071923DD1AF7738900432531 /* SetPwdViewController.xib in Resources */,
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
 				073DBCED1AE7492A009B49EB /* Images.xcassets in Resources */,
 				07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */,
@@ -1030,6 +1087,7 @@
 				0791AB2E1AE89B960009A5A7 /* WYAlertView.m in Sources */,
 				07358A9A1AF760D000D546E5 /* SKSplashView.m in Sources */,
 				078EDBDC1AEF1EF800E93EE8 /* ASIHTTPRequest.m in Sources */,
+				071923CF1AF74D8400432531 /* LoginViewController.m in Sources */,
 				073DBD441AE7712F009B49EB /* NSData+ImageContentType.m in Sources */,
 				073DBD4B1AE7712F009B49EB /* SDWebImagePrefetcher.m in Sources */,
 				07203A141AF1D63B0056A74B /* NetbarTabCell.m in Sources */,
@@ -1045,6 +1103,8 @@
 				073DBDA91AE7939C009B49EB /* WYCommonUtils.m in Sources */,
 				078EDBDF1AEF1EF800E93EE8 /* LSReachability.m in Sources */,
 				0791AB151AE898DA0009A5A7 /* WYNavigationController.m in Sources */,
+				071923DC1AF7738900432531 /* SetPwdViewController.m in Sources */,
+				071923E11AF7771A00432531 /* RegisterViewController.m in Sources */,
 				0799C8B61AF1D8C800E407BB /* ZLPanGestureRecognizer.m in Sources */,
 				073DBD4F1AE7712F009B49EB /* UIImage+WebP.m in Sources */,
 				073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */,
@@ -1056,6 +1116,7 @@
 				0791AB5E1AE8DE260009A5A7 /* QHQnetworkingTool.m in Sources */,
 				073DBD431AE7712F009B49EB /* NSData+GIF.m in Sources */,
 				073DBD461AE7712F009B49EB /* SDWebImageCompat.m in Sources */,
+				071923D71AF76C6C00432531 /* RetrievePwdViewController.m in Sources */,
 				073DBCE21AE7492A009B49EB /* main.m in Sources */,
 				0799C8BA1AF1E7C200E407BB /* GameCommendCardView.m in Sources */,
 				0799C8B71AF1D8C800E407BB /* ZLSwipeableView.m in Sources */,
@@ -1067,7 +1128,6 @@
 				078EDBD71AEF1EF800E93EE8 /* ASIAuthenticationDialog.m in Sources */,
 				0791AB581AE8DE260009A5A7 /* AFNetworkReachabilityManager.m in Sources */,
 				0791AB3B1AE8D8600009A5A7 /* WYSettingConfig.m in Sources */,
-				07358A931AF713FE00D546E5 /* NewIntroViewController.m in Sources */,
 				073DBD421AE7712F009B49EB /* MKAnnotationView+WebCache.m in Sources */,
 				073DBD641AE7717D009B49EB /* UIColor+bit.m in Sources */,
 				073DBDF51AE7A1B0009B49EB /* UIImage+Alpha.m in Sources */,
@@ -1076,7 +1136,9 @@
 				079049501AEA28E100E46795 /* WYHttpRequest.m in Sources */,
 				078EDBDB1AEF1EF800E93EE8 /* ASIFormDataRequest.m in Sources */,
 				073DBD801AE77A3C009B49EB /* MineTabViewController.m in Sources */,
+				071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */,
 				0791AB051AE8889D0009A5A7 /* WYTabBarViewController.m in Sources */,
+				071923D21AF74D8400432531 /* WelcomeViewController.m in Sources */,
 				0791AB091AE88AB10009A5A7 /* WYTabBarItemView.m in Sources */,
 				073DBD7C1AE779C4009B49EB /* SuperMainViewController.m in Sources */,
 				0791AB5C1AE8DE260009A5A7 /* AFURLResponseSerialization.m in Sources */,

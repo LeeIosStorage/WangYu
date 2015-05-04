@@ -7,12 +7,11 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "back@2x.png"
+      "filename" : "kuangfill@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "back icon(1).png"
+      "scale" : "3x"
     }
   ],
   "info" : {

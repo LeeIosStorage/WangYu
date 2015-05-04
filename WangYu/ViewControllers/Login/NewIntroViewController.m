@@ -7,6 +7,7 @@
 //
 
 #import "NewIntroViewController.h"
+#import "WYSettingConfig.h"
 
 @interface NewIntroViewController () <UIScrollViewDelegate>
 
@@ -76,6 +77,7 @@
     [self.view addSubview:self.enterButton];
     
     [self reloadPages];
+    [WYSettingConfig saveEnterVersion];
 }
 
 
