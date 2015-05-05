@@ -24,7 +24,6 @@
 		07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07203A131AF1D63B0056A74B /* NetbarTabCell.xib */; };
 		07203A171AF1F7710056A74B /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07203A161AF1F7710056A74B /* CoreText.framework */; };
 		07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */ = {isa = PBXBuildFile; fileRef = 07203A191AF1FE8C0056A74B /* dqw3.otf */; };
-		07358A931AF713FE00D546E5 /* NewIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07358A921AF713FE00D546E5 /* NewIntroViewController.m */; };
 		07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 07358A961AF760D000D546E5 /* SKSplashIcon.m */; };
 		07358A9A1AF760D000D546E5 /* SKSplashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07358A981AF760D000D546E5 /* SKSplashView.m */; };
 		073DBCE21AE7492A009B49EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE11AE7492A009B49EB /* main.m */; };
@@ -60,7 +59,6 @@
 		073DBD711AE77211009B49EB /* HotUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD701AE77211009B49EB /* HotUpButton.m */; };
 		073DBD741AE778CF009B49EB /* WYUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD731AE778CF009B49EB /* WYUserInfo.m */; };
 		073DBD771AE77929009B49EB /* WYEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD761AE77929009B49EB /* WYEngine.m */; };
-		073DBD7C1AE779C4009B49EB /* SuperMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD7B1AE779C4009B49EB /* SuperMainViewController.m */; };
 		073DBD801AE77A3C009B49EB /* MineTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD7E1AE77A3C009B49EB /* MineTabViewController.m */; };
 		073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 073DBD7F1AE77A3C009B49EB /* MineTabViewController.xib */; };
 		073DBDA91AE7939C009B49EB /* WYCommonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDA81AE7939C009B49EB /* WYCommonUtils.m */; };
@@ -82,6 +80,18 @@
 		073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF01AE7A1B0009B49EB /* UIImage+Resize.m */; };
 		073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF21AE7A1B0009B49EB /* UIImage+RoundedCorner.m */; };
 		073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */; };
+		07868DE61AF8581100160070 /* SuperMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DD01AF8581100160070 /* SuperMainViewController.m */; };
+		07868DE71AF8581100160070 /* WYBaseSuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DD21AF8581100160070 /* WYBaseSuperViewController.m */; };
+		07868DE81AF8581100160070 /* WYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DD41AF8581100160070 /* WYNavigationController.m */; };
+		07868DE91AF8581100160070 /* WYSuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DD61AF8581100160070 /* WYSuperViewController.m */; };
+		07868DEA1AF8581100160070 /* WYTitleNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DD81AF8581100160070 /* WYTitleNavBarView.m */; };
+		07868DEB1AF8581100160070 /* WYTitleNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07868DD91AF8581100160070 /* WYTitleNavBarView.xib */; };
+		07868DEC1AF8581100160070 /* WYCommonVcTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DDC1AF8581100160070 /* WYCommonVcTransition.m */; };
+		07868DED1AF8581100160070 /* WYTabBarItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DDF1AF8581100160070 /* WYTabBarItemView.m */; };
+		07868DEE1AF8581100160070 /* WYTabBarItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07868DE01AF8581100160070 /* WYTabBarItemView.xib */; };
+		07868DEF1AF8581100160070 /* WYTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DE21AF8581100160070 /* WYTabBarView.m */; };
+		07868DF01AF8581100160070 /* WYTabBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07868DE31AF8581100160070 /* WYTabBarView.xib */; };
+		07868DF11AF8581100160070 /* WYTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DE51AF8581100160070 /* WYTabBarViewController.m */; };
 		078EDBD71AEF1EF800E93EE8 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBC21AEF1EF800E93EE8 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		078EDBD81AEF1EF800E93EE8 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBC51AEF1EF800E93EE8 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		078EDBD91AEF1EF800E93EE8 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBC71AEF1EF800E93EE8 /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -97,17 +107,6 @@
 		0790494A1AEA226B00E46795 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 079049491AEA226B00E46795 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0790494D1AEA236100E46795 /* WYService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0790494C1AEA236100E46795 /* WYService.m */; };
 		079049501AEA28E100E46795 /* WYHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0790494F1AEA28E100E46795 /* WYHttpRequest.m */; };
-		0791AB051AE8889D0009A5A7 /* WYTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB041AE8889D0009A5A7 /* WYTabBarViewController.m */; };
-		0791AB091AE88AB10009A5A7 /* WYTabBarItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB071AE88AB10009A5A7 /* WYTabBarItemView.m */; };
-		0791AB0A1AE88AB10009A5A7 /* WYTabBarItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0791AB081AE88AB10009A5A7 /* WYTabBarItemView.xib */; };
-		0791AB0E1AE897EA0009A5A7 /* WYTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB0C1AE897EA0009A5A7 /* WYTabBarView.m */; };
-		0791AB0F1AE897EA0009A5A7 /* WYTabBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0791AB0D1AE897EA0009A5A7 /* WYTabBarView.xib */; };
-		0791AB121AE898550009A5A7 /* WYCommonVcTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB111AE898550009A5A7 /* WYCommonVcTransition.m */; };
-		0791AB151AE898DA0009A5A7 /* WYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB141AE898DA0009A5A7 /* WYNavigationController.m */; };
-		0791AB181AE8994A0009A5A7 /* WYBaseSuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB171AE8994A0009A5A7 /* WYBaseSuperViewController.m */; };
-		0791AB1E1AE899D10009A5A7 /* WYSuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB1A1AE899D10009A5A7 /* WYSuperViewController.m */; };
-		0791AB1F1AE899D10009A5A7 /* WYTitleNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB1C1AE899D10009A5A7 /* WYTitleNavBarView.m */; };
-		0791AB201AE899D10009A5A7 /* WYTitleNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0791AB1D1AE899D10009A5A7 /* WYTitleNavBarView.xib */; };
 		0791AB2D1AE89B960009A5A7 /* WYActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB291AE89B960009A5A7 /* WYActionSheet.m */; };
 		0791AB2E1AE89B960009A5A7 /* WYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB2C1AE89B960009A5A7 /* WYAlertView.m */; };
 		0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0791AB311AE8B7DD0009A5A7 /* AboutViewController.m */; };
@@ -169,8 +168,6 @@
 		07203A131AF1D63B0056A74B /* NetbarTabCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarTabCell.xib; path = Main/NetbarTabCell.xib; sourceTree = "<group>"; };
 		07203A161AF1F7710056A74B /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		07203A191AF1FE8C0056A74B /* dqw3.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dqw3.otf; path = Assets/dqw3.otf; sourceTree = "<group>"; };
-		07358A911AF713FE00D546E5 /* NewIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewIntroViewController.h; path = Login/NewIntroViewController.h; sourceTree = "<group>"; };
-		07358A921AF713FE00D546E5 /* NewIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewIntroViewController.m; path = Login/NewIntroViewController.m; sourceTree = "<group>"; };
 		07358A951AF760D000D546E5 /* SKSplashIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSplashIcon.h; sourceTree = "<group>"; };
 		07358A961AF760D000D546E5 /* SKSplashIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSplashIcon.m; sourceTree = "<group>"; };
 		07358A971AF760D000D546E5 /* SKSplashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSplashView.h; sourceTree = "<group>"; };
@@ -241,8 +238,6 @@
 		073DBD731AE778CF009B49EB /* WYUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYUserInfo.m; sourceTree = "<group>"; };
 		073DBD751AE77929009B49EB /* WYEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYEngine.h; sourceTree = "<group>"; };
 		073DBD761AE77929009B49EB /* WYEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYEngine.m; sourceTree = "<group>"; };
-		073DBD7A1AE779C4009B49EB /* SuperMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperMainViewController.h; sourceTree = "<group>"; };
-		073DBD7B1AE779C4009B49EB /* SuperMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperMainViewController.m; sourceTree = "<group>"; };
 		073DBD7D1AE77A3C009B49EB /* MineTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineTabViewController.h; sourceTree = "<group>"; };
 		073DBD7E1AE77A3C009B49EB /* MineTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineTabViewController.m; sourceTree = "<group>"; };
 		073DBD7F1AE77A3C009B49EB /* MineTabViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MineTabViewController.xib; sourceTree = "<group>"; };
@@ -275,6 +270,27 @@
 		073DBDF21AE7A1B0009B49EB /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		073DBDF31AE7A1B0009B49EB /* UIImageExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageExtras.h; sourceTree = "<group>"; };
 		073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageExtras.m; sourceTree = "<group>"; };
+		07868DCF1AF8581100160070 /* SuperMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperMainViewController.h; sourceTree = "<group>"; };
+		07868DD01AF8581100160070 /* SuperMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperMainViewController.m; sourceTree = "<group>"; };
+		07868DD11AF8581100160070 /* WYBaseSuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYBaseSuperViewController.h; sourceTree = "<group>"; };
+		07868DD21AF8581100160070 /* WYBaseSuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYBaseSuperViewController.m; sourceTree = "<group>"; };
+		07868DD31AF8581100160070 /* WYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYNavigationController.h; sourceTree = "<group>"; };
+		07868DD41AF8581100160070 /* WYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYNavigationController.m; sourceTree = "<group>"; };
+		07868DD51AF8581100160070 /* WYSuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYSuperViewController.h; sourceTree = "<group>"; };
+		07868DD61AF8581100160070 /* WYSuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYSuperViewController.m; sourceTree = "<group>"; };
+		07868DD71AF8581100160070 /* WYTitleNavBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTitleNavBarView.h; sourceTree = "<group>"; };
+		07868DD81AF8581100160070 /* WYTitleNavBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTitleNavBarView.m; sourceTree = "<group>"; };
+		07868DD91AF8581100160070 /* WYTitleNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYTitleNavBarView.xib; sourceTree = "<group>"; };
+		07868DDB1AF8581100160070 /* WYCommonVcTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYCommonVcTransition.h; sourceTree = "<group>"; };
+		07868DDC1AF8581100160070 /* WYCommonVcTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYCommonVcTransition.m; sourceTree = "<group>"; };
+		07868DDE1AF8581100160070 /* WYTabBarItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarItemView.h; sourceTree = "<group>"; };
+		07868DDF1AF8581100160070 /* WYTabBarItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTabBarItemView.m; sourceTree = "<group>"; };
+		07868DE01AF8581100160070 /* WYTabBarItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYTabBarItemView.xib; sourceTree = "<group>"; };
+		07868DE11AF8581100160070 /* WYTabBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarView.h; sourceTree = "<group>"; };
+		07868DE21AF8581100160070 /* WYTabBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTabBarView.m; sourceTree = "<group>"; };
+		07868DE31AF8581100160070 /* WYTabBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYTabBarView.xib; sourceTree = "<group>"; };
+		07868DE41AF8581100160070 /* WYTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarViewController.h; sourceTree = "<group>"; };
+		07868DE51AF8581100160070 /* WYTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTabBarViewController.m; sourceTree = "<group>"; };
 		078EDBC11AEF1EF800E93EE8 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		078EDBC21AEF1EF800E93EE8 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		078EDBC31AEF1EF800E93EE8 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -310,25 +326,6 @@
 		0790494C1AEA236100E46795 /* WYService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYService.m; path = NetWork/WYService.m; sourceTree = "<group>"; };
 		0790494E1AEA28E100E46795 /* WYHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYHttpRequest.h; path = NetWork/WYHttpRequest.h; sourceTree = "<group>"; };
 		0790494F1AEA28E100E46795 /* WYHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYHttpRequest.m; path = NetWork/WYHttpRequest.m; sourceTree = "<group>"; };
-		0791AB031AE8889D0009A5A7 /* WYTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarViewController.h; sourceTree = "<group>"; };
-		0791AB041AE8889D0009A5A7 /* WYTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTabBarViewController.m; sourceTree = "<group>"; };
-		0791AB061AE88AB10009A5A7 /* WYTabBarItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarItemView.h; sourceTree = "<group>"; };
-		0791AB071AE88AB10009A5A7 /* WYTabBarItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTabBarItemView.m; sourceTree = "<group>"; };
-		0791AB081AE88AB10009A5A7 /* WYTabBarItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYTabBarItemView.xib; sourceTree = "<group>"; };
-		0791AB0B1AE897EA0009A5A7 /* WYTabBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarView.h; sourceTree = "<group>"; };
-		0791AB0C1AE897EA0009A5A7 /* WYTabBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTabBarView.m; sourceTree = "<group>"; };
-		0791AB0D1AE897EA0009A5A7 /* WYTabBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYTabBarView.xib; sourceTree = "<group>"; };
-		0791AB101AE898550009A5A7 /* WYCommonVcTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYCommonVcTransition.h; sourceTree = "<group>"; };
-		0791AB111AE898550009A5A7 /* WYCommonVcTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYCommonVcTransition.m; sourceTree = "<group>"; };
-		0791AB131AE898DA0009A5A7 /* WYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYNavigationController.h; sourceTree = "<group>"; };
-		0791AB141AE898DA0009A5A7 /* WYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYNavigationController.m; sourceTree = "<group>"; };
-		0791AB161AE8994A0009A5A7 /* WYBaseSuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYBaseSuperViewController.h; sourceTree = "<group>"; };
-		0791AB171AE8994A0009A5A7 /* WYBaseSuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYBaseSuperViewController.m; sourceTree = "<group>"; };
-		0791AB191AE899D10009A5A7 /* WYSuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYSuperViewController.h; sourceTree = "<group>"; };
-		0791AB1A1AE899D10009A5A7 /* WYSuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYSuperViewController.m; sourceTree = "<group>"; };
-		0791AB1B1AE899D10009A5A7 /* WYTitleNavBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTitleNavBarView.h; sourceTree = "<group>"; };
-		0791AB1C1AE899D10009A5A7 /* WYTitleNavBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTitleNavBarView.m; sourceTree = "<group>"; };
-		0791AB1D1AE899D10009A5A7 /* WYTitleNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYTitleNavBarView.xib; sourceTree = "<group>"; };
 		0791AB281AE89B960009A5A7 /* WYActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYActionSheet.h; sourceTree = "<group>"; };
 		0791AB291AE89B960009A5A7 /* WYActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYActionSheet.m; sourceTree = "<group>"; };
 		0791AB2B1AE89B960009A5A7 /* WYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYAlertView.h; sourceTree = "<group>"; };
@@ -446,15 +443,6 @@
 			name = Assets;
 			sourceTree = "<group>";
 		};
-		07358A8D1AF7133B00D546E5 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				07358A911AF713FE00D546E5 /* NewIntroViewController.h */,
-				07358A921AF713FE00D546E5 /* NewIntroViewController.m */,
-			);
-			name = Login;
-			sourceTree = "<group>";
-		};
 		07358A941AF760D000D546E5 /* SKSplashView */ = {
 			isa = PBXGroup;
 			children = (
@@ -493,7 +481,6 @@
 				073DBD121AE770A2009B49EB /* Engine */,
 				079049431AEA112900E46795 /* NetWork */,
 				0790493B1AE9DC3A00E46795 /* OAuth2 */,
-				073DBD781AE77982009B49EB /* Base */,
 				073DBD151AE770CE009B49EB /* Model */,
 				073DBD131AE770C0009B49EB /* ViewControllers */,
 				073DBD141AE770C0009B49EB /* Views */,
@@ -561,6 +548,9 @@
 		073DBD131AE770C0009B49EB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				07868DCE1AF8581100160070 /* Base */,
+				07868DDA1AF8581100160070 /* Common */,
+				07868DDD1AF8581100160070 /* TabBar */,
 				071923C61AF74D8400432531 /* Login */,
 				0791AB2F1AE8B7A10009A5A7 /* Setting */,
 				073DBD791AE77982009B49EB /* Main */,
@@ -682,27 +672,6 @@
 			path = JSONKit;
 			sourceTree = "<group>";
 		};
-		073DBD781AE77982009B49EB /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				073DBD841AE7919D009B49EB /* Common */,
-				073DBD991AE79343009B49EB /* TabBar */,
-				073DBD7A1AE779C4009B49EB /* SuperMainViewController.h */,
-				073DBD7B1AE779C4009B49EB /* SuperMainViewController.m */,
-				0791AB161AE8994A0009A5A7 /* WYBaseSuperViewController.h */,
-				0791AB171AE8994A0009A5A7 /* WYBaseSuperViewController.m */,
-				0791AB131AE898DA0009A5A7 /* WYNavigationController.h */,
-				0791AB141AE898DA0009A5A7 /* WYNavigationController.m */,
-				0791AB191AE899D10009A5A7 /* WYSuperViewController.h */,
-				0791AB1A1AE899D10009A5A7 /* WYSuperViewController.m */,
-				0791AB1B1AE899D10009A5A7 /* WYTitleNavBarView.h */,
-				0791AB1C1AE899D10009A5A7 /* WYTitleNavBarView.m */,
-				0791AB1D1AE899D10009A5A7 /* WYTitleNavBarView.xib */,
-			);
-			name = Base;
-			path = ViewControllers/Base;
-			sourceTree = "<group>";
-		};
 		073DBD791AE77982009B49EB /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -717,32 +686,6 @@
 				073DBD7F1AE77A3C009B49EB /* MineTabViewController.xib */,
 			);
 			path = Main;
-			sourceTree = "<group>";
-		};
-		073DBD841AE7919D009B49EB /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				0791AB101AE898550009A5A7 /* WYCommonVcTransition.h */,
-				0791AB111AE898550009A5A7 /* WYCommonVcTransition.m */,
-			);
-			name = Common;
-			path = ../Common;
-			sourceTree = "<group>";
-		};
-		073DBD991AE79343009B49EB /* TabBar */ = {
-			isa = PBXGroup;
-			children = (
-				0791AB061AE88AB10009A5A7 /* WYTabBarItemView.h */,
-				0791AB071AE88AB10009A5A7 /* WYTabBarItemView.m */,
-				0791AB081AE88AB10009A5A7 /* WYTabBarItemView.xib */,
-				0791AB0B1AE897EA0009A5A7 /* WYTabBarView.h */,
-				0791AB0C1AE897EA0009A5A7 /* WYTabBarView.m */,
-				0791AB0D1AE897EA0009A5A7 /* WYTabBarView.xib */,
-				0791AB031AE8889D0009A5A7 /* WYTabBarViewController.h */,
-				0791AB041AE8889D0009A5A7 /* WYTabBarViewController.m */,
-			);
-			name = TabBar;
-			path = ../TabBar;
 			sourceTree = "<group>";
 		};
 		073DBDAD1AE794C4009B49EB /* PullToRefresh */ = {
@@ -787,6 +730,48 @@
 				073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */,
 			);
 			path = "UIImage-Categories-master";
+			sourceTree = "<group>";
+		};
+		07868DCE1AF8581100160070 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				07868DCF1AF8581100160070 /* SuperMainViewController.h */,
+				07868DD01AF8581100160070 /* SuperMainViewController.m */,
+				07868DD11AF8581100160070 /* WYBaseSuperViewController.h */,
+				07868DD21AF8581100160070 /* WYBaseSuperViewController.m */,
+				07868DD31AF8581100160070 /* WYNavigationController.h */,
+				07868DD41AF8581100160070 /* WYNavigationController.m */,
+				07868DD51AF8581100160070 /* WYSuperViewController.h */,
+				07868DD61AF8581100160070 /* WYSuperViewController.m */,
+				07868DD71AF8581100160070 /* WYTitleNavBarView.h */,
+				07868DD81AF8581100160070 /* WYTitleNavBarView.m */,
+				07868DD91AF8581100160070 /* WYTitleNavBarView.xib */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		07868DDA1AF8581100160070 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				07868DDB1AF8581100160070 /* WYCommonVcTransition.h */,
+				07868DDC1AF8581100160070 /* WYCommonVcTransition.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		07868DDD1AF8581100160070 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				07868DDE1AF8581100160070 /* WYTabBarItemView.h */,
+				07868DDF1AF8581100160070 /* WYTabBarItemView.m */,
+				07868DE01AF8581100160070 /* WYTabBarItemView.xib */,
+				07868DE11AF8581100160070 /* WYTabBarView.h */,
+				07868DE21AF8581100160070 /* WYTabBarView.m */,
+				07868DE31AF8581100160070 /* WYTabBarView.xib */,
+				07868DE41AF8581100160070 /* WYTabBarViewController.h */,
+				07868DE51AF8581100160070 /* WYTabBarViewController.m */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 		078EDBC01AEF1EF800E93EE8 /* ASIHTTPRequest */ = {
@@ -1018,22 +1003,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				071923D01AF74D8400432531 /* LoginViewController.xib in Resources */,
-				0791AB201AE899D10009A5A7 /* WYTitleNavBarView.xib in Resources */,
 				071923D31AF74D8400432531 /* WelcomeViewController.xib in Resources */,
-				0791AB0F1AE897EA0009A5A7 /* WYTabBarView.xib in Resources */,
 				0799C8B01AF1D88E00E407BB /* GameCommendViewController.xib in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
 				071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */,
+				07868DEE1AF8581100160070 /* WYTabBarItemView.xib in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
 				0791AB341AE8B7DD0009A5A7 /* AboutViewController.xib in Resources */,
 				0799C8BC1AF1EB5800E407BB /* GameCommendCardView.xib in Resources */,
-				0791AB0A1AE88AB10009A5A7 /* WYTabBarItemView.xib in Resources */,
 				071923E21AF7771A00432531 /* RegisterViewController.xib in Resources */,
+				07868DEB1AF8581100160070 /* WYTitleNavBarView.xib in Resources */,
 				071923DD1AF7738900432531 /* SetPwdViewController.xib in Resources */,
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
 				073DBCED1AE7492A009B49EB /* Images.xcassets in Resources */,
 				07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */,
 				07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */,
+				07868DF01AF8581100160070 /* WYTabBarView.xib in Resources */,
 				073DBDB41AE794C4009B49EB /* arrow.png in Resources */,
 				073DBDB51AE794C4009B49EB /* arrow@2x.png in Resources */,
 				07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */,
@@ -1061,11 +1046,12 @@
 				078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */,
 				0791AB5A1AE8DE260009A5A7 /* AFURLConnectionOperation.m in Sources */,
 				073DBD611AE7717D009B49EB /* NSDictionary+ObjectForKey.m in Sources */,
+				07868DE71AF8581100160070 /* WYBaseSuperViewController.m in Sources */,
+				07868DE91AF8581100160070 /* WYSuperViewController.m in Sources */,
 				073DBD631AE7717D009B49EB /* PathHelper.m in Sources */,
 				0790494D1AEA236100E46795 /* WYService.m in Sources */,
 				078EDBD91AEF1EF800E93EE8 /* ASIDataDecompressor.m in Sources */,
 				0790493E1AE9DF3000E46795 /* WYOAuthStore.m in Sources */,
-				0791AB1F1AE899D10009A5A7 /* WYTitleNavBarView.m in Sources */,
 				078EDBDD1AEF1EF800E93EE8 /* ASIInputStream.m in Sources */,
 				073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */,
 				0791AB2D1AE89B960009A5A7 /* WYActionSheet.m in Sources */,
@@ -1075,18 +1061,19 @@
 				073DBD6D1AE771AC009B49EB /* JSONKit.m in Sources */,
 				073DBD491AE7712F009B49EB /* SDWebImageDownloaderOperation.m in Sources */,
 				073DBD521AE7712F009B49EB /* UIView+WebCacheOperation.m in Sources */,
-				0791AB1E1AE899D10009A5A7 /* WYSuperViewController.m in Sources */,
 				073DBD711AE77211009B49EB /* HotUpButton.m in Sources */,
 				073DBD651AE7717D009B49EB /* UIImage+ProportionalFill.m in Sources */,
-				0791AB121AE898550009A5A7 /* WYCommonVcTransition.m in Sources */,
 				0791AB5B1AE8DE260009A5A7 /* AFURLRequestSerialization.m in Sources */,
 				073DBCE51AE7492A009B49EB /* AppDelegate.m in Sources */,
-				0791AB0E1AE897EA0009A5A7 /* WYTabBarView.m in Sources */,
 				073DBD4C1AE7712F009B49EB /* UIButton+WebCache.m in Sources */,
+				07868DED1AF8581100160070 /* WYTabBarItemView.m in Sources */,
+				07868DE81AF8581100160070 /* WYNavigationController.m in Sources */,
+				07868DE61AF8581100160070 /* SuperMainViewController.m in Sources */,
 				0791AB571AE8DE260009A5A7 /* AFHTTPSessionManager.m in Sources */,
 				0791AB2E1AE89B960009A5A7 /* WYAlertView.m in Sources */,
 				07358A9A1AF760D000D546E5 /* SKSplashView.m in Sources */,
 				078EDBDC1AEF1EF800E93EE8 /* ASIHTTPRequest.m in Sources */,
+				07868DEF1AF8581100160070 /* WYTabBarView.m in Sources */,
 				071923CF1AF74D8400432531 /* LoginViewController.m in Sources */,
 				073DBD441AE7712F009B49EB /* NSData+ImageContentType.m in Sources */,
 				073DBD4B1AE7712F009B49EB /* SDWebImagePrefetcher.m in Sources */,
@@ -1096,13 +1083,13 @@
 				0791AB5F1AE8DE260009A5A7 /* UIImage+HQ.m in Sources */,
 				0791AB381AE8CF4C0009A5A7 /* EGOCache.m in Sources */,
 				0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */,
+				07868DF11AF8581100160070 /* WYTabBarViewController.m in Sources */,
 				07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */,
 				0791AB591AE8DE260009A5A7 /* AFSecurityPolicy.m in Sources */,
 				0791AB561AE8DE260009A5A7 /* AFHTTPRequestOperationManager.m in Sources */,
 				073DBD481AE7712F009B49EB /* SDWebImageDownloader.m in Sources */,
 				073DBDA91AE7939C009B49EB /* WYCommonUtils.m in Sources */,
 				078EDBDF1AEF1EF800E93EE8 /* LSReachability.m in Sources */,
-				0791AB151AE898DA0009A5A7 /* WYNavigationController.m in Sources */,
 				071923DC1AF7738900432531 /* SetPwdViewController.m in Sources */,
 				071923E11AF7771A00432531 /* RegisterViewController.m in Sources */,
 				0799C8B61AF1D8C800E407BB /* ZLPanGestureRecognizer.m in Sources */,
@@ -1120,10 +1107,12 @@
 				073DBCE21AE7492A009B49EB /* main.m in Sources */,
 				0799C8BA1AF1E7C200E407BB /* GameCommendCardView.m in Sources */,
 				0799C8B71AF1D8C800E407BB /* ZLSwipeableView.m in Sources */,
+				07868DEA1AF8581100160070 /* WYTitleNavBarView.m in Sources */,
 				0790494A1AEA226B00E46795 /* NSData+Base64.m in Sources */,
 				07203A0E1AF1CE460056A74B /* NetbarTabViewController.m in Sources */,
 				073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */,
 				073DBDB71AE794C4009B49EB /* PullToRefreshView.m in Sources */,
+				07868DEC1AF8581100160070 /* WYCommonVcTransition.m in Sources */,
 				0791AB5D1AE8DE260009A5A7 /* AFURLSessionManager.m in Sources */,
 				078EDBD71AEF1EF800E93EE8 /* ASIAuthenticationDialog.m in Sources */,
 				0791AB581AE8DE260009A5A7 /* AFNetworkReachabilityManager.m in Sources */,
@@ -1132,15 +1121,11 @@
 				073DBD641AE7717D009B49EB /* UIColor+bit.m in Sources */,
 				073DBDF51AE7A1B0009B49EB /* UIImage+Alpha.m in Sources */,
 				073DBD4E1AE7712F009B49EB /* UIImage+MultiFormat.m in Sources */,
-				0791AB181AE8994A0009A5A7 /* WYBaseSuperViewController.m in Sources */,
 				079049501AEA28E100E46795 /* WYHttpRequest.m in Sources */,
 				078EDBDB1AEF1EF800E93EE8 /* ASIFormDataRequest.m in Sources */,
 				073DBD801AE77A3C009B49EB /* MineTabViewController.m in Sources */,
 				071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */,
-				0791AB051AE8889D0009A5A7 /* WYTabBarViewController.m in Sources */,
 				071923D21AF74D8400432531 /* WelcomeViewController.m in Sources */,
-				0791AB091AE88AB10009A5A7 /* WYTabBarItemView.m in Sources */,
-				073DBD7C1AE779C4009B49EB /* SuperMainViewController.m in Sources */,
 				0791AB5C1AE8DE260009A5A7 /* AFURLResponseSerialization.m in Sources */,
 				079049411AE9DF5A00E46795 /* WYOAuthService.m in Sources */,
 				073DBD501AE7712F009B49EB /* UIImageView+HighlightedWebCache.m in Sources */,
