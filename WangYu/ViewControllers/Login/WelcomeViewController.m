@@ -10,6 +10,7 @@
 #import "WYEngine.h"
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "RegisterViewController.h"
 
 @interface WelcomeViewController ()
 
@@ -50,6 +51,8 @@
 
 - (IBAction)registerAction:(id)sender {
     [WYEngine shareInstance].firstLogin = NO;
+    RegisterViewController *vc = [[RegisterViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)visitorAction:(id)sender {

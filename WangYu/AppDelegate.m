@@ -39,11 +39,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     application.statusBarHidden = NO;
 ////    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 //    
-//    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//    self.window.backgroundColor = [UIColor clearColor];
-//    
-//    [self signIn];
-//    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor clearColor];
+    
+    [self signOut];
+//
 ////    if ([[WYEngine shareInstance] hasAccoutLoggedin] || ![WYEngine shareInstance].firstLogin) {
 ////        if ([WYSettingConfig isFirstEnterVersion]) {
 ////            [self showNewIntro];
@@ -55,7 +55,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 ////        [self signOut];
 ////    }
 //
-//    [self.window makeKeyAndVisible];
+    [self.window makeKeyAndVisible];
 
     return YES;
 }

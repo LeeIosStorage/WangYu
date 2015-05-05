@@ -26,8 +26,8 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="NDg-MS-S3z">
-                    <rect key="frame" x="0.0" y="50" width="320" height="262"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="0.0" y="50" width="320" height="299"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="不一样的捕鱼，不一样的欢乐 网娱大师欢迎您快来下载吧 我擦我擦不一样的捕鱼，不一样的欢乐 网娱大师欢迎您快来下载吧 我擦我" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J5R-U9-v98">
                     <rect key="frame" x="0.0" y="352" width="320" height="60"/>

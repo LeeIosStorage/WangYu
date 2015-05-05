@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "RetrievePwdViewController.h"
+#import "RegisterViewController.h"
 
 @interface LoginViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *accountTextField;
@@ -62,6 +63,8 @@
 }
 
 - (IBAction)quickRegisterAction:(id)sender {
+    RegisterViewController *vc = [[RegisterViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)forgetPasswordAction:(id)sender {
