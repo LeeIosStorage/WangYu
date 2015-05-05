@@ -56,7 +56,7 @@
     // Do any additional setup after loading the view.
     self.tabBarHeight = 50;
     self.tabTopGap = 1;
-    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = SKIN_COLOR;
     
     //self.view = self.containerView;
     self.containerView = self.view;

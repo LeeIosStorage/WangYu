@@ -10,8 +10,10 @@
 #import "WYTabBarViewController.h"
 #import "WYEngine.h"
 #import "NetbarTabCell.h"
+#import "SKSplashView.h"
+#import "SKSplashIcon.h"
 
-@interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *orderLabel;
 @property (strong, nonatomic) IBOutlet UILabel *packetLabel;
@@ -26,6 +28,8 @@
 @property (strong, nonatomic) IBOutlet UIView *sectionView;
 @property (strong, nonatomic) IBOutlet UILabel *guessLabel;
 
+@property (strong, nonatomic) SKSplashView *splashView;
+
 
 @end
 
@@ -34,7 +38,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
     self.netBarTable.tableHeaderView = self.headView;
     self.orderLabel.font = SKIN_FONT(15);
     self.orderLabel.textColor = SKIN_TEXT_COLOR1;
@@ -51,12 +54,39 @@
     self.hotLabel.clipsToBounds = YES;
 }
 
+- (void)viewSplash
+{
+    //Setting the background
+//        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+//        imageView.image = [UIImage imageNamed:@"twitter background.png"];
+//        [self.view addSubview:imageView];
+    //Twitter style splash
+    SKSplashIcon *twitterSplashIcon = [[SKSplashIcon alloc] initWithImage:[UIImage imageNamed:@"twitterIcon"] animationType:SKIconAnimationTypeBounce];
+    UIColor *twitterColor = SKIN_COLOR;
+    _splashView = [[SKSplashView alloc] initWithSplashIcon:twitterSplashIcon backgroundColor:twitterColor animationType:SKSplashAnimationTypeNone];
+    _splashView.delegate = self;
+    _splashView.animationDuration = 2;
+    [self.view addSubview:_splashView];
+    [_splashView startAnimation];
+    [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
+        CGRect frame = self.tabController.tabBar.frame;
+        frame.origin.y -= 50.0;
+        self.tabController.tabBar.frame = frame;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
--(void)initNormalTitleNavBarSubviews{
+- (void)initNormalTitleNavBarSubviews{
+    CGRect frame = self.tabController.tabBar.frame;
+    frame.origin.y += 50.0;
+    self.tabController.tabBar.frame = frame;
+    [self viewSplash];
     self.titleNavImageView.hidden = NO;
     [self setRightButtonWithImageName:@"netbar_service_icon" selector:@selector(serviceAction)];
 }
@@ -119,7 +149,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
