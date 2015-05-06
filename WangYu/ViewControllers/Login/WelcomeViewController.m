@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *registerBtn;
 @property (strong, nonatomic) IBOutlet UIButton *visitorBtn;
 @property (strong, nonatomic) IBOutlet UIView *floatView;
+@property (strong, nonatomic) IBOutlet UIImageView *logoImage;
 
 - (IBAction)loginAction:(id)sender;
 - (IBAction)registerAction:(id)sender;
@@ -64,6 +65,7 @@
     
     
     [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        _logoImage.alpha = 1;
         _floatView.alpha = 1;
         CGRect frame = _floatView.frame;
         frame.origin.y = self.view.frame.size.height - frame.size.height;

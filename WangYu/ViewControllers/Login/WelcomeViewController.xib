@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="floatView" destination="UVG-KJ-5Dh" id="pFT-cL-kOB"/>
                 <outlet property="loginBtn" destination="uLM-fS-q5F" id="L15-8U-cFj"/>
+                <outlet property="logoImage" destination="v7o-Jm-D6x" id="Pvz-eV-D5g"/>
                 <outlet property="registerBtn" destination="90Z-NX-Wpr" id="Nb9-OY-m0U"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="visitorBtn" destination="uZb-D9-wEA" id="oeM-J3-z13"/>
@@ -23,7 +24,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome_logo_icon" id="v7o-Jm-D6x">
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome_logo_icon" id="v7o-Jm-D6x">
                     <rect key="frame" x="64" y="122" width="238" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
