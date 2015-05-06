@@ -67,6 +67,11 @@
 
 #pragma mark - custom
 -(void)refreshUIControl{
+    
+    self.setPwdTextField.font = SKIN_FONT(15);
+    self.comfirmTextField.font = SKIN_FONT(15);
+    self.comfimAction.titleLabel.font = SKIN_FONT(18);
+    
     self.comfimAction.backgroundColor = SKIN_COLOR;
     self.comfimAction.layer.cornerRadius = 4;
     self.comfimAction.layer.masksToBounds = YES;

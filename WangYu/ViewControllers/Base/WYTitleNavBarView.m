@@ -39,6 +39,7 @@
         _owner = owner;
         self.backgroundImageView.backgroundColor = SKIN_COLOR;
         self.lineImageView.hidden = YES;
+        self.titleLabel.font = SKIN_FONT(18);
     }
     return self;
 }

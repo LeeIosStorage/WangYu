@@ -8,8 +8,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RetrievePwdViewController">
             <connections>
                 <outlet property="codeTextField" destination="frU-ax-Ujv" id="Eml-Nz-OLz"/>
+                <outlet property="codeTipLabel" destination="S3X-2q-Pa0" id="zlS-1j-Cef"/>
                 <outlet property="getCodeButton" destination="s3Y-xU-3RR" id="2oO-Dm-iQV"/>
                 <outlet property="phoneTextField" destination="8ya-tu-SEv" id="tWf-um-PoZ"/>
+                <outlet property="phoneTipLabel" destination="nqF-Wc-twt" id="tSS-co-0Y1"/>
                 <outlet property="resetPasswordButton" destination="YUL-wW-RDg" id="pz5-jE-7Kh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

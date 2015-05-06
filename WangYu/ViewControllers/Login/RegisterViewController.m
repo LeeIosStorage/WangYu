@@ -21,6 +21,8 @@
     NSTimer *_waitTimer;
 }
 @property (nonatomic, strong) IBOutlet UIView *registerContainerView;
+@property (nonatomic, strong) IBOutlet UILabel *phoneTipLabel;
+@property (nonatomic, strong) IBOutlet UILabel *codeTipLabel;
 @property (strong, nonatomic) IBOutlet UITextField *phoneTextField;
 @property (strong, nonatomic) IBOutlet UITextField *codeTextField;
 @property (strong, nonatomic) IBOutlet UIButton *getCodeButton;
@@ -30,7 +32,10 @@
 
 @property (nonatomic, strong) IBOutlet UIView *invitationCodeView;
 @property (nonatomic, strong) IBOutlet UIView *redPacketLeftView;
+@property (nonatomic, strong) IBOutlet UILabel *symbolIconLabel;
+@property (nonatomic, strong) IBOutlet UILabel *moneyLabel;
 @property (nonatomic, strong) IBOutlet UIView *redPacketRightView;
+@property (nonatomic, strong) IBOutlet UILabel *redPacketTipLabel;
 @property (strong, nonatomic) IBOutlet UITextField *invitationCodeTextField;
 @property (strong, nonatomic) IBOutlet UIButton *invitationAffirmButton;
 @property (strong, nonatomic) IBOutlet UIButton *redPacketHelpButton;
@@ -170,7 +175,23 @@
 #pragma mark - custom
 -(void)refreshUIControl{
     
+    self.phoneTextField.font = SKIN_FONT(15);
+    self.codeTextField.font = SKIN_FONT(15);
+    self.getCodeButton.titleLabel.font = SKIN_FONT(16);
+    self.registerButton.titleLabel.font = SKIN_FONT(18);
+    self.protocolButton.titleLabel.font = SKIN_FONT(12);
+    self.invitationCodeTextField.font = SKIN_FONT(15);
+    self.invitationAffirmButton.titleLabel.font = SKIN_FONT(18);
+    self.redPacketHelpButton.titleLabel.font = SKIN_FONT(12);
+    self.phoneTipLabel.font = SKIN_FONT(16);
+    self.codeTipLabel.font = SKIN_FONT(14);
+//    self.symbolIconLabel.font = SKIN_FONT(33);
+//    self.moneyLabel.font = SKIN_FONT(66);
+    self.redPacketTipLabel.font = SKIN_FONT(12);
+    
     self.getCodeButton.backgroundColor = SKIN_COLOR;
+    self.getCodeButton.layer.cornerRadius = 4;
+    self.getCodeButton.layer.masksToBounds = YES;
     
     self.registerButton.backgroundColor = SKIN_COLOR;
     self.registerButton.layer.cornerRadius = 4;
@@ -272,8 +293,13 @@
 
 - (BOOL)loginButtonEnabled{
     if ([[_phoneTextField text] isPhone]) {
-        _getCodeButton.enabled = YES;
-        [_getCodeButton setBackgroundColor:SKIN_COLOR];
+        if (!_waitTimer.valid) {
+            _getCodeButton.enabled = YES;
+            [_getCodeButton setBackgroundColor:SKIN_COLOR];
+        }else{
+            _getCodeButton.enabled = NO;
+            [_getCodeButton setBackgroundColor:UIColorToRGB(0xe4e4e4)];
+        }
         if (_codeTextField.text.length > 0) {
             _registerButton.enabled = YES;
             [_registerButton setBackgroundColor:SKIN_COLOR];

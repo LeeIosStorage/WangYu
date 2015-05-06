@@ -17,6 +17,8 @@
     int _waitSmsSecond;
     NSTimer *_waitTimer;
 }
+@property (nonatomic, strong) IBOutlet UILabel *phoneTipLabel;
+@property (nonatomic, strong) IBOutlet UILabel *codeTipLabel;
 @property (strong, nonatomic) IBOutlet UITextField *phoneTextField;
 @property (strong, nonatomic) IBOutlet UITextField *codeTextField;
 @property (strong, nonatomic) IBOutlet UIButton *getCodeButton;
@@ -80,6 +82,15 @@
 */
 
 -(void)refreshUIControl{
+    
+    self.phoneTextField.font = SKIN_FONT(15);
+    self.codeTextField.font = SKIN_FONT(15);
+    self.getCodeButton.titleLabel.font = SKIN_FONT(18);
+    self.resetPasswordButton.titleLabel.font = SKIN_FONT(18);
+    self.phoneTipLabel.font = SKIN_FONT(16);
+    self.codeTipLabel.font = SKIN_FONT(14);
+    
+    
     self.getCodeButton.backgroundColor = SKIN_COLOR;
     self.getCodeButton.layer.cornerRadius = 4;
     self.getCodeButton.layer.masksToBounds = YES;
