@@ -130,6 +130,7 @@
 		0799C8B71AF1D8C800E407BB /* ZLSwipeableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0799C8B51AF1D8C800E407BB /* ZLSwipeableView.m */; };
 		0799C8BA1AF1E7C200E407BB /* GameCommendCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0799C8B91AF1E7C200E407BB /* GameCommendCardView.m */; };
 		0799C8BC1AF1EB5800E407BB /* GameCommendCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0799C8BB1AF1EB5800E407BB /* GameCommendCardView.xib */; };
+		07C4C9FD1AF9B283008DA5D3 /* ColorGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C4C9FC1AF9B283008DA5D3 /* ColorGradView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -370,6 +371,8 @@
 		0799C8B81AF1E7C200E407BB /* GameCommendCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommendCardView.h; sourceTree = "<group>"; };
 		0799C8B91AF1E7C200E407BB /* GameCommendCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommendCardView.m; sourceTree = "<group>"; };
 		0799C8BB1AF1EB5800E407BB /* GameCommendCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameCommendCardView.xib; sourceTree = "<group>"; };
+		07C4C9FB1AF9B283008DA5D3 /* ColorGradView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorGradView.h; sourceTree = "<group>"; };
+		07C4C9FC1AF9B283008DA5D3 /* ColorGradView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorGradView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -599,6 +602,8 @@
 				073DBD5E1AE7717D009B49EB /* UIImage+ProportionalFill.m */,
 				073DBD5F1AE7717D009B49EB /* URLHelper.h */,
 				073DBD601AE7717D009B49EB /* URLHelper.m */,
+				07C4C9FB1AF9B283008DA5D3 /* ColorGradView.h */,
+				07C4C9FC1AF9B283008DA5D3 /* ColorGradView.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1085,6 +1090,7 @@
 				0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */,
 				07868DF11AF8581100160070 /* WYTabBarViewController.m in Sources */,
 				07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */,
+				07C4C9FD1AF9B283008DA5D3 /* ColorGradView.m in Sources */,
 				0791AB591AE8DE260009A5A7 /* AFSecurityPolicy.m in Sources */,
 				0791AB561AE8DE260009A5A7 /* AFHTTPRequestOperationManager.m in Sources */,
 				073DBD481AE7712F009B49EB /* SDWebImageDownloader.m in Sources */,
