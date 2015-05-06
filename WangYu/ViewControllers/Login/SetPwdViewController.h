@@ -7,7 +7,12 @@
 //
 
 #import "WYSuperViewController.h"
+#import "WYUserInfo.h"
 
 @interface SetPwdViewController : WYSuperViewController
+
+@property (nonatomic, assign) BOOL isCanBack;
+@property (nonatomic, strong) NSString *registerName;
+@property (nonatomic, strong) WYUserInfo *userInfo;
 
 @end

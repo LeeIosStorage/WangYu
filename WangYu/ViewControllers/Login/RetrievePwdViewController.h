@@ -10,4 +10,6 @@
 
 @interface RetrievePwdViewController : WYSuperViewController
 
+@property (nonatomic, assign) BOOL isCanBack;
+
 @end

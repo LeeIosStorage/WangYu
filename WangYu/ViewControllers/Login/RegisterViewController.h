@@ -15,6 +15,7 @@ typedef enum VcType_{
 
 @interface RegisterViewController : WYSuperViewController
 
+@property (nonatomic, assign) BOOL isCanBack;
 @property (nonatomic, assign) VcType vcType;
 
 @end

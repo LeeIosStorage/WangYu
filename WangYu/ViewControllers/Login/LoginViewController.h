@@ -10,4 +10,6 @@
 
 @interface LoginViewController : WYSuperViewController
 
+@property (nonatomic, assign) BOOL isCanBack;
+
 @end
