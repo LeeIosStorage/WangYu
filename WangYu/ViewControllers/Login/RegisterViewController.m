@@ -8,9 +8,18 @@
 
 #import "RegisterViewController.h"
 #import "WYAlertView.h"
+#import "WYProgressHUD.h"
+#import "WYEngine.h"
+#import "NSString+Value.h"
+#import "SetPwdViewController.h"
 
 @interface RegisterViewController ()
-
+{
+    NSString *_invitationCodeText;
+    
+    int _waitSmsSecond;
+    NSTimer *_waitTimer;
+}
 @property (nonatomic, strong) IBOutlet UIView *registerContainerView;
 @property (strong, nonatomic) IBOutlet UITextField *phoneTextField;
 @property (strong, nonatomic) IBOutlet UITextField *codeTextField;
@@ -38,11 +47,39 @@
 
 @implementation RegisterViewController
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (_waitTimer) {
+        [_waitTimer invalidate];
+        _waitTimer = nil;
+    }
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkTextChaneg:) name:UITextFieldTextDidChangeNotification object:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    //    [self TextFieldResignFirstResponder];
+    if (_waitTimer) {
+        [_waitTimer invalidate];
+        _waitTimer = nil;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    _invitationCodeText = nil;
     self.agreeIconButton.selected = YES;
+    if (_vcType == VcType_Invitation_Code) {
+        [self.invitationCodeTextField becomeFirstResponder];
+    }else if (_vcType == VcType_Register){
+        [self.phoneTextField becomeFirstResponder];
+    }
     [self refreshUIControl];
 }
 
@@ -63,6 +100,25 @@
     [self refreshUIControl];
 }
 
+- (void)waitTimerInterval:(NSTimer *)aTimer{
+    WYLog(@"a Timer waitSmsSecond = %d",_waitSmsSecond);
+    if (_waitSmsSecond <= 0) {
+        [aTimer invalidate];
+        _waitTimer = nil;
+        if ([[_phoneTextField text] isPhone]) {
+            _getCodeButton.enabled = YES;
+            [_getCodeButton setBackgroundColor:SKIN_COLOR];
+        }
+        [_getCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+        return;
+    }
+    
+    [_getCodeButton setTitle:[NSString stringWithFormat:@"%d秒",_waitSmsSecond] forState:UIControlStateNormal];
+    
+    _waitSmsSecond--;
+    
+}
+
 /*
 #pragma mark - Navigation
 
@@ -73,6 +129,45 @@
 }
 */
 
+#pragma mark - IBAction
+- (void)officialRegisterAction:(id)sender{
+    
+    __weak RegisterViewController *weakSelf = self;
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"确定跳过使用邀请码吗？" cancelButtonTitle:@"取消" cancelBlock:^{
+        
+    } okButtonTitle:@"确定" okBlock:^{
+        weakSelf.titleNavBarRightBtn.enabled = NO;
+        [weakSelf skipInvitationCode:YES];
+    }];
+    [alertView show];
+}
+- (IBAction)getCodeAction:(id)sender{
+    [self getPhoneCode];
+}
+- (IBAction)registerAction:(id)sender{
+    if (!self.agreeIconButton.selected) {
+        [WYUIUtils showAlertWithMsg:@"请先阅读网娱大师客户端"];
+        return;
+    }
+    [self checkPhoneCode];
+}
+- (IBAction)protocolAction:(id)sender{
+    
+}
+- (IBAction)agreeAction:(id)sender{
+    self.agreeIconButton.selected = !self.agreeIconButton.selected;
+}
+
+
+- (IBAction)invitationAffirmAction:(id)sender{
+    [self checkInvitationCode];
+}
+
+- (IBAction)helpAction:(id)sender{
+    
+}
+
+#pragma mark - custom
 -(void)refreshUIControl{
     
     self.getCodeButton.backgroundColor = SKIN_COLOR;
@@ -105,10 +200,12 @@
         self.invitationCodeView.hidden = YES;
         [self setTitle:@"用户注册"];
     }
+    [self loginButtonEnabled];
 }
 
 - (void)skipInvitationCode:(BOOL)animation{
     if (animation) {
+        [self textFieldResignFirstResponder];
         [UIView animateWithDuration:1.0 animations:^{
             CGRect frame = self.redPacketLeftView.frame;
             frame.origin.x = -(self.redPacketLeftView.frame.size.width + 12);
@@ -139,37 +236,69 @@
              {
                  
              }];
-            
+            /*
             [UIView animateWithDuration:1.0 animations:^{
                 CGRect frame = self.invitationCodeView.frame;
                 frame.origin.y = self.registerContainerView.frame.origin.y + self.registerContainerView.frame.size.height + 20;
                 self.invitationCodeView.frame = frame;
                 
             } completion:^(BOOL finished) {
-//                self.vcType = VcType_Register;
-//                self.registerContainerView.hidden = NO;
-//                self.invitationCodeView.hidden = NO;
-//                
-//                
-//                CGRect frame = self.registerContainerView.frame;
-//                frame.origin.y = -self.registerContainerView.frame.size.height;
-//                self.registerContainerView.frame = frame;
-//                
-//                [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:0.5f initialSpringVelocity:20 options:UIViewAnimationOptionTransitionCurlUp animations:^{
-//                    CGAffineTransform scaleTransform = CGAffineTransformMakeTranslation(0, self.registerContainerView.frame.size.height + 78);
-//                    self.registerContainerView.transform = scaleTransform;
-//                    
-//                } completion:^(BOOL finished)
-//                 {
-//                     
-//                 }];
+                self.vcType = VcType_Register;
+                self.registerContainerView.hidden = NO;
+                self.invitationCodeView.hidden = NO;
+                
+                
+                CGRect frame = self.registerContainerView.frame;
+                frame.origin.y = -self.registerContainerView.frame.size.height;
+                self.registerContainerView.frame = frame;
+                
+                [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:0.5f initialSpringVelocity:20 options:UIViewAnimationOptionTransitionCurlUp animations:^{
+                    CGAffineTransform scaleTransform = CGAffineTransformMakeTranslation(0, self.registerContainerView.frame.size.height + 78);
+                    self.registerContainerView.transform = scaleTransform;
+                    
+                } completion:^(BOOL finished)
+                 {
+                     
+                 }];
             }];
+             */
         }];
     }else{
         self.invitationCodeView.hidden = YES;
         [self.invitationCodeView removeFromSuperview];
         self.vcType = VcType_Register;
     }
+}
+
+- (BOOL)loginButtonEnabled{
+    if ([[_phoneTextField text] isPhone]) {
+        _getCodeButton.enabled = YES;
+        [_getCodeButton setBackgroundColor:SKIN_COLOR];
+        if (_codeTextField.text.length > 0) {
+            _registerButton.enabled = YES;
+            [_registerButton setBackgroundColor:SKIN_COLOR];
+            return YES;
+        }
+        _registerButton.enabled = NO;
+        [_registerButton setBackgroundColor:UIColorToRGB(0xe4e4e4)];
+        return YES;
+    }
+    _getCodeButton.enabled = NO;
+    [_getCodeButton setBackgroundColor:UIColorToRGB(0xe4e4e4)];
+    _registerButton.enabled = NO;
+    [_registerButton setBackgroundColor:UIColorToRGB(0xe4e4e4)];
+    return NO;
+}
+
+- (void)checkTextChaneg:(NSNotification *)notif
+{
+    [self loginButtonEnabled];
+}
+
+- (void)textFieldResignFirstResponder{
+    [self.invitationCodeTextField resignFirstResponder];
+    [self.phoneTextField resignFirstResponder];
+    [self.codeTextField resignFirstResponder];
 }
 
 -(void)invitationCodeRemove{
@@ -184,41 +313,132 @@
     }];
 }
 
-#pragma mark - IBAction
-- (void)officialRegisterAction:(id)sender{
+-(void)checkInvitationCode{
     
-    __weak RegisterViewController *weakSelf = self;
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"确定跳过使用邀请码吗？" cancelButtonTitle:@"取消" cancelBlock:^{
-        
-    } okButtonTitle:@"确定" okBlock:^{
-        weakSelf.titleNavBarRightBtn.enabled = NO;
-        [weakSelf skipInvitationCode:YES];
-    }];
-    [alertView show];
-}
-- (IBAction)getCodeAction:(id)sender{
-    
-}
-- (IBAction)registerAction:(id)sender{
-    if (!self.agreeIconButton.selected) {
-        [WYUIUtils showAlertWithMsg:@"请先阅读网娱大师客户端"];
+    _invitationCodeTextField.text = [_invitationCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (_invitationCodeTextField.text.length == 0) {
+        [WYProgressHUD lightAlert:@"邀请码不能为空"];
         return;
     }
-}
-- (IBAction)protocolAction:(id)sender{
+    [self textFieldResignFirstResponder];
+    [WYProgressHUD AlertLoading:@"正在验证邀请码" At:self.view];
+    __weak RegisterViewController *weakSelf = self;
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] checkInvitationCodeWithCode:_invitationCodeTextField.text tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"验证成功." At:weakSelf.view];
+        _invitationCodeText = weakSelf.invitationCodeTextField.text;
+        
+        weakSelf.titleNavBarRightBtn.enabled = NO;
+        [weakSelf skipInvitationCode:YES];
+        
+    }tag:tag];
     
 }
-- (IBAction)agreeAction:(id)sender{
-    self.agreeIconButton.selected = !self.agreeIconButton.selected;
-}
 
-
-- (IBAction)invitationAffirmAction:(id)sender{
+-(void)getPhoneCode{
+    
+    _phoneTextField.text = [_phoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (_phoneTextField.text.length == 0) {
+        [WYProgressHUD lightAlert:@"请输入手机号"];
+        return;
+    }
+    
+    if(_waitTimer){
+        [_waitTimer invalidate];
+        _waitTimer = nil;
+    }
+    
+    _waitTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(waitTimerInterval:) userInfo:nil repeats:YES];
+    _waitSmsSecond = 60;
+    _getCodeButton.enabled = NO;
+    [_getCodeButton setBackgroundColor:UIColorToRGB(0xe4e4e4)];
+    [self waitTimerInterval:_waitTimer];
+    
+    [self textFieldResignFirstResponder];
+    [WYProgressHUD AlertLoading:@"正在验证手机号" At:self.view];
+    __weak RegisterViewController *weakSelf = self;
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getCodeWithPhone:_phoneTextField.text type:nil tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败!";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            _waitSmsSecond = 0;
+            [weakSelf waitTimerInterval:_waitTimer];
+            return;
+        }
+        
+        [WYProgressHUD AlertSuccess:@"验证码发送成功." At:weakSelf.view];
+        
+    }tag:tag];
     
 }
 
-- (IBAction)helpAction:(id)sender{
+-(void)checkPhoneCode{
     
+    NSString *phoneTextFieldText = [_phoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (phoneTextFieldText.length == 0) {
+        [WYProgressHUD lightAlert:@"请输入手机号"];
+        return;
+    }
+    NSString *verifyAndemailTextFieldText = [_codeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (verifyAndemailTextFieldText.length == 0) {
+        [WYProgressHUD lightAlert:@"请输入验证码"];
+        return;
+    }
+    [self textFieldResignFirstResponder];
+    [WYProgressHUD AlertLoading:@"正在验证,请稍等" At:self.view];
+    __weak RegisterViewController *weakSelf = self;
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] checkCodeWithPhone:phoneTextFieldText code:verifyAndemailTextFieldText codeType:nil tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        [WYProgressHUD AlertLoadDone];
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYUIUtils showAlertWithMsg:errorMsg];
+            return;
+        }
+        SetPwdViewController *spVc = [[SetPwdViewController alloc] init];
+        spVc.isCanBack = _isCanBack;
+        spVc.registerName = phoneTextFieldText;
+        [weakSelf.navigationController pushViewController:spVc animated:YES];
+        
+    }tag:tag];
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    if ([string isEqualToString:@"\n"]) {
+        return NO;
+    }
+    if (!string.length && range.length > 0) {
+        return YES;
+    }
+    NSString *oldString = [textField.text copy];
+    NSString *newString = [oldString stringByReplacingCharactersInRange:range withString:string];
+    
+    if (textField == _phoneTextField && textField.markedTextRange == nil) {
+        if (newString.length > 11 && textField.text.length >= 11) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 @end

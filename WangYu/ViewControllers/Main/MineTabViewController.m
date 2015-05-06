@@ -53,35 +53,11 @@
 
 #pragma mark - request
 - (void)getCacheTopicInfo{
-//    __weak MineTabViewController *weakSelf = self;
-    int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getHotTopicWithWithTag:tag];
-    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
-        if (jsonRet == nil) {
-            //...
-        }else{
-            
-        }
-    }];
+    
 }
 
 - (void)refreshTopicList{
-//    __weak MineTabViewController *weakSelf = self;
-    int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getHotTopicWithWithTag:tag];
-    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-//        [self.pullRefreshView finishedLoading];
-        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
-        if (!jsonRet || errorMsg) {
-            if (!errorMsg.length) {
-                errorMsg = @"请求失败";
-            }
-//            [XEProgressHUD AlertError:errorMsg At:weakSelf.view];
-            return;
-        }
-          
-    }tag:tag];
+    
 }
 
 #pragma mark - IBAction

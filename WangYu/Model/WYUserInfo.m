@@ -13,6 +13,33 @@
 
 - (void)doSetUserInfoByJsonDic:(NSDictionary*)dic {
     
+    if ([dic stringObjectForKey:@"nickname"]) {
+        _nickName = [dic stringObjectForKey:@"nickname"];
+    }
+    if ([dic stringObjectForKey:@"telephone"]) {
+        _telephone = [dic stringObjectForKey:@"telephone"];
+    }
+    if ([dic stringObjectForKey:@"icon"]) {
+        _avatar = [dic stringObjectForKey:@"icon"];
+    }
+    
+    _score = [dic intValueForKey:@"score"];
+    _valid = [dic intValueForKey:@"valid"];
+    
+    if ([dic stringObjectForKey:@"username"]) {
+        _account = [dic stringObjectForKey:@"username"];
+    }
+    if ([dic stringObjectForKey:@"password"]) {
+        _password = [dic stringObjectForKey:@"password"];
+    }
+    
+    NSDateFormatter *dateFormatter = [WYUIUtils dateFormatterOFUS];
+    if ([dic stringObjectForKey:@"createDate"]) {
+        _createDate = [dateFormatter dateFromString:[dic stringObjectForKey:@"createDate"]];
+    }
+    if ([dic stringObjectForKey:@"updateDate"]) {
+        _updateDate = [dateFormatter dateFromString:[dic stringObjectForKey:@"updateDate"]];
+    }
 }
 
 - (void)setUserInfoByJsonDic:(NSDictionary*)dic{

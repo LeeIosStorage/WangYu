@@ -46,12 +46,14 @@
 - (IBAction)loginAction:(id)sender {
     [WYEngine shareInstance].firstLogin = NO;
     LoginViewController *mpVc = [[LoginViewController alloc] init];
+    mpVc.isCanBack = _showBackButton;
     [self.navigationController pushViewController:mpVc animated:YES];
 }
 
 - (IBAction)registerAction:(id)sender {
     [WYEngine shareInstance].firstLogin = NO;
     RegisterViewController *vc = [[RegisterViewController alloc] init];
+    vc.isCanBack = _showBackButton;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

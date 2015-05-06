@@ -23,7 +23,7 @@
 
 #define CONNECT_TIMEOUT 20
 
-static NSString* API_URL = @"http://xiaor123.cn:801/api";
+static NSString* API_URL = @"http://192.168.16.106";
 
 static WYEngine* s_ShareInstance = nil;
 
@@ -137,9 +137,9 @@ static WYEngine* s_ShareInstance = nil;
 
 - (void)serverInit{
     if (self.serverPlatform == TestPlatform) {
-        API_URL = @"http://192.168.16.29/api";
+        API_URL = @"http://192.168.16.106";
     } else {
-        API_URL = @"http://xiaor123.cn:801/api";
+        API_URL = @"http://192.168.16.106";
     }
 }
 
@@ -227,6 +227,7 @@ static WYEngine* s_ShareInstance = nil;
     _uid = [accountDic objectForKey:@"uid"];
     _account = [accountDic objectForKey:@"account"];
     _userPassword = [accountDic objectForKey:@"accountPwd"];
+    _token = [accountDic objectForKey:@"token"];
 }
 
 - (void)loadUserInfo{
@@ -257,6 +258,9 @@ static WYEngine* s_ShareInstance = nil;
         [accountDic setValue:_account forKey:@"account"];
     if(_userPassword)
         [accountDic setValue:_userPassword forKey:@"accountPwd"];
+    if (_token) {
+        [accountDic setValue:_token forKey:@"token"];
+    }
     [accountDic writeToFile:[self getAccountsStoragePath] atomically:NO];
 }
 
@@ -527,13 +531,74 @@ static WYEngine* s_ShareInstance = nil;
     if (uid) {
         [params setObject:uid forKey:@"userid"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/user/sync",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/user/sync",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
-- (BOOL)getHotTopicWithWithTag:(int)tag{
+- (BOOL)loginWithPhone:(NSString *)phone password:(NSString *)password tag:(int)tag error:(NSError **)errPtr
+{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/topic/hot",API_URL] type:1 parameters:params];
+    if (phone) {
+        [params setObject:phone forKey:@"username"];
+    }
+    if (password) {
+        [params setObject:password forKey:@"password"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/login",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)registerWithPhone:(NSString*)phone password:(NSString*)password invitationCode:(NSString*)invitationCode tag:(int)tag
+{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (phone) {
+        [params setObject:phone forKey:@"mobile"];
+    }
+    if (password) {
+        [params setObject:password forKey:@"password"];
+    }
+    if (invitationCode) {
+        [params setObject:invitationCode forKey:@"invitationCode"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/register",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)getCodeWithPhone:(NSString*)phone type:(NSString*)type tag:(int)tag
+{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (phone) {
+        [params setObject:phone forKey:@"mobile"];
+    }
+    if (type) {
+        [params setObject:type forKey:@"type"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/checkCode",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)checkCodeWithPhone:(NSString*)phone code:(NSString*)msgcode codeType:(NSString*)type tag:(int)tag
+{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (phone) {
+        [params setObject:phone forKey:@"mobile"];
+    }
+    if (msgcode) {
+        [params setObject:msgcode forKey:@"checkCode"];
+    }
+    if (type) {
+        [params setObject:type forKey:@"type"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/checkCodeValidate",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+    
+}
+- (BOOL)checkInvitationCodeWithCode:(NSString*)invitationCode tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (invitationCode) {
+        [params setObject:invitationCode forKey:@"invitationCode"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/checkInvitationCode",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 

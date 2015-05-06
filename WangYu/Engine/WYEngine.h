@@ -24,6 +24,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 @property (nonatomic, strong) NSString* uid;
 @property (nonatomic, strong) NSString* account;
 @property (nonatomic, strong) NSString* userPassword;
+@property (nonatomic, strong) NSString* token;
 @property (nonatomic, strong) WYUserInfo* userInfo;
 @property (nonatomic, readonly) NSDictionary* globalDefaultConfig;
 
@@ -70,7 +71,15 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (unsigned long long)getUrlCacheSize;
 
 #pragma mark - API LIST
+- (BOOL)registerWithPhone:(NSString*)phone password:(NSString*)password invitationCode:(NSString*)invitationCode tag:(int)tag;
+//获取验证码
+- (BOOL)getCodeWithPhone:(NSString*)phone type:(NSString*)type tag:(int)tag;
+//校验验证码
+- (BOOL)checkCodeWithPhone:(NSString*)phone code:(NSString*)msgcode codeType:(NSString*)type tag:(int)tag;
+//校验邀请码
+- (BOOL)checkInvitationCodeWithCode:(NSString*)invitationCode tag:(int)tag;
+
+- (BOOL)loginWithPhone:(NSString*)phone password:(NSString*)password tag:(int)tag error:(NSError **)errPtr;
 - (BOOL)getUserInfoWithUid:(NSString*)uid tag:(int)tag error:(NSError **)errPtr;
-- (BOOL)getHotTopicWithWithTag:(int)tag;
 
 @end
