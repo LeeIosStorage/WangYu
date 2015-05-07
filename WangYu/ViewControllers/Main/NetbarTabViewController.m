@@ -29,6 +29,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *guessLabel;
 
 @property (strong, nonatomic) SKSplashView *splashView;
+@property (strong, nonatomic) IBOutlet UILabel *colorLabel;
 
 
 @end
@@ -52,23 +53,22 @@
     self.hotLabel.font = SKIN_FONT(12);
     self.hotLabel.layer.cornerRadius = 2;
     self.hotLabel.clipsToBounds = YES;
+    self.colorLabel.backgroundColor = UIColorToRGB(0xfac402);
+    self.colorLabel.layer.cornerRadius = 1.0;
+    self.colorLabel.layer.masksToBounds = YES;
 }
 
 - (void)viewSplash
 {
-    //Setting the background
-//        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
-//        imageView.image = [UIImage imageNamed:@"twitter background.png"];
-//        [self.view addSubview:imageView];
-    //Twitter style splash
-    SKSplashIcon *twitterSplashIcon = [[SKSplashIcon alloc] initWithImage:[UIImage imageNamed:@"twitterIcon"] animationType:SKIconAnimationTypeBounce];
-    UIColor *twitterColor = SKIN_COLOR;
-    _splashView = [[SKSplashView alloc] initWithSplashIcon:twitterSplashIcon backgroundColor:twitterColor animationType:SKSplashAnimationTypeNone];
+    SKSplashIcon *sloganSplashIcon = [[SKSplashIcon alloc] initWithImage:[UIImage imageNamed:@"app_slogan_icon"] animationType:SKIconAnimationTypeBounce];
+    UIColor *bgColor = SKIN_COLOR;
+    _splashView = [[SKSplashView alloc] initWithSplashIcon:sloganSplashIcon backgroundColor:bgColor animationType:SKSplashAnimationTypeFade];
     _splashView.delegate = self;
     _splashView.animationDuration = 2;
     [self.view addSubview:_splashView];
     [_splashView startAnimation];
-    [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
+    [UIView animateWithDuration:2 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
+        self.tabController.view.backgroundColor  = [UIColor whiteColor];
         CGRect frame = self.tabController.tabBar.frame;
         frame.origin.y -= 50.0;
         self.tabController.tabBar.frame = frame;

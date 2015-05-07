@@ -40,7 +40,7 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="R4l-Cc-Ruz">
-                            <rect key="frame" x="17" y="6" width="25" height="23"/>
+                            <rect key="frame" x="17" y="6" width="24" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qkq-e6-jh4">
@@ -67,7 +67,7 @@
                 <outlet property="itemIconImageView" destination="R4l-Cc-Ruz" id="YDS-S3-QC4"/>
                 <outlet property="itemLabel" destination="Qkq-e6-jh4" id="l64-6A-6Oo"/>
             </connections>
-            <point key="canvasLocation" x="276" y="333.5"/>
+            <point key="canvasLocation" x="276" y="333"/>
         </view>
     </objects>
     <resources>

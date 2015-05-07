@@ -23,7 +23,6 @@
     // Do any additional setup after loading the view, typically from a nib.
   //  self.view.backgroundColor = SKIN_COLOR;
   //  [self viewSplash];
-    
     AppDelegate *appDelgate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [appDelgate signIn];
 }

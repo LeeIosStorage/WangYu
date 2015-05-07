@@ -144,15 +144,15 @@
 
 - (void) addBounceAnimation
 {
-    CGFloat shrinkDuration = self.animationDuration * 0.1;
-    CGFloat growDuration = self.animationDuration;
+    CGFloat shrinkDuration = self.animationDuration * 0.3;
+    CGFloat growDuration = self.animationDuration * 0.7;
     
-    [UIView animateWithDuration:0 delay:0 usingSpringWithDamping:0.7f initialSpringVelocity:10 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        CGAffineTransform scaleTransform = CGAffineTransformMakeScale(10, 10);
+    [UIView animateWithDuration:shrinkDuration delay:0 usingSpringWithDamping:0.3f initialSpringVelocity:50 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        CGAffineTransform scaleTransform = CGAffineTransformMakeScale(4, 4);
         self.transform = scaleTransform;
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:growDuration animations:^{
-            CGAffineTransform scaleTransform = CGAffineTransformMakeScale(20, 20);
+            CGAffineTransform scaleTransform = CGAffineTransformMakeScale(10, 10);
             self.transform = scaleTransform;
             self.alpha = 0;
         } completion:^(BOOL finished) {
