@@ -38,10 +38,14 @@
     [self textFieldResignFirstResponder];
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.setPwdTextField becomeFirstResponder];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self.setPwdTextField becomeFirstResponder];
     [self refreshUIControl];
 }
 

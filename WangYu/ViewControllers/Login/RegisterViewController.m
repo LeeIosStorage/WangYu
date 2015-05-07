@@ -74,17 +74,21 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    if (_vcType == VcType_Invitation_Code) {
+        [self.invitationCodeTextField becomeFirstResponder];
+    }else if (_vcType == VcType_Register){
+        [self.phoneTextField becomeFirstResponder];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
     _invitationCodeText = nil;
     self.agreeIconButton.selected = YES;
-    if (_vcType == VcType_Invitation_Code) {
-        [self.invitationCodeTextField becomeFirstResponder];
-    }else if (_vcType == VcType_Register){
-        [self.phoneTextField becomeFirstResponder];
-    }
     [self refreshUIControl];
 }
 
@@ -137,21 +141,23 @@
 #pragma mark - IBAction
 - (void)officialRegisterAction:(id)sender{
     
-    __weak RegisterViewController *weakSelf = self;
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"确定跳过使用邀请码吗？" cancelButtonTitle:@"取消" cancelBlock:^{
-        
-    } okButtonTitle:@"确定" okBlock:^{
-        weakSelf.titleNavBarRightBtn.enabled = NO;
-        [weakSelf skipInvitationCode:YES];
-    }];
-    [alertView show];
+    self.titleNavBarRightBtn.enabled = NO;
+    [self skipInvitationCode:YES];
+    
+//    __weak RegisterViewController *weakSelf = self;
+//    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"确定跳过使用邀请码吗？" cancelButtonTitle:@"取消" cancelBlock:^{
+//        
+//    } okButtonTitle:@"确定" okBlock:^{
+//        
+//    }];
+//    [alertView show];
 }
 - (IBAction)getCodeAction:(id)sender{
     [self getPhoneCode];
 }
 - (IBAction)registerAction:(id)sender{
     if (!self.agreeIconButton.selected) {
-        [WYUIUtils showAlertWithMsg:@"请先阅读网娱大师客户端"];
+        [WYUIUtils showAlertWithMsg:@"请先阅读网娱大师客户端协议"];
         return;
     }
     [self checkPhoneCode];
@@ -209,6 +215,7 @@
         self.registerContainerView.hidden = YES;
         self.invitationCodeView.hidden = NO;
         [self setTitle:@"输入邀请码"];
+        self.redPacketTipLabel.text = @"输入邀请码，注册成功可获得6元上网红包2015-05-30过期";
         CGRect frame = self.invitationCodeView.frame;
         frame.origin.x = self.registerContainerView.frame.origin.x;
         frame.origin.y = 64;

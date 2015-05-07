@@ -39,14 +39,17 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
-//    [self TextFieldResignFirstResponder];
+//    [self textFieldResignFirstResponder];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.accountTextField becomeFirstResponder];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    [self.accountTextField becomeFirstResponder];
     [self refreshUIControl];
 }
 

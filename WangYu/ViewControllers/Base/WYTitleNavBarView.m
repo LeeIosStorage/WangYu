@@ -60,5 +60,9 @@
     self.backgroundImageView.backgroundColor = bgColor;
     self.lineImageView.hidden = !showLine;
     self.lineImageView.backgroundColor = UIColorToRGB(0xadadad);
+    CGRect frame = self.lineImageView.frame;
+    frame.size.height = 0.5f;
+    self.lineImageView.frame = frame;
+    
 }
 @end

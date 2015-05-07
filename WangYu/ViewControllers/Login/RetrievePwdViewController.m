@@ -53,10 +53,14 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.phoneTextField becomeFirstResponder];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self.phoneTextField becomeFirstResponder];
     
     [self refreshUIControl];
 }
