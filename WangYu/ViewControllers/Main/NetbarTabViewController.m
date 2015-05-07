@@ -35,6 +35,12 @@
 
 @implementation NetbarTabViewController
 
+-(void)dealloc{
+    WYLog(@"NetbarTabViewController dealloc!!!");
+    _splashView.delegate = nil;
+    _splashView = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

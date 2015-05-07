@@ -126,52 +126,44 @@
     [self textFieldResignFirstResponder];
     __weak SetPwdViewController *weakSelf = self;
     if ([self.setPwdTextField.text isEqualToString:self.comfirmTextField.text]) {
-//        int tag = [[WYEngine shareInstance] getConnectTag];
+        int tag = [[WYEngine shareInstance] getConnectTag];
         if (weakSelf.registerName.length != 0) {
-//            [WYProgressHUD AlertLoading:@"注册中，请稍等" At:weakSelf.view];
-//            [[WYEngine shareInstance] registerWithPhone:weakSelf.registerName password:weakSelf.setPwdTextField.text tag:tag];
-//            [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-//                //                    [WYProgressHUD AlertLoadDone];
-//                NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
-//                if (!jsonRet || errorMsg) {
-//                    if (!errorMsg.length) {
-//                        errorMsg = @"获取失败";
-//                    }
-//                    [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
-//                    return;
-//                }
-//                [WYProgressHUD AlertSuccess:@"注册成功" At:weakSelf.view];
-//                NSDictionary *dic = [jsonRet objectForKey:@"object"];
-//                if (!_userInfo) {
-//                    _userInfo = [[XEUserInfo alloc] init];
-//                }
-//                [_userInfo setUserInfoByJsonDic:dic];
-//                [weakSelf perfectInformation];
-//            }tag:tag];
+            [WYProgressHUD AlertLoading:@"注册中，请稍等" At:weakSelf.view];
+            [[WYEngine shareInstance] registerWithPhone:weakSelf.registerName password:weakSelf.setPwdTextField.text invitationCode:weakSelf.invitationCode tag:tag];
+            [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+                NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+                if (!jsonRet || errorMsg) {
+                    if (!errorMsg.length) {
+                        errorMsg = @"网络错误，请稍后重试";
+                    }
+                    [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                    return;
+                }
+                [WYProgressHUD AlertSuccess:@"注册成功" At:weakSelf.view];
+                NSDictionary *dic = [jsonRet objectForKey:@"object"];
+                if (!_userInfo) {
+                    _userInfo = [[WYUserInfo alloc] init];
+                }
+                [_userInfo setUserInfoByJsonDic:dic];
+                [weakSelf perfectInformation];
+            }tag:tag];
         }else{
-//            [WYProgressHUD AlertLoading:@"正在重置密码" At:weakSelf.view];
-//            [[WYEngine shareInstance] resetPassword:self.setPwdTextField.text withPhone:_userInfo.phone tag:tag];
-//            [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-//                //                [WYProgressHUD AlertLoadDone];
-//                NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
-//                if (!jsonRet || errorMsg) {
-//                    if (!errorMsg.length) {
-//                        errorMsg = @"获取失败";
-//                    }
-//                    [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
-//                    return;
-//                }
-//                [WYProgressHUD AlertSuccess:@"重置密码成功" At:weakSelf.view];
-//                [WYEngine shareInstance].uid = _userInfo.uid;
-//                [WYEngine shareInstance].account = _userInfo.phone;
-//                [WYEngine shareInstance].userPassword = self.setPwdTextField.text;
-//                [[WYEngine shareInstance] saveAccount];
-//                [[WYEngine shareInstance] setUserInfo:_userInfo];
-//                [[WYEngine shareInstance] refreshUserInfo];
-//                
-//                [weakSelf performSelector:@selector(loginFinished) withObject:nil afterDelay:1.0];
-//                
-//            }tag:tag];
+            [WYProgressHUD AlertLoading:@"正在重置密码" At:weakSelf.view];
+            [[WYEngine shareInstance] resetPassword:self.setPwdTextField.text withPhone:_userInfo.telephone tag:tag];
+            [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+                //                [WYProgressHUD AlertLoadDone];
+                NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+                if (!jsonRet || errorMsg) {
+                    if (!errorMsg.length) {
+                        errorMsg = @"获取失败";
+                    }
+                    [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                    return;
+                }
+                [WYProgressHUD AlertSuccess:@"重置密码成功" At:weakSelf.view];
+                [weakSelf perfectInformation];
+                
+            }tag:tag];
         }
     }else{
         [self.comfirmTextField becomeFirstResponder];
@@ -188,6 +180,17 @@
         AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
         [appDelegate signIn];
     }
+}
+
+-(void)perfectInformation{
+    [WYEngine shareInstance].uid = _userInfo.uid;
+    [WYEngine shareInstance].account = _userInfo.account;
+    [WYEngine shareInstance].userPassword = self.setPwdTextField.text;
+    [[WYEngine shareInstance] saveAccount];
+    [[WYEngine shareInstance] setUserInfo:_userInfo];
+    [[WYEngine shareInstance] refreshUserInfo];
+    
+    [self performSelector:@selector(loginFinished) withObject:nil afterDelay:1.0];
 }
 
 #pragma mark - UITextFieldDelegate

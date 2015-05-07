@@ -182,7 +182,7 @@
     [WYProgressHUD AlertLoading:@"正在验证手机号" At:self.view];
     __weak RetrievePwdViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getCodeWithPhone:_phoneTextField.text type:nil tag:tag];
+    [[WYEngine shareInstance] getCodeWithPhone:_phoneTextField.text type:@"2" tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
@@ -217,7 +217,7 @@
     [WYProgressHUD AlertLoading:@"正在验证,请稍等" At:self.view];
     __weak RetrievePwdViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] checkCodeWithPhone:_phoneTextField.text code:verifyAndemailTextFieldText codeType:nil tag:tag];
+    [[WYEngine shareInstance] checkCodeWithPhone:_phoneTextField.text code:verifyAndemailTextFieldText codeType:@"2" tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [WYProgressHUD AlertLoadDone];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];

@@ -222,7 +222,19 @@
 #pragma mark - <WYTabBarDelegate>
 
 - (void)tabBar:(WYTabBarView *)aTabBar didSelectTabAtIndex:(NSUInteger)anIndex{
+    
     UIViewController *vc = [self.viewControllers objectAtIndex:anIndex];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tabBarController:shouldSelectViewController:)]) {
+        BOOL notSelect = [self.delegate tabBarController:self
+                shouldSelectViewController:vc];
+        if (notSelect) {
+            WYTabBarItemView *clickTabItem = [aTabBar.items objectAtIndex:anIndex];
+            [clickTabItem setSelected:NO];
+            WYTabBarItemView *selectedTabItem = [aTabBar.items objectAtIndex:self.selectedIndex];
+            [selectedTabItem setSelected:YES];
+            return;
+        }
+    }
     
     if ([self.selectedViewController isKindOfClass:[UINavigationController class]]) {
         [(UINavigationController *)self.selectedViewController popToRootViewControllerAnimated:YES];

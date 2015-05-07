@@ -294,4 +294,10 @@
     }
 }
 
+-(void)dealloc{
+    //通知remove 
+    WYLog(@"SKSplashView dealloc!!!");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 @end

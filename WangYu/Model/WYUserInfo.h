@@ -23,6 +23,8 @@
 @property(nonatomic, strong) NSString* account;
 @property(nonatomic, strong) NSString* password;
 
+@property(nonatomic, readonly) NSURL* smallAvatarUrl;
+
 @property(nonatomic, strong) NSDictionary* userInfoByJsonDic;
 @property(nonatomic, strong) NSString* jsonString;
 

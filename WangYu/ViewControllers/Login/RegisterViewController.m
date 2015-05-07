@@ -393,7 +393,7 @@
     [WYProgressHUD AlertLoading:@"正在验证手机号" At:self.view];
     __weak RegisterViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getCodeWithPhone:_phoneTextField.text type:nil tag:tag];
+    [[WYEngine shareInstance] getCodeWithPhone:_phoneTextField.text type:@"1" tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
@@ -428,7 +428,7 @@
     [WYProgressHUD AlertLoading:@"正在验证,请稍等" At:self.view];
     __weak RegisterViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] checkCodeWithPhone:phoneTextFieldText code:verifyAndemailTextFieldText codeType:nil tag:tag];
+    [[WYEngine shareInstance] checkCodeWithPhone:phoneTextFieldText code:verifyAndemailTextFieldText codeType:@"1" tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [WYProgressHUD AlertLoadDone];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -442,6 +442,7 @@
         SetPwdViewController *spVc = [[SetPwdViewController alloc] init];
         spVc.isCanBack = _isCanBack;
         spVc.registerName = phoneTextFieldText;
+        spVc.invitationCode = _invitationCodeText;
         [weakSelf.navigationController pushViewController:spVc animated:YES];
         
     }tag:tag];

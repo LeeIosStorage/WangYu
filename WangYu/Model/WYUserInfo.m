@@ -8,6 +8,7 @@
 
 #import "WYUserInfo.h"
 #import "JSONKit.h"
+#import "WYEngine.h"
 
 @implementation WYUserInfo
 
@@ -57,6 +58,13 @@
     }
     
     self.jsonString = [_userInfoByJsonDic JSONString];
+}
+
+- (NSURL *)smallAvatarUrl {
+    if (_avatar == nil) {
+        return nil;
+    }
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _avatar]];
 }
 
 @end
