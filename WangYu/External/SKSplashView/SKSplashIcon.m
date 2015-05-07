@@ -242,5 +242,10 @@
 {
     [self removeFromSuperview];
 }
+-(void)dealloc{
+    //通知remove 
+    WYLog(@"SKSplashIcon dealloc!!!");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end

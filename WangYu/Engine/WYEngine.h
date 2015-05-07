@@ -29,6 +29,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 @property (nonatomic, readonly) NSDictionary* globalDefaultConfig;
 
 @property (nonatomic, readonly) NSString* baseUrl;
+@property (nonatomic, readonly) NSString* baseImgUrl;
 @property (nonatomic, assign) BOOL firstLogin;
 
 @property (nonatomic, assign) ServerPlatform serverPlatform;
@@ -76,6 +77,8 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)getCodeWithPhone:(NSString*)phone type:(NSString*)type tag:(int)tag;
 //校验验证码
 - (BOOL)checkCodeWithPhone:(NSString*)phone code:(NSString*)msgcode codeType:(NSString*)type tag:(int)tag;
+//重置密码
+- (BOOL)resetPassword:(NSString*)password withPhone:(NSString*)phone tag:(int)tag;
 //校验邀请码
 - (BOOL)checkInvitationCodeWithCode:(NSString*)invitationCode tag:(int)tag;
 

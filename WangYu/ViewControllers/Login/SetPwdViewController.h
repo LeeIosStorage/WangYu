@@ -13,6 +13,7 @@
 
 @property (nonatomic, assign) BOOL isCanBack;
 @property (nonatomic, strong) NSString *registerName;
+@property (nonatomic, strong) NSString *invitationCode;
 @property (nonatomic, strong) WYUserInfo *userInfo;
 
 @end

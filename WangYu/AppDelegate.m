@@ -16,7 +16,7 @@
 #import "NewIntroViewController.h"
 #import "WelcomeViewController.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <WYTabBarControllerDelegate>
 
 @property (nonatomic, strong) NewIntroViewController *introView;
 
@@ -42,19 +42,19 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
     
-    [self signOut];
-//
-////    if ([[WYEngine shareInstance] hasAccoutLoggedin] || ![WYEngine shareInstance].firstLogin) {
-////        if ([WYSettingConfig isFirstEnterVersion]) {
-////            [self showNewIntro];
-////        } else {
-////            [self signIn];
-////        }
-////    }else{
-////        NSLog(@"signOut for accout miss");
-////        [self signOut];
-////    }
-//
+//    [self signOut];
+
+    if ([[WYEngine shareInstance] hasAccoutLoggedin] || ![WYEngine shareInstance].firstLogin) {
+        if ([WYSettingConfig isFirstEnterVersion]) {
+            [self showNewIntro];
+        } else {
+            [self signIn];
+        }
+    }else{
+        NSLog(@"signOut for accout miss");
+        [self signOut];
+    }
+
     [self.window makeKeyAndVisible];
 
     return YES;
@@ -80,6 +80,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)signIn{
     NSLog(@"signIn");
     WYTabBarViewController* tabViewController = [[WYTabBarViewController alloc] init];
+    tabViewController.delegate = self;
     tabViewController.viewControllers = [NSArray arrayWithObjects:
                                          [[NetbarTabViewController alloc] init],
                                          [[MineTabViewController alloc] init],
@@ -113,6 +114,14 @@ void uncaughtExceptionHandler(NSException *exception) {
     _mainTabViewController = nil;
     
     [[WYEngine shareInstance] logout];
+}
+
+#pragma mark - WYTabBarControllerDelegate
+-(BOOL) tabBarController:(WYTabBarViewController *)tabBarController shouldSelectViewController:(UIViewController *)viewController{
+    if ([viewController isKindOfClass:[MineTabViewController class]]) {
+        return [[WYEngine shareInstance] needUserLogin:nil];
+    }
+    return NO;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

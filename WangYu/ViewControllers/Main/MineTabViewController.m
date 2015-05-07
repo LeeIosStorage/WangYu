@@ -10,6 +10,7 @@
 #import "WYTabBarViewController.h"
 #import "AboutViewController.h"
 #import "WYEngine.h"
+#import "AppDelegate.h"
 
 @interface MineTabViewController ()
 
@@ -62,8 +63,10 @@
 
 #pragma mark - IBAction
 - (IBAction)settingAction:(id)sender {
-    AboutViewController *vc = [[AboutViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    AppDelegate * appDelgate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    WYLog(@"signOut for user logout from SettingViewController");
+    [appDelgate signOut];
+    [[WYEngine shareInstance] visitorLogin];
 }
 
 @end

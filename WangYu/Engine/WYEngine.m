@@ -23,6 +23,7 @@
 
 #define CONNECT_TIMEOUT 20
 
+static NSString* IMG_URL = @"http://img.wangyuhudong.com";
 static NSString* API_URL = @"http://192.168.16.106";
 
 static WYEngine* s_ShareInstance = nil;
@@ -163,6 +164,9 @@ static WYEngine* s_ShareInstance = nil;
 
 -(NSString *)baseUrl{
     return API_URL;
+}
+-(NSString *)baseImgUrl{
+    return IMG_URL;
 }
 
 - (void)setServerPlatform:(ServerPlatform)serverPlatform {
@@ -593,6 +597,19 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
     
 }
+
+- (BOOL)resetPassword:(NSString*)password withPhone:(NSString*)phone tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (password) {
+        [params setObject:password forKey:@"newPassword"];
+    }
+    if (phone) {
+        [params setObject:phone forKey:@"mobile"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/findPassword",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 - (BOOL)checkInvitationCodeWithCode:(NSString*)invitationCode tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (invitationCode) {
