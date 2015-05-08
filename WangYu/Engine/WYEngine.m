@@ -225,6 +225,11 @@ static WYEngine* s_ShareInstance = nil;
     return filePath;
 }
 
+- (NSString *)getLoginedAccountsStoragePath{
+    NSString *filePath = [[PathHelper documentDirectoryPathWithName:nil] stringByAppendingPathComponent:@"loginedAccount"];
+    return filePath;
+}
+
 - (void)loadAccount{
     NSDictionary * accountDic = [NSDictionary dictionaryWithContentsOfFile:[self getAccountsStoragePath]];
     //.....account信息
@@ -266,23 +271,39 @@ static WYEngine* s_ShareInstance = nil;
         [accountDic setValue:_token forKey:@"token"];
     }
     [accountDic writeToFile:[self getAccountsStoragePath] atomically:NO];
+    
+    [self saveLoginedAccounts];
 }
 
 -(void)removeAccount{
     [[NSFileManager defaultManager] removeItemAtPath:[self getAccountsStoragePath] error:nil];
 }
 
+//记忆登录过的Account
+-(void)saveLoginedAccounts{
+    NSMutableDictionary* accountDic= [NSMutableDictionary dictionaryWithCapacity:1];
+    if (_account)
+        [accountDic setValue:_account forKey:@"account"];
+    [accountDic writeToFile:[self getLoginedAccountsStoragePath] atomically:NO];
+}
+- (NSString*)getMemoryLoginedAccout{
+    NSDictionary * accountDic = [NSDictionary dictionaryWithContentsOfFile:[self getLoginedAccountsStoragePath]];
+    NSString *account = [accountDic stringObjectForKey:@"account"];
+    return account;
+}
+
+
 - (void)refreshUserInfo{
-    int tag = [self getConnectTag];
-    [self getUserInfoWithUid:self.uid tag:tag error:nil];
-    [self addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
-        if (jsonRet && !errorMsg) {
-            [[WYEngine shareInstance].userInfo setUserInfoByJsonDic:[jsonRet objectForKey:@"object"]];
-            [WYEngine shareInstance].userInfo = [WYEngine shareInstance].userInfo;
-        }
-        
-    } tag:tag];
+//    int tag = [self getConnectTag];
+//    [self getUserInfoWithUid:self.uid tag:tag error:nil];
+//    [self addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+//        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+//        if (jsonRet && !errorMsg) {
+//            [[WYEngine shareInstance].userInfo setUserInfoByJsonDic:[jsonRet objectForKey:@"object"]];
+//            [WYEngine shareInstance].userInfo = [WYEngine shareInstance].userInfo;
+//        }
+//        
+//    } tag:tag];
 }
 
 - (BOOL)hasAccoutLoggedin{
@@ -450,7 +471,7 @@ static WYEngine* s_ShareInstance = nil;
             return YES;
         }
         [_urlTagMap setObject:fullUrl forKey:[NSNumber numberWithInteger:tag]];
-        [QHQnetworkingTool getWithURL:fullUrl params:params success:^(id response) {
+        [QHQnetworkingTool getWithURL:fullUrl params:nil success:^(id response) {
             NSLog(@"getFullUrl===========%@ response%@",fullUrl,response);
             [self onResponse:response withTag:tag withError:errPtr];
         } failure:^(NSError *error) {
@@ -461,9 +482,9 @@ static WYEngine* s_ShareInstance = nil;
         NSString* fullUrl = url;
         if (params) {
             NSString *param = [URLHelper getURL:nil queryParameters:params prefixed:NO];
-            fullUrl = [NSString stringWithFormat:@"%@?%@", fullUrl, param];
+            NSString *postFullUrl = [NSString stringWithFormat:@"%@?%@", fullUrl, param];
+            NSLog(@"postFullUrl=%@",postFullUrl);
         }
-        NSLog(@"postFullUrl=%@",fullUrl);
         if (dataArray) {
             [QHQnetworkingTool postWithURL:fullUrl params:nil formDataArray:dataArray success:^(id response) {
                 NSLog(@"postFullUrl===========%@ response%@",fullUrl,response);
@@ -593,7 +614,7 @@ static WYEngine* s_ShareInstance = nil;
     if (type) {
         [params setObject:type forKey:@"type"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/checkCodeValidate",API_URL] type:0 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/checkCodeValidate",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
     
 }
@@ -606,7 +627,7 @@ static WYEngine* s_ShareInstance = nil;
     if (phone) {
         [params setObject:phone forKey:@"mobile"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/findPassword",API_URL] type:0 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/findPassword",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 

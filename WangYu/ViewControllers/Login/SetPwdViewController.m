@@ -165,6 +165,11 @@
                     return;
                 }
                 [WYProgressHUD AlertSuccess:@"重置密码成功" At:weakSelf.view];
+                NSDictionary *dic = [jsonRet objectForKey:@"object"];
+                if (!_userInfo) {
+                    _userInfo = [[WYUserInfo alloc] init];
+                }
+                [_userInfo setUserInfoByJsonDic:dic];
                 [weakSelf perfectInformation];
                 
             }tag:tag];

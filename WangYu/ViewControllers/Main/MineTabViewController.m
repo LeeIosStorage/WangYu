@@ -11,10 +11,11 @@
 #import "AboutViewController.h"
 #import "WYEngine.h"
 #import "AppDelegate.h"
+#import "SettingViewController.h"
 
 @interface MineTabViewController ()
 
-- (IBAction)settingAction:(id)sender;
+- (IBAction)editAction:(id)sender;
 @end
 
 @implementation MineTabViewController
@@ -33,6 +34,8 @@
 
 -(void)initNormalTitleNavBarSubviews{
     [self setTitle:@"我的"];
+    [self setRightButtonWithTitle:@"设置" selector:@selector(settingAction:)];
+    [self.titleNavBarRightBtn setTitleColor:UIColorToRGB(0x387cbc) forState:0];
 }
 
 - (UINavigationController *)navigationController{
@@ -62,11 +65,12 @@
 }
 
 #pragma mark - IBAction
-- (IBAction)settingAction:(id)sender {
-    AppDelegate * appDelgate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    WYLog(@"signOut for user logout from SettingViewController");
-    [appDelgate signOut];
-    [[WYEngine shareInstance] visitorLogin];
+- (IBAction)editAction:(id)sender{
+    
+}
+- (void)settingAction:(id)sender {
+    SettingViewController *setVc = [[SettingViewController alloc] init];
+    [self.navigationController pushViewController:setVc animated:YES];
 }
 
 @end
