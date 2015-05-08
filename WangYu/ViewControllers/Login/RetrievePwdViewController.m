@@ -61,7 +61,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    self.phoneTextField.text = [[WYEngine shareInstance] getMemoryLoginedAccout];
     [self refreshUIControl];
 }
 
@@ -233,7 +233,10 @@
             return;
         }
         SetPwdViewController *spVc = [[SetPwdViewController alloc] init];
-        spVc.isCanBack = _isCanBack;
+        spVc.isCanBack = weakSelf.isCanBack;
+        WYUserInfo *userInfo = [[WYUserInfo alloc] init];
+        userInfo.telephone = weakSelf.phoneTextField.text;
+        spVc.userInfo = userInfo;
         [weakSelf.navigationController pushViewController:spVc animated:YES];
         
     }tag:tag];

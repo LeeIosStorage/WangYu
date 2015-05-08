@@ -80,6 +80,10 @@
 		073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF01AE7A1B0009B49EB /* UIImage+Resize.m */; };
 		073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF21AE7A1B0009B49EB /* UIImage+RoundedCorner.m */; };
 		073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */; };
+		07566CA51AFC648B00F93B58 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07566CA31AFC648B00F93B58 /* SettingViewController.m */; };
+		07566CA61AFC648B00F93B58 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07566CA41AFC648B00F93B58 /* SettingViewController.xib */; };
+		07566CAB1AFC663600F93B58 /* SettingViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07566CA91AFC663600F93B58 /* SettingViewCell.m */; };
+		07566CAC1AFC663600F93B58 /* SettingViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07566CAA1AFC663600F93B58 /* SettingViewCell.xib */; };
 		077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D83781AF9AED800AAF31F /* MBProgressHUD.m */; };
 		077D83801AF9AED800AAF31F /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 077D837A1AF9AED800AAF31F /* ProgressHUD.bundle */; };
 		077D83811AF9AED800AAF31F /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D837C1AF9AED800AAF31F /* ProgressHUD.m */; };
@@ -277,6 +281,12 @@
 		073DBDF21AE7A1B0009B49EB /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		073DBDF31AE7A1B0009B49EB /* UIImageExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageExtras.h; sourceTree = "<group>"; };
 		073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageExtras.m; sourceTree = "<group>"; };
+		07566CA21AFC648B00F93B58 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		07566CA31AFC648B00F93B58 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		07566CA41AFC648B00F93B58 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
+		07566CA81AFC663600F93B58 /* SettingViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewCell.h; sourceTree = "<group>"; };
+		07566CA91AFC663600F93B58 /* SettingViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewCell.m; sourceTree = "<group>"; };
+		07566CAA1AFC663600F93B58 /* SettingViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewCell.xib; sourceTree = "<group>"; };
 		077D83771AF9AED800AAF31F /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		077D83781AF9AED800AAF31F /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		077D837A1AF9AED800AAF31F /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
@@ -582,6 +592,7 @@
 		073DBD141AE770C0009B49EB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				07566CA71AFC663600F93B58 /* Setting */,
 				07203A101AF1D5EE0056A74B /* Main */,
 				073DBD6F1AE77211009B49EB /* HotUpButton.h */,
 				073DBD701AE77211009B49EB /* HotUpButton.m */,
@@ -759,6 +770,16 @@
 			path = "UIImage-Categories-master";
 			sourceTree = "<group>";
 		};
+		07566CA71AFC663600F93B58 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				07566CA81AFC663600F93B58 /* SettingViewCell.h */,
+				07566CA91AFC663600F93B58 /* SettingViewCell.m */,
+				07566CAA1AFC663600F93B58 /* SettingViewCell.xib */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		077D83761AF9AED800AAF31F /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,6 +936,9 @@
 		0791AB2F1AE8B7A10009A5A7 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				07566CA21AFC648B00F93B58 /* SettingViewController.h */,
+				07566CA31AFC648B00F93B58 /* SettingViewController.m */,
+				07566CA41AFC648B00F93B58 /* SettingViewController.xib */,
 				0791AB301AE8B7DD0009A5A7 /* AboutViewController.h */,
 				0791AB311AE8B7DD0009A5A7 /* AboutViewController.m */,
 				0791AB321AE8B7DD0009A5A7 /* AboutViewController.xib */,
@@ -1066,10 +1090,12 @@
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
 				071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */,
 				07868DEE1AF8581100160070 /* WYTabBarItemView.xib in Resources */,
+				07566CA61AFC648B00F93B58 /* SettingViewController.xib in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
 				0791AB341AE8B7DD0009A5A7 /* AboutViewController.xib in Resources */,
 				0799C8BC1AF1EB5800E407BB /* GameCommendCardView.xib in Resources */,
 				071923E21AF7771A00432531 /* RegisterViewController.xib in Resources */,
+				07566CAC1AFC663600F93B58 /* SettingViewCell.xib in Resources */,
 				07868DEB1AF8581100160070 /* WYTitleNavBarView.xib in Resources */,
 				071923DD1AF7738900432531 /* SetPwdViewController.xib in Resources */,
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
@@ -1156,6 +1182,7 @@
 				071923E11AF7771A00432531 /* RegisterViewController.m in Sources */,
 				0799C8B61AF1D8C800E407BB /* ZLPanGestureRecognizer.m in Sources */,
 				073DBD4F1AE7712F009B49EB /* UIImage+WebP.m in Sources */,
+				07566CA51AFC648B00F93B58 /* SettingViewController.m in Sources */,
 				073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */,
 				073DBDAC1AE79457009B49EB /* WYUIUtils.m in Sources */,
 				0799C8AF1AF1D88E00E407BB /* GameCommendViewController.m in Sources */,
@@ -1186,6 +1213,7 @@
 				073DBDF51AE7A1B0009B49EB /* UIImage+Alpha.m in Sources */,
 				073DBD4E1AE7712F009B49EB /* UIImage+MultiFormat.m in Sources */,
 				079049501AEA28E100E46795 /* WYHttpRequest.m in Sources */,
+				07566CAB1AFC663600F93B58 /* SettingViewCell.m in Sources */,
 				078EDBDB1AEF1EF800E93EE8 /* ASIFormDataRequest.m in Sources */,
 				073DBD801AE77A3C009B49EB /* MineTabViewController.m in Sources */,
 				071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */,
