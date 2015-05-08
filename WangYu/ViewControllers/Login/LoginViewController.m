@@ -13,6 +13,7 @@
 #import "WYProgressHUD.h"
 #import "AppDelegate.h"
 #import "NSString+Value.h"
+#import "DeformationButton.h"
 
 @interface LoginViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *accountTextField;
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *loginButton;
 @property (strong, nonatomic) IBOutlet UIButton *quickRegisterButton;
 @property (strong, nonatomic) IBOutlet UIButton *forgetPasswordButton;
+@property (strong, nonatomic) DeformationButton *deformationBtn;
 
 - (IBAction)loginAction:(id)sender;
 - (IBAction)quickRegisterAction:(id)sender;
@@ -52,7 +54,31 @@
     // Do any additional setup after loading the view from its nib.
     self.accountTextField.text = [[WYEngine shareInstance] getMemoryLoginedAccout];
     [self refreshUIControl];
+//    self.loginButton.hidden = YES;
+//    
+//    _deformationBtn = [[DeformationButton alloc]initWithFrame:CGRectMake(12, self.loginButton.frame.origin.y + 180, self.loginButton.frame.size.width, 44)];
+//    _deformationBtn.contentColor = UIColorToRGB(0xfdd644);
+//    _deformationBtn.progressColor = [UIColor whiteColor];
+//    [self.view addSubview:_deformationBtn];
+//    
+//    [_deformationBtn.forDisplayButton setTitle:@"登录" forState:UIControlStateNormal];
+//    _deformationBtn.forDisplayButton.titleLabel.font = SKIN_FONT(18);
+//    [_deformationBtn.forDisplayButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
+//    [_deformationBtn.forDisplayButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 6, 0, 0)];
+//    
+//    UIImage *bgImage = [UIImage imageNamed:@"login_btn_bg"];
+//    [_deformationBtn.forDisplayButton setBackgroundImage:[bgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)] forState:UIControlStateNormal];
+//    
+//    [_deformationBtn addTarget:self action:@selector(btnEvent) forControlEvents:UIControlEventTouchUpInside];
 }
+
+//- (void)btnEvent{
+//    NSLog(@"btnEvent");
+//}
+//
+//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+//    //    deformationBtn.isLoading = !deformationBtn.isLoading;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
