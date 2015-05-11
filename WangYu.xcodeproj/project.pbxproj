@@ -80,6 +80,10 @@
 		073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF01AE7A1B0009B49EB /* UIImage+Resize.m */; };
 		073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF21AE7A1B0009B49EB /* UIImage+RoundedCorner.m */; };
 		073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */; };
+		0745B3881B007AF3006D6853 /* NetbarDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0745B3861B007AF3006D6853 /* NetbarDetailCell.m */; };
+		0745B3891B007AF3006D6853 /* NetbarDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0745B3871B007AF3006D6853 /* NetbarDetailCell.xib */; };
+		074DDC871B0080140081AFA4 /* NetbarDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074DDC851B0080140081AFA4 /* NetbarDetailViewController.m */; };
+		074DDC881B0080140081AFA4 /* NetbarDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074DDC861B0080140081AFA4 /* NetbarDetailViewController.xib */; };
 		07566CA51AFC648B00F93B58 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07566CA31AFC648B00F93B58 /* SettingViewController.m */; };
 		07566CA61AFC648B00F93B58 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07566CA41AFC648B00F93B58 /* SettingViewController.xib */; };
 		07566CAB1AFC663600F93B58 /* SettingViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07566CA91AFC663600F93B58 /* SettingViewCell.m */; };
@@ -283,6 +287,12 @@
 		073DBDF21AE7A1B0009B49EB /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		073DBDF31AE7A1B0009B49EB /* UIImageExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageExtras.h; sourceTree = "<group>"; };
 		073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageExtras.m; sourceTree = "<group>"; };
+		0745B3851B007AF3006D6853 /* NetbarDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetbarDetailCell.h; path = Netbar/NetbarDetailCell.h; sourceTree = "<group>"; };
+		0745B3861B007AF3006D6853 /* NetbarDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetbarDetailCell.m; path = Netbar/NetbarDetailCell.m; sourceTree = "<group>"; };
+		0745B3871B007AF3006D6853 /* NetbarDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarDetailCell.xib; path = Netbar/NetbarDetailCell.xib; sourceTree = "<group>"; };
+		074DDC841B0080140081AFA4 /* NetbarDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetbarDetailViewController.h; path = NetBar/NetbarDetailViewController.h; sourceTree = "<group>"; };
+		074DDC851B0080140081AFA4 /* NetbarDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetbarDetailViewController.m; path = NetBar/NetbarDetailViewController.m; sourceTree = "<group>"; };
+		074DDC861B0080140081AFA4 /* NetbarDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarDetailViewController.xib; path = NetBar/NetbarDetailViewController.xib; sourceTree = "<group>"; };
 		07566CA21AFC648B00F93B58 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		07566CA31AFC648B00F93B58 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		07566CA41AFC648B00F93B58 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
@@ -591,6 +601,7 @@
 				071923C61AF74D8400432531 /* Login */,
 				0791AB2F1AE8B7A10009A5A7 /* Setting */,
 				073DBD791AE77982009B49EB /* Main */,
+				0745B37E1B005646006D6853 /* NetBar */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -598,6 +609,7 @@
 		073DBD141AE770C0009B49EB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0745B3841B007A9C006D6853 /* Netbar */,
 				07566CA71AFC663600F93B58 /* Setting */,
 				07203A101AF1D5EE0056A74B /* Main */,
 				073DBD6F1AE77211009B49EB /* HotUpButton.h */,
@@ -775,6 +787,26 @@
 				073DBDF41AE7A1B0009B49EB /* UIImageExtras.m */,
 			);
 			path = "UIImage-Categories-master";
+			sourceTree = "<group>";
+		};
+		0745B37E1B005646006D6853 /* NetBar */ = {
+			isa = PBXGroup;
+			children = (
+				074DDC841B0080140081AFA4 /* NetbarDetailViewController.h */,
+				074DDC851B0080140081AFA4 /* NetbarDetailViewController.m */,
+				074DDC861B0080140081AFA4 /* NetbarDetailViewController.xib */,
+			);
+			name = NetBar;
+			sourceTree = "<group>";
+		};
+		0745B3841B007A9C006D6853 /* Netbar */ = {
+			isa = PBXGroup;
+			children = (
+				0745B3851B007AF3006D6853 /* NetbarDetailCell.h */,
+				0745B3861B007AF3006D6853 /* NetbarDetailCell.m */,
+				0745B3871B007AF3006D6853 /* NetbarDetailCell.xib */,
+			);
+			name = Netbar;
 			sourceTree = "<group>";
 		};
 		07566CA71AFC663600F93B58 /* Setting */ = {
@@ -1109,6 +1141,7 @@
 				071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */,
 				07868DEE1AF8581100160070 /* WYTabBarItemView.xib in Resources */,
 				07566CA61AFC648B00F93B58 /* SettingViewController.xib in Resources */,
+				0745B3891B007AF3006D6853 /* NetbarDetailCell.xib in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
 				0791AB341AE8B7DD0009A5A7 /* AboutViewController.xib in Resources */,
 				0799C8BC1AF1EB5800E407BB /* GameCommendCardView.xib in Resources */,
@@ -1119,6 +1152,7 @@
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
 				073DBCED1AE7492A009B49EB /* Images.xcassets in Resources */,
 				07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */,
+				074DDC881B0080140081AFA4 /* NetbarDetailViewController.xib in Resources */,
 				07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */,
 				07868DF01AF8581100160070 /* WYTabBarView.xib in Resources */,
 				073DBDB41AE794C4009B49EB /* arrow.png in Resources */,
@@ -1227,6 +1261,7 @@
 				078EDBD71AEF1EF800E93EE8 /* ASIAuthenticationDialog.m in Sources */,
 				0791AB581AE8DE260009A5A7 /* AFNetworkReachabilityManager.m in Sources */,
 				0791AB3B1AE8D8600009A5A7 /* WYSettingConfig.m in Sources */,
+				0745B3881B007AF3006D6853 /* NetbarDetailCell.m in Sources */,
 				073DBD421AE7712F009B49EB /* MKAnnotationView+WebCache.m in Sources */,
 				073DBD641AE7717D009B49EB /* UIColor+bit.m in Sources */,
 				073DBDF51AE7A1B0009B49EB /* UIImage+Alpha.m in Sources */,
@@ -1241,6 +1276,7 @@
 				07CB97661AFC5D3400928CB7 /* MMMaterialDesignSpinner.m in Sources */,
 				079049411AE9DF5A00E46795 /* WYOAuthService.m in Sources */,
 				073DBD501AE7712F009B49EB /* UIImageView+HighlightedWebCache.m in Sources */,
+				074DDC871B0080140081AFA4 /* NetbarDetailViewController.m in Sources */,
 				073DBD4D1AE7712F009B49EB /* UIImage+GIF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

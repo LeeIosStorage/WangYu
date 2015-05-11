@@ -12,6 +12,7 @@
 #import "NetbarTabCell.h"
 #import "SKSplashView.h"
 #import "SKSplashIcon.h"
+#import "NetbarDetailViewController.h"
 
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate>
 
@@ -157,6 +158,10 @@
 {
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+    
+    NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
+    [self.navigationController pushViewController:ndVc animated:YES];
+
 }
 
 
