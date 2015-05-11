@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		070DCBDF1B00762F00B27C19 /* OrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 070DCBDD1B00762F00B27C19 /* OrdersViewController.m */; };
+		070DCBE01B00762F00B27C19 /* OrdersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 070DCBDE1B00762F00B27C19 /* OrdersViewController.xib */; };
 		071923CF1AF74D8400432531 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923C81AF74D8400432531 /* LoginViewController.m */; };
 		071923D01AF74D8400432531 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071923C91AF74D8400432531 /* LoginViewController.xib */; };
 		071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923CB1AF74D8400432531 /* NewIntroViewController.m */; };
@@ -88,6 +90,10 @@
 		07566CA61AFC648B00F93B58 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07566CA41AFC648B00F93B58 /* SettingViewController.xib */; };
 		07566CAB1AFC663600F93B58 /* SettingViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07566CA91AFC663600F93B58 /* SettingViewCell.m */; };
 		07566CAC1AFC663600F93B58 /* SettingViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07566CAA1AFC663600F93B58 /* SettingViewCell.xib */; };
+		076195E71B008F8C00397711 /* ReserveOrderViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 076195E51B008F8C00397711 /* ReserveOrderViewCell.m */; };
+		076195E81B008F8C00397711 /* ReserveOrderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076195E61B008F8C00397711 /* ReserveOrderViewCell.xib */; };
+		076195EC1B008FAC00397711 /* PayOrderViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 076195EA1B008FAC00397711 /* PayOrderViewCell.m */; };
+		076195ED1B008FAC00397711 /* PayOrderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076195EB1B008FAC00397711 /* PayOrderViewCell.xib */; };
 		077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D83781AF9AED800AAF31F /* MBProgressHUD.m */; };
 		077D83801AF9AED800AAF31F /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 077D837A1AF9AED800AAF31F /* ProgressHUD.bundle */; };
 		077D83811AF9AED800AAF31F /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D837C1AF9AED800AAF31F /* ProgressHUD.m */; };
@@ -160,6 +166,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		070DCBDC1B00762F00B27C19 /* OrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdersViewController.h; sourceTree = "<group>"; };
+		070DCBDD1B00762F00B27C19 /* OrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrdersViewController.m; sourceTree = "<group>"; };
+		070DCBDE1B00762F00B27C19 /* OrdersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrdersViewController.xib; sourceTree = "<group>"; };
 		071923C71AF74D8400432531 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		071923C81AF74D8400432531 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		071923C91AF74D8400432531 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -299,6 +308,12 @@
 		07566CA81AFC663600F93B58 /* SettingViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewCell.h; sourceTree = "<group>"; };
 		07566CA91AFC663600F93B58 /* SettingViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewCell.m; sourceTree = "<group>"; };
 		07566CAA1AFC663600F93B58 /* SettingViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewCell.xib; sourceTree = "<group>"; };
+		076195E41B008F8C00397711 /* ReserveOrderViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReserveOrderViewCell.h; sourceTree = "<group>"; };
+		076195E51B008F8C00397711 /* ReserveOrderViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReserveOrderViewCell.m; sourceTree = "<group>"; };
+		076195E61B008F8C00397711 /* ReserveOrderViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReserveOrderViewCell.xib; sourceTree = "<group>"; };
+		076195E91B008FAC00397711 /* PayOrderViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayOrderViewCell.h; sourceTree = "<group>"; };
+		076195EA1B008FAC00397711 /* PayOrderViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayOrderViewCell.m; sourceTree = "<group>"; };
+		076195EB1B008FAC00397711 /* PayOrderViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayOrderViewCell.xib; sourceTree = "<group>"; };
 		077D83771AF9AED800AAF31F /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		077D83781AF9AED800AAF31F /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		077D837A1AF9AED800AAF31F /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
@@ -447,6 +462,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		070DCBDB1B0075F700B27C19 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				070DCBDC1B00762F00B27C19 /* OrdersViewController.h */,
+				070DCBDD1B00762F00B27C19 /* OrdersViewController.m */,
+				070DCBDE1B00762F00B27C19 /* OrdersViewController.xib */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
 		071923C61AF74D8400432531 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -599,6 +624,7 @@
 				07868DDA1AF8581100160070 /* Common */,
 				07868DDD1AF8581100160070 /* TabBar */,
 				071923C61AF74D8400432531 /* Login */,
+				070DCBDB1B0075F700B27C19 /* Mine */,
 				0791AB2F1AE8B7A10009A5A7 /* Setting */,
 				073DBD791AE77982009B49EB /* Main */,
 				0745B37E1B005646006D6853 /* NetBar */,
@@ -610,6 +636,7 @@
 			isa = PBXGroup;
 			children = (
 				0745B3841B007A9C006D6853 /* Netbar */,
+				076195E31B008F4800397711 /* Mine */,
 				07566CA71AFC663600F93B58 /* Setting */,
 				07203A101AF1D5EE0056A74B /* Main */,
 				073DBD6F1AE77211009B49EB /* HotUpButton.h */,
@@ -817,6 +844,19 @@
 				07566CAA1AFC663600F93B58 /* SettingViewCell.xib */,
 			);
 			path = Setting;
+			sourceTree = "<group>";
+		};
+		076195E31B008F4800397711 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				076195E41B008F8C00397711 /* ReserveOrderViewCell.h */,
+				076195E51B008F8C00397711 /* ReserveOrderViewCell.m */,
+				076195E61B008F8C00397711 /* ReserveOrderViewCell.xib */,
+				076195E91B008FAC00397711 /* PayOrderViewCell.h */,
+				076195EA1B008FAC00397711 /* PayOrderViewCell.m */,
+				076195EB1B008FAC00397711 /* PayOrderViewCell.xib */,
+			);
+			path = Mine;
 			sourceTree = "<group>";
 		};
 		077D83761AF9AED800AAF31F /* MBProgressHUD */ = {
@@ -1140,6 +1180,7 @@
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
 				071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */,
 				07868DEE1AF8581100160070 /* WYTabBarItemView.xib in Resources */,
+				070DCBE01B00762F00B27C19 /* OrdersViewController.xib in Resources */,
 				07566CA61AFC648B00F93B58 /* SettingViewController.xib in Resources */,
 				0745B3891B007AF3006D6853 /* NetbarDetailCell.xib in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
@@ -1151,12 +1192,14 @@
 				071923DD1AF7738900432531 /* SetPwdViewController.xib in Resources */,
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
 				073DBCED1AE7492A009B49EB /* Images.xcassets in Resources */,
+				076195E81B008F8C00397711 /* ReserveOrderViewCell.xib in Resources */,
 				07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */,
 				074DDC881B0080140081AFA4 /* NetbarDetailViewController.xib in Resources */,
 				07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */,
 				07868DF01AF8581100160070 /* WYTabBarView.xib in Resources */,
 				073DBDB41AE794C4009B49EB /* arrow.png in Resources */,
 				073DBDB51AE794C4009B49EB /* arrow@2x.png in Resources */,
+				076195ED1B008FAC00397711 /* PayOrderViewCell.xib in Resources */,
 				07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1182,6 +1225,7 @@
 				078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */,
 				0791AB5A1AE8DE260009A5A7 /* AFURLConnectionOperation.m in Sources */,
 				073DBD611AE7717D009B49EB /* NSDictionary+ObjectForKey.m in Sources */,
+				070DCBDF1B00762F00B27C19 /* OrdersViewController.m in Sources */,
 				07868DE71AF8581100160070 /* WYBaseSuperViewController.m in Sources */,
 				07868DE91AF8581100160070 /* WYSuperViewController.m in Sources */,
 				073DBD631AE7717D009B49EB /* PathHelper.m in Sources */,
@@ -1221,6 +1265,7 @@
 				0791AB5F1AE8DE260009A5A7 /* UIImage+HQ.m in Sources */,
 				0791AB381AE8CF4C0009A5A7 /* EGOCache.m in Sources */,
 				0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */,
+				076195E71B008F8C00397711 /* ReserveOrderViewCell.m in Sources */,
 				07868DF11AF8581100160070 /* WYTabBarViewController.m in Sources */,
 				077D83811AF9AED800AAF31F /* ProgressHUD.m in Sources */,
 				07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */,
@@ -1251,6 +1296,7 @@
 				07868DEA1AF8581100160070 /* WYTitleNavBarView.m in Sources */,
 				0790494A1AEA226B00E46795 /* NSData+Base64.m in Sources */,
 				07203A0E1AF1CE460056A74B /* NetbarTabViewController.m in Sources */,
+				076195EC1B008FAC00397711 /* PayOrderViewCell.m in Sources */,
 				07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */,
 				077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */,
 				077D83891AF9C3BC00AAF31F /* NSString+Value.m in Sources */,

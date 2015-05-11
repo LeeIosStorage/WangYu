@@ -72,7 +72,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (void)clearAllCache;
 - (unsigned long long)getUrlCacheSize;
 
-#pragma mark - API LIST
+#pragma mark ------ API LIST
 - (BOOL)registerWithPhone:(NSString*)phone password:(NSString*)password invitationCode:(NSString*)invitationCode tag:(int)tag;
 //获取验证码
 - (BOOL)getCodeWithPhone:(NSString*)phone type:(NSString*)type tag:(int)tag;
@@ -85,5 +85,9 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 
 - (BOOL)loginWithPhone:(NSString*)phone password:(NSString*)password tag:(int)tag error:(NSError **)errPtr;
 - (BOOL)getUserInfoWithUid:(NSString*)uid tag:(int)tag error:(NSError **)errPtr;
+
+#pragma mark - 网吧
+- (BOOL)getReserveOrderListWithUid:(NSString *)uid tag:(int)tag;
+- (BOOL)getPayOrderListWithUid:(NSString *)uid tag:(int)tag;
 
 @end

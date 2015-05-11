@@ -12,6 +12,7 @@
 #import "WYEngine.h"
 #import "AppDelegate.h"
 #import "SettingViewController.h"
+#import "OrdersViewController.h"
 
 @interface MineTabViewController ()
 
@@ -66,6 +67,9 @@
 
 #pragma mark - IBAction
 - (IBAction)editAction:(id)sender{
+    
+    OrdersViewController *orderVc = [[OrdersViewController alloc] init];
+    [self.navigationController pushViewController:orderVc animated:YES];
     
 }
 - (void)settingAction:(id)sender {
