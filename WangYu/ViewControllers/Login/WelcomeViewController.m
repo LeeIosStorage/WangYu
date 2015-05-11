@@ -80,6 +80,21 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)goBack{
+//    [UIView animateWithDuration:1.0 delay:0 usingSpringWithDamping:3.0f initialSpringVelocity:10 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+//        CGAffineTransform scaleTransform = CGAffineTransformMakeTranslation(0, -self.view.frame.size.height);
+//        self.navigationController.view.transform = scaleTransform;
+//    } completion:^(BOOL finished)
+//     {
+//         
+//     }];
+    
+    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
 #pragma mark - IBAction
 - (IBAction)loginAction:(id)sender {
     [WYEngine shareInstance].firstLogin = NO;
@@ -97,6 +112,8 @@
 
 - (IBAction)visitorAction:(id)sender {
     
+//    [self goBack];
+//    return;
     [WYEngine shareInstance].firstLogin = NO;
     [[WYEngine shareInstance] visitorLogin];
     AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
