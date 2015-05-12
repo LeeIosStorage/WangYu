@@ -58,7 +58,6 @@
 		073DBD651AE7717D009B49EB /* UIImage+ProportionalFill.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD5E1AE7717D009B49EB /* UIImage+ProportionalFill.m */; };
 		073DBD661AE7717D009B49EB /* URLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD601AE7717D009B49EB /* URLHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		073DBD6D1AE771AC009B49EB /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD6A1AE771AC009B49EB /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		073DBD711AE77211009B49EB /* HotUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD701AE77211009B49EB /* HotUpButton.m */; };
 		073DBD741AE778CF009B49EB /* WYUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD731AE778CF009B49EB /* WYUserInfo.m */; };
 		073DBD771AE77929009B49EB /* WYEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD761AE77929009B49EB /* WYEngine.m */; };
 		073DBD801AE77A3C009B49EB /* MineTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBD7E1AE77A3C009B49EB /* MineTabViewController.m */; };
@@ -156,8 +155,10 @@
 		0799C8B01AF1D88E00E407BB /* GameCommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0799C8AE1AF1D88E00E407BB /* GameCommendViewController.xib */; };
 		0799C8B61AF1D8C800E407BB /* ZLPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0799C8B31AF1D8C800E407BB /* ZLPanGestureRecognizer.m */; };
 		0799C8B71AF1D8C800E407BB /* ZLSwipeableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0799C8B51AF1D8C800E407BB /* ZLSwipeableView.m */; };
-		0799C8BA1AF1E7C200E407BB /* GameCommendCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0799C8B91AF1E7C200E407BB /* GameCommendCardView.m */; };
-		0799C8BC1AF1EB5800E407BB /* GameCommendCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0799C8BB1AF1EB5800E407BB /* GameCommendCardView.xib */; };
+		079D52521B01E48600DF4D6B /* GameCommendCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 079D524E1B01E48600DF4D6B /* GameCommendCardView.m */; };
+		079D52531B01E48600DF4D6B /* GameCommendCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 079D524F1B01E48600DF4D6B /* GameCommendCardView.xib */; };
+		079D52541B01E48600DF4D6B /* HotUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 079D52511B01E48600DF4D6B /* HotUpButton.m */; };
+		079D52571B01E52900DF4D6B /* WYSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 079D52561B01E52900DF4D6B /* WYSegmentedView.m */; };
 		07C4C9FD1AF9B283008DA5D3 /* ColorGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C4C9FC1AF9B283008DA5D3 /* ColorGradView.m */; };
 		07CB97661AFC5D3400928CB7 /* MMMaterialDesignSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97651AFC5D3400928CB7 /* MMMaterialDesignSpinner.m */; };
 		07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97681AFC5D4C00928CB7 /* DeformationButton.m */; };
@@ -266,8 +267,6 @@
 		073DBD601AE7717D009B49EB /* URLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLHelper.m; sourceTree = "<group>"; };
 		073DBD691AE771AC009B49EB /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		073DBD6A1AE771AC009B49EB /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		073DBD6F1AE77211009B49EB /* HotUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotUpButton.h; sourceTree = "<group>"; };
-		073DBD701AE77211009B49EB /* HotUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotUpButton.m; sourceTree = "<group>"; };
 		073DBD721AE778CF009B49EB /* WYUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYUserInfo.h; sourceTree = "<group>"; };
 		073DBD731AE778CF009B49EB /* WYUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYUserInfo.m; sourceTree = "<group>"; };
 		073DBD751AE77929009B49EB /* WYEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYEngine.h; sourceTree = "<group>"; };
@@ -442,9 +441,13 @@
 		0799C8B31AF1D8C800E407BB /* ZLPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLPanGestureRecognizer.m; sourceTree = "<group>"; };
 		0799C8B41AF1D8C800E407BB /* ZLSwipeableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLSwipeableView.h; sourceTree = "<group>"; };
 		0799C8B51AF1D8C800E407BB /* ZLSwipeableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLSwipeableView.m; sourceTree = "<group>"; };
-		0799C8B81AF1E7C200E407BB /* GameCommendCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommendCardView.h; sourceTree = "<group>"; };
-		0799C8B91AF1E7C200E407BB /* GameCommendCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommendCardView.m; sourceTree = "<group>"; };
-		0799C8BB1AF1EB5800E407BB /* GameCommendCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameCommendCardView.xib; sourceTree = "<group>"; };
+		079D524D1B01E48600DF4D6B /* GameCommendCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommendCardView.h; sourceTree = "<group>"; };
+		079D524E1B01E48600DF4D6B /* GameCommendCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommendCardView.m; sourceTree = "<group>"; };
+		079D524F1B01E48600DF4D6B /* GameCommendCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameCommendCardView.xib; sourceTree = "<group>"; };
+		079D52501B01E48600DF4D6B /* HotUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotUpButton.h; sourceTree = "<group>"; };
+		079D52511B01E48600DF4D6B /* HotUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotUpButton.m; sourceTree = "<group>"; };
+		079D52551B01E52900DF4D6B /* WYSegmentedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYSegmentedView.h; sourceTree = "<group>"; };
+		079D52561B01E52900DF4D6B /* WYSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYSegmentedView.m; sourceTree = "<group>"; };
 		07C4C9FB1AF9B283008DA5D3 /* ColorGradView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorGradView.h; sourceTree = "<group>"; };
 		07C4C9FC1AF9B283008DA5D3 /* ColorGradView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorGradView.m; sourceTree = "<group>"; };
 		07CB97641AFC5D3400928CB7 /* MMMaterialDesignSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMMaterialDesignSpinner.h; sourceTree = "<group>"; };
@@ -655,15 +658,11 @@
 		073DBD141AE770C0009B49EB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				079D524C1B01E48600DF4D6B /* Common */,
 				0745B3841B007A9C006D6853 /* Netbar */,
 				076195E31B008F4800397711 /* Mine */,
 				07566CA71AFC663600F93B58 /* Setting */,
 				07203A101AF1D5EE0056A74B /* Main */,
-				073DBD6F1AE77211009B49EB /* HotUpButton.h */,
-				073DBD701AE77211009B49EB /* HotUpButton.m */,
-				0799C8B81AF1E7C200E407BB /* GameCommendCardView.h */,
-				0799C8B91AF1E7C200E407BB /* GameCommendCardView.m */,
-				0799C8BB1AF1EB5800E407BB /* GameCommendCardView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1114,6 +1113,20 @@
 			path = ZLSwipeableView;
 			sourceTree = "<group>";
 		};
+		079D524C1B01E48600DF4D6B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				079D524D1B01E48600DF4D6B /* GameCommendCardView.h */,
+				079D524E1B01E48600DF4D6B /* GameCommendCardView.m */,
+				079D524F1B01E48600DF4D6B /* GameCommendCardView.xib */,
+				079D52501B01E48600DF4D6B /* HotUpButton.h */,
+				079D52511B01E48600DF4D6B /* HotUpButton.m */,
+				079D52551B01E52900DF4D6B /* WYSegmentedView.h */,
+				079D52561B01E52900DF4D6B /* WYSegmentedView.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		07CB97631AFC5D3400928CB7 /* MMMaterialDesignSpinner */ = {
 			isa = PBXGroup;
 			children = (
@@ -1208,6 +1221,7 @@
 				0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */,
 				071923D01AF74D8400432531 /* LoginViewController.xib in Resources */,
 				071923D31AF74D8400432531 /* WelcomeViewController.xib in Resources */,
+				079D52531B01E48600DF4D6B /* GameCommendCardView.xib in Resources */,
 				077D83801AF9AED800AAF31F /* ProgressHUD.bundle in Resources */,
 				0799C8B01AF1D88E00E407BB /* GameCommendViewController.xib in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
@@ -1220,7 +1234,6 @@
 				0777DFD11B01C4CB00E1E314 /* QuickPayViewController.xib in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
 				0791AB341AE8B7DD0009A5A7 /* AboutViewController.xib in Resources */,
-				0799C8BC1AF1EB5800E407BB /* GameCommendCardView.xib in Resources */,
 				071923E21AF7771A00432531 /* RegisterViewController.xib in Resources */,
 				07566CAC1AFC663600F93B58 /* SettingViewCell.xib in Resources */,
 				07868DEB1AF8581100160070 /* WYTitleNavBarView.xib in Resources */,
@@ -1256,6 +1269,7 @@
 			files = (
 				0791AB551AE8DE260009A5A7 /* AFHTTPRequestOperation.m in Sources */,
 				073DBCE81AE7492A009B49EB /* ViewController.m in Sources */,
+				079D52571B01E52900DF4D6B /* WYSegmentedView.m in Sources */,
 				073DBD4A1AE7712F009B49EB /* SDWebImageManager.m in Sources */,
 				073DBD741AE778CF009B49EB /* WYUserInfo.m in Sources */,
 				078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */,
@@ -1278,7 +1292,6 @@
 				073DBD6D1AE771AC009B49EB /* JSONKit.m in Sources */,
 				073DBD491AE7712F009B49EB /* SDWebImageDownloaderOperation.m in Sources */,
 				073DBD521AE7712F009B49EB /* UIView+WebCacheOperation.m in Sources */,
-				073DBD711AE77211009B49EB /* HotUpButton.m in Sources */,
 				073DBD651AE7717D009B49EB /* UIImage+ProportionalFill.m in Sources */,
 				0791AB5B1AE8DE260009A5A7 /* AFURLRequestSerialization.m in Sources */,
 				073DBCE51AE7492A009B49EB /* AppDelegate.m in Sources */,
@@ -1311,6 +1324,7 @@
 				0791AB561AE8DE260009A5A7 /* AFHTTPRequestOperationManager.m in Sources */,
 				073DBD481AE7712F009B49EB /* SDWebImageDownloader.m in Sources */,
 				073DBDA91AE7939C009B49EB /* WYCommonUtils.m in Sources */,
+				079D52541B01E48600DF4D6B /* HotUpButton.m in Sources */,
 				078EDBDF1AEF1EF800E93EE8 /* LSReachability.m in Sources */,
 				071923DC1AF7738900432531 /* SetPwdViewController.m in Sources */,
 				071923E11AF7771A00432531 /* RegisterViewController.m in Sources */,
@@ -1330,11 +1344,11 @@
 				071923D71AF76C6C00432531 /* RetrievePwdViewController.m in Sources */,
 				0777DFD01B01C4CB00E1E314 /* QuickPayViewController.m in Sources */,
 				073DBCE21AE7492A009B49EB /* main.m in Sources */,
-				0799C8BA1AF1E7C200E407BB /* GameCommendCardView.m in Sources */,
 				0799C8B71AF1D8C800E407BB /* ZLSwipeableView.m in Sources */,
 				07868DEA1AF8581100160070 /* WYTitleNavBarView.m in Sources */,
 				0790494A1AEA226B00E46795 /* NSData+Base64.m in Sources */,
 				07203A0E1AF1CE460056A74B /* NetbarTabViewController.m in Sources */,
+				079D52521B01E48600DF4D6B /* GameCommendCardView.m in Sources */,
 				076195EC1B008FAC00397711 /* PayOrderViewCell.m in Sources */,
 				07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */,
 				077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */,

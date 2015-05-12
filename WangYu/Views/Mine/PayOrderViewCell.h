@@ -10,4 +10,16 @@
 
 @interface PayOrderViewCell : UITableViewCell
 
+@property (strong, nonatomic) NSDictionary *orderInfo;
+
+@property (strong, nonatomic) IBOutlet UILabel *netbarNameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *indicatorImageView;
+@property (strong, nonatomic) IBOutlet UILabel *stateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *priceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *privilegeYuanLabel;
+@property (strong, nonatomic) IBOutlet UILabel *redPacketLabel;
+@property (strong, nonatomic) IBOutlet UILabel *orderTimeLabel;
+@property (strong, nonatomic) IBOutlet UIButton *cancelOrderButton;
+@property (strong, nonatomic) IBOutlet UIButton *payOrderButton;
+
 @end

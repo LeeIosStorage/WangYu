@@ -10,4 +10,17 @@
 
 @interface ReserveOrderViewCell : UITableViewCell
 
+@property (strong, nonatomic) NSDictionary *orderInfo;
+
+@property (strong, nonatomic) IBOutlet UILabel *netbarNameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *indicatorImageView;
+@property (strong, nonatomic) IBOutlet UILabel *stateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *orderTimeLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *openImageViewIcon;
+@property (strong, nonatomic) IBOutlet UILabel *openTimeLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *seatImageViewIcon;
+@property (strong, nonatomic) IBOutlet UILabel *seatLabel;
+@property (strong, nonatomic) IBOutlet UILabel *introLabel;
+@property (strong, nonatomic) IBOutlet UIButton *cancelOrderButton;
+@property (strong, nonatomic) IBOutlet UIButton *payOrderButton;
 @end
