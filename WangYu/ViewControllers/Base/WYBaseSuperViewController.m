@@ -168,6 +168,9 @@
             id title = [items objectAtIndex:index];
             if ([title isKindOfClass:[NSString class]]) {
                 [_segmentedControl setTitle:title forSegmentAtIndex:index];
+                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:15],NSForegroundColorAttributeName:SKIN_TEXT_COLOR1};
+                [_segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+                [_segmentedControl setTitleTextAttributes:attributes forState:UIControlStateSelected];
             }
         }
         _segmentedControl.tintColor = [UIColor whiteColor];

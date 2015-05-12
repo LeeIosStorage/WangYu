@@ -24,14 +24,17 @@
                     <rect key="frame" x="97" y="65.000016666855629" width="127" height="38"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <state key="normal" title="关于">
+                    <state key="normal" title="我的订单">
                         <color key="titleColor" red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="editAction:" destination="-1" eventType="touchUpInside" id="3V6-Uw-5dN"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="274" y="413"/>
+            <point key="canvasLocation" x="277" y="412"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
