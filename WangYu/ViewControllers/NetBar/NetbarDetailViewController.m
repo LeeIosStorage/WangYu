@@ -8,6 +8,8 @@
 
 #import "NetbarDetailViewController.h"
 #import "NetbarDetailCell.h"
+#import "QuickBookViewController.h"
+#import "QuickPayViewController.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -145,10 +147,12 @@
 }
 
 - (IBAction)bookAction:(id)sender {
-    
+    QuickBookViewController *qbVc = [[QuickBookViewController alloc] init];
+    [self.navigationController pushViewController:qbVc animated:YES];
 }
 
 - (IBAction)payAction:(id)sender {
-    
+    QuickPayViewController *qpVc = [[QuickPayViewController alloc] init];
+    [self.navigationController pushViewController:qpVc animated:YES];
 }
 @end

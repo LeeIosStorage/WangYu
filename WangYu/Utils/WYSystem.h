@@ -21,7 +21,7 @@
 #define SKIN_COLOR [UIColor colorWithRed:(1.0*0xfd/0xff) green:(1.0*0xd6/0xff) blue:(1.0*0x44/0xff) alpha:1]
 
 #define SKIN_TEXT_COLOR1 [UIColor colorWithRed:(1.0*0x33/0xff) green:(1.0*0x33/0xff) blue:(1.0*0x33/0xff) alpha:1]
-#define SKIN_TEXT_COLOR2 [UIColor colorWithRed:(1.0*0xd2/0xff) green:(1.0*0xd2/0xff) blue:(1.0*0xd2/0xff) alpha:1]
+#define SKIN_TEXT_COLOR2 [UIColor colorWithRed:(1.0*0x9a/0xff) green:(1.0*0x9a/0xff) blue:(1.0*0x9a/0xff) alpha:1]
 
 #define FONT_PATH [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"dqw3.otf"]
 #define SKIN_FONT(X) [WYUIUtils customFontWithPath:FONT_PATH size:X];
