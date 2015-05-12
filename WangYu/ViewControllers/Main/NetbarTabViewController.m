@@ -41,6 +41,8 @@
     WYLog(@"NetbarTabViewController dealloc!!!");
     _splashView.delegate = nil;
     _splashView = nil;
+    _netBarTable.delegate = nil;
+    _netBarTable.dataSource = nil;
 }
 
 - (void)viewDidLoad {

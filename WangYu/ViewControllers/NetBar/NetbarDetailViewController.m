@@ -42,7 +42,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self.view setBackgroundColor:UIColorToRGB(0xF1F1F1)];
     self.teamTable.tableHeaderView = self.headerView;
     
     self.netbarImage.layer.cornerRadius = 4.0;
@@ -132,6 +131,18 @@
         NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
         cell = [cells objectAtIndex:0];
     }
+    
+//    cell.teamLabel.font = SKIN_FONT(12);
+//    cell.teamLabel.textColor = SKIN_TEXT_COLOR1;
+//    
+//    cell.dateLabel.font = SKIN_FONT(12);
+//    cell.dateLabel.textColor = SKIN_TEXT_COLOR2;
+//    
+//    cell.joinNumLabel.font = SKIN_FONT(12);
+//    cell.joinNumLabel.textColor = SKIN_TEXT_COLOR2;
+//    
+//    cell.nameLabel.font = SKIN_FONT(12);
+//    cell.nameLabel.textColor = SKIN_TEXT_COLOR1;
     
     return cell;
 }

@@ -9,14 +9,28 @@
 #import "NetbarTabCell.h"
 #import "UIImageView+WebCache.h"
 
+@interface NetbarTabCell()
+
+@property (nonatomic, weak) UIFont *font1;
+@property (nonatomic, weak) UIFont *font2;
+
+@end
+
 @implementation NetbarTabCell
 
 - (void)awakeFromNib {
     // Initialization code
-    self.netbarTitle.font = SKIN_FONT(15);
-    self.netbarAddress.font = SKIN_FONT(12);
-    self.netbarPrice.font = SKIN_FONT(12);
-    self.netbarDistance.font = SKIN_FONT(12);
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        self.font1 = SKIN_FONT(15);
+        self.font2 = SKIN_FONT(12);
+        dispatch_async(dispatch_get_main_queue(),^{
+            self.netbarTitle.font = self.font1;
+            self.netbarAddress.font = self.font2;
+            self.netbarPrice.font = self.font2;
+            self.netbarDistance.font = self.font2;
+        });
+    });
     [self.netbarImage sd_setImageWithURL:@"xxx" placeholderImage:[UIImage imageNamed:@"netbar_default_img"]];
     self.netbarImage.layer.cornerRadius = 4.0;
     self.netbarImage.layer.masksToBounds = YES;
