@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic) IBOutlet UIView *maskView;
 
+@property (strong, nonatomic) IBOutlet UIImageView *netbarImage;
 @property (strong, nonatomic) IBOutlet UITableView *teamTable;
 @property (strong, nonatomic) IBOutlet UIView *sectionView;
 @property (strong, nonatomic) IBOutlet UIButton *bookButton;
@@ -22,6 +23,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *netbarLabel;
 @property (strong, nonatomic) IBOutlet UILabel *colorLabel;
 @property (strong, nonatomic) IBOutlet UILabel *sectionLabel;
+@property (strong, nonatomic) IBOutlet UILabel *priceLabel1;
+@property (strong, nonatomic) IBOutlet UILabel *priceLabel2;
+@property (strong, nonatomic) IBOutlet UILabel *addressLabel;
+@property (strong, nonatomic) IBOutlet UILabel *phoneLabel;
+@property (strong, nonatomic) IBOutlet UILabel *descLabel;
+
 
 - (IBAction)bookAction:(id)sender;
 - (IBAction)payAction:(id)sender;
@@ -33,7 +40,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self.view setBackgroundColor:UIColorToRGB(0xF1F1F1)];
     self.teamTable.tableHeaderView = self.headerView;
+    
+    self.netbarImage.layer.cornerRadius = 4.0;
+    self.netbarImage.layer.masksToBounds = YES;
+    
+    self.netbarLabel.textColor = SKIN_TEXT_COLOR1;
+    self.netbarLabel.font = SKIN_FONT(15);
+    
+    self.priceLabel1.textColor = SKIN_TEXT_COLOR2;
+    self.priceLabel1.font = SKIN_FONT(12);
+    self.priceLabel2.textColor = SKIN_TEXT_COLOR2;
+    self.priceLabel2.font = SKIN_FONT(12);
+    
+    self.addressLabel.textColor = SKIN_TEXT_COLOR1;
+    self.addressLabel.font = SKIN_FONT(12);
+    self.phoneLabel.textColor = SKIN_TEXT_COLOR1;
+    self.phoneLabel.font = SKIN_FONT(12);
+    self.descLabel.textColor =SKIN_TEXT_COLOR1;
+    self.descLabel.font = SKIN_FONT(12);
     
     self.colorLabel.backgroundColor = UIColorToRGB(0xfac402);
     self.colorLabel.layer.cornerRadius = 1.0;

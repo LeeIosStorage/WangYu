@@ -18,6 +18,8 @@
     self.netbarPrice.font = SKIN_FONT(12);
     self.netbarDistance.font = SKIN_FONT(12);
     [self.netbarImage sd_setImageWithURL:@"xxx" placeholderImage:[UIImage imageNamed:@"netbar_default_img"]];
+    self.netbarImage.layer.cornerRadius = 4.0;
+    self.netbarImage.layer.masksToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

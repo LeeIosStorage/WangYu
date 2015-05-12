@@ -10,4 +10,10 @@
 
 @interface NetbarDetailCell : UITableViewCell
 
+@property (strong, nonatomic) IBOutlet UILabel *teamLabel;
+@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *joinNumLabel;
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+
+
 @end

@@ -39,7 +39,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self.view setBackgroundColor:UIColorRGB(240, 240, 240)];//UIColorRGB(240, 240, 240)
+    [self.view setBackgroundColor:UIColorRGB(241, 241, 241)];//UIColorRGB(240, 240, 240)
     self.view.clipsToBounds = YES;
 //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
