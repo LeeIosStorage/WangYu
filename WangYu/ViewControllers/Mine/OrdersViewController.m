@@ -11,6 +11,7 @@
 #import "WYProgressHUD.h"
 #import "ReserveOrderViewCell.h"
 #import "PayOrderViewCell.h"
+#import "WYSegmentedView.h"
 
 #define ORDER_TYPE_RESERVE     0
 #define ORDER_TYPE_PAY         1
@@ -35,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.view.backgroundColor = UIColorRGB(240, 240, 240);
+    self.view.backgroundColor = UIColorRGB(241, 241, 241);
     _selectedSegmentIndex = 0;
     
     self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.reserveOrderTableView];
@@ -55,7 +56,19 @@
 }
 
 - (void)initNormalTitleNavBarSubviews{
-    [self setSegmentedControlWithSelector:@selector(segmentedControlAction:) items:@[@"预订订单",@"支付订单"]];
+//    [self setSegmentedControlWithSelector:@selector(segmentedControlAction:) items:@[@"预订订单",@"支付订单"]];
+    WYSegmentedView *segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((self.titleNavBar.frame.size.width-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
+    segmentedView.items = @[@"预订订单",@"支付订单"];
+    __weak OrdersViewController *weakSelf = self;
+    segmentedView.segmentedButtonClickBlock = ^(NSInteger index){
+        if (index == weakSelf.selectedSegmentIndex) {
+            return;
+        }
+        weakSelf.selectedSegmentIndex = index;
+//        WYLog(@"selectedSegmentIndex = %d",(int)index);
+        [self feedsTypeSwitch:(int)index needRefreshFeeds:NO];
+    };
+    [self.titleNavBar addSubview:segmentedView];
 }
 
 -(void)feedsTypeSwitch:(int)tag needRefreshFeeds:(BOOL)needRefresh
@@ -278,7 +291,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.payOrderTableView) {
-        return 128;
+        return 150;
     }
     return 150;
 }
@@ -293,6 +306,7 @@
             cell = [cells objectAtIndex:0];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+        cell.orderInfo = nil;
         return cell;
     }
     static NSString *CellIdentifier = @"ReserveOrderViewCell";
@@ -303,7 +317,7 @@
         cell.backgroundColor = [UIColor clearColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
+    cell.orderInfo = nil;
     return cell;
 }
 
