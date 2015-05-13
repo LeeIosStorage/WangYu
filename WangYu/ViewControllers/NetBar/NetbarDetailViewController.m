@@ -42,6 +42,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self refreshUI];
+}
+
+- (void)refreshUI {
     self.teamTable.tableHeaderView = self.headerView;
     
     self.netbarImage.layer.cornerRadius = 4.0;
@@ -153,10 +157,6 @@
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
 
-- (void)dealloc {
-
-}
-
 - (IBAction)bookAction:(id)sender {
     QuickBookViewController *qbVc = [[QuickBookViewController alloc] init];
     [self.navigationController pushViewController:qbVc animated:YES];
@@ -166,4 +166,11 @@
     QuickPayViewController *qpVc = [[QuickPayViewController alloc] init];
     [self.navigationController pushViewController:qpVc animated:YES];
 }
+
+-(void)dealloc{
+    WYLog(@"NetbarDetailViewController dealloc!!!");
+    _teamTable.delegate = nil;
+    _teamTable.dataSource = nil;
+}
+
 @end

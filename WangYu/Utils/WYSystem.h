@@ -31,6 +31,9 @@
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
+//用于block获取弱引用
+#define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
+
 //获取屏幕 宽度、高度
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WYNetbarInfo.h"
 
 @interface NetbarTabCell : UITableViewCell
 
@@ -15,5 +16,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *netbarAddress;
 @property (strong, nonatomic) IBOutlet UILabel *netbarPrice;
 @property (strong, nonatomic) IBOutlet UILabel *netbarDistance;
+
+@property (strong, nonatomic) WYNetbarInfo *netbarInfo;
 
 @end

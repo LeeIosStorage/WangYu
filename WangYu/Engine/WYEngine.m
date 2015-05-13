@@ -663,6 +663,7 @@ static WYEngine* s_ShareInstance = nil;
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbarReserveList",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
+
 - (BOOL)getPayOrderListWithUid:(NSString *)uid tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (uid) {

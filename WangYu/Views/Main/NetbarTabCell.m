@@ -20,7 +20,6 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         self.font1 = SKIN_FONT(15);
         self.font2 = SKIN_FONT(12);
@@ -31,7 +30,6 @@
             self.netbarDistance.font = self.font2;
         });
     });
-    [self.netbarImage sd_setImageWithURL:@"xxx" placeholderImage:[UIImage imageNamed:@"netbar_default_img"]];
     self.netbarImage.layer.cornerRadius = 4.0;
     self.netbarImage.layer.masksToBounds = YES;
 }
@@ -40,6 +38,42 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void)setNetbarInfo:(WYNetbarInfo *)netbarInfo{
+    _netbarInfo = netbarInfo;
+    if (![netbarInfo.smallImageUrl isEqual:[NSNull null]]) {
+        [_netbarImage sd_setImageWithURL:netbarInfo.smallImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
+    }else{
+        [_netbarImage sd_setImageWithURL:nil];
+        [_netbarImage setImage:[UIImage imageNamed:@"netbar_load_icon"]];
+    }
+    
+    _netbarTitle.text = netbarInfo.netbarName;
+    _netbarPrice.text = netbarInfo.price;
+    _netbarDistance.text = netbarInfo.distance;
+    _netbarAddress.text = netbarInfo.address;
+    
+//    _priceLabel.text = [NSString stringWithFormat:@"￥%@",cardInfo.price];
+//    _cardTitleLabel.text = cardInfo.title;
+//    if (cardInfo.status == 1) {
+//        [_statusBtn setTitle:@"免费领取" forState:UIControlStateNormal];
+//        _statusBtn.enabled = YES;
+//        [_statusBtn setBackgroundImage:[UIImage imageNamed:@"card_status_bg"] forState:UIControlStateNormal];
+//    }else if (cardInfo.status == 2) {
+//        [_statusBtn setTitle:@"领用完" forState:UIControlStateNormal];
+//        _statusBtn.enabled = NO;
+//        [_statusBtn setBackgroundImage:[UIImage imageNamed:@"card_staus_hover_bg"] forState:UIControlStateNormal];
+//    }else if (cardInfo.status == 3) {
+//        [_statusBtn setTitle:@"已过期" forState:UIControlStateNormal];
+//        _statusBtn.enabled = NO;
+//        [_statusBtn setBackgroundImage:[UIImage imageNamed:@"card_staus_hover_bg"] forState:UIControlStateNormal];
+//    }else if (cardInfo.status == 4) {
+//        [_statusBtn setTitle:@"已领取" forState:UIControlStateNormal];
+//        _statusBtn.enabled = NO;
+//        [_statusBtn setBackgroundImage:[UIImage imageNamed:@"card_staus_hover_bg"] forState:UIControlStateNormal];
+//    }
+//    _cardDes.text = cardInfo.des;
 }
 
 @end

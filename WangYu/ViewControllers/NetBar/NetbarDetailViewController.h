@@ -7,7 +7,10 @@
 //
 
 #import "WYSuperViewController.h"
+#import "WYNetbarInfo.h"
 
 @interface NetbarDetailViewController : WYSuperViewController
+
+@property (nonatomic, strong) WYNetbarInfo *netbarInfo;
 
 @end

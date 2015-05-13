@@ -93,6 +93,7 @@
 		076195E81B008F8C00397711 /* ReserveOrderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076195E61B008F8C00397711 /* ReserveOrderViewCell.xib */; };
 		076195EC1B008FAC00397711 /* PayOrderViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 076195EA1B008FAC00397711 /* PayOrderViewCell.m */; };
 		076195ED1B008FAC00397711 /* PayOrderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076195EB1B008FAC00397711 /* PayOrderViewCell.xib */; };
+		07695CDF1B03231000F4806C /* WYNetbarInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 07695CDE1B03231000F4806C /* WYNetbarInfo.m */; };
 		0777DFCB1B01C4AA00E1E314 /* QuickBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */; };
 		0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */; };
 		0777DFD01B01C4CB00E1E314 /* QuickPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777DFCE1B01C4CB00E1E314 /* QuickPayViewController.m */; };
@@ -321,6 +322,8 @@
 		076195E91B008FAC00397711 /* PayOrderViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayOrderViewCell.h; sourceTree = "<group>"; };
 		076195EA1B008FAC00397711 /* PayOrderViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayOrderViewCell.m; sourceTree = "<group>"; };
 		076195EB1B008FAC00397711 /* PayOrderViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayOrderViewCell.xib; sourceTree = "<group>"; };
+		07695CDD1B03231000F4806C /* WYNetbarInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYNetbarInfo.h; sourceTree = "<group>"; };
+		07695CDE1B03231000F4806C /* WYNetbarInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYNetbarInfo.m; sourceTree = "<group>"; };
 		0777DFC81B01C4AA00E1E314 /* QuickBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickBookViewController.h; path = NetBar/QuickBookViewController.h; sourceTree = "<group>"; };
 		0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickBookViewController.m; path = NetBar/QuickBookViewController.m; sourceTree = "<group>"; };
 		0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuickBookViewController.xib; path = NetBar/QuickBookViewController.xib; sourceTree = "<group>"; };
@@ -672,6 +675,8 @@
 			children = (
 				073DBD721AE778CF009B49EB /* WYUserInfo.h */,
 				073DBD731AE778CF009B49EB /* WYUserInfo.m */,
+				07695CDD1B03231000F4806C /* WYNetbarInfo.h */,
+				07695CDE1B03231000F4806C /* WYNetbarInfo.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1316,6 +1321,7 @@
 				0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */,
 				076195E71B008F8C00397711 /* ReserveOrderViewCell.m in Sources */,
 				07868DF11AF8581100160070 /* WYTabBarViewController.m in Sources */,
+				07695CDF1B03231000F4806C /* WYNetbarInfo.m in Sources */,
 				077D83811AF9AED800AAF31F /* ProgressHUD.m in Sources */,
 				07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */,
 				07C4C9FD1AF9B283008DA5D3 /* ColorGradView.m in Sources */,
@@ -1521,7 +1527,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "WangYu/WangYu-Prefx.pch";
 				INFOPLIST_FILE = WangYu/Info.plist;

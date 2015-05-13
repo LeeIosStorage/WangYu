@@ -13,6 +13,8 @@
 #import "SKSplashView.h"
 #import "SKSplashIcon.h"
 #import "NetbarDetailViewController.h"
+#import "WYProgressHUD.h"
+#import "WYNetbarInfo.h"
 
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate>
 
@@ -21,33 +23,32 @@
 @property (strong, nonatomic) IBOutlet UILabel *bookLabel;
 @property (strong, nonatomic) IBOutlet UILabel *bookDecLabel;
 @property (strong, nonatomic) IBOutlet UILabel *hotLabel;
-
-@property (strong, nonatomic) IBOutlet UIView *headView;
-
-@property (strong, nonatomic) IBOutlet UITableView *netBarTable;
-
-@property (strong, nonatomic) IBOutlet UIView *sectionView;
 @property (strong, nonatomic) IBOutlet UILabel *guessLabel;
-
-@property (strong, nonatomic) SKSplashView *splashView;
 @property (strong, nonatomic) IBOutlet UILabel *colorLabel;
+@property (strong, nonatomic) IBOutlet UIView *headView;
+@property (strong, nonatomic) IBOutlet UIView *sectionView;
+@property (strong, nonatomic) IBOutlet UITableView *netBarTable;
+@property (strong, nonatomic) SKSplashView *splashView;
 
+@property (strong, nonatomic) NSMutableArray *netbarArray;
 
 @end
 
 @implementation NetbarTabViewController
 
--(void)dealloc{
-    WYLog(@"NetbarTabViewController dealloc!!!");
-    _splashView.delegate = nil;
-    _splashView = nil;
-    _netBarTable.delegate = nil;
-    _netBarTable.dataSource = nil;
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self refreshUI];
+    [self getNetbarInfo];
+}
+
+-(void)refreshUI
+{
     self.netBarTable.tableHeaderView = self.headView;
     self.orderLabel.font = SKIN_FONT(15);
     self.orderLabel.textColor = SKIN_TEXT_COLOR1;
@@ -111,6 +112,34 @@
     
 }
 
+- (void)getNetbarInfo{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getNetbarListWithUid:[WYEngine shareInstance].uid tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        [WYProgressHUD AlertLoadDone];
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        weakSelf.netbarArray = [NSMutableArray array];
+        NSArray *netbarDicArray = [jsonRet arrayObjectForKey:@"object"];
+        for (NSDictionary *dic in netbarDicArray) {
+            if (![dic isKindOfClass:[NSDictionary class]]) {
+                continue;
+            }
+            WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
+            [netbarInfo setNetbarInfoByJsonDic:dic];
+            [weakSelf.netbarArray addObject:netbarInfo];
+        }
+        [weakSelf.netBarTable reloadData];
+    }tag:tag];
+}
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -119,7 +148,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20;
+    return self.netbarArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -145,27 +174,33 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"NetbarTabCell";
-    NetbarTabCell *cell;
-    
-    cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NetbarTabCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
         cell = [cells objectAtIndex:0];
     }
-    
+    WYNetbarInfo *netbarInfo = _netbarArray[indexPath.row];
+    cell.netbarInfo = netbarInfo;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    WYNetbarInfo *info = _netbarArray[indexPath.row];
+    NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
+    ndVc.netbarInfo = info;
+    [self.navigationController pushViewController:ndVc animated:YES];
+    
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
-    
-    NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
-    [self.navigationController pushViewController:ndVc animated:YES];
-
 }
 
-
+-(void)dealloc{
+    WYLog(@"NetbarTabViewController dealloc!!!");
+    _splashView.delegate = nil;
+    _splashView = nil;
+    _netBarTable.delegate = nil;
+    _netBarTable.dataSource = nil;
+}
 
 @end
