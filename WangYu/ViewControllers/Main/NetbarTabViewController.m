@@ -15,6 +15,8 @@
 #import "NetbarDetailViewController.h"
 #import "WYProgressHUD.h"
 #import "WYNetbarInfo.h"
+#import "OrdersViewController.h"
+#import "NetbarSearchViewController.h"
 
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate>
 
@@ -31,6 +33,9 @@
 @property (strong, nonatomic) SKSplashView *splashView;
 
 @property (strong, nonatomic) NSMutableArray *netbarArray;
+
+- (IBAction)orderAction:(id)sender;
+- (IBAction)searchNetbarAction:(id)sender;
 
 @end
 
@@ -138,6 +143,16 @@
         }
         [weakSelf.netBarTable reloadData];
     }tag:tag];
+}
+#pragma mark - IBAction
+- (IBAction)orderAction:(id)sender {
+    OrdersViewController *orderVc = [[OrdersViewController alloc] init];
+    [self.navigationController pushViewController:orderVc animated:YES];
+}
+
+- (IBAction)searchNetbarAction:(id)sender {
+    NetbarSearchViewController *searchVc = [[NetbarSearchViewController alloc] init];
+    [self.navigationController pushViewController:searchVc animated:YES];
 }
 
 #pragma mark - Table view data source

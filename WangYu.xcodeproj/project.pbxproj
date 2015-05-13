@@ -94,6 +94,9 @@
 		076195EC1B008FAC00397711 /* PayOrderViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 076195EA1B008FAC00397711 /* PayOrderViewCell.m */; };
 		076195ED1B008FAC00397711 /* PayOrderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076195EB1B008FAC00397711 /* PayOrderViewCell.xib */; };
 		07695CDF1B03231000F4806C /* WYNetbarInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 07695CDE1B03231000F4806C /* WYNetbarInfo.m */; };
+		076E224F1B02F73200F33815 /* NetbarSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E224D1B02F73200F33815 /* NetbarSearchViewController.m */; };
+		076E22501B02F73200F33815 /* NetbarSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076E224E1B02F73200F33815 /* NetbarSearchViewController.xib */; };
+		076E22531B03187100F33815 /* WYSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E22521B03187100F33815 /* WYSearchBar.m */; };
 		0777DFCB1B01C4AA00E1E314 /* QuickBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */; };
 		0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */; };
 		0777DFD01B01C4CB00E1E314 /* QuickPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777DFCE1B01C4CB00E1E314 /* QuickPayViewController.m */; };
@@ -324,6 +327,11 @@
 		076195EB1B008FAC00397711 /* PayOrderViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayOrderViewCell.xib; sourceTree = "<group>"; };
 		07695CDD1B03231000F4806C /* WYNetbarInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYNetbarInfo.h; sourceTree = "<group>"; };
 		07695CDE1B03231000F4806C /* WYNetbarInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYNetbarInfo.m; sourceTree = "<group>"; };
+		076E224C1B02F73200F33815 /* NetbarSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetbarSearchViewController.h; path = NetBar/NetbarSearchViewController.h; sourceTree = "<group>"; };
+		076E224D1B02F73200F33815 /* NetbarSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetbarSearchViewController.m; path = NetBar/NetbarSearchViewController.m; sourceTree = "<group>"; };
+		076E224E1B02F73200F33815 /* NetbarSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarSearchViewController.xib; path = NetBar/NetbarSearchViewController.xib; sourceTree = "<group>"; };
+		076E22511B03187100F33815 /* WYSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYSearchBar.h; sourceTree = "<group>"; };
+		076E22521B03187100F33815 /* WYSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYSearchBar.m; sourceTree = "<group>"; };
 		0777DFC81B01C4AA00E1E314 /* QuickBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickBookViewController.h; path = NetBar/QuickBookViewController.h; sourceTree = "<group>"; };
 		0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickBookViewController.m; path = NetBar/QuickBookViewController.m; sourceTree = "<group>"; };
 		0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuickBookViewController.xib; path = NetBar/QuickBookViewController.xib; sourceTree = "<group>"; };
@@ -852,6 +860,9 @@
 				0777DFCD1B01C4CB00E1E314 /* QuickPayViewController.h */,
 				0777DFCE1B01C4CB00E1E314 /* QuickPayViewController.m */,
 				0777DFCF1B01C4CB00E1E314 /* QuickPayViewController.xib */,
+				076E224C1B02F73200F33815 /* NetbarSearchViewController.h */,
+				076E224D1B02F73200F33815 /* NetbarSearchViewController.m */,
+				076E224E1B02F73200F33815 /* NetbarSearchViewController.xib */,
 			);
 			name = NetBar;
 			sourceTree = "<group>";
@@ -1128,6 +1139,8 @@
 				079D52511B01E48600DF4D6B /* HotUpButton.m */,
 				079D52551B01E52900DF4D6B /* WYSegmentedView.h */,
 				079D52561B01E52900DF4D6B /* WYSegmentedView.m */,
+				076E22511B03187100F33815 /* WYSearchBar.h */,
+				076E22521B03187100F33815 /* WYSearchBar.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1223,6 +1236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				076E22501B02F73200F33815 /* NetbarSearchViewController.xib in Resources */,
 				0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */,
 				071923D01AF74D8400432531 /* LoginViewController.xib in Resources */,
 				071923D31AF74D8400432531 /* WelcomeViewController.xib in Resources */,
@@ -1345,6 +1359,7 @@
 				079049461AEA15EB00E46795 /* WYQuery.m in Sources */,
 				073DBD471AE7712F009B49EB /* SDWebImageDecoder.m in Sources */,
 				0791AB5E1AE8DE260009A5A7 /* QHQnetworkingTool.m in Sources */,
+				076E224F1B02F73200F33815 /* NetbarSearchViewController.m in Sources */,
 				073DBD431AE7712F009B49EB /* NSData+GIF.m in Sources */,
 				073DBD461AE7712F009B49EB /* SDWebImageCompat.m in Sources */,
 				071923D71AF76C6C00432531 /* RetrievePwdViewController.m in Sources */,
@@ -1379,6 +1394,7 @@
 				071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */,
 				071923D21AF74D8400432531 /* WelcomeViewController.m in Sources */,
 				0791AB5C1AE8DE260009A5A7 /* AFURLResponseSerialization.m in Sources */,
+				076E22531B03187100F33815 /* WYSearchBar.m in Sources */,
 				07CB97661AFC5D3400928CB7 /* MMMaterialDesignSpinner.m in Sources */,
 				079049411AE9DF5A00E46795 /* WYOAuthService.m in Sources */,
 				073DBD501AE7712F009B49EB /* UIImageView+HighlightedWebCache.m in Sources */,

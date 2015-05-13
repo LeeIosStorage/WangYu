@@ -140,7 +140,7 @@
     __weak OrdersViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getReserveOrderListWithUid:[WYEngine shareInstance].uid tag:tag];
+    [[WYEngine shareInstance] getReserveOrderListWithUid:[WYEngine shareInstance].uid page:1 pageSize:10 tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -162,7 +162,7 @@
     _reserveNextCursor = 1;
     __weak OrdersViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getReserveOrderListWithUid:[WYEngine shareInstance].uid tag:tag];
+    [[WYEngine shareInstance] getReserveOrderListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.reserveNextCursor pageSize:10 tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -174,9 +174,6 @@
 //            return;
         }
         weakSelf.reserveOrderList = [[NSMutableArray alloc] init];
-        for (int i = 0; i < 100; i ++) {
-            [weakSelf.reserveOrderList addObject:@"0"];
-        }
 //        NSArray *object = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"activity"];
 //        for (NSDictionary *dic in object) {
 //            XEActivityInfo *activityInfo = [[XEActivityInfo alloc] init];
@@ -202,7 +199,7 @@
     __weak OrdersViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getPayOrderListWithUid:[WYEngine shareInstance].uid tag:tag];
+    [[WYEngine shareInstance] getPayOrderListWithUid:[WYEngine shareInstance].uid page:1 pageSize:10 tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -223,7 +220,7 @@
     _payNextCursor = 1;
     __weak OrdersViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getPayOrderListWithUid:[WYEngine shareInstance].uid tag:tag];
+    [[WYEngine shareInstance] getPayOrderListWithUid:[WYEngine shareInstance].uid page:(int)_payNextCursor pageSize:10 tag:tag];
 
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [self.pullRefreshView2 finishedLoading];
