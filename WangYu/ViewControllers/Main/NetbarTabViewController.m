@@ -16,6 +16,7 @@
 #import "WYProgressHUD.h"
 #import "WYNetbarInfo.h"
 #import "OrdersViewController.h"
+#import "NetbarSearchViewController.h"
 
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate>
 
@@ -35,6 +36,8 @@
 
 - (IBAction)orderAction:(id)sender;
 - (IBAction)packetAction:(id)sender;
+- (IBAction)searchNetbarAction:(id)sender;
+
 
 @end
 
@@ -199,21 +202,27 @@
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
 
+#pragma mark - IBAction
+- (IBAction)orderAction:(id)sender {
+    OrdersViewController *orderVc = [[OrdersViewController alloc] init];
+    [self.navigationController pushViewController:orderVc animated:YES];
+}
+
+- (IBAction)searchNetbarAction:(id)sender {
+    NetbarSearchViewController *searchVc = [[NetbarSearchViewController alloc] init];
+    [self.navigationController pushViewController:searchVc animated:YES];
+}
+
+- (IBAction)packetAction:(id)sender {
+    
+}
+
 -(void)dealloc{
     WYLog(@"NetbarTabViewController dealloc!!!");
     _splashView.delegate = nil;
     _splashView = nil;
     _netBarTable.delegate = nil;
     _netBarTable.dataSource = nil;
-}
-
-- (IBAction)orderAction:(id)sender {
-    OrdersViewController *oVc = [[OrdersViewController alloc] init];
-    [self.navigationController pushViewController:oVc animated:YES];
-}
-
-- (IBAction)packetAction:(id)sender {
-    
 }
 
 @end

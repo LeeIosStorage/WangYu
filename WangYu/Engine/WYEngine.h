@@ -92,7 +92,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //网吧详情
 - (BOOL)getNetbarDetailWithUid:(NSString *)uid netbarId:(NSString *)nid tag:(int)tag;
 
-- (BOOL)getReserveOrderListWithUid:(NSString *)uid tag:(int)tag;
-- (BOOL)getPayOrderListWithUid:(NSString *)uid tag:(int)tag;
+- (BOOL)getReserveOrderListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
+- (BOOL)getPayOrderListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
 
 @end
