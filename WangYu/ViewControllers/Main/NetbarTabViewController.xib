@@ -4,6 +4,12 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="dqw3.otf">
+            <string>HiraginoSansGB-W3</string>
+            <string>HiraginoSansGB-W3</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NetbarTabViewController">
             <connections>
@@ -47,14 +53,14 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的订单" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Dha-FS-8XH">
-                            <rect key="frame" x="32" y="50" width="71" height="21"/>
+                            <rect key="frame" x="32" y="57" width="71" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="14"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_order_icon" id="TZH-7k-Brq">
-                            <rect key="frame" x="56" y="17" width="24" height="30"/>
+                            <rect key="frame" x="45" y="8" width="44" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="63A-RU-TAj">
@@ -63,16 +69,36 @@
                             <color key="backgroundColor" red="0.82352941176470584" green="0.82352941176470584" blue="0.82352941176470584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每周领红包" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AxE-o4-J4o">
-                            <rect key="frame" x="198" y="50" width="87" height="21"/>
+                            <rect key="frame" x="198" y="57" width="87" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="14"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_packet_icon" id="pTE-PJ-GqT">
-                            <rect key="frame" x="234" y="17" width="24" height="30"/>
+                            <rect key="frame" x="219" y="8" width="44" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JJi-gm-hwc">
+                            <rect key="frame" x="0.0" y="0.0" width="160" height="84"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="orderAction:" destination="-1" eventType="touchUpInside" id="4n4-ub-vGD"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gvP-kX-PTh">
+                            <rect key="frame" x="160" y="0.0" width="160" height="84"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="packetAction:" destination="-1" eventType="touchUpInside" id="Yjz-95-Xcr"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -182,8 +208,8 @@
     <resources>
         <image name="netbar_book_icon" width="44" height="50"/>
         <image name="netbar_indicator_icon" width="9" height="15"/>
-        <image name="netbar_order_icon" width="24" height="30"/>
-        <image name="netbar_packet_icon" width="24" height="30"/>
+        <image name="netbar_order_icon" width="44" height="44"/>
+        <image name="netbar_packet_icon" width="44" height="44"/>
         <image name="netbar_refresh_icon" width="15" height="15"/>
         <image name="netbar_saw_icon" width="320" height="14"/>
         <image name="s_n_set_line" width="300" height="1"/>

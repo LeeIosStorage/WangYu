@@ -89,6 +89,8 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 #pragma mark - 网吧
 //首页网吧list
 - (BOOL)getNetbarListWithUid:(NSString *)uid tag:(int)tag;
+//网吧详情
+- (BOOL)getNetbarDetailWithUid:(NSString *)uid netbarId:(NSString *)nid tag:(int)tag;
 
 - (BOOL)getReserveOrderListWithUid:(NSString *)uid tag:(int)tag;
 - (BOOL)getPayOrderListWithUid:(NSString *)uid tag:(int)tag;

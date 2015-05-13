@@ -15,6 +15,7 @@
 #import "NetbarDetailViewController.h"
 #import "WYProgressHUD.h"
 #import "WYNetbarInfo.h"
+#import "OrdersViewController.h"
 
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate>
 
@@ -31,6 +32,9 @@
 @property (strong, nonatomic) SKSplashView *splashView;
 
 @property (strong, nonatomic) NSMutableArray *netbarArray;
+
+- (IBAction)orderAction:(id)sender;
+- (IBAction)packetAction:(id)sender;
 
 @end
 
@@ -52,9 +56,9 @@
     self.netBarTable.tableHeaderView = self.headView;
     self.orderLabel.font = SKIN_FONT(15);
     self.orderLabel.textColor = SKIN_TEXT_COLOR1;
-    self.packetLabel.font = SKIN_FONT(15);
+    self.packetLabel.font = SKIN_FONT(14);
     self.packetLabel.textColor = SKIN_TEXT_COLOR1;
-    self.bookLabel.font = SKIN_FONT(15);
+    self.bookLabel.font = SKIN_FONT(14);
     self.bookLabel.textColor = SKIN_TEXT_COLOR1;
     self.bookDecLabel.font = SKIN_FONT(12);
     self.bookDecLabel.textColor = SKIN_TEXT_COLOR2;
@@ -201,6 +205,15 @@
     _splashView = nil;
     _netBarTable.delegate = nil;
     _netBarTable.dataSource = nil;
+}
+
+- (IBAction)orderAction:(id)sender {
+    OrdersViewController *oVc = [[OrdersViewController alloc] init];
+    [self.navigationController pushViewController:oVc animated:YES];
+}
+
+- (IBAction)packetAction:(id)sender {
+    
 }
 
 @end

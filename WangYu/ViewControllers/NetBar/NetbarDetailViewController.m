@@ -10,6 +10,9 @@
 #import "NetbarDetailCell.h"
 #import "QuickBookViewController.h"
 #import "QuickPayViewController.h"
+#import "WYNetbarInfo.h"
+#import "WYEngine.h"
+#import "WYProgressHUD.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -43,6 +46,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self refreshUI];
+    [self getNetbarDataSource];
 }
 
 - (void)refreshUI {
@@ -84,6 +88,24 @@
     self.payButton.backgroundColor = SKIN_COLOR;
     self.payButton.layer.cornerRadius = 4.0;
     self.payButton.layer.masksToBounds = YES;
+}
+
+- (void)getNetbarDataSource {
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getNetbarDetailWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        [WYProgressHUD AlertLoadDone];
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        
+    }tag:tag];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -135,18 +157,6 @@
         NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
         cell = [cells objectAtIndex:0];
     }
-    
-//    cell.teamLabel.font = SKIN_FONT(12);
-//    cell.teamLabel.textColor = SKIN_TEXT_COLOR1;
-//    
-//    cell.dateLabel.font = SKIN_FONT(12);
-//    cell.dateLabel.textColor = SKIN_TEXT_COLOR2;
-//    
-//    cell.joinNumLabel.font = SKIN_FONT(12);
-//    cell.joinNumLabel.textColor = SKIN_TEXT_COLOR2;
-//    
-//    cell.nameLabel.font = SKIN_FONT(12);
-//    cell.nameLabel.textColor = SKIN_TEXT_COLOR1;
     
     return cell;
 }
