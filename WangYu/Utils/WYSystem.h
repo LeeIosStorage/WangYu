@@ -26,6 +26,9 @@
 #define FONT_PATH [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"dqw3.otf"]
 #define SKIN_FONT(X) [WYUIUtils customFontWithPath:FONT_PATH size:X];
 
+#define FONT_NAME @"HiraginoSansGB-W3"//冬青
+#define SKIN_FONT_FROMNAME(X) [WYUIUtils customFontWithFontName:FONT_NAME size:X];
+
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 //获取屏幕 宽度、高度

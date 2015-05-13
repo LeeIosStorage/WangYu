@@ -52,6 +52,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.view.backgroundColor = [UIColor whiteColor];
     self.accountTextField.text = [[WYEngine shareInstance] getMemoryLoginedAccout];
     [self refreshUIControl];
 //    self.loginButton.hidden = YES;

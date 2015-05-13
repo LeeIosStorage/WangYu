@@ -87,6 +87,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 //    self.phoneTextField.text = [[WYEngine shareInstance] getMemoryLoginedAccout];
+    self.view.backgroundColor = [UIColor whiteColor];
     _invitationCodeText = nil;
     self.agreeIconButton.selected = YES;
     [self refreshUIControl];

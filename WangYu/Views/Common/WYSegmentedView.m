@@ -79,7 +79,7 @@
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.frame = CGRectMake(index*selectedImageView.frame.size.width, 0, selectedImageView.frame.size.width, self.bounds.size.height);
             button.backgroundColor = [UIColor clearColor];
-            button.titleLabel.font = SKIN_FONT(14);
+            button.titleLabel.font = SKIN_FONT_FROMNAME(14);
             [button setTitleColor:SKIN_TEXT_COLOR1 forState:0];
             [button setTitle:title forState:0];
             button.tag = index;

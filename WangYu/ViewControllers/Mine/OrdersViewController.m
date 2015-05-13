@@ -57,7 +57,7 @@
 
 - (void)initNormalTitleNavBarSubviews{
 //    [self setSegmentedControlWithSelector:@selector(segmentedControlAction:) items:@[@"预订订单",@"支付订单"]];
-    WYSegmentedView *segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((self.titleNavBar.frame.size.width-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
+    WYSegmentedView *segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
     segmentedView.items = @[@"预订订单",@"支付订单"];
     __weak OrdersViewController *weakSelf = self;
     segmentedView.segmentedButtonClickBlock = ^(NSInteger index){
@@ -174,10 +174,9 @@
 //            return;
         }
         weakSelf.reserveOrderList = [[NSMutableArray alloc] init];
-        [weakSelf.reserveOrderList addObject:@"0"];
-        [weakSelf.reserveOrderList addObject:@"0"];
-        [weakSelf.reserveOrderList addObject:@"0"];
-        [weakSelf.reserveOrderList addObject:@"0"];
+        for (int i = 0; i < 100; i ++) {
+            [weakSelf.reserveOrderList addObject:@"0"];
+        }
 //        NSArray *object = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"activity"];
 //        for (NSDictionary *dic in object) {
 //            XEActivityInfo *activityInfo = [[XEActivityInfo alloc] init];

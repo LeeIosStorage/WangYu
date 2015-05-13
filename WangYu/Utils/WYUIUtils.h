@@ -59,5 +59,6 @@
 
 //自定义冬青字体
 + (UIFont*)customFontWithPath:(NSString*)path size:(CGFloat)size;
++ (UIFont*)customFontWithFontName:(NSString*)fontName size:(CGFloat)size;
 
 @end

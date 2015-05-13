@@ -13,14 +13,14 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.netbarNameLabel.font = SKIN_FONT(15);
-    self.stateLabel.font = SKIN_FONT(13);
-    self.orderTimeLabel.font = SKIN_FONT(12);
-    self.openTimeLabel.font = SKIN_FONT(12);
-    self.seatLabel.font = SKIN_FONT(12);
-    self.introLabel.font = SKIN_FONT(12);
-    self.cancelOrderButton.titleLabel.font = SKIN_FONT(14);
-    self.payOrderButton.titleLabel.font = SKIN_FONT(14);
+    self.netbarNameLabel.font = SKIN_FONT_FROMNAME(15);
+    self.stateLabel.font = SKIN_FONT_FROMNAME(13);
+    self.orderTimeLabel.font = SKIN_FONT_FROMNAME(12);
+    self.openTimeLabel.font = SKIN_FONT_FROMNAME(12);
+    self.seatLabel.font = SKIN_FONT_FROMNAME(12);
+    self.introLabel.font = SKIN_FONT_FROMNAME(12);
+    self.cancelOrderButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
+    self.payOrderButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
     
     [self.cancelOrderButton.layer setMasksToBounds:YES];
     [self.cancelOrderButton.layer setCornerRadius:4.0];
