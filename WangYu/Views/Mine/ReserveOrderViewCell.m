@@ -38,10 +38,31 @@
 
     // Configure the view for the selected state
 }
+- (IBAction)netbarAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(reserveOrderViewCellNetbarClickWithCell:)]) {
+        [self.delegate reserveOrderViewCellNetbarClickWithCell:self];
+    }
+}
 
--(void)setOrderInfo:(NSDictionary *)orderInfo{
+- (IBAction)cancelOrderAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(reserveOrderViewCellCancelClickWithCell:)]) {
+        [self.delegate reserveOrderViewCellCancelClickWithCell:self];
+    }
+}
+
+- (IBAction)payAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(reserveOrderViewCellPayClickWithCell:)]) {
+        [self.delegate reserveOrderViewCellPayClickWithCell:self];
+    }
+}
+
+-(void)setOrderInfo:(WYOrderInfo *)orderInfo{
+    _orderInfo = orderInfo;
     
-    NSString *netbarName = self.netbarNameLabel.text;
+    _orderTimeLabel.text = [WYUIUtils dateDiscriptionFromNowBk:orderInfo.reservationDate];
+    
+    NSString *netbarName = orderInfo.netbarName;
+    self.netbarNameLabel.text = netbarName;
     float width = [WYCommonUtils widthWithText:netbarName font:self.netbarNameLabel.font lineBreakMode:NSLineBreakByWordWrapping];
     if (width > (SCREEN_WIDTH - 135)) {
         width = (SCREEN_WIDTH - 135);
@@ -54,15 +75,62 @@
     frame.origin.x = self.netbarNameLabel.frame.origin.x + self.netbarNameLabel.frame.size.width + 6;
     self.indicatorImageView.frame = frame;
     
-    NSString *seatText = self.seatLabel.text;
+    NSString *seatText = [NSString stringWithFormat:@"%d个座位",orderInfo.seating];
+    self.seatLabel.text = seatText;
     width = [WYCommonUtils widthWithText:seatText font:self.seatLabel.font lineBreakMode:NSLineBreakByWordWrapping];
     frame = self.seatImageViewIcon.frame;
     frame.origin.x = SCREEN_WIDTH - width - 12 - 5 - frame.size.width;
     self.seatImageViewIcon.frame = frame;
     
+    
+    int state = 1;
+    NSString *stateLabelText = @"";
+    NSString *introLabelText = @"";
+    int isValid = orderInfo.isValid;
+    if (isValid == 0) {
+        stateLabelText = @"已取消";
+        introLabelText = @"您已取消该预订";
+    }else if (isValid == 1){
+        stateLabelText = @"待处理";
+        introLabelText = @"您已提交订单，请等待网吧处理";
+        state = 2;
+    }else if (isValid == 2){
+        stateLabelText = @"支付成功";
+    }
+    int isReceive = orderInfo.isReceive;
+    if (isReceive == 1) {
+        stateLabelText = @"已接单";
+        if (orderInfo.price == 0) {
+            introLabelText = @"网吧已接单，可放心前往上网";
+            state = 2;
+        }else{
+            introLabelText = @"网吧已接单，请先支付定金";
+            state = 4;
+            [self.payOrderButton setTitle:@"支付定金" forState:0];
+        }
+    }else if (isReceive == 0){
+        stateLabelText = @"待处理";
+        introLabelText = @"您已提交订单，请等待网吧处理";
+        state = 2;
+    }else if (isReceive == -1){
+        stateLabelText = @"已拒单";
+        introLabelText = @"网吧已拒单，原因：";
+    }
+    int status = orderInfo.status;
+    if (status == -1) {
+        stateLabelText = @"支付失败";
+        introLabelText = @"定金支付失败";
+        state = 4;
+        [self.payOrderButton setTitle:@"继续支付" forState:0];
+    }else if (status == 1){
+        stateLabelText = @"已支付";
+        introLabelText = @"您已支付成功，请到网吧退还押金";
+    }
+    self.stateLabel.text = stateLabelText;
+    self.introLabel.text = introLabelText;
+    
     self.cancelOrderButton.hidden = YES;
     self.payOrderButton.hidden = YES;
-    int state = 4;
     if (state == 1) {
         self.cancelOrderButton.hidden = YES;
         self.payOrderButton.hidden = YES;
@@ -103,5 +171,4 @@
     self.introLabel.frame = frame;
     
 }
-
 @end

@@ -702,4 +702,33 @@ static WYEngine* s_ShareInstance = nil;
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbarOrderList",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
+
+- (BOOL)cancelReserveOrderWithUid:(NSString *)uid reserveId:(NSString *)reserveId tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (reserveId) {
+        [params setObject:reserveId forKey:@"reserveId"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/cancleReserve",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+- (BOOL)deletePayOrderWithUid:(NSString *)uid orderId:(NSString *)orderId tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (orderId) {
+        [params setObject:orderId forKey:@"orderId"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/deleteOrder",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
 @end

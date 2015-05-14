@@ -44,9 +44,31 @@
     // Configure the view for the selected state
 }
 
--(void)setOrderInfo:(NSDictionary *)orderInfo{
+- (IBAction)netbarAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(payOrderViewCellNetbarClickWithCell:)]) {
+        [self.delegate payOrderViewCellNetbarClickWithCell:self];
+    }
+}
+
+- (IBAction)cancelOrderAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(payOrderViewCellCancelClickWithCell:)]) {
+        [self.delegate payOrderViewCellCancelClickWithCell:self];
+    }
+}
+
+- (IBAction)payAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(payOrderViewCellPayClickWithCell:)]) {
+        [self.delegate payOrderViewCellPayClickWithCell:self];
+    }
+}
+
+-(void)setOrderInfo:(WYOrderInfo *)orderInfo{
+    _orderInfo = orderInfo;
     
-    NSString *netbarName = self.netbarNameLabel.text;
+    _orderTimeLabel.text = [WYUIUtils dateDiscriptionFromNowBk:orderInfo.createDate];
+    
+    NSString *netbarName = orderInfo.netbarName;
+    self.netbarNameLabel.text = netbarName;
     float width = [WYCommonUtils widthWithText:netbarName font:self.netbarNameLabel.font lineBreakMode:NSLineBreakByWordWrapping];
     if (width > (SCREEN_WIDTH - 135)) {
         width = (SCREEN_WIDTH - 135);
@@ -59,13 +81,15 @@
     frame.origin.x = self.netbarNameLabel.frame.origin.x + self.netbarNameLabel.frame.size.width + 6;
     self.indicatorImageView.frame = frame;
     
-    NSString *priceText = self.priceLabel.text;
+    NSString *priceText = [NSString stringWithFormat:@"￥%@",orderInfo.amount];
+    self.priceLabel.text = priceText;
     width = [WYCommonUtils widthWithText:priceText font:self.priceLabel.font lineBreakMode:NSLineBreakByWordWrapping];
     frame = self.priceLabel.frame;
     frame.size.width = width;
     self.priceLabel.frame = frame;
     
-    NSString *privilegeYuanText = self.privilegeYuanLabel.text;
+    NSString *privilegeYuanText = [NSString stringWithFormat:@"%d元",orderInfo.scoreAmount];
+    self.privilegeYuanLabel.text = privilegeYuanText;
     width = [WYCommonUtils widthWithText:privilegeYuanText font:self.privilegeYuanLabel.font lineBreakMode:NSLineBreakByWordWrapping];
     frame = self.privilegeYuanLabel.frame;
     frame.origin.x = self.priceLabel.frame.origin.x + self.priceLabel.frame.size.width + 7;
@@ -76,7 +100,8 @@
     [attrString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:NSMakeRange(0, privilegeYuanText.length)];
     self.privilegeYuanLabel.attributedText = attrString;
     
-    NSString *redPacketText = self.redPacketLabel.text;
+    NSString *redPacketText = [NSString stringWithFormat:@"使用%d元红包",orderInfo.redbagAmount];
+    self.redPacketLabel.text = redPacketText;
     width = [WYCommonUtils widthWithText:redPacketText font:self.redPacketLabel.font lineBreakMode:NSLineBreakByWordWrapping];
     frame = self.redPacketLabel.frame;
     frame.origin.x = self.privilegeYuanLabel.frame.origin.x + self.privilegeYuanLabel.frame.size.width + 7;
@@ -85,27 +110,35 @@
     
     self.cancelOrderButton.hidden = YES;
     self.payOrderButton.hidden = YES;
-    int state = 4;
-    if (state == 1) {
+    self.stateLabel.text = @"支付成功";
+    self.stateLabel.textColor = UIColorToRGB(0xf03f3f);
+    self.stateLabel.hidden = NO;
+    int status = orderInfo.status;
+    if (status == 0) {
         self.cancelOrderButton.hidden = YES;
         self.payOrderButton.hidden = YES;
-    }else if (state == 2){
+    }else if (status == 1){
         self.cancelOrderButton.hidden = NO;
         self.payOrderButton.hidden = YES;
         CGRect buttonFrame = self.cancelOrderButton.frame;
         buttonFrame.origin.x = SCREEN_WIDTH - buttonFrame.size.width - 12;
         self.cancelOrderButton.frame = buttonFrame;
         
-    }else if (state == 3){
-        self.cancelOrderButton.hidden = YES;
-        self.payOrderButton.hidden = NO;
-        CGRect buttonFrame = self.payOrderButton.frame;
-        buttonFrame.origin.x = SCREEN_WIDTH - buttonFrame.size.width - 12;
-        self.payOrderButton.frame = buttonFrame;
-        
-    }else if (state == 4){
+    }
+//    else if (status == 3){
+//        self.cancelOrderButton.hidden = YES;
+//        self.payOrderButton.hidden = NO;
+//        CGRect buttonFrame = self.payOrderButton.frame;
+//        buttonFrame.origin.x = SCREEN_WIDTH - buttonFrame.size.width - 12;
+//        self.payOrderButton.frame = buttonFrame;
+//        
+//    }
+    else if (status == -1){
         self.cancelOrderButton.hidden = NO;
         self.payOrderButton.hidden = NO;
+        self.stateLabel.textColor = SKIN_TEXT_COLOR1;
+        self.stateLabel.text = @"支付失败";
+        
         CGRect buttonFrame = self.payOrderButton.frame;
         buttonFrame.origin.x = SCREEN_WIDTH - buttonFrame.size.width - 12;
         self.payOrderButton.frame = buttonFrame;
@@ -113,6 +146,8 @@
         buttonFrame.origin.x = self.payOrderButton.frame.origin.x - buttonFrame.size.width - 12;
         self.cancelOrderButton.frame = buttonFrame;
         
+    }else{
+        self.stateLabel.hidden = YES;
     }
     
     frame = self.orderTimeLabel.frame;

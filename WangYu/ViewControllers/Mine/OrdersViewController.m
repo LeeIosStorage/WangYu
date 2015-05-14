@@ -12,11 +12,14 @@
 #import "ReserveOrderViewCell.h"
 #import "PayOrderViewCell.h"
 #import "WYSegmentedView.h"
+#import "WYOrderInfo.h"
+#import "NetbarDetailViewController.h"
+#import "QuickPayViewController.h"
 
 #define ORDER_TYPE_RESERVE     0
 #define ORDER_TYPE_PAY         1
 
-@interface OrdersViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface OrdersViewController ()<UITableViewDataSource,UITableViewDelegate,ReserveOrderViewCellDelegate,PayOrderViewCellDelegate>
 
 @property (strong, nonatomic) NSMutableArray *reserveOrderList;
 @property (nonatomic, strong) IBOutlet UITableView *reserveOrderTableView;
@@ -36,6 +39,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [WYEngine shareInstance].uid = @"21";
+    [WYEngine shareInstance].token = @"sZsSuV+5U9eJakz3JLmqNQ==";
+    
+    
     self.view.backgroundColor = UIColorRGB(241, 241, 241);
     _selectedSegmentIndex = 0;
     
@@ -147,12 +155,12 @@
         }else{
             weakSelf.reserveOrderList = [[NSMutableArray alloc] init];
             
-//            NSArray *object = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"activity"];
-//            for (NSDictionary *dic in object) {
-//                XEActivityInfo *activityInfo = [[XEActivityInfo alloc] init];
-//                [activityInfo setActivityInfoByJsonDic:dic];
-//                [weakSelf.activityList addObject:activityInfo];
-//            }
+            NSArray *object = [jsonRet arrayObjectForKey:@"object"];
+            for (NSDictionary *dic in object) {
+                WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
+                [orderInfo setOrderInfoByJsonDic:dic];
+                [weakSelf.reserveOrderList addObject:orderInfo];
+            }
             [weakSelf.reserveOrderTableView reloadData];
         }
     }];
@@ -174,13 +182,13 @@
 //            return;
         }
         weakSelf.reserveOrderList = [[NSMutableArray alloc] init];
-//        NSArray *object = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"activity"];
-//        for (NSDictionary *dic in object) {
-//            XEActivityInfo *activityInfo = [[XEActivityInfo alloc] init];
-//            [activityInfo setActivityInfoByJsonDic:dic];
-//            [weakSelf.activityList addObject:activityInfo];
-//        }
-//        
+        NSArray *object = [jsonRet arrayObjectForKey:@"object"];
+        for (NSDictionary *dic in object) {
+            WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
+            [orderInfo setOrderInfoByJsonDic:dic];
+            [weakSelf.reserveOrderList addObject:orderInfo];
+        }
+//
 //        weakSelf.reserveCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"end"] boolValue];
 //        if (!weakSelf.reserveCanLoadMore) {
 //            weakSelf.reserveOrderTableView.showsInfiniteScrolling = NO;
@@ -205,12 +213,12 @@
             //...
         }else{
             weakSelf.payOrderList = [[NSMutableArray alloc] init];
-//            NSArray *object = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"activity"];
-//            for (NSDictionary *dic in object) {
-//                XERecipesInfo *recipesInfo = [[XERecipesInfo alloc] init];
-//                [recipesInfo setRecipesInfoByDic:dic];
-//                [weakSelf.payOrderList addObject:recipesInfo];
-//            }
+            NSArray *object = [jsonRet arrayObjectForKey:@"object"];
+            for (NSDictionary *dic in object) {
+                WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
+                [orderInfo setOrderInfoByJsonDic:dic];
+                [weakSelf.payOrderList addObject:orderInfo];
+            }
             [weakSelf.payOrderTableView reloadData];
         }
     }];
@@ -230,21 +238,17 @@
                 errorMsg = @"请求失败";
             }
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
-//            return;
+            return;
         }
         
         weakSelf.payOrderList = [[NSMutableArray alloc] init];
-        [weakSelf.payOrderList addObject:@"0"];
-        [weakSelf.payOrderList addObject:@"0"];
-        [weakSelf.payOrderList addObject:@"0"];
-        [weakSelf.payOrderList addObject:@"0"];
-//        NSArray *object = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"activity"];
-//        for (NSDictionary *dic in object) {
-//            XERecipesInfo *recipesInfo = [[XERecipesInfo alloc] init];
-//            [recipesInfo setRecipesInfoByDic:dic];
-//            [weakSelf.payOrderList addObject:recipesInfo];
-//        }
-//        
+        NSArray *object = [jsonRet arrayObjectForKey:@"object"];
+        for (NSDictionary *dic in object) {
+            WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
+            [orderInfo setOrderInfoByJsonDic:dic];
+            [weakSelf.payOrderList addObject:orderInfo];
+        }
+//
 //        weakSelf.payCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"end"] boolValue];
 //        if (!weakSelf.payCanLoadMore) {
 //            weakSelf.payOrderTableView.showsInfiniteScrolling = NO;
@@ -302,7 +306,8 @@
             cell = [cells objectAtIndex:0];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        cell.orderInfo = nil;
+        cell.delegate = self;
+        cell.orderInfo = _payOrderList[indexPath.row];
         return cell;
     }
     static NSString *CellIdentifier = @"ReserveOrderViewCell";
@@ -313,7 +318,8 @@
         cell.backgroundColor = [UIColor clearColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    cell.orderInfo = nil;
+    cell.delegate = self;
+    cell.orderInfo = _reserveOrderList[indexPath.row];
     return cell;
 }
 
@@ -321,6 +327,121 @@
 {
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+}
+
+#pragma mark - ReserveOrderViewCellDelegate
+- (void)reserveOrderViewCellNetbarClickWithCell:(id)cell{
+    
+    NSIndexPath* indexPath = [self.reserveOrderTableView indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+    WYOrderInfo* orderInfo = _reserveOrderList[indexPath.row];
+    NetbarDetailViewController *vc = [[NetbarDetailViewController alloc] init];
+    WYNetbarInfo *netBarInfo = [[WYNetbarInfo alloc] init];
+    netBarInfo.nid = orderInfo.netbarId;
+    netBarInfo.netbarName = orderInfo.netbarName;
+    vc.netbarInfo = netBarInfo;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+- (void)reserveOrderViewCellCancelClickWithCell:(id)cell{
+    NSIndexPath* indexPath = [self.reserveOrderTableView indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+    WYOrderInfo* orderInfo = _reserveOrderList[indexPath.row];
+    [self cancelReserveOrder:orderInfo];
+}
+- (void)reserveOrderViewCellPayClickWithCell:(id)cell{
+    NSIndexPath* indexPath = [self.reserveOrderTableView indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+    WYOrderInfo* orderInfo = _reserveOrderList[indexPath.row];
+    if (orderInfo.price == 0) {
+        [WYProgressHUD AlertSuccess:@"该网吧不需要支付定金" At:self.view];
+        return;
+    }
+    QuickPayViewController *payVc = [[QuickPayViewController alloc] init];
+    [self.navigationController pushViewController:payVc animated:YES];
+}
+
+#pragma mark - PayOrderViewCellDelegate
+- (void)payOrderViewCellNetbarClickWithCell:(id)cell{
+    NSIndexPath* indexPath = [self.payOrderTableView indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+    WYOrderInfo* orderInfo = _payOrderList[indexPath.row];
+    NetbarDetailViewController *vc = [[NetbarDetailViewController alloc] init];
+    WYNetbarInfo *netBarInfo = [[WYNetbarInfo alloc] init];
+    netBarInfo.nid = orderInfo.netbarId;
+    netBarInfo.netbarName = orderInfo.netbarName;
+    vc.netbarInfo = netBarInfo;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)payOrderViewCellCancelClickWithCell:(id)cell{
+    NSIndexPath* indexPath = [self.payOrderTableView indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+    WYOrderInfo* orderInfo = _payOrderList[indexPath.row];
+    [self deletePayOrder:orderInfo];
+}
+- (void)payOrderViewCellPayClickWithCell:(id)cell{
+    NSIndexPath* indexPath = [self.payOrderTableView indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+//    WYOrderInfo* orderInfo = _payOrderList[indexPath.row];
+    QuickPayViewController *payVc = [[QuickPayViewController alloc] init];
+    [self.navigationController pushViewController:payVc animated:YES];
+}
+
+-(void)cancelReserveOrder:(WYOrderInfo *)orderInfo{
+    __weak OrdersViewController *weakSelf = self;
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] cancelReserveOrderWithUid:[WYEngine shareInstance].uid reserveId:orderInfo.orderId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"取消订单成功" At:weakSelf.view];
+        [weakSelf.reserveOrderTableView reloadData];
+        
+    } tag:tag];
+}
+
+-(void)deletePayOrder:(WYOrderInfo *)orderInfo{
+    __weak OrdersViewController *weakSelf = self;
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] deletePayOrderWithUid:[WYEngine shareInstance].uid orderId:orderInfo.orderId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"删除订单成功" At:weakSelf.view];
+        
+        NSInteger index = [weakSelf.payOrderList indexOfObject:orderInfo];
+        if (index == NSNotFound || index < 0 || index >= weakSelf.payOrderList.count) {
+            return;
+        }
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+        [weakSelf.payOrderList removeObjectAtIndex:indexPath.row];
+        [weakSelf.payOrderTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+    } tag:tag];
 }
 
 @end
