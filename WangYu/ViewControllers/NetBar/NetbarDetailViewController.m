@@ -13,6 +13,7 @@
 #import "WYNetbarInfo.h"
 #import "WYEngine.h"
 #import "WYProgressHUD.h"
+#import "UIImageView+WebCache.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -33,6 +34,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (strong, nonatomic) IBOutlet UILabel *descLabel;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 
 
 - (IBAction)bookAction:(id)sender;
@@ -46,6 +48,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self refreshUI];
+    [self refreshHeaderView];
     [self getNetbarDataSource];
 }
 
@@ -60,8 +63,6 @@
     
     self.priceLabel1.textColor = SKIN_TEXT_COLOR2;
     self.priceLabel1.font = SKIN_FONT(12);
-    self.priceLabel2.textColor = SKIN_TEXT_COLOR2;
-    self.priceLabel2.font = SKIN_FONT(12);
     
     self.addressLabel.textColor = SKIN_TEXT_COLOR1;
     self.addressLabel.font = SKIN_FONT(12);
@@ -69,6 +70,8 @@
     self.phoneLabel.font = SKIN_FONT(12);
     self.descLabel.textColor =SKIN_TEXT_COLOR1;
     self.descLabel.font = SKIN_FONT(12);
+    self.timeLabel.textColor = SKIN_TEXT_COLOR2;
+    self.timeLabel.font = SKIN_FONT(12);
     
     self.colorLabel.backgroundColor = UIColorToRGB(0xfac402);
     self.colorLabel.layer.cornerRadius = 1.0;
@@ -88,6 +91,31 @@
     self.payButton.backgroundColor = SKIN_COLOR;
     self.payButton.layer.cornerRadius = 4.0;
     self.payButton.layer.masksToBounds = YES;
+
+}
+
+- (void)refreshHeaderView {
+    if (![self.netbarInfo.smallImageUrl isEqual:[NSNull null]]) {
+        [self.netbarImage sd_setImageWithURL:self.netbarInfo.smallImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
+    }else{
+        [self.netbarImage sd_setImageWithURL:nil];
+        [self.netbarImage setImage:[UIImage imageNamed:@"netbar_load_icon"]];
+    }
+    self.phoneLabel.text = self.netbarInfo.telephone;
+    self.addressLabel.text = self.netbarInfo.address;
+    self.netbarLabel.text = self.netbarInfo.netbarName;
+    
+    self.priceLabel2.text = [NSString stringWithFormat:@"￥%d",self.netbarInfo.price];
+    
+    CGFloat priceLabelWidth = [WYCommonUtils widthWithText:self.priceLabel2.text font:self.priceLabel2.font lineBreakMode:self.priceLabel2.lineBreakMode];
+    CGRect frame = self.priceLabel2.frame;
+    frame.size.width = priceLabelWidth;
+    self.priceLabel2.frame = frame;
+    
+    frame = self.timeLabel.frame;
+    frame.origin.x = self.priceLabel2.frame.size.width + self.priceLabel2.frame.origin.x;
+    self.timeLabel.frame = frame;
+    self.timeLabel.text = [NSString stringWithFormat:@"/小时"];
 }
 
 - (void)getNetbarDataSource {
@@ -104,7 +132,9 @@
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
             return;
         }
-        
+        NSDictionary *dic = [jsonRet objectForKey:@"object"];
+        [weakSelf.netbarInfo setNetbarInfoByJsonDic:dic];
+        [weakSelf refreshHeaderView];
     }tag:tag];
 }
 

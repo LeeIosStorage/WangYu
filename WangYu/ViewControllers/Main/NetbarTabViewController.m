@@ -17,6 +17,8 @@
 #import "WYNetbarInfo.h"
 #import "OrdersViewController.h"
 #import "NetbarSearchViewController.h"
+#import "WYLocationServiceUtil.h"
+#import <MapKit/MapKit.h>
 
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate>
 
@@ -32,6 +34,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *netBarTable;
 @property (strong, nonatomic) SKSplashView *splashView;
 
+@property (nonatomic, assign) CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic) NSMutableArray *netbarArray;
 
 - (IBAction)orderAction:(id)sender;
@@ -50,7 +53,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self refreshUI];
-    [self getNetbarInfo];
+    [self getCacheNetbarInfos];
+    [self getNetbarInfos];
+    
+    WS(weakSelf);
+    //获取用户位置
+    [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString) {
+        
+    } location:^(CLLocation *location) {
+        weakSelf.currentLocation = [location coordinate];//当前经纬
+        [weakSelf getNetbarInfos];
+    }];
+
 }
 
 -(void)refreshUI
@@ -118,10 +132,35 @@
     
 }
 
-- (void)getNetbarInfo{
+-(void)getCacheNetbarInfos{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getNetbarListWithUid:[WYEngine shareInstance].uid tag:tag];
+    [[WYEngine shareInstance] addGetCacheTag:tag];
+    [[WYEngine shareInstance] getNetbarListWithUid:[WYEngine shareInstance].uid latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude tag:tag];
+    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+        if (jsonRet == nil) {
+            //...
+        }else{
+            weakSelf.netbarArray = [NSMutableArray array];
+            
+            NSArray *netbarDicArray = [jsonRet arrayObjectForKey:@"object"];
+            for (NSDictionary *dic in netbarDicArray) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
+                [netbarInfo setNetbarInfoByJsonDic:dic];
+                [weakSelf.netbarArray addObject:netbarInfo];
+            }
+            [weakSelf.netBarTable reloadData];
+        }
+    }];
+}
+
+- (void)getNetbarInfos{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getNetbarListWithUid:[WYEngine shareInstance].uid latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [WYProgressHUD AlertLoadDone];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];

@@ -34,6 +34,12 @@
     if ([dic objectForKey:@"distance"]) {
         _distance = [[dic stringObjectForKey:@"distance"] description];
     }
+    if ([dic objectForKey:@"telephone"]) {
+        _telephone = [dic stringObjectForKey:@"telephone"];
+    }
+    if ([dic stringObjectForKey:@"netbar_name"]) {
+        _netbarName = [dic stringObjectForKey:@"netbar_name"];
+    }
 }
 
 - (void)setNetbarInfoByJsonDic:(NSDictionary*)dic{

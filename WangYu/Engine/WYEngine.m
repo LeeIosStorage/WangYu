@@ -641,7 +641,7 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
-- (BOOL)getNetbarListWithUid:(NSString *)uid tag:(int)tag{
+- (BOOL)getNetbarListWithUid:(NSString *)uid  latitude:(float)latitude longitude:(float)longitude tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (uid) {
         [params setObject:uid forKey:@"userId"];
@@ -649,6 +649,11 @@ static WYEngine* s_ShareInstance = nil;
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
+    if (latitude != 0 && longitude != 0) {
+        [params setObject:[[NSNumber numberWithFloat:longitude] description] forKey:@"longitude"];
+        [params setObject:[[NSNumber numberWithFloat:latitude] description] forKey:@"latitude"];
+    }
+    
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbarList",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }

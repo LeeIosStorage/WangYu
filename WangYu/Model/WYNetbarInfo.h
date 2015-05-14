@@ -15,6 +15,7 @@
 @property(nonatomic, strong) NSString* netbarImageUrl;              //图片地址
 @property(nonatomic, strong) NSString* address;                     //位置
 @property(nonatomic, strong) NSString* distance;                    //距离
+@property(nonatomic, strong) NSString* telephone;                   //电话
 @property(nonatomic, assign) BOOL isOrder;                          //是否支持预订
 @property(nonatomic, assign) BOOL isPay;                            //是否支持支付
 @property(nonatomic, assign) BOOL isRecommend;                      //是否被推荐
