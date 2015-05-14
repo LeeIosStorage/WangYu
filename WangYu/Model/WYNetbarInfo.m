@@ -29,7 +29,7 @@
         _isRecommend = [dic intValueForKey:@"is_recommend"];
     }
     if ([dic intValueForKey:@"price"]) {
-        _price = [dic stringObjectForKey:@"price"];
+        _price = [dic intValueForKey:@"price"];
     }
     if ([dic objectForKey:@"distance"]) {
         _distance = [[dic stringObjectForKey:@"distance"] description];

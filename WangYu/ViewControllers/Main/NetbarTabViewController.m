@@ -38,7 +38,6 @@
 - (IBAction)packetAction:(id)sender;
 - (IBAction)searchNetbarAction:(id)sender;
 
-
 @end
 
 @implementation NetbarTabViewController

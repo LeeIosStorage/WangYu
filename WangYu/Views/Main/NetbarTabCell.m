@@ -8,6 +8,7 @@
 
 #import "NetbarTabCell.h"
 #import "UIImageView+WebCache.h"
+#import "WYCommonUtils.h"
 
 @interface NetbarTabCell()
 
@@ -26,10 +27,13 @@
         dispatch_async(dispatch_get_main_queue(),^{
             self.netbarTitle.font = self.font1;
             self.netbarAddress.font = self.font2;
-            self.netbarPrice.font = self.font2;
             self.netbarDistance.font = self.font2;
+            self.netbarTime.font = self.font2;
         });
     });
+    self.netbarTitle.textColor = SKIN_TEXT_COLOR1;
+    self.netbarAddress.textColor = SKIN_TEXT_COLOR2;
+    self.netbarTime.textColor = SKIN_TEXT_COLOR2;
     self.netbarImage.layer.cornerRadius = 4.0;
     self.netbarImage.layer.masksToBounds = YES;
 }
@@ -38,6 +42,7 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+    
 }
 
 -(void)setNetbarInfo:(WYNetbarInfo *)netbarInfo{
@@ -50,30 +55,52 @@
     }
     
     _netbarTitle.text = netbarInfo.netbarName;
-    _netbarPrice.text = netbarInfo.price;
-    _netbarDistance.text = netbarInfo.distance;
-    _netbarAddress.text = netbarInfo.address;
+    _netbarPrice.text = [NSString stringWithFormat:@"￥%d",netbarInfo.price];
     
-//    _priceLabel.text = [NSString stringWithFormat:@"￥%@",cardInfo.price];
-//    _cardTitleLabel.text = cardInfo.title;
-//    if (cardInfo.status == 1) {
-//        [_statusBtn setTitle:@"免费领取" forState:UIControlStateNormal];
-//        _statusBtn.enabled = YES;
-//        [_statusBtn setBackgroundImage:[UIImage imageNamed:@"card_status_bg"] forState:UIControlStateNormal];
-//    }else if (cardInfo.status == 2) {
-//        [_statusBtn setTitle:@"领用完" forState:UIControlStateNormal];
-//        _statusBtn.enabled = NO;
-//        [_statusBtn setBackgroundImage:[UIImage imageNamed:@"card_staus_hover_bg"] forState:UIControlStateNormal];
-//    }else if (cardInfo.status == 3) {
-//        [_statusBtn setTitle:@"已过期" forState:UIControlStateNormal];
-//        _statusBtn.enabled = NO;
-//        [_statusBtn setBackgroundImage:[UIImage imageNamed:@"card_staus_hover_bg"] forState:UIControlStateNormal];
-//    }else if (cardInfo.status == 4) {
-//        [_statusBtn setTitle:@"已领取" forState:UIControlStateNormal];
-//        _statusBtn.enabled = NO;
-//        [_statusBtn setBackgroundImage:[UIImage imageNamed:@"card_staus_hover_bg"] forState:UIControlStateNormal];
-//    }
-//    _cardDes.text = cardInfo.des;
+    CGFloat priceLabelWidth = [WYCommonUtils widthWithText:_netbarPrice.text font:_netbarPrice.font lineBreakMode:_netbarPrice.lineBreakMode];
+    CGRect frame = _netbarPrice.frame;
+    frame.size.width = priceLabelWidth;
+    _netbarPrice.frame = frame;
+    
+    frame = _netbarTime.frame;
+    frame.origin.x = _netbarPrice.frame.size.width + _netbarPrice.frame.origin.x;
+    _netbarTime.frame = frame;
+    _netbarTime.text = [NSString stringWithFormat:@"/小时"];
+    if (netbarInfo.distance != nil) {
+        _netbarDistance.text = [NSString stringWithFormat:@"%@m",netbarInfo.distance];
+    }else {
+        _netbarDistance.text = @"";
+    }
+
+    frame = _bookImage.frame;
+    if (netbarInfo.isOrder) {
+        _bookImage.hidden = NO;
+    }else {
+        _bookImage.hidden = YES;
+    }
+    
+    CGFloat interval = 0.;
+    
+    if (netbarInfo.isPay) {
+        _payImage.hidden = NO;
+        frame = _payImage.frame;
+        interval = netbarInfo.isOrder?(CGRectGetWidth(_bookImage.frame) + CGRectGetWidth(_payImage.frame) + 7):CGRectGetWidth(_bookImage.frame);
+        frame.origin.x = SCREEN_WIDTH - 12 - interval;
+        _payImage.frame = frame;
+    }else {
+        _payImage.hidden = YES;
+    }
+    if (netbarInfo.isRecommend) {
+        _recommendImage.hidden = NO;
+        frame = _recommendImage.frame;
+        interval = netbarInfo.isOrder?(CGRectGetWidth(_bookImage.frame) + CGRectGetWidth(_recommendImage.frame) + 7):CGRectGetWidth(_recommendImage.frame) + (netbarInfo.isPay?(CGRectGetWidth(_recommendImage.frame) + 7):0);
+        frame.origin.x = SCREEN_WIDTH - 12 - interval;
+        _recommendImage.frame = frame;
+    }else {
+        _recommendImage.hidden = YES;
+    }
+    
+    _netbarAddress.text = netbarInfo.address;
 }
 
 @end

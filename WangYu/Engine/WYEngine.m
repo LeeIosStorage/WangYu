@@ -154,8 +154,9 @@ static WYEngine* s_ShareInstance = nil;
     if (removeAccout) {
         _account = nil;
     }
-    
+
     _userPassword = nil;
+    _token = nil;
     [self saveAccount];
     _userInfo = [[WYUserInfo alloc] init];
     [WYSettingConfig logout];
