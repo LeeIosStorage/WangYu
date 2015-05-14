@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WYOrderInfo.h"
 
+@protocol ReserveOrderViewCellDelegate;
 @interface ReserveOrderViewCell : UITableViewCell
 
-@property (strong, nonatomic) NSDictionary *orderInfo;
+@property(nonatomic, assign) id<ReserveOrderViewCellDelegate> delegate;
+
+@property (strong, nonatomic) WYOrderInfo *orderInfo;
 
 @property (strong, nonatomic) IBOutlet UILabel *netbarNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *indicatorImageView;
@@ -23,4 +27,16 @@
 @property (strong, nonatomic) IBOutlet UILabel *introLabel;
 @property (strong, nonatomic) IBOutlet UIButton *cancelOrderButton;
 @property (strong, nonatomic) IBOutlet UIButton *payOrderButton;
+
+- (IBAction)netbarAction:(id)sender;
+- (IBAction)cancelOrderAction:(id)sender;
+- (IBAction)payAction:(id)sender;
+@end
+
+@protocol ReserveOrderViewCellDelegate <NSObject>
+@optional
+- (void)reserveOrderViewCellNetbarClickWithCell:(id)cell;
+- (void)reserveOrderViewCellCancelClickWithCell:(id)cell;
+- (void)reserveOrderViewCellPayClickWithCell:(id)cell;
+
 @end
