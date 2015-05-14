@@ -7,6 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NetbarSearchViewController">
             <connections>
+                <outlet property="clearHistoryButton" destination="29z-z3-qli" id="GoD-XB-xLn"/>
+                <outlet property="historyContainerView" destination="6ui-Gl-Ed5" id="wIv-2X-hUg"/>
+                <outlet property="historyFooterView" destination="eGs-s7-2Kh" id="G8w-Ku-rzP"/>
+                <outlet property="historyTable" destination="vdz-Zx-MuR" id="yOD-vJ-Td3"/>
                 <outlet property="netBarTable" destination="Dcs-lu-lw6" id="Y2X-kP-Sv4"/>
                 <outlet property="searchBar" destination="De1-uU-XhZ" id="Q8A-Mr-UYw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -38,6 +42,39 @@
                 <outlet property="delegate" destination="-1" id="UOT-OP-dGW"/>
             </connections>
         </searchBar>
+        <view contentMode="scaleToFill" id="6ui-Gl-Ed5">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vdz-Zx-MuR">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="cjA-HL-zgO"/>
+                        <outlet property="delegate" destination="-1" id="ZbO-0R-TCl"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+        <view contentMode="scaleToFill" id="eGs-s7-2Kh">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="29z-z3-qli">
+                    <rect key="frame" x="108" y="10" width="104" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="清除搜索记录">
+                        <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

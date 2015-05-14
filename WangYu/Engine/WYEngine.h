@@ -95,6 +95,10 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)getNetbarAllListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize latitude:(float)latitude longitude:(float)longitude tag:(int)tag;
 //搜索网吧(网吧名称)
 - (BOOL)searchNetbarWithUid:(NSString *)uid netbarName:(NSString *)netbarName latitude:(float)latitude longitude:(float)longitude tag:(int)tag;
+//附近网吧(经纬度)
+- (BOOL)searchLocalNetbarWithUid:(NSString *)uid latitude:(float)latitude longitude:(float)longitude tag:(int)tag;
+//附近网吧(城市)
+- (BOOL)searchLocalNetbarWithUid:(NSString *)uid city:(NSString *)city latitude:(float)latitude longitude:(float)longitude tag:(int)tag;
 
 - (BOOL)getReserveOrderListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
 - (BOOL)getPayOrderListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;

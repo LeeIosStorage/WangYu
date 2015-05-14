@@ -778,4 +778,40 @@ static WYEngine* s_ShareInstance = nil;
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/searchNetbar",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
+
+- (BOOL)searchLocalNetbarWithUid:(NSString *)uid latitude:(float)latitude longitude:(float)longitude tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (latitude != 0 && longitude != 0) {
+        [params setObject:[[NSNumber numberWithFloat:longitude] description] forKey:@"longitude"];
+        [params setObject:[[NSNumber numberWithFloat:latitude] description] forKey:@"latitude"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/searchLocalNetbar",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)searchLocalNetbarWithUid:(NSString *)uid city:(NSString *)city latitude:(float)latitude longitude:(float)longitude tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (city) {
+        [params setObject:city forKey:@"city"];
+    }
+    if (latitude != 0 && longitude != 0) {
+        [params setObject:[[NSNumber numberWithFloat:longitude] description] forKey:@"longitude"];
+        [params setObject:[[NSNumber numberWithFloat:latitude] description] forKey:@"latitude"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/searchNetbarForMap",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 @end

@@ -29,6 +29,15 @@
 @property (assign, nonatomic) SInt64  netBarNextCursor;
 @property (assign, nonatomic) BOOL netBarCanLoadMore;
 
+@property (strong, nonatomic) IBOutlet UIView *historyContainerView;
+@property (strong, nonatomic) IBOutlet UIView *historyFooterView;
+@property (strong, nonatomic) IBOutlet UIButton *clearHistoryButton;
+@property (strong, nonatomic) IBOutlet UITableView *historyTable;
+
+@property (nonatomic, strong) NSMutableArray *groupDataSource;
+@property (nonatomic, strong) NSMutableArray *historyInfos;
+@property (nonatomic, strong) NSMutableArray *nearbyNetBarInfos;
+
 @end
 
 @implementation NetbarSearchViewController
@@ -37,6 +46,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     _netBarInfos = [[NSMutableArray alloc] init];
+    _groupDataSource = [[NSMutableArray alloc] init];
+    _historyInfos = [[NSMutableArray alloc] init];
+    _nearbyNetBarInfos = [[NSMutableArray alloc] init];
+    
+    [self initControlUI];
+    [self getHistorySearchData];
+    
     _searchBarIsEditing = NO;
     [self getCacheNetbarInfos];
     [self refreshNetbarInfos];
@@ -48,6 +64,7 @@
     } location:^(CLLocation *location) {
         weakSelf.currentLocation = [location coordinate];//当前经纬
         [weakSelf refreshNetbarInfos];
+        [weakSelf getNearbyNetBars];
     }];
     
 }
@@ -75,7 +92,33 @@
 */
 
 
+-(void)initControlUI{
+    [self.clearHistoryButton.layer setMasksToBounds:YES];
+    [self.clearHistoryButton.layer setCornerRadius:4.0];
+    [self.clearHistoryButton.layer setBorderWidth:0.5]; //边框宽度
+    [self.clearHistoryButton.layer setBorderColor:SKIN_TEXT_COLOR1.CGColor];//边框颜色
+    self.clearHistoryButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
+}
+
 #pragma mark - custom
+-(void)getHistorySearchData{
+    [_historyInfos addObject:@"网娱网吧"];
+    [_historyInfos addObject:@"出租车"];
+    [_historyInfos addObject:@"美国老头"];
+    
+    [_nearbyNetBarInfos addObject:@"附近网吧1"];
+    [_nearbyNetBarInfos addObject:@"附近"];
+    [_nearbyNetBarInfos addObject:@"附近网吧"];
+    
+    if (_historyInfos.count > 0) {
+        [_groupDataSource addObject:_historyInfos];
+    }
+    if (_nearbyNetBarInfos) {
+        [_groupDataSource addObject:_nearbyNetBarInfos];
+    }
+    
+}
+
 -(void)getCacheNetbarInfos{
     __weak NetbarSearchViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
@@ -132,6 +175,37 @@
     }tag:tag];
 }
 
+-(void)getNearbyNetBars{
+    
+//    WS(weakSelf);
+//    int tag = [[WYEngine shareInstance] getConnectTag];
+//    [[WYEngine shareInstance] ];
+//    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+//        [WYProgressHUD AlertLoadDone];
+//        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+//        if (!jsonRet || errorMsg) {
+//            if (!errorMsg.length) {
+//                errorMsg = @"请求失败";
+//            }
+//            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+//            return;
+//        }
+////        weakSelf.netBarInfos = [[NSMutableArray alloc] init];
+////        
+////        NSArray *netbarDicArray = [jsonRet arrayObjectForKey:@"object"];
+////        for (NSDictionary *dic in netbarDicArray) {
+////            if (![dic isKindOfClass:[NSDictionary class]]) {
+////                continue;
+////            }
+////            WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
+////            [netbarInfo setNetbarInfoByJsonDic:dic];
+////            [weakSelf.netBarInfos addObject:netbarInfo];
+////        }
+////        
+////        [weakSelf.netBarTable reloadData];
+//    }tag:tag];
+}
+
 -(void)doSearchAction{
     
 }
@@ -153,20 +227,37 @@
     } completion:^(BOOL finished) {
         
     }];
+    self.netBarTable.hidden = NO;
+    if (self.historyContainerView.superview) {
+        [self.historyContainerView removeFromSuperview];
+    }
+}
+
+-(void)doSearchBarBeginEditing{
+    _searchBarIsEditing = YES;
+    [self setTilteLeftViewHide:YES];
+    [self.titleNavBarRightBtn setImage:nil forState:0];
+    [self.titleNavBarRightBtn setTitle:@"取消" forState:0];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.searchBar.frame = CGRectMake(12, 20, SCREEN_WIDTH - 12-47, 44);
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+    self.netBarTable.hidden = YES;
+    CGRect frame = self.historyContainerView.frame;
+    frame.origin.y = self.titleNavBar.frame.size.height;
+    frame.size.width = self.view.bounds.size.width;
+    frame.size.height = self.view.bounds.size.height;
+    self.historyContainerView.frame = frame;
+    [self.view addSubview:self.historyContainerView];
+    [self.historyTable reloadData];
 }
 
 #pragma mark - UISearchBarDelegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     if (searchBar == self.searchBar) {
-        _searchBarIsEditing = YES;
-        [self setTilteLeftViewHide:YES];
-        [self.titleNavBarRightBtn setImage:nil forState:0];
-        [self.titleNavBarRightBtn setTitle:@"取消" forState:0];
-        [UIView animateWithDuration:0.3 animations:^{
-            self.searchBar.frame = CGRectMake(12, 20, SCREEN_WIDTH - 12-47, 44);
-        } completion:^(BOOL finished) {
-            
-        }];
+        [self doSearchBarBeginEditing];
     }
     return YES;
 }
@@ -215,32 +306,137 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if (tableView == self.historyTable) {
+        return _groupDataSource.count;
+    }
     return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (tableView == self.historyTable) {
+        return 39;
+    }
+    return 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (tableView == self.historyTable) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 39)];
+        view.backgroundColor = [UIColor whiteColor];
+        
+        
+        UIImageView *topLineImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"s_n_set_line"]];
+        topLineImgView.frame = CGRectMake(0, 0, view.frame.size.width, 1);
+        [view addSubview:topLineImgView];
+        
+        UIImageView *botLineImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"s_n_set_line"]];
+        botLineImgView.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, 1);
+        [view addSubview:botLineImgView];
+        
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, view.frame.size.width-12*2, 44)];
+        nameLabel.backgroundColor = [UIColor clearColor];
+        nameLabel.numberOfLines = 1;
+        nameLabel.textAlignment = NSTextAlignmentLeft;
+        nameLabel.textColor = SKIN_TEXT_COLOR2;
+        nameLabel.font = SKIN_FONT_FROMNAME(12);
+        if (section == 0) {
+            nameLabel.text = @"搜索历史";
+        }else if (section == 1){
+            nameLabel.text = @"附近网吧";
+        }
+        [view addSubview:nameLabel];
+        
+        return view;
+    }
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (tableView == self.historyTable) {
+        if (section == 0) {
+            return self.historyFooterView.frame.size.height;
+        }
+        return 0;
+    }
+    return 0;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if (tableView == self.historyTable) {
+        if (section == 0) {
+            self.historyFooterView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 49);
+            return self.historyFooterView;
+        }
+        return nil;
+    }
+    return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (tableView == self.historyTable) {
+        NSArray *rows = [_groupDataSource objectAtIndex:section];
+        return rows.count;
+    }
     return self.netBarInfos.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (tableView == self.historyTable) {
+        return 44;
+    }
     return 94;
 }
 
+static int historyLabel_Tag = 201;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"NetbarTabCell";
-    NetbarTabCell *cell;
-    
-    cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
-        cell = [cells objectAtIndex:0];
+    if (tableView == self.historyTable) {
+        static NSString *CellIdentifier = @"CellIdentifier";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            UIImageView *botLineImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"s_n_set_line"]];
+            botLineImgView.frame = CGRectMake(0, 43, self.view.bounds.size.width, 1);
+            [cell addSubview:botLineImgView];
+            
+            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, self.view.bounds.size.width-12*2, 44)];
+            nameLabel.tag = historyLabel_Tag;
+            nameLabel.backgroundColor = [UIColor clearColor];
+            nameLabel.numberOfLines = 1;
+            nameLabel.textAlignment = NSTextAlignmentLeft;
+            nameLabel.textColor = SKIN_TEXT_COLOR1;
+            nameLabel.font = SKIN_FONT_FROMNAME(14);
+            [cell addSubview:nameLabel];
+        }
+        
+        UILabel *nameLabel = (UILabel *)[cell viewWithTag:historyLabel_Tag];
+        NSArray *rowArray = [_groupDataSource objectAtIndex:indexPath.section];
+        id rowData = [rowArray objectAtIndex:indexPath.row];
+        if ([rowData isKindOfClass:[NSString class]]) {
+            nameLabel.text = [rowData description];
+        }else if ([rowData isKindOfClass:[NSDictionary class]]){
+            
+        }
+        
+        
+        return cell;
+        
+    }else if (tableView == self.netBarTable){
+        static NSString *CellIdentifier = @"NetbarTabCell";
+        NetbarTabCell *cell;
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
+            cell = [cells objectAtIndex:0];
+        }
+        WYNetbarInfo *netbarInfo = _netBarInfos[indexPath.row];
+        cell.netbarInfo = netbarInfo;
+        return cell;
     }
-    WYNetbarInfo *netbarInfo = _netBarInfos[indexPath.row];
-    cell.netbarInfo = netbarInfo;
-    return cell;
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -248,11 +444,20 @@
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
     
-    WYNetbarInfo *netbarInfo = _netBarInfos[indexPath.row];
-    NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
-    ndVc.netbarInfo = netbarInfo;
-    [self.navigationController pushViewController:ndVc animated:YES];
-    
+    if (tableView == self.historyTable) {
+        NSArray *rowArray = [_groupDataSource objectAtIndex:indexPath.section];
+        id rowData = [rowArray objectAtIndex:indexPath.row];
+        if ([rowData isKindOfClass:[NSString class]]) {
+            
+        }else if ([rowData isKindOfClass:[NSDictionary class]]){
+            
+        }
+    }else if (tableView == self.netBarTable){
+        WYNetbarInfo *netbarInfo = _netBarInfos[indexPath.row];
+        NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
+        ndVc.netbarInfo = netbarInfo;
+        [self.navigationController pushViewController:ndVc animated:YES];
+    }
 }
 
 @end
