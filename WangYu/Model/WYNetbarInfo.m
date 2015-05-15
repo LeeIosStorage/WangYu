@@ -40,6 +40,20 @@
     if ([dic stringObjectForKey:@"netbar_name"]) {
         _netbarName = [dic stringObjectForKey:@"netbar_name"];
     }
+    if ([dic stringObjectForKey:@"latitude"]) {
+        _latitude = [dic stringObjectForKey:@"latitude"];
+    }
+    if ([dic stringObjectForKey:@"longitude"]) {
+        _longitude = [dic stringObjectForKey:@"longitude"];
+    }
+    
+    id objectForKey = [dic arrayObjectForKey:@"imgs"];
+    if (objectForKey) {
+        _picIds = [NSMutableArray array];
+        for (NSDictionary *objectDic in objectForKey) {
+            [_picIds addObject:[objectDic objectForKey:@"url"]];
+        }
+    }
 }
 
 - (void)setNetbarInfoByJsonDic:(NSDictionary*)dic{
@@ -64,5 +78,12 @@
     return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _netbarImageUrl]];
 }
 
+- (NSArray *)picURLs{
+    NSMutableArray* urls = [[NSMutableArray alloc] init];
+    for (NSString* picId in _picIds) {
+        [urls addObject:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl] ,picId]]];
+    }
+    return urls;
+}
 
 @end

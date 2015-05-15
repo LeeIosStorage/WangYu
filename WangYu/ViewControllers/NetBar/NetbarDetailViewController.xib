@@ -12,6 +12,7 @@
                 <outlet property="colorLabel" destination="AW2-2J-ITk" id="shY-tA-4Sa"/>
                 <outlet property="descLabel" destination="6Xk-gM-uq6" id="mDz-c4-Zof"/>
                 <outlet property="headerView" destination="rz3-iP-YlE" id="mJt-CZ-VAc"/>
+                <outlet property="imageScrollView" destination="lAv-Lw-pKe" id="BS8-KH-M2Y"/>
                 <outlet property="maskView" destination="lmL-DR-qfq" id="kie-W7-gvb"/>
                 <outlet property="netbarImage" destination="LGd-Cn-CNR" id="0Vd-iB-nVR"/>
                 <outlet property="netbarLabel" destination="S8S-aA-BgQ" id="wkm-u1-XlY"/>
@@ -88,7 +89,7 @@
             <point key="canvasLocation" x="471" y="281"/>
         </view>
         <view contentMode="scaleToFill" id="rz3-iP-YlE">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="348"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="358"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="eJJ-DW-phd">
@@ -108,7 +109,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="网鱼网咖" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="S8S-aA-BgQ">
-                            <rect key="frame" x="99" y="12" width="88" height="21"/>
+                            <rect key="frame" x="99" y="12" width="213" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -261,29 +262,31 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <view contentMode="scaleToFill" id="fVl-Ha-pay">
-                    <rect key="frame" x="0.0" y="245" width="320" height="93"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="lAv-Lw-pKe">
+                    <rect key="frame" x="0.0" y="255" width="320" height="93"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="Vtv-fY-ag6">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="2Pc-Dr-EH1">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cwT-Gx-q2z">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="93"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="1I3-5h-QVP">
                             <rect key="frame" x="0.0" y="92" width="320" height="1"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_default_img" id="AZG-Io-tfp">
-                            <rect key="frame" x="12" y="12" width="80" height="69"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_default_img" id="Mru-EV-Qjk">
-                            <rect key="frame" x="100" y="12" width="80" height="69"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_default_img" id="nLm-XK-DvO">
-                            <rect key="frame" x="188" y="12" width="80" height="69"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="xed-ao-w74"/>
+                    </connections>
+                </scrollView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>

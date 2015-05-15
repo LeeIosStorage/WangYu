@@ -19,6 +19,7 @@
 
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic) IBOutlet UIView *maskView;
+@property (strong, nonatomic) IBOutlet UIScrollView *imageScrollView;
 
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImage;
 @property (strong, nonatomic) IBOutlet UITableView *teamTable;
@@ -49,7 +50,8 @@
     // Do any additional setup after loading the view from its nib.
     [self refreshUI];
     [self refreshHeaderView];
-    [self getNetbarDataSource];
+    [self getCacheNetbarInfo];
+    [self getNetbarInfo];
 }
 
 - (void)refreshUI {
@@ -60,7 +62,7 @@
     
     self.netbarLabel.textColor = SKIN_TEXT_COLOR1;
     self.netbarLabel.font = SKIN_FONT(15);
-    
+
     self.priceLabel1.textColor = SKIN_TEXT_COLOR2;
     self.priceLabel1.font = SKIN_FONT(12);
     
@@ -116,9 +118,47 @@
     frame.origin.x = self.priceLabel2.frame.size.width + self.priceLabel2.frame.origin.x;
     self.timeLabel.frame = frame;
     self.timeLabel.text = [NSString stringWithFormat:@"/小时"];
+    
+    [self.imageScrollView removeFromSuperview];
+    [self.headerView addSubview:self.imageScrollView];
+    int index = 0;
+    if(self.netbarInfo.picIds.count > 0){
+        for (NSString *picUrl in self.netbarInfo.picIds) {
+            WYLog(@"picUrl = %@",picUrl);
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12 + index*(80+7), 12, 80, 76)];
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.clipsToBounds = YES;
+            imageView.userInteractionEnabled = YES;
+            [imageView sd_setImageWithURL:[self.netbarInfo.picURLs objectAtIndex:index] placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
+            [self.imageScrollView addSubview:imageView];
+            index ++;
+        }
+        if(index > 4){
+            [self.imageScrollView setContentSize:CGSizeMake(12 + index*(80+7), self.imageScrollView.frame.size.height)];
+        }
+        self.imageScrollView.pagingEnabled = YES;
+        self.imageScrollView.showsHorizontalScrollIndicator = NO;
+    }
 }
 
-- (void)getNetbarDataSource {
+-(void)getCacheNetbarInfo{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] addGetCacheTag:tag];
+    [[WYEngine shareInstance] getNetbarDetailWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];
+
+    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+        if (jsonRet == nil) {
+            //...
+        }else{
+            NSDictionary *dic = [jsonRet objectForKey:@"object"];
+            [weakSelf.netbarInfo setNetbarInfoByJsonDic:dic];
+            [weakSelf refreshHeaderView];
+        }
+    }];
+}
+
+- (void)getNetbarInfo {
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] getNetbarDetailWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];

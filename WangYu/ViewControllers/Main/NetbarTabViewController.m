@@ -18,6 +18,8 @@
 #import "OrdersViewController.h"
 #import "NetbarSearchViewController.h"
 #import "WYLocationServiceUtil.h"
+#import "WYAlertView.h"
+#import "LocationViewController.h"
 #import <MapKit/MapKit.h>
 
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate>
@@ -34,8 +36,18 @@
 @property (strong, nonatomic) IBOutlet UITableView *netBarTable;
 @property (strong, nonatomic) SKSplashView *splashView;
 
+//@property (strong, nonatomic) IBOutlet UILabel *currentLabel;
+//@property (strong, nonatomic) IBOutlet UILabel *statusLabel;
+//@property (strong, nonatomic) IBOutlet UILabel *cityLabel;
+//@property (strong, nonatomic) IBOutlet UILabel *noticeLabel;
+//@property (strong, nonatomic) IBOutlet UILabel *hintLabel;
+//@property (strong, nonatomic) IBOutlet UIButton *currentCityButton;
+//@property (strong, nonatomic) IBOutlet UIView *lightupCityView;
+//@property (strong, nonatomic) IBOutlet UIView *noticeView;
+
 @property (nonatomic, assign) CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic) NSMutableArray *netbarArray;
+//@property (nonatomic, strong) NSArray *cityArray;
 
 - (IBAction)orderAction:(id)sender;
 - (IBAction)packetAction:(id)sender;
@@ -55,11 +67,16 @@
     [self refreshUI];
     [self getCacheNetbarInfos];
     [self getNetbarInfos];
-    
     WS(weakSelf);
     //获取用户位置
     [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString) {
-        
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:errorString cancelButtonTitle:@"取消" cancelBlock:^{
+        } okButtonTitle:@"确定" okBlock:^{
+            LocationViewController *lVc = [[LocationViewController alloc] init];
+            [self.navigationController pushViewController:lVc animated:YES];
+        }];
+        [alertView show];
+        return;
     } location:^(CLLocation *location) {
         weakSelf.currentLocation = [location coordinate];//当前经纬
         [weakSelf getNetbarInfos];
