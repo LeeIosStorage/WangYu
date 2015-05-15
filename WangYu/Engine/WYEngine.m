@@ -795,7 +795,7 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
-- (BOOL)searchLocalNetbarWithUid:(NSString *)uid city:(NSString *)city latitude:(float)latitude longitude:(float)longitude tag:(int)tag{
+- (BOOL)searchMapNetbarWithUid:(NSString *)uid city:(NSString *)city latitude:(float)latitude longitude:(float)longitude tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (uid) {
         [params setObject:uid forKey:@"userId"];

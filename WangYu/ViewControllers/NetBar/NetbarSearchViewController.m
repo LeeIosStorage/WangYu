@@ -15,6 +15,7 @@
 #import "WYNetbarInfo.h"
 #import "WYLocationServiceUtil.h"
 #import <MapKit/MapKit.h>
+#import "WYNetBarManager.h"
 
 @interface NetbarSearchViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -34,10 +35,18 @@
 @property (strong, nonatomic) IBOutlet UIButton *clearHistoryButton;
 @property (strong, nonatomic) IBOutlet UITableView *historyTable;
 
+@property (nonatomic, assign) BOOL havHistorySearchRecord;
 @property (nonatomic, strong) NSMutableArray *groupDataSource;
 @property (nonatomic, strong) NSMutableArray *historyInfos;
 @property (nonatomic, strong) NSMutableArray *nearbyNetBarInfos;
 
+//搜索
+@property (nonatomic, strong) NSString *searchContent;
+@property (strong, nonatomic) IBOutlet UIView *searchContainerView;
+@property (strong, nonatomic) IBOutlet UITableView *searchTableView;
+@property (nonatomic, strong) NSMutableArray *searchNetBarInfos;
+
+-(IBAction)removeSearchRecordAction:(id)sender;
 @end
 
 @implementation NetbarSearchViewController
@@ -51,7 +60,7 @@
     _nearbyNetBarInfos = [[NSMutableArray alloc] init];
     
     [self initControlUI];
-    [self getHistorySearchData];
+    [self refreshHistorySearchData];
     
     _searchBarIsEditing = NO;
     [self getCacheNetbarInfos];
@@ -101,22 +110,24 @@
 }
 
 #pragma mark - custom
--(void)getHistorySearchData{
-    [_historyInfos addObject:@"网娱网吧"];
-    [_historyInfos addObject:@"出租车"];
-    [_historyInfos addObject:@"美国老头"];
+-(void)refreshHistorySearchData{
+    //搜索历史记录
+    [_historyInfos removeAllObjects];
+    NSArray *searchRecordArray = [[WYNetBarManager shareInstance] getHistorySearchRecord];
+    for (NSString *info in searchRecordArray) {
+        [_historyInfos addObject:info];
+    }
     
-    [_nearbyNetBarInfos addObject:@"附近网吧1"];
-    [_nearbyNetBarInfos addObject:@"附近"];
-    [_nearbyNetBarInfos addObject:@"附近网吧"];
-    
+    //历史搜索and附近网吧
+    _groupDataSource = [[NSMutableArray alloc] init];
     if (_historyInfos.count > 0) {
         [_groupDataSource addObject:_historyInfos];
+        _havHistorySearchRecord = YES;
     }
-    if (_nearbyNetBarInfos) {
+    if (_nearbyNetBarInfos.count > 0) {
         [_groupDataSource addObject:_nearbyNetBarInfos];
     }
-    
+    [self.historyTable reloadData];
 }
 
 -(void)getCacheNetbarInfos{
@@ -130,7 +141,7 @@
         }else{
             weakSelf.netBarInfos = [[NSMutableArray alloc] init];
             
-            NSArray *netbarDicArray = [jsonRet arrayObjectForKey:@"object"];
+            NSArray *netbarDicArray = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
             for (NSDictionary *dic in netbarDicArray) {
                 if (![dic isKindOfClass:[NSDictionary class]]) {
                     continue;
@@ -150,7 +161,6 @@
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)_netBarNextCursor pageSize:10 latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        [WYProgressHUD AlertLoadDone];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -161,7 +171,7 @@
         }
         weakSelf.netBarInfos = [[NSMutableArray alloc] init];
         
-        NSArray *netbarDicArray = [jsonRet arrayObjectForKey:@"object"];
+        NSArray *netbarDicArray = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
         for (NSDictionary *dic in netbarDicArray) {
             if (![dic isKindOfClass:[NSDictionary class]]) {
                 continue;
@@ -177,37 +187,95 @@
 
 -(void)getNearbyNetBars{
     
-//    WS(weakSelf);
-//    int tag = [[WYEngine shareInstance] getConnectTag];
-//    [[WYEngine shareInstance] ];
-//    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-//        [WYProgressHUD AlertLoadDone];
-//        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
-//        if (!jsonRet || errorMsg) {
-//            if (!errorMsg.length) {
-//                errorMsg = @"请求失败";
-//            }
-//            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
-//            return;
-//        }
-////        weakSelf.netBarInfos = [[NSMutableArray alloc] init];
-////        
-////        NSArray *netbarDicArray = [jsonRet arrayObjectForKey:@"object"];
-////        for (NSDictionary *dic in netbarDicArray) {
-////            if (![dic isKindOfClass:[NSDictionary class]]) {
-////                continue;
-////            }
-////            WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
-////            [netbarInfo setNetbarInfoByJsonDic:dic];
-////            [weakSelf.netBarInfos addObject:netbarInfo];
-////        }
-////        
-////        [weakSelf.netBarTable reloadData];
-//    }tag:tag];
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] searchLocalNetbarWithUid:[WYEngine shareInstance].uid latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        weakSelf.nearbyNetBarInfos = [[NSMutableArray alloc] init];
+        NSArray *netbarDicArray = [jsonRet arrayObjectForKey:@"object"];
+        for (NSDictionary *dic in netbarDicArray) {
+            if (![dic isKindOfClass:[NSDictionary class]]) {
+                continue;
+            }
+            WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
+            [netbarInfo setNetbarInfoByJsonDic:dic];
+            [weakSelf.nearbyNetBarInfos addObject:netbarInfo];
+        }
+        
+        [weakSelf refreshHistorySearchData];
+        
+//        [weakSelf.historyTable reloadData];
+        
+    }tag:tag];
 }
 
 -(void)doSearchAction{
     
+    self.searchContent = [self.searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [[WYNetBarManager shareInstance] addSaveHistorySearchRecord:self.searchContent];
+    
+    [WYProgressHUD AlertLoading:@"搜索中,请稍等."];
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] searchNetbarWithUid:[WYEngine shareInstance].uid netbarName:self.searchContent latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        
+        weakSelf.searchNetBarInfos = [[NSMutableArray alloc] init];
+        NSArray *netbarDicArray = [jsonRet arrayObjectForKey:@"object"];
+        for (NSDictionary *dic in netbarDicArray) {
+            if (![dic isKindOfClass:[NSDictionary class]]) {
+                continue;
+            }
+            WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
+            [netbarInfo setNetbarInfoByJsonDic:dic];
+            [weakSelf.searchNetBarInfos addObject:netbarInfo];
+        }
+        
+        [weakSelf refreshSearchTableView];
+        
+        [weakSelf.searchTableView reloadData];
+        
+    }tag:tag];
+    
+}
+
+-(void)refreshSearchTableView{
+    if (self.searchNetBarInfos.count == 0) {
+        [WYProgressHUD AlertSuccess:@"搜索结果为空" At:self.view];
+    }else{
+        [WYProgressHUD AlertSuccess:@"搜索成功" At:self.view];
+    }
+    
+    self.historyContainerView.hidden = YES;
+    
+    if (!self.searchContainerView.superview) {
+        CGRect frame = self.searchContainerView.frame;
+        frame.origin.y = self.titleNavBar.frame.size.height;
+        frame.size.width = self.view.bounds.size.width;
+        frame.size.height = self.view.bounds.size.height - self.titleNavBar.frame.size.height;
+        self.searchContainerView.frame = frame;
+        [self.view addSubview:self.searchContainerView];
+    }else{
+        self.searchContainerView.hidden = NO;
+    }
+    
+    [self.searchTableView reloadData];
 }
 
 -(void)mapAction:(id)sender{
@@ -215,9 +283,14 @@
         [self doSearchBarEndEditing];
     }
 }
+-(IBAction)removeSearchRecordAction:(id)sender{
+    [[WYNetBarManager shareInstance] removeHistorySearchRecord];
+    [self refreshHistorySearchData];
+}
 
 - (void)doSearchBarEndEditing{
     [self.searchBar resignFirstResponder];
+    self.searchBar.text = nil;
     _searchBarIsEditing = NO;
     [self setTilteLeftViewHide:NO];
     [self.titleNavBarRightBtn setImage:[UIImage imageNamed:@"netbar_map_icon"] forState:0];
@@ -230,6 +303,9 @@
     self.netBarTable.hidden = NO;
     if (self.historyContainerView.superview) {
         [self.historyContainerView removeFromSuperview];
+    }
+    if (self.searchContainerView.superview) {
+        [self.searchContainerView removeFromSuperview];
     }
 }
 
@@ -248,7 +324,7 @@
     CGRect frame = self.historyContainerView.frame;
     frame.origin.y = self.titleNavBar.frame.size.height;
     frame.size.width = self.view.bounds.size.width;
-    frame.size.height = self.view.bounds.size.height;
+    frame.size.height = self.view.bounds.size.height - self.titleNavBar.frame.size.height;
     self.historyContainerView.frame = frame;
     [self.view addSubview:self.historyContainerView];
     [self.historyTable reloadData];
@@ -277,17 +353,16 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     
     if (searchBar == self.searchBar) {
-//        self.searchContent = [self.searchBar2.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//        if ([self.searchContent length] == 0) {
-//            [self.searchTableView reloadData];
-//            self.noResultTipLabel.hidden = YES;
-//            self.searchTableView.hidden = YES;
-//            self.searchMaskVew.alpha = 0.5;
-//            [self refreshNoResultTipLabel];
-//        }else{
-//            self.searchMaskVew.alpha = 0;
-//            self.searchTableView.hidden = NO;
-//        }
+        self.searchContent = [self.searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if ([self.searchContent length] == 0) {
+            [self.searchTableView reloadData];
+            self.searchContainerView.hidden = YES;
+            self.historyContainerView.hidden = NO;
+            [self refreshHistorySearchData];
+        }else{
+            self.searchTableView.hidden = NO;
+            self.historyContainerView.hidden = YES;
+        }
     }
 //    if (!searchText.length && !searchBar.isFirstResponder) {
 //        [searchBar performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:.1];
@@ -296,6 +371,9 @@
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     if (self.netBarTable == scrollView) {
         [self doSearchBarEndEditing];
     }else{
@@ -341,7 +419,11 @@
         nameLabel.textColor = SKIN_TEXT_COLOR2;
         nameLabel.font = SKIN_FONT_FROMNAME(12);
         if (section == 0) {
-            nameLabel.text = @"搜索历史";
+            if (_havHistorySearchRecord) {
+                nameLabel.text = @"搜索历史";
+            }else{
+                nameLabel.text = @"附近网吧";
+            }
         }else if (section == 1){
             nameLabel.text = @"附近网吧";
         }
@@ -354,7 +436,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if (tableView == self.historyTable) {
-        if (section == 0) {
+        if (section == 0 && _havHistorySearchRecord) {
             return self.historyFooterView.frame.size.height;
         }
         return 0;
@@ -363,7 +445,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if (tableView == self.historyTable) {
-        if (section == 0) {
+        if (section == 0 && _havHistorySearchRecord) {
             self.historyFooterView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 49);
             return self.historyFooterView;
         }
@@ -377,6 +459,8 @@
     if (tableView == self.historyTable) {
         NSArray *rows = [_groupDataSource objectAtIndex:section];
         return rows.count;
+    }else if (tableView == self.searchTableView){
+        return self.searchNetBarInfos.count;
     }
     return self.netBarInfos.count;
 }
@@ -416,10 +500,10 @@ static int historyLabel_Tag = 201;
         id rowData = [rowArray objectAtIndex:indexPath.row];
         if ([rowData isKindOfClass:[NSString class]]) {
             nameLabel.text = [rowData description];
-        }else if ([rowData isKindOfClass:[NSDictionary class]]){
-            
+        }else if ([rowData isKindOfClass:[WYNetbarInfo class]]){
+            WYNetbarInfo *netbarInfo = rowData;
+            nameLabel.text = netbarInfo.netbarName;
         }
-        
         
         return cell;
         
@@ -435,6 +519,18 @@ static int historyLabel_Tag = 201;
         WYNetbarInfo *netbarInfo = _netBarInfos[indexPath.row];
         cell.netbarInfo = netbarInfo;
         return cell;
+    }else if (tableView == self.searchTableView){
+        static NSString *CellIdentifier = @"NetbarTabCell";
+        NetbarTabCell *cell;
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
+            cell = [cells objectAtIndex:0];
+        }
+        WYNetbarInfo *netbarInfo = _searchNetBarInfos[indexPath.row];
+        cell.netbarInfo = netbarInfo;
+        return cell;
     }
     return nil;
 }
@@ -448,12 +544,25 @@ static int historyLabel_Tag = 201;
         NSArray *rowArray = [_groupDataSource objectAtIndex:indexPath.section];
         id rowData = [rowArray objectAtIndex:indexPath.row];
         if ([rowData isKindOfClass:[NSString class]]) {
+            self.searchBar.text = [rowData description];
+            [self.searchBar becomeFirstResponder];
+            [self doSearchAction];
             
-        }else if ([rowData isKindOfClass:[NSDictionary class]]){
-            
+        }else if ([rowData isKindOfClass:[WYNetbarInfo class]]){
+            WYNetbarInfo *netbarInfo = rowData;
+            NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
+            ndVc.netbarInfo = netbarInfo;
+            [self.navigationController pushViewController:ndVc animated:YES];
         }
     }else if (tableView == self.netBarTable){
+        
         WYNetbarInfo *netbarInfo = _netBarInfos[indexPath.row];
+        NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
+        ndVc.netbarInfo = netbarInfo;
+        [self.navigationController pushViewController:ndVc animated:YES];
+    }else if (tableView == self.searchTableView){
+        
+        WYNetbarInfo *netbarInfo = _searchNetBarInfos[indexPath.row];
         NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
         ndVc.netbarInfo = netbarInfo;
         [self.navigationController pushViewController:ndVc animated:YES];

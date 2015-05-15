@@ -13,6 +13,8 @@
                 <outlet property="historyTable" destination="vdz-Zx-MuR" id="yOD-vJ-Td3"/>
                 <outlet property="netBarTable" destination="Dcs-lu-lw6" id="Y2X-kP-Sv4"/>
                 <outlet property="searchBar" destination="De1-uU-XhZ" id="Q8A-Mr-UYw"/>
+                <outlet property="searchContainerView" destination="IxS-Ht-GOb" id="nCo-RT-OvE"/>
+                <outlet property="searchTableView" destination="vY0-qK-oAn" id="cMq-mX-LhE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -42,7 +44,7 @@
                 <outlet property="delegate" destination="-1" id="UOT-OP-dGW"/>
             </connections>
         </searchBar>
-        <view contentMode="scaleToFill" id="6ui-Gl-Ed5">
+        <view contentMode="scaleToFill" id="6ui-Gl-Ed5" userLabel="View - history">
             <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -52,6 +54,22 @@
                     <connections>
                         <outlet property="dataSource" destination="-1" id="cjA-HL-zgO"/>
                         <outlet property="delegate" destination="-1" id="ZbO-0R-TCl"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+        <view contentMode="scaleToFill" id="IxS-Ht-GOb" userLabel="View - search">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vY0-qK-oAn">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="fw7-Ap-BYj"/>
+                        <outlet property="delegate" destination="-1" id="A4n-QK-i43"/>
                     </connections>
                 </tableView>
             </subviews>
