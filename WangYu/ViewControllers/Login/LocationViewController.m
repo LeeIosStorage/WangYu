@@ -82,6 +82,7 @@
         [button.layer setCornerRadius:4.0];
         [button.layer setBorderWidth:0.5];
         [button.layer setBorderColor:UIColorToRGB(0xadadad).CGColor];
+        [button addTarget:self action:@selector(locationAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.lightupCityView addSubview:button];
         if (index > 5) {
             frame.size.height = 134 + (index/3 - 1)*(34+12);
@@ -97,7 +98,7 @@
 
 - (IBAction)locationAction:(id)sender {
     AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    [appDelegate.mainTabViewController.tabBar selectIndex:1];
+    [appDelegate.mainTabViewController.tabBar selectIndex:0];
 }
 
 @end
