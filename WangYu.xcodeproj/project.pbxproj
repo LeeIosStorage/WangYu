@@ -101,6 +101,8 @@
 		076E22531B03187100F33815 /* WYSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E22521B03187100F33815 /* WYSearchBar.m */; };
 		076E22561B03512700F33815 /* WYOrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E22551B03512700F33815 /* WYOrderInfo.m */; };
 		076F82861B059CB700CACF0D /* WYNetBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 076F82851B059CB700CACF0D /* WYNetBarManager.m */; };
+		076F828F1B05E0CB00CACF0D /* NetbarMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076F828D1B05E0CB00CACF0D /* NetbarMapViewController.m */; };
+		076F82901B05E0CB00CACF0D /* NetbarMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076F828E1B05E0CB00CACF0D /* NetbarMapViewController.xib */; };
 		0777DFCB1B01C4AA00E1E314 /* QuickBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */; };
 		0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */; };
 		0777DFD01B01C4CB00E1E314 /* QuickPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777DFCE1B01C4CB00E1E314 /* QuickPayViewController.m */; };
@@ -346,6 +348,9 @@
 		076E22551B03512700F33815 /* WYOrderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYOrderInfo.m; sourceTree = "<group>"; };
 		076F82841B059CB700CACF0D /* WYNetBarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYNetBarManager.h; sourceTree = "<group>"; };
 		076F82851B059CB700CACF0D /* WYNetBarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYNetBarManager.m; sourceTree = "<group>"; };
+		076F828C1B05E0CB00CACF0D /* NetbarMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetbarMapViewController.h; path = NetBar/NetbarMapViewController.h; sourceTree = "<group>"; };
+		076F828D1B05E0CB00CACF0D /* NetbarMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetbarMapViewController.m; path = NetBar/NetbarMapViewController.m; sourceTree = "<group>"; };
+		076F828E1B05E0CB00CACF0D /* NetbarMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarMapViewController.xib; path = NetBar/NetbarMapViewController.xib; sourceTree = "<group>"; };
 		0777DFC81B01C4AA00E1E314 /* QuickBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickBookViewController.h; path = NetBar/QuickBookViewController.h; sourceTree = "<group>"; };
 		0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickBookViewController.m; path = NetBar/QuickBookViewController.m; sourceTree = "<group>"; };
 		0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuickBookViewController.xib; path = NetBar/QuickBookViewController.xib; sourceTree = "<group>"; };
@@ -890,6 +895,9 @@
 				076E224C1B02F73200F33815 /* NetbarSearchViewController.h */,
 				076E224D1B02F73200F33815 /* NetbarSearchViewController.m */,
 				076E224E1B02F73200F33815 /* NetbarSearchViewController.xib */,
+				076F828C1B05E0CB00CACF0D /* NetbarMapViewController.h */,
+				076F828D1B05E0CB00CACF0D /* NetbarMapViewController.m */,
+				076F828E1B05E0CB00CACF0D /* NetbarMapViewController.xib */,
 			);
 			name = NetBar;
 			sourceTree = "<group>";
@@ -1285,6 +1293,7 @@
 				0777DFDB1B01D6DF00E1E314 /* QuickPayCell.xib in Resources */,
 				070DCBE01B00762F00B27C19 /* OrdersViewController.xib in Resources */,
 				07566CA61AFC648B00F93B58 /* SettingViewController.xib in Resources */,
+				076F82901B05E0CB00CACF0D /* NetbarMapViewController.xib in Resources */,
 				0745B3891B007AF3006D6853 /* NetbarDetailCell.xib in Resources */,
 				0777DFD11B01C4CB00E1E314 /* QuickPayViewController.xib in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
@@ -1416,6 +1425,7 @@
 				07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */,
 				077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */,
 				077D83891AF9C3BC00AAF31F /* NSString+Value.m in Sources */,
+				076F828F1B05E0CB00CACF0D /* NetbarMapViewController.m in Sources */,
 				073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */,
 				0777DFDA1B01D6DF00E1E314 /* QuickPayCell.m in Sources */,
 				073DBDB71AE794C4009B49EB /* PullToRefreshView.m in Sources */,
