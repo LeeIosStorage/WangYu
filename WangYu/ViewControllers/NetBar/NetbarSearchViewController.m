@@ -16,6 +16,7 @@
 #import "WYLocationServiceUtil.h"
 #import <MapKit/MapKit.h>
 #import "WYNetBarManager.h"
+#import "NetbarMapViewController.h"
 
 @interface NetbarSearchViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -123,6 +124,8 @@
     if (_historyInfos.count > 0) {
         [_groupDataSource addObject:_historyInfos];
         _havHistorySearchRecord = YES;
+    }else{
+        _havHistorySearchRecord = NO;
     }
     if (_nearbyNetBarInfos.count > 0) {
         [_groupDataSource addObject:_nearbyNetBarInfos];
@@ -281,7 +284,17 @@
 -(void)mapAction:(id)sender{
     if (_searchBarIsEditing) {
         [self doSearchBarEndEditing];
+        return;
     }
+    NetbarMapViewController *mapVc = [[NetbarMapViewController alloc] init];
+    CLLocationCoordinate2D location;
+    location.latitude = 30.19185;
+    location.longitude = 120.14598;
+    mapVc.location = location;
+    mapVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self.navigationController presentViewController:mapVc animated:YES completion:^{
+        
+    }];
 }
 -(IBAction)removeSearchRecordAction:(id)sender{
     [[WYNetBarManager shareInstance] removeHistorySearchRecord];

@@ -49,6 +49,9 @@ static WYNetBarManager* _shareInstance = nil;
 - (NSMutableArray *)addSaveHistorySearchRecord:(NSString *)record{
     
     NSMutableArray* array = [self getHistorySearchRecord];
+    if (array == nil) {
+        array = [[NSMutableArray alloc] init];
+    }
     for (NSString *info in array) {
         if ([info isEqualToString:record]) {
             [array removeObject:info];
