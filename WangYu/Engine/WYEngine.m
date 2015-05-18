@@ -673,6 +673,37 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
+//一键支付
+- (BOOL)quickBookingWithUid:(NSString *)uid reserveDate:(NSString *)date amount:(double)amount netbarId:(NSString *)nid hours:(int)hours num:(int)num remark:(NSString *)remark tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (nid) {
+        [params setObject:nid forKey:@"netbarId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (date) {
+        [params setObject:date forKey:@"reserveDate"];
+    }
+    if (amount) {
+        [params setObject:[NSNumber numberWithDouble:amount] forKey:@"amount"];
+    }
+    if (hours) {
+        [params setObject:[NSNumber numberWithInt:hours] forKey:@"hours"];
+    }
+    if (num) {
+        [params setObject:[NSNumber numberWithInt:num] forKey:@"num"];
+    }
+    if (remark) {
+        [params setObject:remark forKey:@"remark"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/doReserve",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 - (BOOL)getReserveOrderListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (uid) {

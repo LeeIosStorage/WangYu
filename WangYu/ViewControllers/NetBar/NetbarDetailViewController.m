@@ -239,6 +239,7 @@
 
 - (IBAction)bookAction:(id)sender {
     QuickBookViewController *qbVc = [[QuickBookViewController alloc] init];
+    qbVc.netbarInfo = self.netbarInfo;
     [self.navigationController pushViewController:qbVc animated:YES];
 }
 

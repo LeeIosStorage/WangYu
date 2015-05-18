@@ -7,7 +7,10 @@
 //
 
 #import "WYSuperViewController.h"
+#import "WYNetbarInfo.h"
 
 @interface QuickBookViewController : WYSuperViewController
+
+@property (nonatomic, strong) WYNetbarInfo *netbarInfo;
 
 @end

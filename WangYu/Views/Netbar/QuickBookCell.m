@@ -17,7 +17,7 @@
     self.titleName.textColor = SKIN_TEXT_COLOR1;
     
     self.rightLabel.font = SKIN_FONT(12);
-    self.rightLabel.textColor = SKIN_TEXT_COLOR2;
+    self.rightLabel.textColor = SKIN_TEXT_COLOR3;
     
 }
 
