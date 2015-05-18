@@ -61,7 +61,7 @@
     _nearbyNetBarInfos = [[NSMutableArray alloc] init];
     
     [self initControlUI];
-    [self refreshHistorySearchData];
+    [self refreshHistorySearchData:NO];
     
     _searchBarIsEditing = NO;
     [self getCacheNetbarInfos];
@@ -111,12 +111,14 @@
 }
 
 #pragma mark - custom
--(void)refreshHistorySearchData{
+-(void)refreshHistorySearchData:(BOOL)lose{
     //搜索历史记录
     [_historyInfos removeAllObjects];
-    NSArray *searchRecordArray = [[WYNetBarManager shareInstance] getHistorySearchRecord];
-    for (NSString *info in searchRecordArray) {
-        [_historyInfos addObject:info];
+    if (!lose) {
+        NSArray *searchRecordArray = [[WYNetBarManager shareInstance] getHistorySearchRecord];
+        for (NSString *info in searchRecordArray) {
+            [_historyInfos addObject:info];
+        }
     }
     
     //历史搜索and附近网吧
@@ -213,7 +215,7 @@
             [weakSelf.nearbyNetBarInfos addObject:netbarInfo];
         }
         
-        [weakSelf refreshHistorySearchData];
+        [weakSelf refreshHistorySearchData:NO];
         
 //        [weakSelf.historyTable reloadData];
         
@@ -298,7 +300,7 @@
 }
 -(IBAction)removeSearchRecordAction:(id)sender{
     [[WYNetBarManager shareInstance] removeHistorySearchRecord];
-    [self refreshHistorySearchData];
+    [self refreshHistorySearchData:YES];
 }
 
 - (void)doSearchBarEndEditing{
@@ -371,7 +373,7 @@
             [self.searchTableView reloadData];
             self.searchContainerView.hidden = YES;
             self.historyContainerView.hidden = NO;
-            [self refreshHistorySearchData];
+            [self refreshHistorySearchData:NO];
         }else{
             self.searchTableView.hidden = NO;
             self.historyContainerView.hidden = YES;
