@@ -18,6 +18,12 @@
 #define Tag_addcost_check    200
 
 @interface QuickBookViewController ()<UITableViewDataSource,UITableViewDelegate,UIPickerViewDataSource, UIPickerViewDelegate>{
+    int date;
+    int hours;
+    int seatNum;
+    NSString* dateString;
+    NSString* seatString;
+    NSString* hourString;
     NSArray *_dateArray;
     NSArray *_timeArray;
     NSArray *_durationArray;
@@ -60,7 +66,9 @@
     
     self.hintLabel.font = SKIN_FONT_FROMNAME(12);
     self.hintLabel.textColor = SKIN_TEXT_COLOR2;
-    
+    hours = 1;
+    seatNum = 1;
+    hourString = @"1小时";
     _dateArray = [NSArray arrayWithObjects:@"今天",@"明天",@"后天",nil];
     _timeArray = @[@(1),@(2),@(3),@(4),@(5),@(6),@(7),@(8)];
     _durationArray = @[@(1),@(2),@(3),@(4),@(5),@(6),@(7),@(8),@(9),@(10),@(11),@(12)];
@@ -126,7 +134,7 @@
 - (void)doReserve {
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] quickBookingWithUid:[WYEngine shareInstance].uid reserveDate:@"" amount:12 netbarId:_netbarInfo.nid hours:2 num:2 remark:@"头号" tag:tag];
+    [[WYEngine shareInstance] quickBookingWithUid:[WYEngine shareInstance].uid reserveDate:@"2015-05-19 18:00:00" amount:12 netbarId:_netbarInfo.nid hours:2 num:2 remark:@"头号" tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [WYProgressHUD AlertLoadDone];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -180,7 +188,7 @@
         if (indexPath.row == 0) {
             cell.titleName.text = @"预订日期";
             cell.leftImage.image = [UIImage imageNamed:@"netbar_orders_date_icon"];
-            cell.rightLabel.text = @"今天";
+            cell.rightLabel.text = dateString;
         } else if (indexPath.row == 1) {
             cell.titleName.text = @"上网时间";
             cell.leftImage.image = [UIImage imageNamed:@"netbar_orders_time_icon"];
@@ -188,11 +196,11 @@
         } else if (indexPath.row == 2) {
             cell.titleName.text = @"上网时长";
             cell.leftImage.image = [UIImage imageNamed:@"netbar_orders_duration_icon"];
-            cell.rightLabel.text = @"6小时";
+            cell.rightLabel.text = hourString;
         } else if (indexPath.row == 3) {
             cell.titleName.text = @"座位数量";
             cell.leftImage.image = [UIImage imageNamed:@"netbar_orders_seatnum_icon"];
-            cell.rightLabel.text = @"2个";
+            cell.rightLabel.text = seatString;
         }
     } else if (indexPath.section == 1){
         if (indexPath.row == 0) {
@@ -251,6 +259,8 @@
 //            self.fitmentLabel.text = [_fitmentTextArray objectAtIndex:0];
 //            fitment = 1;
 //        }
+        hours = (int)_durationArray[0];
+        hourString = [NSString stringWithFormat:@"%@小时",[_durationArray objectAtIndex:0]];
     }else if(checkType == Tag_seatnum_check){
 //        bPayType = YES;
 //        if ([self.payTypeLabel.text isEqualToString:@"支付形式"]) {
@@ -304,18 +314,25 @@
 
 -(void) pickerView: (UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent: (NSInteger)component
 {
+    NSIndexPath *indexPath;
+    if (checkType == Tag_addcost_check) {
+        indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    }else {
+        indexPath = [NSIndexPath indexPathForRow:checkType - 100 inSection:0];
+    }
+    
     if (checkType == Tag_date_check) {
-//        self.direLabel.text = [_direTextArray objectAtIndex:row];
-//        direction = (int)_direArray[row];
+        dateString = [_dateArray objectAtIndex:row];
     }else if(checkType == Tag_duration_check){
-//        self.fitmentLabel.text = [_fitmentTextArray objectAtIndex:row];
-//        fitment = (int)_fitmentArray[row];
+        hours = [_durationArray[row] intValue];
+        hourString = [NSString stringWithFormat:@"%@小时",[_durationArray objectAtIndex:row]];
     }else if(checkType == Tag_seatnum_check){
-//        self.payTypeLabel.text = [_payTextArray objectAtIndex:row];
-//        payType = (int)_payArray[row];
+        seatNum = [_seatnumArray[row] intValue];
+        seatString = [NSString stringWithFormat:@"%@个",[_seatnumArray objectAtIndex:row]];
     }else if(checkType == Tag_addcost_check){
         
     }
+    [_bookTable reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (IBAction)bookAction:(id)sender {
