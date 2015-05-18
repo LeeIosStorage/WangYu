@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class CLLocation;
 typedef void(^LocationBlock)(NSString *errorString);
@@ -18,6 +19,9 @@ typedef void(^LocationSucessBlock)(CLLocation *location);
 
 //简单判断定位服务是否开启
 +(BOOL) isLocationServiceOpen;
+
+//转化为火星坐标
++(CLLocationCoordinate2D)convertNewCoordinateWith:(CLLocationCoordinate2D)location;
 
 //获取用户地址
 -(void) getUserCurrentLocation:(LocationBlock) block location:(LocationSucessBlock) locationSucess;

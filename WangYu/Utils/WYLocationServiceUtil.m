@@ -7,7 +7,6 @@
 //
 
 #import "WYLocationServiceUtil.h"
-#import <CoreLocation/CoreLocation.h>
 #import "WYUIUtils.h"
 #import "CLLocation+Sino.h"
 
@@ -54,6 +53,12 @@
     return YES;
 }
 
++(CLLocationCoordinate2D)convertNewCoordinateWith:(CLLocationCoordinate2D)location{
+    CLLocation *clLocation = [[CLLocation alloc] initWithLatitude:location.latitude longitude:location.longitude];
+    CLLocation *marsLocation = [clLocation locationMarsFromEarth];
+    CLLocationCoordinate2D coordinate = [marsLocation coordinate];
+    return coordinate;
+}
 
 //获取用户位置信息
 -(void) getUserCurrentLocation:(LocationBlock) block location:(LocationSucessBlock) locationSucess;

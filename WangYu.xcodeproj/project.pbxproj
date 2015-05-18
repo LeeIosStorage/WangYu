@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		070DCBDF1B00762F00B27C19 /* OrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 070DCBDD1B00762F00B27C19 /* OrdersViewController.m */; };
 		070DCBE01B00762F00B27C19 /* OrdersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 070DCBDE1B00762F00B27C19 /* OrdersViewController.xib */; };
+		0715C3A41B09AD6F00C37F82 /* MapChooseAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0715C39F1B09AD6F00C37F82 /* MapChooseAnnotationView.m */; };
+		0715C3A51B09AD6F00C37F82 /* MapChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0715C3A11B09AD6F00C37F82 /* MapChooseViewController.m */; };
+		0715C3A61B09AD6F00C37F82 /* MapChooseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0715C3A21B09AD6F00C37F82 /* MapChooseViewController.xib */; };
+		0715C3A71B09AD6F00C37F82 /* Pin_Ios7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0715C3A31B09AD6F00C37F82 /* Pin_Ios7@2x.png */; };
 		071923CF1AF74D8400432531 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923C81AF74D8400432531 /* LoginViewController.m */; };
 		071923D01AF74D8400432531 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071923C91AF74D8400432531 /* LoginViewController.xib */; };
 		071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923CB1AF74D8400432531 /* NewIntroViewController.m */; };
@@ -190,6 +194,12 @@
 		070DCBDC1B00762F00B27C19 /* OrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdersViewController.h; sourceTree = "<group>"; };
 		070DCBDD1B00762F00B27C19 /* OrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrdersViewController.m; sourceTree = "<group>"; };
 		070DCBDE1B00762F00B27C19 /* OrdersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrdersViewController.xib; sourceTree = "<group>"; };
+		0715C39E1B09AD6F00C37F82 /* MapChooseAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapChooseAnnotationView.h; sourceTree = "<group>"; };
+		0715C39F1B09AD6F00C37F82 /* MapChooseAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapChooseAnnotationView.m; sourceTree = "<group>"; };
+		0715C3A01B09AD6F00C37F82 /* MapChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapChooseViewController.h; sourceTree = "<group>"; };
+		0715C3A11B09AD6F00C37F82 /* MapChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapChooseViewController.m; sourceTree = "<group>"; };
+		0715C3A21B09AD6F00C37F82 /* MapChooseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapChooseViewController.xib; sourceTree = "<group>"; };
+		0715C3A31B09AD6F00C37F82 /* Pin_Ios7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pin_Ios7@2x.png"; sourceTree = "<group>"; };
 		071923C71AF74D8400432531 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		071923C81AF74D8400432531 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		071923C91AF74D8400432531 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -944,6 +954,12 @@
 		076C8CE91B048BBB00421460 /* MapChoose */ = {
 			isa = PBXGroup;
 			children = (
+				0715C3A31B09AD6F00C37F82 /* Pin_Ios7@2x.png */,
+				0715C3A01B09AD6F00C37F82 /* MapChooseViewController.h */,
+				0715C3A11B09AD6F00C37F82 /* MapChooseViewController.m */,
+				0715C3A21B09AD6F00C37F82 /* MapChooseViewController.xib */,
+				0715C39E1B09AD6F00C37F82 /* MapChooseAnnotationView.h */,
+				0715C39F1B09AD6F00C37F82 /* MapChooseAnnotationView.m */,
 				076C8CEA1B048BBB00421460 /* CLLocation+Sino.h */,
 				076C8CEB1B048BBB00421460 /* CLLocation+Sino.m */,
 			);
@@ -1289,6 +1305,7 @@
 				0799C8B01AF1D88E00E407BB /* GameCommendViewController.xib in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
 				071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */,
+				0715C3A71B09AD6F00C37F82 /* Pin_Ios7@2x.png in Resources */,
 				07868DEE1AF8581100160070 /* WYTabBarItemView.xib in Resources */,
 				0777DFDB1B01D6DF00E1E314 /* QuickPayCell.xib in Resources */,
 				070DCBE01B00762F00B27C19 /* OrdersViewController.xib in Resources */,
@@ -1302,6 +1319,7 @@
 				07566CAC1AFC663600F93B58 /* SettingViewCell.xib in Resources */,
 				07868DEB1AF8581100160070 /* WYTitleNavBarView.xib in Resources */,
 				071923DD1AF7738900432531 /* SetPwdViewController.xib in Resources */,
+				0715C3A61B09AD6F00C37F82 /* MapChooseViewController.xib in Resources */,
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
 				073DBCED1AE7492A009B49EB /* Images.xcassets in Resources */,
 				076195E81B008F8C00397711 /* ReserveOrderViewCell.xib in Resources */,
@@ -1382,6 +1400,7 @@
 				0791AB5F1AE8DE260009A5A7 /* UIImage+HQ.m in Sources */,
 				0791AB381AE8CF4C0009A5A7 /* EGOCache.m in Sources */,
 				0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */,
+				0715C3A41B09AD6F00C37F82 /* MapChooseAnnotationView.m in Sources */,
 				076195E71B008F8C00397711 /* ReserveOrderViewCell.m in Sources */,
 				07868DF11AF8581100160070 /* WYTabBarViewController.m in Sources */,
 				07695CDF1B03231000F4806C /* WYNetbarInfo.m in Sources */,
@@ -1443,6 +1462,7 @@
 				07566CAB1AFC663600F93B58 /* SettingViewCell.m in Sources */,
 				078EDBDB1AEF1EF800E93EE8 /* ASIFormDataRequest.m in Sources */,
 				073DBD801AE77A3C009B49EB /* MineTabViewController.m in Sources */,
+				0715C3A51B09AD6F00C37F82 /* MapChooseViewController.m in Sources */,
 				071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */,
 				071923D21AF74D8400432531 /* WelcomeViewController.m in Sources */,
 				0791AB5C1AE8DE260009A5A7 /* AFURLResponseSerialization.m in Sources */,

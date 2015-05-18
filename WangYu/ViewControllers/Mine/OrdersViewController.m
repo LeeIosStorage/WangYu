@@ -155,7 +155,7 @@
         }else{
             weakSelf.reserveOrderList = [[NSMutableArray alloc] init];
             
-            NSArray *object = [jsonRet arrayObjectForKey:@"object"];
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
             for (NSDictionary *dic in object) {
                 WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
                 [orderInfo setOrderInfoByJsonDic:dic];
@@ -182,7 +182,7 @@
 //            return;
         }
         weakSelf.reserveOrderList = [[NSMutableArray alloc] init];
-        NSArray *object = [jsonRet arrayObjectForKey:@"object"];
+        NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
         for (NSDictionary *dic in object) {
             WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
             [orderInfo setOrderInfoByJsonDic:dic];
@@ -202,7 +202,7 @@
     }tag:tag];
 }
 
-#pragma mark - 历史活动
+#pragma mark - 支付订单
 - (void)getCachePayOrders{
     __weak OrdersViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
@@ -213,7 +213,7 @@
             //...
         }else{
             weakSelf.payOrderList = [[NSMutableArray alloc] init];
-            NSArray *object = [jsonRet arrayObjectForKey:@"object"];
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
             for (NSDictionary *dic in object) {
                 WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
                 [orderInfo setOrderInfoByJsonDic:dic];
@@ -242,7 +242,7 @@
         }
         
         weakSelf.payOrderList = [[NSMutableArray alloc] init];
-        NSArray *object = [jsonRet arrayObjectForKey:@"object"];
+        NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
         for (NSDictionary *dic in object) {
             WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
             [orderInfo setOrderInfoByJsonDic:dic];

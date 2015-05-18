@@ -318,6 +318,7 @@ static WYEngine* s_ShareInstance = nil;
     _uid = nil;
     _account = nil;
     _userPassword = nil;
+    _token = nil;
     [self removeAccount];
     _userInfo = [[WYUserInfo alloc] init];
 }
