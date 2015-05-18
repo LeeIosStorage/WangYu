@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *titleName;
 @property (strong, nonatomic) IBOutlet UILabel *rightLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *leftImage;
 
 
 @end

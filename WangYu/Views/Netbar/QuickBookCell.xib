@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="条目名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gLU-nk-ris">
-                        <rect key="frame" x="12" y="11" width="71" height="21"/>
+                        <rect key="frame" x="33" y="11" width="71" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -32,9 +32,14 @@
                         <rect key="frame" x="0.0" y="43" width="320" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="5zV-w7-KRN">
+                        <rect key="frame" x="12" y="15" width="14" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="leftImage" destination="5zV-w7-KRN" id="qWS-Yu-gG7"/>
                 <outlet property="rightLabel" destination="FJE-o8-2b8" id="Zis-xs-bXC"/>
                 <outlet property="titleName" destination="gLU-nk-ris" id="i9f-iI-7jm"/>
             </connections>

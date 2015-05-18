@@ -55,7 +55,7 @@
     }
     
     _netbarTitle.text = netbarInfo.netbarName;
-    _netbarPrice.text = [NSString stringWithFormat:@"￥%d",netbarInfo.price];
+    _netbarPrice.text = [NSString stringWithFormat:@"%d",netbarInfo.price];
     
     CGFloat priceLabelWidth = [WYCommonUtils widthWithText:_netbarPrice.text font:_netbarPrice.font lineBreakMode:_netbarPrice.lineBreakMode];
     CGRect frame = _netbarPrice.frame;
@@ -66,12 +66,36 @@
     frame.origin.x = _netbarPrice.frame.size.width + _netbarPrice.frame.origin.x;
     _netbarTime.frame = frame;
     _netbarTime.text = [NSString stringWithFormat:@"/小时"];
+    
     if (netbarInfo.distance != nil) {
         _netbarDistance.text = [NSString stringWithFormat:@"%@m",netbarInfo.distance];
+        NSArray *array = [netbarInfo.distance componentsSeparatedByString:@"."];
+        if ([array[0] intValue] == 0) {
+            _netbarDistance.text = [NSString stringWithFormat:@"%@m" ,[array[1] substringToIndex:3]];
+        }else {
+            NSString *strTemp = array[0];
+            if (strTemp.length == 1) {
+                _netbarDistance.text = [NSString stringWithFormat:@"%@.%@km" ,array[0],[array[1] substringToIndex:2]];
+            }else if (strTemp.length == 2) {
+                _netbarDistance.text = [NSString stringWithFormat:@"%@.%@km" ,array[0],[array[1] substringToIndex:1]];
+            }else {
+                _netbarDistance.text = [NSString stringWithFormat:@"%@km" ,array[0]];
+            }
+        }
     }else {
         _netbarDistance.text = @"";
     }
-
+    
+    CGFloat distanceWidth = [WYCommonUtils widthWithText:_netbarDistance.text font:_netbarDistance.font lineBreakMode:_netbarDistance.lineBreakMode];
+    frame = _netbarDistance.frame;
+    frame.size.width = distanceWidth;
+    frame.origin.x = SCREEN_WIDTH - 12 - distanceWidth;
+    _netbarDistance.frame = frame;
+    
+    frame = _mapImage.frame;
+    frame.origin.x = _netbarDistance.frame.origin.x - 7 - _mapImage.frame.size.width;
+    _mapImage.frame = frame;
+    
     frame = _bookImage.frame;
     if (netbarInfo.isOrder) {
         _bookImage.hidden = NO;
@@ -101,6 +125,12 @@
     }
     
     _netbarAddress.text = netbarInfo.address;
+}
+
+- (IBAction)mapAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(netbarTabCellMapClickWithCell:)]) {
+        [self.delegate netbarTabCellMapClickWithCell:self];
+    }
 }
 
 @end

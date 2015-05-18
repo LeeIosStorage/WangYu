@@ -20,9 +20,10 @@
 #import "WYLocationServiceUtil.h"
 #import "WYAlertView.h"
 #import "LocationViewController.h"
+#import "NetbarMapViewController.h"
 #import <MapKit/MapKit.h>
 
-@interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate>
+@interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate,NetbarTabCellDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *orderLabel;
 @property (strong, nonatomic) IBOutlet UILabel *packetLabel;
@@ -241,6 +242,7 @@
         NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
         cell = [cells objectAtIndex:0];
     }
+    cell.delegate = self;
     WYNetbarInfo *netbarInfo = _netbarArray[indexPath.row];
     cell.netbarInfo = netbarInfo;
     return cell;
@@ -255,6 +257,24 @@
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+}
+
+#pragma mark - NetbarTabCellDelegate
+- (void)netbarTabCellMapClickWithCell:(id)cell {
+    NSIndexPath* indexPath = [self.netBarTable indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+    WYNetbarInfo* netbarInfo = _netbarArray[indexPath.row];
+    NetbarMapViewController *nmVc = [[NetbarMapViewController alloc] init];
+    CLLocationCoordinate2D coordinate;
+    coordinate.latitude = [netbarInfo.latitude doubleValue];
+    coordinate.longitude = [netbarInfo.longitude doubleValue];
+    nmVc.location = coordinate;
+    nmVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self.navigationController presentViewController:nmVc animated:YES completion:^{
+        
+    }];
 }
 
 #pragma mark - IBAction

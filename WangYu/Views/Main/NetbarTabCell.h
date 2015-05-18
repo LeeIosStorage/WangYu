@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WYNetbarInfo.h"
 
+@protocol NetbarTabCellDelegate;
 @interface NetbarTabCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImage;
@@ -19,9 +20,20 @@
 @property (strong, nonatomic) IBOutlet UIImageView *recommendImage;
 @property (strong, nonatomic) IBOutlet UIImageView *payImage;
 @property (strong, nonatomic) IBOutlet UIImageView *bookImage;
+@property (strong, nonatomic) IBOutlet UIImageView *mapImage;
 
 @property (strong, nonatomic) IBOutlet UILabel *netbarDistance;
 
+@property(nonatomic, assign) id<NetbarTabCellDelegate> delegate;
+
 @property (strong, nonatomic) WYNetbarInfo *netbarInfo;
+- (IBAction)mapAction:(id)sender;
 
 @end
+
+@protocol NetbarTabCellDelegate <NSObject>
+@optional
+- (void)netbarTabCellMapClickWithCell:(id)cell;
+
+@end
+

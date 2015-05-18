@@ -107,7 +107,7 @@
     self.addressLabel.text = self.netbarInfo.address;
     self.netbarLabel.text = self.netbarInfo.netbarName;
     
-    self.priceLabel2.text = [NSString stringWithFormat:@"￥%d",self.netbarInfo.price];
+    self.priceLabel2.text = [NSString stringWithFormat:@"%d",self.netbarInfo.price];
     
     CGFloat priceLabelWidth = [WYCommonUtils widthWithText:self.priceLabel2.text font:self.priceLabel2.font lineBreakMode:self.priceLabel2.lineBreakMode];
     CGRect frame = self.priceLabel2.frame;
