@@ -13,6 +13,9 @@
 		0715C3A51B09AD6F00C37F82 /* MapChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0715C3A11B09AD6F00C37F82 /* MapChooseViewController.m */; };
 		0715C3A61B09AD6F00C37F82 /* MapChooseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0715C3A21B09AD6F00C37F82 /* MapChooseViewController.xib */; };
 		0715C3A71B09AD6F00C37F82 /* Pin_Ios7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0715C3A31B09AD6F00C37F82 /* Pin_Ios7@2x.png */; };
+		0715C3AA1B09ECB200C37F82 /* WYCustomerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0715C3A91B09ECB200C37F82 /* WYCustomerWindow.m */; };
+		0715C3AC1B09ECE000C37F82 /* WYCustomerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0715C3AB1B09ECE000C37F82 /* WYCustomerWindow.xib */; };
+		0715C3AF1B09EF7300C37F82 /* WYShareActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0715C3AE1B09EF7300C37F82 /* WYShareActionSheet.m */; };
 		071923CF1AF74D8400432531 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923C81AF74D8400432531 /* LoginViewController.m */; };
 		071923D01AF74D8400432531 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071923C91AF74D8400432531 /* LoginViewController.xib */; };
 		071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923CB1AF74D8400432531 /* NewIntroViewController.m */; };
@@ -200,6 +203,11 @@
 		0715C3A11B09AD6F00C37F82 /* MapChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapChooseViewController.m; sourceTree = "<group>"; };
 		0715C3A21B09AD6F00C37F82 /* MapChooseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapChooseViewController.xib; sourceTree = "<group>"; };
 		0715C3A31B09AD6F00C37F82 /* Pin_Ios7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pin_Ios7@2x.png"; sourceTree = "<group>"; };
+		0715C3A81B09ECB200C37F82 /* WYCustomerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYCustomerWindow.h; sourceTree = "<group>"; };
+		0715C3A91B09ECB200C37F82 /* WYCustomerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYCustomerWindow.m; sourceTree = "<group>"; };
+		0715C3AB1B09ECE000C37F82 /* WYCustomerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYCustomerWindow.xib; sourceTree = "<group>"; };
+		0715C3AD1B09EF7300C37F82 /* WYShareActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYShareActionSheet.h; sourceTree = "<group>"; };
+		0715C3AE1B09EF7300C37F82 /* WYShareActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYShareActionSheet.m; sourceTree = "<group>"; };
 		071923C71AF74D8400432531 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		071923C81AF74D8400432531 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		071923C91AF74D8400432531 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -1201,6 +1209,11 @@
 				079D52561B01E52900DF4D6B /* WYSegmentedView.m */,
 				076E22511B03187100F33815 /* WYSearchBar.h */,
 				076E22521B03187100F33815 /* WYSearchBar.m */,
+				0715C3AD1B09EF7300C37F82 /* WYShareActionSheet.h */,
+				0715C3AE1B09EF7300C37F82 /* WYShareActionSheet.m */,
+				0715C3A81B09ECB200C37F82 /* WYCustomerWindow.h */,
+				0715C3A91B09ECB200C37F82 /* WYCustomerWindow.m */,
+				0715C3AB1B09ECE000C37F82 /* WYCustomerWindow.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1319,6 +1332,7 @@
 				07566CAC1AFC663600F93B58 /* SettingViewCell.xib in Resources */,
 				07868DEB1AF8581100160070 /* WYTitleNavBarView.xib in Resources */,
 				071923DD1AF7738900432531 /* SetPwdViewController.xib in Resources */,
+				0715C3AC1B09ECE000C37F82 /* WYCustomerWindow.xib in Resources */,
 				0715C3A61B09AD6F00C37F82 /* MapChooseViewController.xib in Resources */,
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
 				073DBCED1AE7492A009B49EB /* Images.xcassets in Resources */,
@@ -1371,6 +1385,7 @@
 				073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */,
 				076E22561B03512700F33815 /* WYOrderInfo.m in Sources */,
 				0791AB2D1AE89B960009A5A7 /* WYActionSheet.m in Sources */,
+				0715C3AF1B09EF7300C37F82 /* WYShareActionSheet.m in Sources */,
 				073DBD451AE7712F009B49EB /* SDImageCache.m in Sources */,
 				078EDBDA1AEF1EF800E93EE8 /* ASIDownloadCache.m in Sources */,
 				073DBD661AE7717D009B49EB /* URLHelper.m in Sources */,
@@ -1420,6 +1435,7 @@
 				073DBD4F1AE7712F009B49EB /* UIImage+WebP.m in Sources */,
 				07566CA51AFC648B00F93B58 /* SettingViewController.m in Sources */,
 				073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */,
+				0715C3AA1B09ECB200C37F82 /* WYCustomerWindow.m in Sources */,
 				073DBDAC1AE79457009B49EB /* WYUIUtils.m in Sources */,
 				0799C8AF1AF1D88E00E407BB /* GameCommendViewController.m in Sources */,
 				073DBD511AE7712F009B49EB /* UIImageView+WebCache.m in Sources */,

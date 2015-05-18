@@ -14,9 +14,12 @@
 #import "WYEngine.h"
 #import "WYProgressHUD.h"
 #import "UIImageView+WebCache.h"
+#import "WYShareActionSheet.h"
 
-@interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
-
+@interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate>
+{
+    WYShareActionSheet *_shareAction;
+}
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic) IBOutlet UIView *maskView;
 @property (strong, nonatomic) IBOutlet UIScrollView *imageScrollView;
@@ -244,6 +247,12 @@
 }
 
 - (IBAction)payAction:(id)sender {
+    
+//    _shareAction = [[WYShareActionSheet alloc] init];
+//    _shareAction.owner = self;
+//    [_shareAction showShareAction];
+//    return;
+    
     QuickPayViewController *qpVc = [[QuickPayViewController alloc] init];
     [self.navigationController pushViewController:qpVc animated:YES];
 }

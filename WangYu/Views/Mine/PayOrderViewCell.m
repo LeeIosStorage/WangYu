@@ -114,9 +114,17 @@
     self.stateLabel.textColor = UIColorToRGB(0xf03f3f);
     self.stateLabel.hidden = NO;
     int status = orderInfo.status;
+    if (status > 1) {
+        status = 1;
+    }
     if (status == 0) {
-        self.cancelOrderButton.hidden = YES;
+        self.cancelOrderButton.hidden = NO;
         self.payOrderButton.hidden = YES;
+        
+        CGRect buttonFrame = self.cancelOrderButton.frame;
+        buttonFrame.origin.x = SCREEN_WIDTH - buttonFrame.size.width - 12;
+        self.cancelOrderButton.frame = buttonFrame;
+        
     }else if (status == 1){
         self.cancelOrderButton.hidden = NO;
         self.payOrderButton.hidden = YES;
