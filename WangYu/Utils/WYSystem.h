@@ -13,9 +13,20 @@
 #import "NSDictionary+ObjectForKey.h"
 #import "WYUIUtils.h"
 
+//第三方参数
+#define QQ_ID                       @"1104351020"
+#define QQ_Key                      @"s4CYSjksFZX6tY8o"
+#define WX_ID                       @"wxb10451ed2c4a6ce3"
+#define WX_Secret                   @"d95b2512200cb6696c63e6fec2110a4d"
+#define SINA_ID                     @"3734649134"
+#define SINA_Secret                 @"57bba34da9bae335b351f2057283bbf1"
+#define Sina_RedirectURL            @"http://www.wangyuhudong.com"
+
+
 #define SINGLE_CELL_HEIGHT 44.f
 #define SINGLE_HEADER_HEADER 6.f
 
+#define MAX_WX_IMAGE_SIZE 32*1024
 #define WY_IMAGE_COMPRESSION_QUALITY 0.4
 
 #define SKIN_COLOR [UIColor colorWithRed:(1.0*0xfd/0xff) green:(1.0*0xd6/0xff) blue:(1.0*0x44/0xff) alpha:1]

@@ -184,7 +184,7 @@
             //                break;
             //            }
             else if (indexPath.row == 1){
-                [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@""]];//itms-apps://itunes.apple.com/app/id967105015
+                [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id986749236"]];//
                 break;
             }else if (indexPath.row == 2){
                 AboutViewController *aVc = [[AboutViewController alloc] init];

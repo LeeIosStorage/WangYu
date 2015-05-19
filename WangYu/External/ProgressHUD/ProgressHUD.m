@@ -348,7 +348,9 @@
 	{
 		double length = label.text.length;
 		NSTimeInterval sleep = length * 0.04 + 0.5;
-		
+        if (sleep < 1.0) {
+            sleep = 1.0;
+        }
 		[NSThread sleepForTimeInterval:sleep];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{

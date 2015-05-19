@@ -248,10 +248,10 @@
 
 - (IBAction)payAction:(id)sender {
     
-//    _shareAction = [[WYShareActionSheet alloc] init];
-//    _shareAction.owner = self;
-//    [_shareAction showShareAction];
-//    return;
+    _shareAction = [[WYShareActionSheet alloc] init];
+    _shareAction.owner = self;
+    [_shareAction showShareAction];
+    return;
     
     QuickPayViewController *qpVc = [[QuickPayViewController alloc] init];
     [self.navigationController pushViewController:qpVc animated:YES];
