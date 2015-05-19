@@ -21,6 +21,7 @@
 @property(nonatomic, assign) int valid;
 
 @property(nonatomic, strong) NSString* account;
+@property(nonatomic, strong) NSString* token;
 @property(nonatomic, strong) NSString* password;
 
 @property(nonatomic, readonly) NSURL* smallAvatarUrl;

@@ -166,12 +166,12 @@
                     return;
                 }
                 [WYProgressHUD AlertSuccess:@"重置密码成功" At:weakSelf.view];
-                NSDictionary *dic = [jsonRet objectForKey:@"object"];
-                if (!_userInfo) {
-                    _userInfo = [[WYUserInfo alloc] init];
-                }
-                [_userInfo setUserInfoByJsonDic:dic];
-                [weakSelf perfectInformation];
+//                NSDictionary *dic = [jsonRet objectForKey:@"object"];
+//                if (!_userInfo) {
+//                    _userInfo = [[WYUserInfo alloc] init];
+//                }
+//                [_userInfo setUserInfoByJsonDic:dic];
+//                [weakSelf perfectInformation];
                 
             }tag:tag];
         }
@@ -196,6 +196,7 @@
     [WYEngine shareInstance].uid = _userInfo.uid;
     [WYEngine shareInstance].account = _userInfo.account;
     [WYEngine shareInstance].userPassword = self.setPwdTextField.text;
+    [WYEngine shareInstance].token = _userInfo.token;
     [[WYEngine shareInstance] saveAccount];
     [[WYEngine shareInstance] setUserInfo:_userInfo];
     [[WYEngine shareInstance] refreshUserInfo];

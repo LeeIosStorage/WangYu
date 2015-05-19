@@ -33,6 +33,9 @@
     if ([dic stringObjectForKey:@"password"]) {
         _password = [dic stringObjectForKey:@"password"];
     }
+    if ([dic stringObjectForKey:@"token"]) {
+        _token = [dic stringObjectForKey:@"token"];
+    }
     
     NSDateFormatter *dateFormatter = [WYUIUtils dateFormatterOFUS];
     if ([dic stringObjectForKey:@"createDate"]) {
