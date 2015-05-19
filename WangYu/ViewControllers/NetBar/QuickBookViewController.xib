@@ -8,6 +8,7 @@
         <mutableArray key="dqw3.otf">
             <string>HiraginoSansGB-W3</string>
             <string>HiraginoSansGB-W3</string>
+            <string>HiraginoSansGB-W3</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -15,10 +16,12 @@
             <connections>
                 <outlet property="bookButton" destination="vry-On-dfc" id="FEi-KF-dJb"/>
                 <outlet property="bookTable" destination="fVS-Je-hk4" id="v81-Dg-fzl"/>
+                <outlet property="datePicker" destination="LW0-TV-xBH" id="zaY-FZ-22U"/>
                 <outlet property="descButton" destination="C3U-9s-wiN" id="ZmR-S2-29P"/>
+                <outlet property="descTextView" destination="jIu-Wf-0Cc" id="pFf-lf-AWX"/>
+                <outlet property="floatView" destination="r9V-JS-Nhk" id="sM1-cD-Bz3"/>
                 <outlet property="footerView" destination="1Oa-ds-M47" id="9pV-nE-7aT"/>
                 <outlet property="hintLabel" destination="Hhc-gQ-PGM" id="RLK-Bk-54N"/>
-                <outlet property="specialField" destination="Lsl-ku-roc" id="4rc-nY-0jX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -61,13 +64,13 @@
                     <rect key="frame" x="0.0" y="38" width="320" height="63"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="Lsl-ku-roc">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="jIu-Wf-0Cc">
                             <rect key="frame" x="12" y="0.0" width="296" height="62"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
+                            <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="12"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="C3U-9s-wiN">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -99,6 +102,26 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="186" y="169.5"/>
+        </view>
+        <view contentMode="scaleToFill" id="r9V-JS-Nhk">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" id="LW0-TV-xBH">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <date key="date" timeIntervalSinceReferenceDate="376231624.02171099">
+                        <!--2012-12-03 12:47:04 +0000-->
+                    </date>
+                    <locale key="locale" localeIdentifier="zh-Hans"/>
+                    <connections>
+                        <action selector="datePickerValueChanged:" destination="-1" eventType="valueChanged" id="iPu-XQ-n0j"/>
+                    </connections>
+                </datePicker>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
     <resources>

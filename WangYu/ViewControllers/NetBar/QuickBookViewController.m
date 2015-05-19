@@ -10,6 +10,7 @@
 #import "QuickBookCell.h"
 #import "WYEngine.h"
 #import "WYProgressHUD.h"
+#import "OrdersViewController.h"
 
 #define Tag_date_check       100
 #define Tag_time_check       101
@@ -21,9 +22,14 @@
     int date;
     int hours;
     int seatNum;
+    int addCost;
     NSString* dateString;
     NSString* seatString;
     NSString* hourString;
+    NSString* timeString;
+    NSString* costString;
+    NSString* dateTempString;
+    NSString* startTimeString;
     NSArray *_dateArray;
     NSArray *_timeArray;
     NSArray *_durationArray;
@@ -35,14 +41,17 @@
 @property (strong, nonatomic) IBOutlet UIView *footerView;
 @property (strong, nonatomic) IBOutlet UITableView *bookTable;
 @property (strong, nonatomic) IBOutlet UIButton *bookButton;
-@property (strong, nonatomic) IBOutlet UITextField *specialField;
+@property (strong, nonatomic) IBOutlet UITextView *descTextView;
 @property (strong, nonatomic) IBOutlet UILabel *hintLabel;
 @property (strong, nonatomic) IBOutlet UIButton *descButton;
-
 @property (nonatomic, weak) UIView *Pickermask;
+@property (assign, nonatomic) CGRect keyboardBounds;
+@property (strong, nonatomic) IBOutlet UIView *floatView;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 
 - (IBAction)bookAction:(id)sender;
 - (IBAction)descAction:(id)sender;
+- (IBAction)datePickerValueChanged:(id)sender;
 
 @end
 
@@ -59,21 +68,19 @@
     self.bookButton.layer.cornerRadius = 4.0;
     self.bookButton.layer.masksToBounds = YES;
     
-    self.specialField.textColor = SKIN_TEXT_COLOR2;
-    self.specialField.font = SKIN_FONT(12);
-    [self.specialField.layer setBorderWidth:0.5];
-    [self.specialField.layer setBorderColor:UIColorToRGB(0xadadad).CGColor];
+    self.descTextView.textColor = SKIN_TEXT_COLOR2;
+    self.descTextView.font = SKIN_FONT(12);
+    [self.descTextView.layer setBorderWidth:0.5];
+    [self.descTextView.layer setBorderColor:UIColorToRGB(0xadadad).CGColor];
     
     self.hintLabel.font = SKIN_FONT_FROMNAME(12);
     self.hintLabel.textColor = SKIN_TEXT_COLOR2;
-    hours = 1;
     seatNum = 1;
-    hourString = @"1小时";
     _dateArray = [NSArray arrayWithObjects:@"今天",@"明天",@"后天",nil];
-    _timeArray = @[@(1),@(2),@(3),@(4),@(5),@(6),@(7),@(8)];
+//    _timeArray = @[@(1),@(2),@(3),@(4),@(5),@(6),@(7),@(8)];
     _durationArray = @[@(1),@(2),@(3),@(4),@(5),@(6),@(7),@(8),@(9),@(10),@(11),@(12)];
     _seatnumArray = @[@(1),@(2),@(3),@(4),@(5),@(6),@(7),@(8),@(9),@(10)];
-    _addcostArray = @[@(1),@(2),@(3),@(4),@(5),@(6)];
+    _addcostArray = @[@(0),@(1),@(2),@(3),@(4),@(5),@(6)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -84,6 +91,10 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    CGRect frame = _floatView.frame;
+    frame.origin.y = self.view.bounds.size.height;
+    _floatView.frame = frame;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -105,12 +116,24 @@
     
     // Need to translate the bounds to account for rotation.
     keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+    keyboardBounds.origin.y -= 42;
+    keyboardBounds.size.height += 42;
+    self.keyboardBounds = keyboardBounds;
     
     // get a rect for the textView frame
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:[duration doubleValue]];
     [UIView setAnimationCurve:[curve intValue]];
+    
+    if (self.descTextView.isFirstResponder) {
+        int diff = self.footerView.frame.origin.y + self.footerView.frame.size.height + keyboardBounds.size.height - self.bookTable.bounds.size.height;
+        if(diff > 0)
+            self.bookTable.contentOffset = CGPointMake(0, diff);
+    }
+    if (_floatView.superview == self.view) {
+        [_floatView removeFromSuperview];
+    }
     
     [UIView commitAnimations];
 }
@@ -126,15 +149,36 @@
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:[duration doubleValue]];
     [UIView setAnimationCurve:[curve intValue]];
-    
+    if (self.descTextView.text.length == 0) {
+        _descButton.hidden = NO;
+    }
     // commit animations
     [UIView commitAnimations];
 }
 
 - (void)doReserve {
+    if (dateString.length == 0) {
+        [WYProgressHUD lightAlert:@"请预订上网日期"];
+        return;
+    }
+    if (timeString.length == 0) {
+        [WYProgressHUD lightAlert:@"请预订上网时间"];
+        return;
+    }
+    if (hourString.length == 0) {
+        [WYProgressHUD lightAlert:@"请预订上网时长"];
+        return;
+    }
+    if (seatString.length ==0) {
+        [WYProgressHUD lightAlert:@"请预订座位数量"];
+        return;
+    }
+    
+    NSString *tempString = [NSString stringWithFormat:@"%@ %@",dateTempString, startTimeString];
+    NSLog(@"========%@",tempString);
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] quickBookingWithUid:[WYEngine shareInstance].uid reserveDate:@"2015-05-19 18:00:00" amount:12 netbarId:_netbarInfo.nid hours:2 num:2 remark:@"头号" tag:tag];
+    [[WYEngine shareInstance] quickBookingWithUid:[WYEngine shareInstance].uid reserveDate:tempString amount:seatNum*addCost netbarId:_netbarInfo.nid hours:hours num:seatNum remark:_descTextView.text tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [WYProgressHUD AlertLoadDone];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -147,6 +191,9 @@
         }
         NSDictionary *dic = [jsonRet objectForKey:@"object"];
         NSLog(@"=========%@",dic);
+        
+        OrdersViewController *oVc = [[OrdersViewController alloc] init];
+        [self.navigationController pushViewController:oVc animated:YES];
     }tag:tag];
 }
 
@@ -192,7 +239,7 @@
         } else if (indexPath.row == 1) {
             cell.titleName.text = @"上网时间";
             cell.leftImage.image = [UIImage imageNamed:@"netbar_orders_time_icon"];
-            cell.rightLabel.text = @"11时00分";
+            cell.rightLabel.text = timeString;
         } else if (indexPath.row == 2) {
             cell.titleName.text = @"上网时长";
             cell.leftImage.image = [UIImage imageNamed:@"netbar_orders_duration_icon"];
@@ -206,7 +253,7 @@
         if (indexPath.row == 0) {
             cell.titleName.text = @"追加费用";
             cell.leftImage.image = [UIImage imageNamed:@"netbar_orders_add_icon"];
-            cell.rightLabel.text = @"0元";
+            cell.rightLabel.text = costString;
         }
     }
     
@@ -215,6 +262,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self doforEndEdit];
     checkType = indexPath.row + 100 + indexPath.section * 100;
     if (checkType != Tag_time_check) {
         UIView *Pickermask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
@@ -239,6 +287,37 @@
         [confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
         [confirmBtn setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
         [Pickermask addSubview:confirmBtn];
+    }else {
+        [self setValueByDate:_datePicker.date];
+        if (_floatView.superview == self.view) {
+            [UIView animateWithDuration:0.3 animations:^{
+                CGRect rect = _floatView.frame;
+                rect.origin.y = self.view.frame.size.height;
+                _floatView.frame = rect;
+            } completion:^(BOOL finished) {
+                [self.floatView removeFromSuperview];
+            }];
+        }else{
+            UIView *Pickermask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+            Pickermask.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+            [[UIApplication sharedApplication].keyWindow addSubview:Pickermask];
+            self.Pickermask = Pickermask;
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closePicker)];
+            [Pickermask addGestureRecognizer:tap];
+            
+            if (_descTextView.isFirstResponder) {
+                [_descTextView resignFirstResponder];
+            }
+            [UIView animateWithDuration:0.3 animations:^{
+                CGRect rect = _floatView.frame;
+                rect.origin.y = self.view.frame.size.height - _floatView.frame.size.height;
+                _floatView.frame = rect;
+                [Pickermask addSubview:_floatView];
+            } completion:^(BOOL finished) {
+                
+            }];
+        }
     }
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
@@ -248,34 +327,62 @@
 -(void)pickerComfirm
 {
     if (checkType == Tag_date_check) {
-//        bDirection = YES;
-//        if ([self.direLabel.text isEqualToString:@"房间朝向"]) {
-//            self.direLabel.text = [_direTextArray objectAtIndex:0];
-//            direction = 1;
-//        }
+        if (dateString.length == 0) {
+            dateString = [_dateArray objectAtIndex:0];
+            NSCalendar * calender = [NSCalendar currentCalendar];
+            unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit |
+            NSHourCalendarUnit | NSMinuteCalendarUnit |NSSecondCalendarUnit;
+            NSDateComponents *compsNow = [calender components:unitFlags fromDate:[NSDate date]];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+            dateTempString = [dateFormatter stringFromDate:[calender dateFromComponents:compsNow]];
+        }
     }else if(checkType == Tag_duration_check){
-//        bFitment = YES;
-//        if ([self.fitmentLabel.text isEqualToString:@"房间装修"]) {
-//            self.fitmentLabel.text = [_fitmentTextArray objectAtIndex:0];
-//            fitment = 1;
-//        }
-        hours = (int)_durationArray[0];
-        hourString = [NSString stringWithFormat:@"%@小时",[_durationArray objectAtIndex:0]];
+        if (hourString.length == 0) {
+            hours = [_durationArray[0] intValue];
+            hourString = [NSString stringWithFormat:@"%@小时",[_durationArray objectAtIndex:0]];
+        }
     }else if(checkType == Tag_seatnum_check){
-//        bPayType = YES;
-//        if ([self.payTypeLabel.text isEqualToString:@"支付形式"]) {
-//            self.payTypeLabel.text = [_payTextArray objectAtIndex:0];
-//            payType = 1;
-//        }
+        if (seatString.length == 0) {
+            seatNum = [_seatnumArray[0] intValue];
+            seatString = [NSString stringWithFormat:@"%@个",[_seatnumArray objectAtIndex:0]];
+        }
     }else if(checkType == Tag_addcost_check){
-        
+        if (costString.length == 0) {
+            addCost = [_addcostArray[0] doubleValue];
+            costString = [NSString stringWithFormat:@"%@元",[_addcostArray objectAtIndex:0]];
+        }
     }
+    NSIndexPath *indexPath;
+    if (checkType == Tag_addcost_check) {
+        indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    }else {
+        indexPath = [NSIndexPath indexPathForRow:checkType - 100 inSection:0];
+    }
+    [_bookTable reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [self.Pickermask removeFromSuperview];
 }
 
 -(void)closePicker
 {
     [self.Pickermask removeFromSuperview];
+}
+
+#pragma mark -UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self doforEndEdit];
+}
+
+- (void)doforEndEdit{
+    if (self.descTextView.isFirstResponder) {
+        self.bookTable.contentOffset = CGPointMake(0, 0);
+    }
+    if (self.descTextView.isFirstResponder) {
+        [self.descTextView resignFirstResponder];
+    }
+    if (self.floatView.superview) {
+        [self.floatView removeFromSuperview];
+    }
 }
 
 #pragma -UIPickerView代理
@@ -294,7 +401,7 @@
     }else if(checkType == Tag_seatnum_check){
         return [NSString stringWithFormat:@"%@个",[_seatnumArray objectAtIndex:row]];
     }else if(checkType == Tag_addcost_check){
-        return [NSString stringWithFormat:@"%@元",[_addcostArray objectAtIndex:row]];
+        return [NSString stringWithFormat:@"%d元",[[_addcostArray objectAtIndex:row] intValue]*seatNum];
     }
     return nil;
 }
@@ -323,25 +430,56 @@
     
     if (checkType == Tag_date_check) {
         dateString = [_dateArray objectAtIndex:row];
+        NSCalendar * calender = [NSCalendar currentCalendar];
+        unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit |
+        NSHourCalendarUnit | NSMinuteCalendarUnit |NSSecondCalendarUnit;
+        NSDateComponents *compsNow = [calender components:unitFlags fromDate:[NSDate date]];
+        compsNow.day += row;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        dateTempString = [dateFormatter stringFromDate:[calender dateFromComponents:compsNow]];
     }else if(checkType == Tag_duration_check){
         hours = [_durationArray[row] intValue];
         hourString = [NSString stringWithFormat:@"%@小时",[_durationArray objectAtIndex:row]];
     }else if(checkType == Tag_seatnum_check){
         seatNum = [_seatnumArray[row] intValue];
         seatString = [NSString stringWithFormat:@"%@个",[_seatnumArray objectAtIndex:row]];
+        //价格联动
+        if (costString.length != 0) {
+            int amount = 0;
+            amount = seatNum*addCost;
+            costString = [NSString stringWithFormat:@"%d元",amount];
+            [_bookTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+        }
     }else if(checkType == Tag_addcost_check){
-        
+        addCost = [_addcostArray[row] intValue];
+        costString = [NSString stringWithFormat:@"%d元",[[_addcostArray objectAtIndex:row] intValue]*seatNum];
     }
     [_bookTable reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (IBAction)bookAction:(id)sender {
+    [self doforEndEdit];
     [self doReserve];
 }
 
 - (IBAction)descAction:(id)sender {
     _descButton.hidden = YES;
-    [_specialField resignFirstResponder];
+    [self.descTextView becomeFirstResponder];
+}
+
+- (IBAction)datePickerValueChanged:(id)sender {
+    [self setValueByDate:_datePicker.date];
+}
+
+- (void)setValueByDate:(NSDate*)pickerDate{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH时mm分"];
+    timeString = [dateFormatter stringFromDate:pickerDate];
+    NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
+    [dateFormatter2 setDateFormat:@"HH:mm:ss"];
+    startTimeString = [dateFormatter2 stringFromDate:pickerDate];
+    [_bookTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)dealloc {
