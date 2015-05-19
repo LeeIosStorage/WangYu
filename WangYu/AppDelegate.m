@@ -15,8 +15,12 @@
 #import "WYEngine.h"
 #import "NewIntroViewController.h"
 #import "WelcomeViewController.h"
+#import "WXApi.h"
+#import "WeiboSDK.h"
+#import "WYProgressHUD.h"
+#import "WYShareManager.h"
 
-@interface AppDelegate () <WYTabBarControllerDelegate>
+@interface AppDelegate () <WYTabBarControllerDelegate,WXApiDelegate>
 
 @property (nonatomic, strong) NewIntroViewController *introView;
 
@@ -42,7 +46,10 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
     
-//    [self signOut];
+    //第三方注册
+
+    
+    
 
     if ([[WYEngine shareInstance] hasAccoutLoggedin] || ![WYEngine shareInstance].firstLogin) {
         if ([WYSettingConfig isFirstEnterVersion]) {
@@ -122,6 +129,29 @@ void uncaughtExceptionHandler(NSException *exception) {
         return [[WYEngine shareInstance] needUserLogin:nil];
     }
     return NO;
+}
+
+
+- (BOOL)handleOpenURL:(NSURL *)url {
+    NSLog(@"query=%@,scheme=%@,host=%@", url.query, url.scheme, url.host);
+    NSString *scheme = [url scheme];
+    
+    if ([scheme hasPrefix:@"wx"]) {
+        return [WXApi handleOpenURL:url delegate:[WYShareManager shareInstance]];
+    }
+    NSLog(@"##########openURL:(NSURL *)url checkAndOpenUrl");
+    return [WeiboSDK handleOpenURL:url delegate:[WYShareManager shareInstance]];
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [self handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    NSLog(@"openURL url=%@, sourceApplication=%@, annotation=%@", url, sourceApplication, annotation);
+    return [self handleOpenURL:url];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

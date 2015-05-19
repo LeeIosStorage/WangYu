@@ -8,6 +8,7 @@
 
 #import "WYShareActionSheet.h"
 #import "WYCustomerWindow.h"
+#import "WYShareManager.h"
 
 @interface WYShareActionSheet() <WYCustomerWindowDelg>
 {
@@ -46,9 +47,26 @@
         }
     }else if (indexPath.section == 1){
         if (row == 0) {
+            [self shareToWX:WXSceneSession];
+        }else if (row == 1){
+            [self shareToWX:WXSceneTimeline];
+        }else if (row == 2){
             
+        }else if (row == 3){
+            [self shareToWeiBo];
         }
     }
+}
+
+#pragma mark - share
+-(void)shareToWX:(int)scene{
+    [WYShareManager shareToWXWithScene:scene title:@"网娱大师" description:@"一款前所未有的网吧产品" webpageUrl:@"http://www.baidu.com" image:nil];
+}
+
+-(void)shareToWeiBo{
+    [[WYShareManager shareInstance] shareToWb:^(WBSendMessageToWeiboResponse *response) {
+        
+    } title:@"网娱大师" description:@"一款前所未有的网吧产品" webpageUrl:@"http://xiaor123.cn:801/api/share/topic/0/318" image:nil];
 }
 
 @end
