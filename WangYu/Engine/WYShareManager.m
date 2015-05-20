@@ -11,7 +11,9 @@
 
 static WYShareManager* wy_shareManager = nil;
 
-@interface WYShareManager ()
+@interface WYShareManager (){
+    TencentOAuth *_tencentOAuth;
+}
 @property(nonatomic, strong) WYWeiboShareResultBlock shareBlock;
 
 @end
@@ -36,11 +38,13 @@ static WYShareManager* wy_shareManager = nil;
         [WeiboSDK enableDebugMode:YES];
 #endif
         [WeiboSDK registerApp:SINA_ID];
+        
+        _tencentOAuth = [[TencentOAuth alloc] initWithAppId:QQ_ID andDelegate:nil];
     }
     return self;
 }
 
-+ (BOOL)shareToWXWithScene:(int)scene title:(NSString *)title description:(NSString *)description webpageUrl:(NSString *)webpageUrl image:(UIImage*)image{
+- (BOOL)shareToWXWithScene:(int)scene title:(NSString *)title description:(NSString *)description webpageUrl:(NSString *)webpageUrl image:(UIImage*)image{
     
     if (!([WXApi isWXAppInstalled])) {
         NSLog(@"not support or not install weixin");
@@ -161,22 +165,36 @@ static WYShareManager* wy_shareManager = nil;
     WYLog(@"shareToWb send ret:%d", ret);
 }
 
-#pragma mark - WXApiDelegate
--(void)onResp:(BaseResp *)resp{
-    if([resp isKindOfClass:[SendMessageToWXResp class]]){
-        NSString *strMsg = [NSString stringWithFormat:@"Wx发送消息结果:%d", resp.errCode];
-        NSLog(@"send ret:%@", strMsg);
-        switch (resp.errCode) {
-            case WXSuccess:{
-                [WYProgressHUD AlertSuccess:@"分享微信成功"];
-            }
-                break;
-                
-            default:
-                [WYProgressHUD AlertError:@"分享微信失败"];
-                break;
+- (void)shareToQQTitle:(NSString *)title description:(NSString *)description webpageUrl:(NSString *)webpageUrl image:(UIImage*)image{
+    
+    if (title.length > 128) {
+        title = [title substringToIndex:128];
+    }
+    if (description.length>512) {
+        description = [description substringToIndex:512];
+    }
+    
+    NSData *imgData = nil;
+    if (!image) {
+        image = [UIImage imageNamed:@"netbar_load_icon"];
+    }
+    if (image) {
+        imgData = UIImageJPEGRepresentation(image, WY_IMAGE_COMPRESSION_QUALITY);
+        if (imgData.length > MAX_WX_IMAGE_SIZE/32) {//try again
+            imgData = UIImageJPEGRepresentation(image, WY_IMAGE_COMPRESSION_QUALITY/2);
         }
     }
+    
+//    QQApiTextObject* txtObj = [QQApiTextObject objectWithText:title];//分享纯文字
+//    QQApiImageObject* contenObj = [QQApiImageObject objectWithData:imgData previewImageData:imgData title:title description:description];//图片分享
+    QQApiNewsObject* contenObj = [QQApiNewsObject objectWithURL:[NSURL URLWithString:webpageUrl] title:title description:description previewImageData:imgData];//链接分享
+//    QQApiAudioObject* contenObj = [QQApiAudioObject objectWithURL:[NSURL URLWithString:webpageUrl] title:title description:description previewImageData:imgData];
+//    contenObj.targetContentType = QQApiURLTargetTypeAudio;
+    
+    SendMessageToQQReq* req = [SendMessageToQQReq reqWithContent:contenObj];
+    
+    QQApiSendResultCode sent = [QQApiInterface sendReq:req];
+    WYLog(@"shareToQQ send ret:%d", sent);
 }
 
 #pragma mark - WeiboSDKDelegate
@@ -188,17 +206,65 @@ static WYShareManager* wy_shareManager = nil;
     if ([response isKindOfClass:WBAuthorizeResponse.class])
     {
     }else if ([response isKindOfClass:WBSendMessageToWeiboResponse.class]){
-        if (response.statusCode == WeiboSDKResponseStatusCodeSuccess) {
-            [WYProgressHUD AlertSuccess:@"分享微博成功"];
-        }else{
-            [WYProgressHUD AlertError:@"分享微博失败"];
-        }
         if (self.shareBlock) {
             self.shareResponse = (WBSendMessageToWeiboResponse *)response;
             self.shareBlock((WBSendMessageToWeiboResponse *)response);
             self.shareResponse = nil;
         }
+        if (response.statusCode == WeiboSDKResponseStatusCodeSuccess) {
+            [WYProgressHUD AlertSuccess:@"分享微博成功"];
+        }else{
+            [WYProgressHUD AlertError:@"分享微博失败"];
+        }
     }
+}
+
+#pragma mark - QQApiInterfaceDelegate
+- (void)onReq:(QQBaseReq *)req
+{
+    switch (req.type)
+    {
+        case EGETMESSAGEFROMQQREQTYPE:
+        {
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+
+- (void)onResp:(QQBaseResp *)resp
+{
+    switch (resp.type)
+    {
+        case ESENDMESSAGETOQQRESPTYPE:
+        {
+            SendMessageToQQResp* sendResp = (SendMessageToQQResp*)resp;
+            if ([sendResp.result intValue] == EQQAPISENDSUCESS) {
+                [WYProgressHUD AlertSuccess:@"分享QQ成功"];
+            }else{
+                [WYProgressHUD AlertError:@"分享QQ失败"];
+//                [self performSelector:@selector(shareAlertWithTitle:) withObject:@"分享QQ失败" afterDelay:1.0];
+            }
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+- (void)isOnlineResponse:(NSDictionary *)response{
+    
+}
+
+
+
+#pragma mark - custom
+-(void)shareAlertWithTitle:(NSString *)title{
+    [WYProgressHUD AlertError:title];
 }
 
 @end

@@ -17,6 +17,7 @@
 #import "WelcomeViewController.h"
 #import "WXApi.h"
 #import "WeiboSDK.h"
+#import <TencentOpenAPI/TencentOAuth.h>
 #import "WYProgressHUD.h"
 #import "WYShareManager.h"
 #import "WYPayManager.h"
@@ -134,17 +135,22 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 
 - (BOOL)handleOpenURL:(NSURL *)url {
-    NSLog(@"query=%@,scheme=%@,host=%@", url.query, url.scheme, url.host);
+    WYLog(@"query=%@,scheme=%@,host=%@", url.query, url.scheme, url.host);
     NSString *scheme = [url scheme];
     
     if ([[url absoluteString] hasPrefix:@"wxb10451ed2c4a6ce3://pay"]) {
         return [WXApi handleOpenURL:url delegate:[WYPayManager shareInstance]];
     }
     if ([scheme hasPrefix:@"wx"]) {
-        return [WXApi handleOpenURL:url delegate:[WYShareManager shareInstance]];
+        return [WXApi handleOpenURL:url delegate:self];
     }
-    NSLog(@"##########openURL:(NSURL *)url checkAndOpenUrl");
-    return [WeiboSDK handleOpenURL:url delegate:[WYShareManager shareInstance]];
+    if ([scheme hasPrefix:@"wb"]) {
+        return [WeiboSDK handleOpenURL:url delegate:[WYShareManager shareInstance]];
+    }
+    if ([scheme hasPrefix:@"tencent"]) {
+        return [QQApiInterface handleOpenURL:url delegate:[WYShareManager shareInstance]];
+    }
+    return YES;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
@@ -154,8 +160,26 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    NSLog(@"openURL url=%@, sourceApplication=%@, annotation=%@", url, sourceApplication, annotation);
+    WYLog(@"openURL url=%@, sourceApplication=%@, annotation=%@", url, sourceApplication, annotation);
     return [self handleOpenURL:url];
+}
+
+#pragma mark - WXApiDelegate
+-(void)onResp:(BaseResp *)resp{
+    if([resp isKindOfClass:[SendMessageToWXResp class]]){
+        NSString *strMsg = [NSString stringWithFormat:@"Wx发送消息结果:%d", resp.errCode];
+        NSLog(@"send ret:%@", strMsg);
+        switch (resp.errCode) {
+            case WXSuccess:{
+                [WYProgressHUD AlertSuccess:@"分享微信成功"];
+            }
+                break;
+                
+            default:
+                [WYProgressHUD AlertError:@"分享微信失败"];
+                break;
+        }
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
