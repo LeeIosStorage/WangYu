@@ -21,6 +21,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *packetLabel;
 @property (strong, nonatomic) IBOutlet UIButton *payButton;
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImage;
+@property (strong, nonatomic) IBOutlet UILabel *colorLabel;
+@property (assign, nonatomic) BOOL isAlipay;
+@property (assign, nonatomic) BOOL isWeixin;
 
 - (IBAction)payAction:(id)sender;
 
@@ -31,7 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    self.isAlipay = YES;
+    self.isWeixin = NO;
     self.payTable.tableHeaderView = self.headerView;
     self.payTable.tableFooterView = self.footerView;
     
@@ -48,6 +52,10 @@
     self.priceLabel.textColor = SKIN_TEXT_COLOR1;
     self.packetLabel.font = SKIN_FONT(12);
     self.packetLabel.textColor = SKIN_TEXT_COLOR1;
+    
+    self.colorLabel.backgroundColor = UIColorToRGB(0xfac402);
+    self.colorLabel.layer.cornerRadius = 1.0;
+    self.colorLabel.layer.masksToBounds = YES;
     
     [self.payButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
     self.payButton.titleLabel.font = SKIN_FONT(18);
@@ -99,9 +107,22 @@
     if (indexPath.row == 0) {
         [cell.payImage setImage:[UIImage imageNamed:@"netbar_orders_alipay_icon"]];
         cell.payLabel.text = @"支付宝";
+        if (self.isAlipay) {
+            [cell.checkButton setImage:[UIImage imageNamed:@"netbar_orders_check_icon"] forState:UIControlStateNormal];
+        }else {
+            [cell.checkButton setImage:[UIImage imageNamed:@"netbar_orders_uncheck_icon"] forState:UIControlStateNormal];
+        }
+        [cell setbottomLineWithType:0];
     } else if (indexPath.row == 1) {
        [cell.payImage setImage:[UIImage imageNamed:@"netbar_orders_weixin_icon"]];
         cell.payLabel.text = @"微信支付";
+        if (self.isWeixin) {
+            [cell.checkButton setImage:[UIImage imageNamed:@"netbar_orders_check_icon"] forState:UIControlStateNormal];
+        }else {
+            [cell.checkButton setImage:[UIImage imageNamed:@"netbar_orders_uncheck_icon"] forState:UIControlStateNormal];
+        }
+        cell.topline.hidden = YES;
+        [cell setbottomLineWithType:1];
     }
     
     return cell;
@@ -111,6 +132,14 @@
 {
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+    if (indexPath.row == 0) {
+        self.isAlipay = YES;
+        self.isWeixin = NO;
+    }else if (indexPath.row == 1) {
+        self.isAlipay = NO;
+        self.isWeixin = YES;
+    }
+    [self.payTable reloadData];
 }
 
 - (IBAction)payAction:(id)sender {

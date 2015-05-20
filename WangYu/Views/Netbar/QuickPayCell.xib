@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="QuickPayCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KGk-i7-Jjw" customClass="QuickPayCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -30,7 +30,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="twB-4Y-nB2">
-                        <rect key="frame" x="0.0" y="43" width="320" height="1"/>
+                        <rect key="frame" x="12" y="43" width="296" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wZu-XY-Ejh">
@@ -46,6 +46,8 @@
                 <outlet property="checkButton" destination="wZu-XY-Ejh" id="v59-08-TTf"/>
                 <outlet property="payImage" destination="pFk-ey-bQo" id="rlA-Ja-Wvv"/>
                 <outlet property="payLabel" destination="ST5-RD-phc" id="xGx-RE-jb9"/>
+                <outlet property="sepline" destination="twB-4Y-nB2" id="v6Y-Ok-kYp"/>
+                <outlet property="topline" destination="cdJ-kS-QhO" id="Bmd-yD-ZWX"/>
             </connections>
             <point key="canvasLocation" x="438" y="305"/>
         </tableViewCell>

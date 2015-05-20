@@ -39,10 +39,14 @@
 @property (strong, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (strong, nonatomic) IBOutlet UILabel *descLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (strong, nonatomic) IBOutlet UIButton *collectButton;
+@property (strong, nonatomic) IBOutlet UIButton *shareButton;
 
 
 - (IBAction)bookAction:(id)sender;
 - (IBAction)payAction:(id)sender;
+- (IBAction)collectAction:(id)sender;
+- (IBAction)shareAction:(id)sender;
 
 @end
 
@@ -247,14 +251,21 @@
 }
 
 - (IBAction)payAction:(id)sender {
+
+    QuickPayViewController *qpVc = [[QuickPayViewController alloc] init];
+    qpVc.netbarInfo = self.netbarInfo;
+    [self.navigationController pushViewController:qpVc animated:YES];
+}
+
+- (IBAction)collectAction:(id)sender {
     
+}
+
+- (IBAction)shareAction:(id)sender {
     _shareAction = [[WYShareActionSheet alloc] init];
     _shareAction.owner = self;
     [_shareAction showShareAction];
     return;
-    
-    QuickPayViewController *qpVc = [[QuickPayViewController alloc] init];
-    [self.navigationController pushViewController:qpVc animated:YES];
 }
 
 -(void)dealloc{

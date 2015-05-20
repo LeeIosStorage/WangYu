@@ -14,5 +14,11 @@
 @property (strong, nonatomic) IBOutlet UILabel *payLabel;
 @property (strong, nonatomic) IBOutlet UIButton *checkButton;
 
+@property (nonatomic, strong) IBOutlet UIImageView *sepline;
+@property (nonatomic, strong) IBOutlet UIImageView *topline;
+
+@property (assign, nonatomic) BOOL isChecked;
+
+- (void) setbottomLineWithType:(int)type;
 
 @end
