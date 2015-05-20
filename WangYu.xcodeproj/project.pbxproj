@@ -186,6 +186,8 @@
 		079D52571B01E52900DF4D6B /* WYSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 079D52561B01E52900DF4D6B /* WYSegmentedView.m */; };
 		07B48B3F1B0C4D1F0000857F /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B48B3B1B0C4D1F0000857F /* libWeChatSDK.a */; };
 		07B48B401B0C4D1F0000857F /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 07B48B3C1B0C4D1F0000857F /* read_me.txt */; };
+		07B48B4A1B0C6E9D0000857F /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 07B48B481B0C6E9D0000857F /* TencentOpenApi_IOS_Bundle.bundle */; };
+		07B48B4B1B0C6E9D0000857F /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B48B491B0C6E9D0000857F /* TencentOpenAPI.framework */; };
 		07C4C9FD1AF9B283008DA5D3 /* ColorGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C4C9FC1AF9B283008DA5D3 /* ColorGradView.m */; };
 		07CB97661AFC5D3400928CB7 /* MMMaterialDesignSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97651AFC5D3400928CB7 /* MMMaterialDesignSpinner.m */; };
 		07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97681AFC5D4C00928CB7 /* DeformationButton.m */; };
@@ -527,6 +529,8 @@
 		07B48B3C1B0C4D1F0000857F /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
 		07B48B3D1B0C4D1F0000857F /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		07B48B3E1B0C4D1F0000857F /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		07B48B481B0C6E9D0000857F /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		07B48B491B0C6E9D0000857F /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		07C4C9FB1AF9B283008DA5D3 /* ColorGradView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorGradView.h; sourceTree = "<group>"; };
 		07C4C9FC1AF9B283008DA5D3 /* ColorGradView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorGradView.m; sourceTree = "<group>"; };
 		07CB97641AFC5D3400928CB7 /* MMMaterialDesignSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMMaterialDesignSpinner.h; sourceTree = "<group>"; };
@@ -547,6 +551,7 @@
 				073DBDD61AE79F1D009B49EB /* libsqlite3.0.dylib in Frameworks */,
 				073DBDD81AE79F37009B49EB /* libz.dylib in Frameworks */,
 				073DBDE41AE79F8B009B49EB /* SystemConfiguration.framework in Frameworks */,
+				07B48B4B1B0C6E9D0000857F /* TencentOpenAPI.framework in Frameworks */,
 				07203A171AF1F7710056A74B /* CoreText.framework in Frameworks */,
 				073DBDEA1AE7A023009B49EB /* UIKit.framework in Frameworks */,
 				073DBDE61AE79F93009B49EB /* AssetsLibrary.framework in Frameworks */,
@@ -1046,6 +1051,7 @@
 		077E60731B0B11430079BC9E /* ThridApp */ = {
 			isa = PBXGroup;
 			children = (
+				07B48B431B0C6C2F0000857F /* TencentOpenAPI */,
 				07B48B3A1B0C4D1F0000857F /* WeChatSDK_1.5 */,
 				077E607F1B0B2D5F0079BC9E /* libWeiboSDK */,
 			);
@@ -1295,6 +1301,15 @@
 			path = WeChatSDK_1.5;
 			sourceTree = "<group>";
 		};
+		07B48B431B0C6C2F0000857F /* TencentOpenAPI */ = {
+			isa = PBXGroup;
+			children = (
+				07B48B481B0C6E9D0000857F /* TencentOpenApi_IOS_Bundle.bundle */,
+				07B48B491B0C6E9D0000857F /* TencentOpenAPI.framework */,
+			);
+			path = TencentOpenAPI;
+			sourceTree = "<group>";
+		};
 		07CB97631AFC5D3400928CB7 /* MMMaterialDesignSpinner */ = {
 			isa = PBXGroup;
 			children = (
@@ -1424,6 +1439,7 @@
 				07868DF01AF8581100160070 /* WYTabBarView.xib in Resources */,
 				073DBDB41AE794C4009B49EB /* arrow.png in Resources */,
 				073DBDB51AE794C4009B49EB /* arrow@2x.png in Resources */,
+				07B48B4A1B0C6E9D0000857F /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				076195ED1B008FAC00397711 /* PayOrderViewCell.xib in Resources */,
 				07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */,
 			);
@@ -1700,7 +1716,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/WangYu/External/ThridApp/TencentOpenAPI",
+				);
 				GCC_PREFIX_HEADER = "WangYu/WangYu-Prefx.pch";
 				INFOPLIST_FILE = WangYu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1723,7 +1742,10 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/WangYu/External/ThridApp/TencentOpenAPI",
+				);
 				GCC_PREFIX_HEADER = "WangYu/WangYu-Prefx.pch";
 				INFOPLIST_FILE = WangYu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
