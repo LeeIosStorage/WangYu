@@ -655,7 +655,7 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:[[NSNumber numberWithFloat:latitude] description] forKey:@"latitude"];
     }
     
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbarList",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/list",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
@@ -670,7 +670,7 @@ static WYEngine* s_ShareInstance = nil;
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbarDetail",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/detail",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
@@ -701,7 +701,7 @@ static WYEngine* s_ShareInstance = nil;
     if (remark) {
         [params setObject:remark forKey:@"remark"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/doReserve",API_URL] type:0 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/doReserve",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
@@ -719,7 +719,7 @@ static WYEngine* s_ShareInstance = nil;
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbarReserveList",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/reserveList",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
@@ -737,7 +737,7 @@ static WYEngine* s_ShareInstance = nil;
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbarOrderList",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/orderList",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
@@ -752,7 +752,7 @@ static WYEngine* s_ShareInstance = nil;
     if (reserveId) {
         [params setObject:reserveId forKey:@"reserveId"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/cancleReserve",API_URL] type:0 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/cancleReserve",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 - (BOOL)deletePayOrderWithUid:(NSString *)uid orderId:(NSString *)orderId tag:(int)tag{
@@ -766,7 +766,7 @@ static WYEngine* s_ShareInstance = nil;
     if (orderId) {
         [params setObject:orderId forKey:@"orderId"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/deleteOrder",API_URL] type:0 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/deleteOrder",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
@@ -788,7 +788,7 @@ static WYEngine* s_ShareInstance = nil;
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbarListAll",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/listAll",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 //搜索网吧(网吧名称)
@@ -807,7 +807,7 @@ static WYEngine* s_ShareInstance = nil;
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/searchNetbar",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/searchNetbar",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
@@ -823,7 +823,7 @@ static WYEngine* s_ShareInstance = nil;
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/searchLocalNetbar",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/searchLocalNetbar",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
@@ -842,7 +842,7 @@ static WYEngine* s_ShareInstance = nil;
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/searchNetbarForMap",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/searchNetbarForMap",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
