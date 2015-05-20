@@ -15,6 +15,7 @@
 #import "WYProgressHUD.h"
 #import "UIImageView+WebCache.h"
 #import "WYShareActionSheet.h"
+#import "WeiboSDK.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate>
 {
@@ -251,7 +252,6 @@
 }
 
 - (IBAction)payAction:(id)sender {
-
     QuickPayViewController *qpVc = [[QuickPayViewController alloc] init];
     qpVc.netbarInfo = self.netbarInfo;
     [self.navigationController pushViewController:qpVc animated:YES];
@@ -265,7 +265,6 @@
     _shareAction = [[WYShareActionSheet alloc] init];
     _shareAction.owner = self;
     [_shareAction showShareAction];
-    return;
 }
 
 -(void)dealloc{

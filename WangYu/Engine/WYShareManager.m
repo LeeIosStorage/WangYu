@@ -32,7 +32,9 @@ static WYShareManager* wy_shareManager = nil;
     if (self) {
         [WXApi registerApp:WX_ID withDescription:@"WY"];
         
+#ifdef DEBUG
         [WeiboSDK enableDebugMode:YES];
+#endif
         [WeiboSDK registerApp:SINA_ID];
     }
     return self;
@@ -93,7 +95,7 @@ static WYShareManager* wy_shareManager = nil;
     return ret;
 }
 
-- (void)shareToWb:(WYWeiboShareResultBlock)result title:(NSString *)title description:(NSString *)description webpageUrl:(NSString *)webpageUrl image:(UIImage*)image{
+- (void)shareToWb:(WYWeiboShareResultBlock)result title:(NSString *)title description:(NSString *)description webpageUrl:(NSString *)webpageUrl image:(UIImage*)image VC:(id)VC{
     self.shareBlock = result;
     
     /*****多媒体
@@ -143,8 +145,18 @@ static WYShareManager* wy_shareManager = nil;
     NSString* shareTitle = [NSString stringWithFormat:@"%@  %@ %@",title,@"(分享自@网娱大师)",webpageUrl];
     sendMsg.text = shareTitle;
     
-    WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest request];
-    request.message = sendMsg;
+    //不能SSO分享
+//    WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest request];
+//    request.message = sendMsg;
+    
+    //SSO分享
+    WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
+    authRequest.redirectURI = Sina_RedirectURL;
+    authRequest.scope = @"all";
+    NSString *vcStr = NSStringFromClass([VC class]);
+    WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:sendMsg authInfo:authRequest access_token:nil];
+    request.userInfo = @{@"ShareMessageFrom":vcStr};
+    
     BOOL ret = [WeiboSDK sendRequest:request];
     WYLog(@"shareToWb send ret:%d", ret);
 }

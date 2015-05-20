@@ -66,7 +66,7 @@
 -(void)shareToWeiBo{
     [[WYShareManager shareInstance] shareToWb:^(WBSendMessageToWeiboResponse *response) {
         
-    } title:@"网娱大师" description:@"一款前所未有的网吧产品" webpageUrl:@"http://xiaor123.cn:801/api/share/topic/0/318" image:nil];
+    } title:@"网娱大师" description:@"一款前所未有的网吧产品" webpageUrl:@"http://xiaor123.cn:801/api/share/topic/0/318" image:nil VC:_owner];
 }
 
 @end

@@ -168,7 +168,7 @@
         }
         [WYProgressHUD AlertSuccess:@"登录成功." At:weakSelf.view];
         
-        NSDictionary *object = [[jsonRet dictionaryObjectForKey:@"object"] dictionaryObjectForKey:@"userInfo"];
+        NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
         WYUserInfo *userInfo = [[WYUserInfo alloc] init];
         [userInfo setUserInfoByJsonDic:object];
         
