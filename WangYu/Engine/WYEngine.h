@@ -99,8 +99,16 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)searchLocalNetbarWithUid:(NSString *)uid latitude:(float)latitude longitude:(float)longitude tag:(int)tag;
 //附近网吧(城市)
 - (BOOL)searchMapNetbarWithUid:(NSString *)uid city:(NSString *)city latitude:(float)latitude longitude:(float)longitude tag:(int)tag;
-//一键支付
+//一键预订
 - (BOOL)quickBookingWithUid:(NSString *)uid reserveDate:(NSString *)date amount:(double)amount netbarId:(NSString *)nid hours:(int)hours num:(int)num remark:(NSString *)remark tag:(int)tag;
+//预订订单支付
+- (BOOL)reservePayWithUid:(NSString *)uid body:(NSString *)body orderId:(long)orderId type:(int)type tag:(int)tag;
+//支付订单支付
+- (BOOL)orderPayWithUid:(NSString *)uid body:(NSString *)body amount:(double)amount netbarId:(NSString *)nid type:(int)type tag:(int)tag;
+//定金支付
+- (BOOL)reserveToOrderWithUid:(NSString *)uid reserveId:(long)reserveId tag:(int)tag;
+//网吧收藏
+- (BOOL)collectionNetbarWithUid:(NSString *)uid netbarId:(NSString *)nid tag:(int)tag;
 
 - (BOOL)getReserveOrderListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
 - (BOOL)getPayOrderListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;

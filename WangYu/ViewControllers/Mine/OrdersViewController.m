@@ -39,11 +39,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    [WYEngine shareInstance].uid = @"21";
-    [WYEngine shareInstance].token = @"sZsSuV+5U9eJakz3JLmqNQ==";
-    
-    
     self.view.backgroundColor = UIColorRGB(241, 241, 241);
     _selectedSegmentIndex = 0;
     
