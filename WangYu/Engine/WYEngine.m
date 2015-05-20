@@ -24,7 +24,7 @@
 #define CONNECT_TIMEOUT 20
 
 static NSString* IMG_URL = @"http://img.wangyuhudong.com";
-static NSString* API_URL = @"http://192.168.16.106";
+static NSString* API_URL = @"http://192.168.17.204";
 
 static WYEngine* s_ShareInstance = nil;
 
@@ -138,9 +138,9 @@ static WYEngine* s_ShareInstance = nil;
 
 - (void)serverInit{
     if (self.serverPlatform == TestPlatform) {
-        API_URL = @"http://192.168.16.106";
+        API_URL = @"http://192.168.17.204";
     } else {
-        API_URL = @"http://192.168.16.106";
+        API_URL = @"http://192.168.17.204";
     }
 }
 
