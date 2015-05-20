@@ -19,6 +19,7 @@
 #import "WeiboSDK.h"
 #import "WYProgressHUD.h"
 #import "WYShareManager.h"
+#import "WYPayManager.h"
 
 @interface AppDelegate () <WYTabBarControllerDelegate,WXApiDelegate>
 
@@ -45,7 +46,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 //    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
-    
+    [WXApi registerApp:WX_ID withDescription:@"WY"];
     //第三方注册
 
     
@@ -136,6 +137,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSLog(@"query=%@,scheme=%@,host=%@", url.query, url.scheme, url.host);
     NSString *scheme = [url scheme];
     
+    if ([[url absoluteString] hasPrefix:@"wxb10451ed2c4a6ce3://pay"]) {
+        return [WXApi handleOpenURL:url delegate:[WYPayManager shareInstance]];
+    }
     if ([scheme hasPrefix:@"wx"]) {
         return [WXApi handleOpenURL:url delegate:[WYShareManager shareInstance]];
     }

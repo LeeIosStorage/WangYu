@@ -8,6 +8,10 @@
 
 #import "QuickPayViewController.h"
 #import "QuickPayCell.h"
+#import "WYEngine.h"
+#import "WYProgressHUD.h"
+#import "OrdersViewController.h"
+#import "WYPayManager.h"
 
 @interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -24,6 +28,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *colorLabel;
 @property (assign, nonatomic) BOOL isAlipay;
 @property (assign, nonatomic) BOOL isWeixin;
+@property (strong, nonatomic) IBOutlet UITextField *amountField;
 
 - (IBAction)payAction:(id)sender;
 
@@ -142,8 +147,42 @@
     [self.payTable reloadData];
 }
 
+#pragma mark -UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self doforEndEdit];
+}
+
+- (void)doforEndEdit{
+    if (self.amountField.isFirstResponder) {
+        self.payTable.contentOffset = CGPointMake(0, 0);
+    }
+    if (self.amountField.isFirstResponder) {
+        [self.amountField resignFirstResponder];
+    }
+}
+
 - (IBAction)payAction:(id)sender {
-    
+    if (self.isAlipay) {
+        return;
+    }
+    if (self.isWeixin) {
+        WS(weakSelf);
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:@"qeqe" amount:0.01 netbarId:self.netbarInfo.nid type:0 tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            [WYProgressHUD AlertLoadDone];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSDictionary *dic = [jsonRet objectForKey:@"object"];
+            [[WYPayManager shareInstance] payForWinxinWith:dic];
+        }tag:tag];
+    }
 }
 
 @end

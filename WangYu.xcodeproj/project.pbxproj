@@ -189,6 +189,7 @@
 		07C4C9FD1AF9B283008DA5D3 /* ColorGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C4C9FC1AF9B283008DA5D3 /* ColorGradView.m */; };
 		07CB97661AFC5D3400928CB7 /* MMMaterialDesignSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97651AFC5D3400928CB7 /* MMMaterialDesignSpinner.m */; };
 		07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97681AFC5D4C00928CB7 /* DeformationButton.m */; };
+		07EEF6C21B0C789000DBC511 /* WYPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EEF6C11B0C789000DBC511 /* WYPayManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -533,6 +534,8 @@
 		07CB97651AFC5D3400928CB7 /* MMMaterialDesignSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMaterialDesignSpinner.m; sourceTree = "<group>"; };
 		07CB97671AFC5D4C00928CB7 /* DeformationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeformationButton.h; sourceTree = "<group>"; };
 		07CB97681AFC5D4C00928CB7 /* DeformationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeformationButton.m; sourceTree = "<group>"; };
+		07EEF6C01B0C789000DBC511 /* WYPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPayManager.h; sourceTree = "<group>"; };
+		07EEF6C11B0C789000DBC511 /* WYPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPayManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -727,6 +730,8 @@
 				076F82851B059CB700CACF0D /* WYNetBarManager.m */,
 				077E607C1B0B2B310079BC9E /* WYShareManager.h */,
 				077E607D1B0B2B310079BC9E /* WYShareManager.m */,
+				07EEF6C01B0C789000DBC511 /* WYPayManager.h */,
+				07EEF6C11B0C789000DBC511 /* WYPayManager.m */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -1465,6 +1470,7 @@
 				076E22561B03512700F33815 /* WYOrderInfo.m in Sources */,
 				0791AB2D1AE89B960009A5A7 /* WYActionSheet.m in Sources */,
 				0715C3AF1B09EF7300C37F82 /* WYShareActionSheet.m in Sources */,
+				07EEF6C21B0C789000DBC511 /* WYPayManager.m in Sources */,
 				073DBD451AE7712F009B49EB /* SDImageCache.m in Sources */,
 				078EDBDA1AEF1EF800E93EE8 /* ASIDownloadCache.m in Sources */,
 				073DBD661AE7717D009B49EB /* URLHelper.m in Sources */,
