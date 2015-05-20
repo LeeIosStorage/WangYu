@@ -25,6 +25,9 @@
     if ([dic objectForKey:@"is_order"]) {
         _isOrder = [dic boolValueForKey:@"is_order"];
     }
+    if ([dic objectForKey:@"faved"]) {
+        _isFaved = [dic boolValueForKey:@"faved"];
+    }
     if ([dic objectForKey:@"is_recommend"]) {
         _isRecommend = [dic intValueForKey:@"is_recommend"];
     }

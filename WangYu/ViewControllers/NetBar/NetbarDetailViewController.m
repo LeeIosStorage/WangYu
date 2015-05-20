@@ -110,6 +110,11 @@
         [self.netbarImage sd_setImageWithURL:nil];
         [self.netbarImage setImage:[UIImage imageNamed:@"netbar_load_icon"]];
     }
+    if (self.netbarInfo.isFaved) {
+        [self.collectButton setBackgroundImage:[UIImage imageNamed:@"netbar_detail_collect_icon"] forState:UIControlStateNormal];
+    }else {
+        [self.collectButton setBackgroundImage:[UIImage imageNamed:@"netbar_detail_uncollect_icon"] forState:UIControlStateNormal];
+    }
     self.phoneLabel.text = self.netbarInfo.telephone;
     self.addressLabel.text = self.netbarInfo.address;
     self.netbarLabel.text = self.netbarInfo.netbarName;
@@ -251,14 +256,31 @@
 }
 
 - (IBAction)payAction:(id)sender {
-
     QuickPayViewController *qpVc = [[QuickPayViewController alloc] init];
     qpVc.netbarInfo = self.netbarInfo;
     [self.navigationController pushViewController:qpVc animated:YES];
 }
 
 - (IBAction)collectAction:(id)sender {
-    
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] collectionNetbarWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        [WYProgressHUD AlertLoadDone];
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        NSString *result = [jsonRet objectForKey:@"result"];
+        if ([result isEqualToString:@"success"]) {
+            weakSelf.netbarInfo.isFaved = YES;
+            [weakSelf refreshHeaderView];
+        }
+    }tag:tag];
 }
 
 - (IBAction)shareAction:(id)sender {
