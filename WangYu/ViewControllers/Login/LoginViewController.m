@@ -175,7 +175,7 @@
         [WYEngine shareInstance].uid = userInfo.uid;
         [WYEngine shareInstance].account = _accountTextField.text;
         [WYEngine shareInstance].userPassword = _passwordTextField.text;
-        [WYEngine shareInstance].token = [[jsonRet dictionaryObjectForKey:@"object"] stringObjectForKey:@"token"];
+        [WYEngine shareInstance].token = userInfo.token;
         [[WYEngine shareInstance] saveAccount];
         
         [WYEngine shareInstance].userInfo = userInfo;

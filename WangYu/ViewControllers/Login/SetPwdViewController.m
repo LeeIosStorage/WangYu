@@ -10,6 +10,7 @@
 #import "WYProgressHUD.h"
 #import "WYEngine.h"
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 
 @interface SetPwdViewController ()
 
@@ -165,13 +166,11 @@
                     [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
                     return;
                 }
-                [WYProgressHUD AlertSuccess:@"重置密码成功" At:weakSelf.view];
-                NSDictionary *dic = [jsonRet objectForKey:@"object"];
-                if (!_userInfo) {
-                    _userInfo = [[WYUserInfo alloc] init];
-                }
-                [_userInfo setUserInfoByJsonDic:dic];
-                [weakSelf perfectInformation];
+                [WYProgressHUD AlertSuccess:@"重置密码成功,请重新登录" At:weakSelf.view];
+                
+                double length = @"重置密码成功,请重新登录".length;
+                NSTimeInterval sleep = length * 0.04 + 0.5 + 0.15;
+                [self performSelector:@selector(resetLogin) withObject:nil afterDelay:sleep];
                 
             }tag:tag];
         }
@@ -180,6 +179,19 @@
         [WYProgressHUD AlertError:@"两次密码不一致" At:weakSelf.view];
     }
     
+}
+
+-(void)resetLogin{
+    if (self.navigationController.viewControllers.count > 2) {
+        UIViewController *vc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 3];
+        if ([vc isKindOfClass:[LoginViewController class]]) {
+            LoginViewController *loginVc = (LoginViewController *)vc;
+            loginVc.isCanBack = self.isCanBack;
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+    }
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(void)loginFinished{
@@ -196,6 +208,7 @@
     [WYEngine shareInstance].uid = _userInfo.uid;
     [WYEngine shareInstance].account = _userInfo.account;
     [WYEngine shareInstance].userPassword = self.setPwdTextField.text;
+    [WYEngine shareInstance].token = _userInfo.token;
     [[WYEngine shareInstance] saveAccount];
     [[WYEngine shareInstance] setUserInfo:_userInfo];
     [[WYEngine shareInstance] refreshUserInfo];

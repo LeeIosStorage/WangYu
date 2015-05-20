@@ -96,17 +96,15 @@ static WYShareManager* wy_shareManager = nil;
 - (void)shareToWb:(WYWeiboShareResultBlock)result title:(NSString *)title description:(NSString *)description webpageUrl:(NSString *)webpageUrl image:(UIImage*)image{
     self.shareBlock = result;
     
+    /*****多媒体
     WBWebpageObject *msg = [WBWebpageObject object];
     msg.title = title;
     msg.description = description;
-    [msg setObjectID:@""];
+    [msg setObjectID:@"identifier1"];
     if (msg.description.length>1024) {
         msg.description = [msg.description substringToIndex:1024];
     }
-    msg.webpageUrl = webpageUrl;
-    
     NSData *imgData = nil;
-    
     if (!image) {
         image = [UIImage imageNamed:@"netbar_load_icon"];
     }
@@ -115,17 +113,34 @@ static WYShareManager* wy_shareManager = nil;
         if (imgData.length > MAX_WX_IMAGE_SIZE) {//try again
             imgData = UIImageJPEGRepresentation(image, WY_IMAGE_COMPRESSION_QUALITY/2);
         }
-        
     }
     if (imgData && imgData.length < MAX_WX_IMAGE_SIZE) {
         [msg setThumbnailData:imgData];
     }else{
     }
+    msg.webpageUrl = webpageUrl;
+    */
     
+    WBImageObject *msg = [WBImageObject object];
+    NSData *imgData = nil;
+    if (!image) {
+        image = [UIImage imageNamed:@"netbar_load_icon"];
+    }
+    if (image) {
+        imgData = UIImageJPEGRepresentation(image, WY_IMAGE_COMPRESSION_QUALITY);
+        if (imgData.length > MAX_WX_IMAGE_SIZE) {//try again
+            imgData = UIImageJPEGRepresentation(image, WY_IMAGE_COMPRESSION_QUALITY/2);
+        }
+    }
+    if (imgData && imgData.length < MAX_WX_IMAGE_SIZE) {
+        msg.imageData = imgData;
+    }else{
+    }
     
     WBMessageObject *sendMsg = [WBMessageObject message];
-    sendMsg.mediaObject = msg;
-    NSString* shareTitle = [NSString stringWithFormat:@"%@  %@",msg.title,@"(分享自@网娱大师)"];
+    sendMsg.imageObject = msg;
+//    sendMsg.mediaObject = msg;
+    NSString* shareTitle = [NSString stringWithFormat:@"%@  %@ %@",title,@"(分享自@网娱大师)",webpageUrl];
     sendMsg.text = shareTitle;
     
     WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest request];
