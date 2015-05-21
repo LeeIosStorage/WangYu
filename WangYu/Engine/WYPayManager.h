@@ -15,4 +15,6 @@
 
 - (void)payForWinxinWith:(NSDictionary *)dictionary;
 
+- (void)payForAlipayWith:(NSDictionary *)dictionary;
+
 @end

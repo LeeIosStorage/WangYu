@@ -162,27 +162,31 @@
 }
 
 - (IBAction)payAction:(id)sender {
-    if (self.isAlipay) {
-        return;
-    }
-    if (self.isWeixin) {
-        WS(weakSelf);
-        int tag = [[WYEngine shareInstance] getConnectTag];
-        [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:@"qeqe" amount:0.01 netbarId:self.netbarInfo.nid type:0 tag:tag];
-        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-            [WYProgressHUD AlertLoadDone];
-            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
-            if (!jsonRet || errorMsg) {
-                if (!errorMsg.length) {
-                    errorMsg = @"请求失败";
-                }
-                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
-                return;
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:@"qeqe" amount:[_amountField.text doubleValue] netbarId:self.netbarInfo.nid type:self.isWeixin?0:1 tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        [WYProgressHUD AlertLoadDone];
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
             }
-            NSDictionary *dic = [jsonRet objectForKey:@"object"];
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        if (weakSelf.isWeixin) {
+            dic = [jsonRet objectForKey:@"object"];
             [[WYPayManager shareInstance] payForWinxinWith:dic];
-        }tag:tag];
-    }
+        }else {
+            [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"orderId"] forKey:@"orderId"];
+            [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"out_trade_no"] forKey:@"out_trade_no"];
+            [dic setValue:weakSelf.netbarInfo.netbarName forKey:@"netbarName"];
+            [dic setValue:weakSelf.amountField.text forKey:@"amount"];
+            [[WYPayManager shareInstance] payForAlipayWith:dic];
+        }
+    }tag:tag];
 }
 
 @end
