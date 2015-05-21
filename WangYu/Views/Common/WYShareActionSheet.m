@@ -10,6 +10,7 @@
 #import "WYCustomerWindow.h"
 #import "WYShareManager.h"
 #import "SDImageCache.h"
+#import "WYEngine.h"
 
 @interface WYShareActionSheet() <WYCustomerWindowDelg>
 {
@@ -42,9 +43,9 @@
 }
 
 - (void)shareContent{
-    self.shareTitle = [NSString stringWithFormat:@"网娱大师网吧-%@",_netbarInfo.netbarName];
-    self.shareDescription = [NSString stringWithFormat:@"网娱大师-%@",@"任性开黑，美女约战"];
-    self.shareWebpageUrl = [NSString stringWithFormat:@"%@",@"http://xiaor123.cn:801/api/share/topic/0/318"];
+    self.shareTitle = [NSString stringWithFormat:@"网娱大师-%@|快来定座吧",_netbarInfo.netbarName];
+    self.shareDescription = [NSString stringWithFormat:@"上网价格￥%d/小时\n%@",_netbarInfo.price,_netbarInfo.address];
+    self.shareWebpageUrl = [NSString stringWithFormat:@"%@/share/netbar/%@",[WYEngine shareInstance].baseUrl,_netbarInfo.nid];
     
     if (![self.netbarInfo.smallImageUrl isEqual:[NSNull null]]) {
         self.shareImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[self.netbarInfo.smallImageUrl absoluteString]];

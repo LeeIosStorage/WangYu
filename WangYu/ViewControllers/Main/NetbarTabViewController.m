@@ -81,6 +81,7 @@
     } location:^(CLLocation *location) {
         weakSelf.currentLocation = [location coordinate];//当前经纬
         [weakSelf getNetbarInfos];
+        [weakSelf placemarkReverseLocation:location];
     }];
 
 }
@@ -122,6 +123,14 @@
         self.tabController.tabBar.frame = frame;
     } completion:^(BOOL finished) {
         
+    }];
+}
+
+- (void)placemarkReverseLocation:(CLLocation *)location{
+    [[WYLocationServiceUtil shareInstance] placemarkReverseGeoLocation:location placemark:^(CLPlacemark *placemark) {
+//        WYLog(@"Placemark des: %@", placemark.description);
+        NSDictionary *addressDictionary = placemark.addressDictionary;
+        WYLog(@"Placemark addressDictionary: %@", addressDictionary);
     }];
 }
 

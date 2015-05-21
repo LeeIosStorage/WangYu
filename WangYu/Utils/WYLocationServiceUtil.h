@@ -13,6 +13,8 @@
 typedef void(^LocationBlock)(NSString *errorString);
 typedef void(^LocationSucessBlock)(CLLocation *location);
 
+typedef void(^ReverseGeoLocationSucessBlock)(CLPlacemark *placemark);
+
 @interface WYLocationServiceUtil : NSObject
 
 +(WYLocationServiceUtil *) shareInstance;
@@ -22,6 +24,11 @@ typedef void(^LocationSucessBlock)(CLLocation *location);
 
 //转化为火星坐标
 +(CLLocationCoordinate2D)convertNewCoordinateWith:(CLLocationCoordinate2D)location;
+//获取上次地位时记录的经纬度
++(CLLocationCoordinate2D)getLastRecordLocation;
+
+//经纬度反解码地址信息
+-(void)placemarkReverseGeoLocation:(CLLocation *)location placemark:(ReverseGeoLocationSucessBlock)placemarkSucess;
 
 //获取用户地址
 -(void) getUserCurrentLocation:(LocationBlock) block location:(LocationSucessBlock) locationSucess;
