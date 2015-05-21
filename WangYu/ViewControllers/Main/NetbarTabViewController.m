@@ -270,7 +270,7 @@
     CLLocationCoordinate2D coordinate;
     coordinate.latitude = [netbarInfo.latitude doubleValue];
     coordinate.longitude = [netbarInfo.longitude doubleValue];
-    nmVc.location = coordinate;
+    [nmVc setShowLocation:coordinate.latitude longitute:coordinate.longitude];
     nmVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self.navigationController presentViewController:nmVc animated:YES completion:^{
         

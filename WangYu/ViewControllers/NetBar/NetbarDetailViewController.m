@@ -16,6 +16,8 @@
 #import "UIImageView+WebCache.h"
 #import "WYShareActionSheet.h"
 #import "WeiboSDK.h"
+#import "WYAlertView.h"
+#import "NetbarMapViewController.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate>
 {
@@ -43,11 +45,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *collectButton;
 @property (strong, nonatomic) IBOutlet UIButton *shareButton;
 
-
 - (IBAction)bookAction:(id)sender;
 - (IBAction)payAction:(id)sender;
 - (IBAction)collectAction:(id)sender;
 - (IBAction)shareAction:(id)sender;
+- (IBAction)locationAction:(id)sender;
+- (IBAction)phoneAction:(id)sender;
 
 @end
 
@@ -289,6 +292,23 @@
     _shareAction.netbarInfo = self.netbarInfo;
     _shareAction.owner = self;
     [_shareAction showShareAction];
+}
+
+- (IBAction)locationAction:(id)sender {
+    NetbarMapViewController *nmVc = [[NetbarMapViewController alloc] init];
+    CLLocationCoordinate2D coordinate;
+    coordinate.latitude = [self.netbarInfo.latitude doubleValue];
+    coordinate.longitude = [self.netbarInfo.longitude doubleValue];
+    [nmVc setShowLocation:coordinate.latitude longitute:coordinate.longitude];
+    [self.navigationController pushViewController:nmVc animated:YES];
+}
+
+- (IBAction)phoneAction:(id)sender {
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"联系网吧" message:self.netbarInfo.telephone cancelButtonTitle:@"取消" cancelBlock:nil okButtonTitle:@"呼叫" okBlock:^{
+        NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", self.netbarInfo.telephone]];
+        [[UIApplication sharedApplication] openURL:URL];
+    }];
+    [alertView show];
 }
 
 -(void)dealloc{

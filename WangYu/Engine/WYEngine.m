@@ -689,9 +689,9 @@ static WYEngine* s_ShareInstance = nil;
     if (date) {
         [params setObject:date forKey:@"reserveDate"];
     }
-    if (amount) {
-        [params setObject:[NSNumber numberWithDouble:amount] forKey:@"amount"];
-    }
+ 
+    [params setObject:[NSNumber numberWithDouble:amount] forKey:@"amount"];
+    
     if (hours) {
         [params setObject:[NSNumber numberWithInt:hours] forKey:@"hours"];
     }
