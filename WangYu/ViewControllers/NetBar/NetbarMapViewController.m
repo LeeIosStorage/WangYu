@@ -505,11 +505,11 @@
         NSString* souceLong = [NSString stringWithString:[[NSNumber numberWithDouble:_currentLocation.longitude] description]];
         NSString* desLat = [NSString stringWithString:[[NSNumber numberWithDouble:_showLocation.latitude] description]];
         NSString* desLong = [NSString stringWithString:[[NSNumber numberWithDouble:_showLocation.longitude] description]];
-        urlString = [NSString stringWithFormat:@"baidumap://map/direction?origin=%@,%@&destination=%@,%@&mode=driving&src=Xiaoer&coord_type=gcj02",souceLat,souceLong,desLat,desLong];
+        urlString = [NSString stringWithFormat:@"baidumap://map/direction?origin=%@,%@&destination=%@,%@&mode=driving&src=WY&coord_type=gcj02",souceLat,souceLong,desLat,desLong];
         tipString = @"您还未安装百度地图";
     }else if ([buttonTitle isEqualToString:@"高德地图"]){
         //style  导航方式：(=0：速度最快，=1：费用最少，=2：距离最短，=3：不走高速，=4：躲避拥堵，=5：不走高速且避免收费，=6：不走高速且躲避拥堵，=7：躲避收费和拥堵，=8：不走高速躲避收费和拥堵)
-        urlString = [NSString stringWithFormat:@"iosamap://navi?sourceApplication=Xiaoer&backScheme=Xiaoer://&lat=%f&lon=%f&dev=1&style=2",_showLocation.latitude,_showLocation.longitude];
+        urlString = [NSString stringWithFormat:@"iosamap://navi?sourceApplication=WY&backScheme=WY://&lat=%f&lon=%f&dev=1&style=2",_showLocation.latitude,_showLocation.longitude];
         //poiname=fangheng&poiid=BGVIS&
         tipString = @"您还未安装高德地图";
     }else if ([buttonTitle isEqualToString:@"苹果地图"]){
