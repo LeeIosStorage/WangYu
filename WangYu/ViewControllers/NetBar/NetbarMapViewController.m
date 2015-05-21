@@ -76,12 +76,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    
-    [WYEngine shareInstance].uid = @"21";
-    [WYEngine shareInstance].token = @"sZsSuV+5U9eJakz3JLmqNQ==";
-    
-    
-    
     self.titleNavBarRightBtn.hidden = YES;
     self.mapView.delegate = self;
     

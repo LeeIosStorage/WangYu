@@ -420,4 +420,20 @@ static bool dateFormatterOFUSInvalid ;
     return font;
 }
 
+#pragma CATransition动画实现
++ (void) transitionWithType:(NSString *) type WithSubtype:(NSString *) subtype ForView : (UIView *) view
+{
+    /*
+     * type  @"oglFlip":翻转,@"rippleEffect":波纹
+     */
+    CATransition *animation = [CATransition animation];
+    animation.duration = 0.4f;
+    animation.type = type;
+    if (subtype != nil) {
+        animation.subtype = subtype;
+    }
+    animation.timingFunction = UIViewAnimationOptionCurveEaseInOut;
+    [view.layer addAnimation:animation forKey:@"animation"];
+}
+
 @end

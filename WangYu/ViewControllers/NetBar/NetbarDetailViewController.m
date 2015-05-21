@@ -263,11 +263,18 @@
 }
 
 - (IBAction)collectAction:(id)sender {
+    
+    self.collectButton.enabled = NO;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] collectionNetbarWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];
+    if (weakSelf.netbarInfo.isFaved) {
+        [[WYEngine shareInstance] unCollectionNetbarWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];
+    }else{
+        [[WYEngine shareInstance] collectionNetbarWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];
+    }
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        [WYProgressHUD AlertLoadDone];
+//        [WYProgressHUD AlertLoadDone];
+        self.collectButton.enabled = YES;
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -276,9 +283,16 @@
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
             return;
         }
-        NSString *result = [jsonRet objectForKey:@"result"];
-        if ([result isEqualToString:@"success"]) {
-            weakSelf.netbarInfo.isFaved = YES;
+        int code = [jsonRet intValueForKey:@"code"];
+        if (code == 0) {
+            if (weakSelf.netbarInfo.isFaved) {
+                [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromTop ForView:self.collectButton];
+                [WYProgressHUD AlertSuccess:@"取消收藏成功" At:weakSelf.view];
+            }else{
+                [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromBottom ForView:self.collectButton];
+                [WYProgressHUD AlertSuccess:@"收藏成功" At:weakSelf.view];
+            }
+            weakSelf.netbarInfo.isFaved = !weakSelf.netbarInfo.isFaved;
             [weakSelf refreshHeaderView];
         }
     }tag:tag];

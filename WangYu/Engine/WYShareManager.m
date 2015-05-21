@@ -260,8 +260,6 @@ static WYShareManager* wy_shareManager = nil;
     
 }
 
-
-
 #pragma mark - custom
 -(void)shareAlertWithTitle:(NSString *)title{
     [WYProgressHUD AlertError:title];
