@@ -21,6 +21,7 @@
 #import "WYProgressHUD.h"
 #import "WYShareManager.h"
 #import "WYPayManager.h"
+#import <AlipaySDK/AlipaySDK.h>
 
 @interface AppDelegate () <WYTabBarControllerDelegate,WXApiDelegate>
 
@@ -149,6 +150,24 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     if ([scheme hasPrefix:@"tencent"]) {
         return [QQApiInterface handleOpenURL:url delegate:[WYShareManager shareInstance]];
+    }
+    if ([scheme hasPrefix:@"WY://safepay"]) {
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"reslut = %@", resultDic);
+            NSInteger status = [[resultDic objectForKey:@"resultStatus"] integerValue];
+            switch (status) {
+                case 9000:
+                {
+                    NSLog(@"==================支付成功");
+                }
+                    break;
+                default:
+                {
+                    NSLog(@"==================失败=======%@",[resultDic objectForKey:@"memo"]);
+                }
+                    break;
+            }
+        }];
     }
     return YES;
 }
