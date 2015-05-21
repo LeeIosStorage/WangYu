@@ -286,6 +286,7 @@
 
 - (IBAction)shareAction:(id)sender {
     _shareAction = [[WYShareActionSheet alloc] init];
+    _shareAction.netbarInfo = self.netbarInfo;
     _shareAction.owner = self;
     [_shareAction showShareAction];
 }

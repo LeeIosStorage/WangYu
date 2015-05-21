@@ -14,8 +14,8 @@
 #import "WYUIUtils.h"
 
 //第三方参数
-#define QQ_ID                       @"1104351020"
-#define QQ_Key                      @"s4CYSjksFZX6tY8o"
+#define QQ_ID                       @"1104513102"
+#define QQ_Key                      @"L3PVlr3bpXd9I63d"
 #define WX_ID                       @"wxb10451ed2c4a6ce3"
 #define WX_Secret                   @"d95b2512200cb6696c63e6fec2110a4d"
 #define SINA_ID                     @"3734649134"

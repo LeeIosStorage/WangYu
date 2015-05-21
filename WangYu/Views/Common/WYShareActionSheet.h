@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WYNetbarInfo.h"
 
 @protocol WYShareActionSheetDelegate <NSObject>
 
@@ -17,6 +18,8 @@
 @interface WYShareActionSheet : NSObject
 
 @property (nonatomic, weak) UIViewController<WYShareActionSheetDelegate> *owner;
+
+@property (nonatomic, strong) WYNetbarInfo *netbarInfo;
 
 -(void) showShareAction;
 
