@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MineTabViewController.h"
 #import "NetbarTabViewController.h"
+#import "ActivityTabViewController.h"
 #import "GameCommendViewController.h"
 #import "WYNavigationController.h"
 #import "WYSettingConfig.h"
@@ -93,7 +94,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     tabViewController.delegate = self;
     tabViewController.viewControllers = [NSArray arrayWithObjects:
                                          [[NetbarTabViewController alloc] init],
-                                         [[MineTabViewController alloc] init],
+                                         [[ActivityTabViewController alloc] init],
                                          [[GameCommendViewController alloc] init],
                                          [[MineTabViewController alloc] init],
                                          nil];

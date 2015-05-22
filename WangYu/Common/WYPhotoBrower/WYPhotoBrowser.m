@@ -156,7 +156,7 @@
 - (void)photoClick:(UITapGestureRecognizer *)recognizer
 {
     _scrollView.hidden = YES;
-    
+    _indexLabel.hidden = YES;
     WYBrowserImageView *currentImageView = (WYBrowserImageView *)recognizer.view;
     NSInteger currentIndex = currentImageView.tag;
     
@@ -181,6 +181,10 @@
     [UIView animateWithDuration:WYPhotoBrowserHideImageAnimationDuration animations:^{
         tempView.frame = targetTemp;
         self.backgroundColor = [UIColor clearColor];
+        if ([self.delegate respondsToSelector:@selector(statusBarNeedsHidden:)]) {
+            return [self.delegate statusBarNeedsHidden:NO];
+        }
+        
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
@@ -267,7 +271,7 @@
     tempView.frame = rect;
     tempView.contentMode = [_scrollView.subviews[self.currentImageIndex] contentMode];
     _scrollView.hidden = YES;
-    
+    _indexLabel.hidden = NO;
     
     [UIView animateWithDuration:WYPhotoBrowserShowImageAnimationDuration animations:^{
         tempView.center = self.center;
@@ -277,6 +281,9 @@
         [tempView removeFromSuperview];
         _scrollView.hidden = NO;
     }];
+    if ([self.delegate respondsToSelector:@selector(statusBarNeedsHidden:)]) {
+        return [self.delegate statusBarNeedsHidden:YES];
+    }
 }
 
 - (UIImage *)placeholderImageForIndex:(NSInteger)index
@@ -314,7 +321,6 @@
             }];
         }
     }
-    
     
     _indexLabel.text = [NSString stringWithFormat:@"%d/%ld", index + 1, (long)self.imageCount];
     [self setupImageOfImageViewForIndex:index];

@@ -38,6 +38,8 @@
 		0723DE001B0F19830040295B /* CalloutMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0723DDFD1B0F19830040295B /* CalloutMapAnnotation.m */; };
 		0723DE081B0F2F5D0040295B /* CustomMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0723DE071B0F2F5D0040295B /* CustomMapCell.m */; };
 		0723DE0A1B0F2F720040295B /* CustomMapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0723DE091B0F2F720040295B /* CustomMapCell.xib */; };
+		0728D03B1B0F252A00239D96 /* ActivityTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0728D0391B0F252A00239D96 /* ActivityTabViewController.m */; };
+		0728D03C1B0F252A00239D96 /* ActivityTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0728D03A1B0F252A00239D96 /* ActivityTabViewController.xib */; };
 		07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 07358A961AF760D000D546E5 /* SKSplashIcon.m */; };
 		07358A9A1AF760D000D546E5 /* SKSplashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07358A981AF760D000D546E5 /* SKSplashView.m */; };
 		073DBCE21AE7492A009B49EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE11AE7492A009B49EB /* main.m */; };
@@ -276,6 +278,9 @@
 		0723DE061B0F2F5D0040295B /* CustomMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomMapCell.h; sourceTree = "<group>"; };
 		0723DE071B0F2F5D0040295B /* CustomMapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomMapCell.m; sourceTree = "<group>"; };
 		0723DE091B0F2F720040295B /* CustomMapCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomMapCell.xib; sourceTree = "<group>"; };
+		0728D0381B0F252A00239D96 /* ActivityTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTabViewController.h; sourceTree = "<group>"; };
+		0728D0391B0F252A00239D96 /* ActivityTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTabViewController.m; sourceTree = "<group>"; };
+		0728D03A1B0F252A00239D96 /* ActivityTabViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityTabViewController.xib; sourceTree = "<group>"; };
 		07358A951AF760D000D546E5 /* SKSplashIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSplashIcon.h; sourceTree = "<group>"; };
 		07358A961AF760D000D546E5 /* SKSplashIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSplashIcon.m; sourceTree = "<group>"; };
 		07358A971AF760D000D546E5 /* SKSplashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSplashView.h; sourceTree = "<group>"; };
@@ -1051,6 +1056,9 @@
 				07203A0B1AF1CE460056A74B /* NetbarTabViewController.h */,
 				07203A0C1AF1CE460056A74B /* NetbarTabViewController.m */,
 				07203A0D1AF1CE460056A74B /* NetbarTabViewController.xib */,
+				0728D0381B0F252A00239D96 /* ActivityTabViewController.h */,
+				0728D0391B0F252A00239D96 /* ActivityTabViewController.m */,
+				0728D03A1B0F252A00239D96 /* ActivityTabViewController.xib */,
 				0799C8AC1AF1D88E00E407BB /* GameCommendViewController.h */,
 				0799C8AD1AF1D88E00E407BB /* GameCommendViewController.m */,
 				0799C8AE1AF1D88E00E407BB /* GameCommendViewController.xib */,
@@ -1729,6 +1737,7 @@
 				076F82901B05E0CB00CACF0D /* NetbarMapViewController.xib in Resources */,
 				0745B3891B007AF3006D6853 /* NetbarDetailCell.xib in Resources */,
 				0777DFD11B01C4CB00E1E314 /* QuickPayViewController.xib in Resources */,
+				0728D03C1B0F252A00239D96 /* ActivityTabViewController.xib in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
 				0791AB341AE8B7DD0009A5A7 /* AboutViewController.xib in Resources */,
 				0723DE0A1B0F2F720040295B /* CustomMapCell.xib in Resources */,
@@ -1828,6 +1837,7 @@
 				0794938F1B0D9C3D008152A6 /* RSADataSigner.m in Sources */,
 				078EDBD81AEF1EF800E93EE8 /* ASIDataCompressor.m in Sources */,
 				0791AB5F1AE8DE260009A5A7 /* UIImage+HQ.m in Sources */,
+				0728D03B1B0F252A00239D96 /* ActivityTabViewController.m in Sources */,
 				0791AB381AE8CF4C0009A5A7 /* EGOCache.m in Sources */,
 				077E607E1B0B2B310079BC9E /* WYShareManager.m in Sources */,
 				0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */,

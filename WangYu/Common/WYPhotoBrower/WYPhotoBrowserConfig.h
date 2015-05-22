@@ -24,10 +24,10 @@ typedef enum {
 #define WYPhotoBrowserImageViewMargin 10
 
 // browser中显示图片动画时长
-#define WYPhotoBrowserShowImageAnimationDuration 0.8f
+#define WYPhotoBrowserShowImageAnimationDuration 0.6f
 
 // browser中显示图片动画时长
-#define WYPhotoBrowserHideImageAnimationDuration 0.8f
+#define WYPhotoBrowserHideImageAnimationDuration 0.6f
 
 // 图片下载进度指示进度显示样式（SDWaitingViewModeLoopDiagram 环形，SDWaitingViewModePieDiagram 饼型）
 #define WYWaitingViewProgressMode WYWaitingViewModeLoopDiagram
