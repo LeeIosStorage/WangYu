@@ -184,6 +184,9 @@
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
+    if ([self.delegate respondsToSelector:@selector(statusBarNeedsHidden:)]) {
+        return [self.delegate statusBarNeedsHidden:NO];
+    }
 }
 
 - (void)imageViewDoubleTaped:(UITapGestureRecognizer *)recognizer
@@ -268,7 +271,6 @@
     tempView.contentMode = [_scrollView.subviews[self.currentImageIndex] contentMode];
     _scrollView.hidden = YES;
     
-    
     [UIView animateWithDuration:WYPhotoBrowserShowImageAnimationDuration animations:^{
         tempView.center = self.center;
         tempView.bounds = (CGRect){CGPointZero, targetTemp.size};
@@ -277,6 +279,9 @@
         [tempView removeFromSuperview];
         _scrollView.hidden = NO;
     }];
+    if ([self.delegate respondsToSelector:@selector(statusBarNeedsHidden:)]) {
+        return [self.delegate statusBarNeedsHidden:YES];
+    }
 }
 
 - (UIImage *)placeholderImageForIndex:(NSInteger)index
@@ -314,7 +319,6 @@
             }];
         }
     }
-    
     
     _indexLabel.text = [NSString stringWithFormat:@"%d/%ld", index + 1, (long)self.imageCount];
     [self setupImageOfImageViewForIndex:index];

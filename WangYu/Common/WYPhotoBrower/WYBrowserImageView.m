@@ -152,6 +152,7 @@
         UIImageView *zoomingImageView = [[UIImageView alloc] initWithImage:self.image];
         zoomingImageView.bounds = self.bounds;
         zoomingImageView.contentMode = UIViewContentModeScaleAspectFit;
+        zoomingImageView.center = _scrollImageView.center;
         _zoomingImageView = zoomingImageView;
         [_zoomingScroolView addSubview:zoomingImageView];
         [self addSubview:_zoomingScroolView];

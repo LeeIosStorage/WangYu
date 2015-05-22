@@ -16,6 +16,9 @@
 - (UIImage *)photoBrowser:(WYPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index;
 @optional
 - (NSURL *)photoBrowser:(WYPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index;
+
+- (void)statusBarNeedsHidden:(BOOL)bHidden;
+
 @end
 
 @interface WYPhotoBrowser : UIView <UIScrollViewDelegate>

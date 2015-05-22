@@ -21,9 +21,10 @@
 #import "WYAlertView.h"
 #import "NetbarMapViewController.h"
 
-@interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate>
+@interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate,WYPhotoGroupDelegate>
 {
     WYShareActionSheet *_shareAction;
+    BOOL _bHidden;
 }
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic) IBOutlet UIView *maskView;
@@ -151,14 +152,14 @@
 //            [self.imageScrollView addSubview:imageView];
 //            index ++;
 //        }
-//        if(index > 4){
-//            [self.imageScrollView setContentSize:CGSizeMake(12 + index*(80+7), self.imageScrollView.frame.size.height)];
-//        }
-//        self.imageScrollView.pagingEnabled = YES;
-//        self.imageScrollView.showsHorizontalScrollIndicator = NO;
+        if(self.netbarInfo.picIds.count > 3){
+            [self.imageScrollView setContentSize:CGSizeMake(12 + self.netbarInfo.picIds.count*(80+7), self.imageScrollView.frame.size.height)];
+        }
+        self.imageScrollView.pagingEnabled = YES;
+        self.imageScrollView.showsHorizontalScrollIndicator = NO;
         
         WYPhotoGroup *photoGroup = [[WYPhotoGroup alloc] init];
-        
+        photoGroup.delegate = self;
         NSMutableArray *temp = [NSMutableArray array];
         [self.netbarInfo.picURLs enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
             WYPhotoItem *item = [[WYPhotoItem alloc] init];
@@ -343,6 +344,15 @@
     WYLog(@"NetbarDetailViewController dealloc!!!");
     _teamTable.delegate = nil;
     _teamTable.dataSource = nil;
+}
+
+- (void)controllerStatusBarHidden:(BOOL)bHidden{
+    _bHidden = bHidden;
+    [self prefersStatusBarHidden];
+}
+
+- (BOOL)prefersStatusBarHidden{
+    return _bHidden;
 }
 
 @end

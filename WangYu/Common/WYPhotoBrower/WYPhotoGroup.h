@@ -8,8 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class WYPhotoGroup;
+
+@protocol WYPhotoGroupDelegate <NSObject>
+
+@optional
+- (void)controllerStatusBarHidden:(BOOL)bHidden;
+
+@end
+
 @interface WYPhotoGroup : UIView
 
 @property (nonatomic, strong) NSArray *photoItemArray;
+
+@property (nonatomic, weak) id<WYPhotoGroupDelegate> delegate;
 
 @end
