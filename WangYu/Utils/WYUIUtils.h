@@ -61,4 +61,7 @@
 + (UIFont*)customFontWithPath:(NSString*)path size:(CGFloat)size;
 + (UIFont*)customFontWithFontName:(NSString*)fontName size:(CGFloat)size;
 
+#pragma CATransition动画实现
++ (void) transitionWithType:(NSString *) type WithSubtype:(NSString *) subtype ForView : (UIView *) view;
+
 @end

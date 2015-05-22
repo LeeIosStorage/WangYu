@@ -9,11 +9,17 @@
 #import "WYLocationServiceUtil.h"
 #import "WYUIUtils.h"
 #import "CLLocation+Sino.h"
+#import "PathHelper.h"
 
 @interface WYLocationServiceUtil() <CLLocationManagerDelegate>
 @property (nonatomic, strong) CLLocationManager *manager;
+@property (nonatomic, strong) CLGeocoder *mRgeo;
 @property (nonatomic, strong) NSMutableArray    *callbackArray;
 @property (nonatomic, strong) NSMutableArray    *sucessCallbackArray;
+
+//经纬反编码
+@property (nonatomic, strong) NSMutableArray    *reverseSucessCallbackArray;
+
 @end
 
 @implementation WYLocationServiceUtil
@@ -36,7 +42,7 @@
         _manager.delegate = self;
         _callbackArray = [[NSMutableArray alloc] init];
         _sucessCallbackArray = [NSMutableArray array];
-        
+        _reverseSucessCallbackArray = [NSMutableArray array];
     }
     return self;
 }
@@ -132,6 +138,71 @@
 }
 
 
+-(void)placemarkReverseGeoLocation:(CLLocation *)location placemark:(ReverseGeoLocationSucessBlock)placemarkSucess
+{
+    if (_mRgeo) {
+        [_mRgeo cancelGeocode];
+        [self setMRgeo:nil];
+    }
+    
+    if (placemarkSucess) {
+        [_reverseSucessCallbackArray addObject:[placemarkSucess copy]];
+    }
+    
+    _mRgeo = [[CLGeocoder alloc] init];
+    __weak WYLocationServiceUtil *weakSelf = self;
+    [_mRgeo reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (placemarks.count && !error) {
+            WYLog(@"didFindPlacemark: placemarks.count = %d, %@", (int)placemarks.count, placemarks);
+        }else {
+            WYLog(@"did not FindPlacemark, error = %@",error);
+//            [WYProgressHUD AlertError:@"位置获取失败" At:weakSelf.view];
+            return;
+        }
+        CLPlacemark *placemark = [placemarks objectAtIndex:0];
+        WYLog(@"didFindPlacemark des: %@", placemark.description);
+        
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            if (!weakSelf.reverseSucessCallbackArray.count) {
+                return;
+            }
+            for (id block in weakSelf.reverseSucessCallbackArray) {
+                ((ReverseGeoLocationSucessBlock)block)(placemark);
+            }
+            [weakSelf.reverseSucessCallbackArray removeAllObjects];
+        });
+    }];
+}
+
+- (NSString *)getStorePath{
+    NSString *filePath = [PathHelper documentDirectoryPathWithName:@"location"];
+    return filePath;
+}
+- (void)saveLastCLLocation:(CLLocation *)location{
+    
+    CLLocationCoordinate2D location2D = [location coordinate];
+    NSMutableDictionary *locationDic = [NSMutableDictionary dictionaryWithCapacity:2];
+    if (location2D.longitude) {
+        [locationDic setObject:[NSNumber numberWithDouble:location2D.longitude] forKey:@"longitude"];
+    }
+    if (location2D.latitude) {
+        [locationDic setObject:[NSNumber numberWithDouble:location2D.latitude] forKey:@"latitude"];
+    }
+    NSString* path = [[self getStorePath] stringByAppendingPathComponent:@"location.xml"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [locationDic writeToFile:path atomically:YES];
+    });
+}
+
++(CLLocationCoordinate2D)getLastRecordLocation{
+    NSString* path = [[PathHelper documentDirectoryPathWithName:@"location"] stringByAppendingPathComponent:@"location.xml"];
+    NSDictionary* locationDic = [[NSDictionary alloc] initWithContentsOfFile:path];
+    CLLocationCoordinate2D location;
+    location.latitude = [[locationDic objectForKey:@"latitude"] doubleValue];
+    location.longitude = [[locationDic objectForKey:@"longitude"] doubleValue];
+    return location;
+}
+
 #pragma mark -- CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error {
@@ -167,6 +238,7 @@
         //把标准坐标转成火星坐标返回
         CLLocation *marsLocation = [[locations objectAtIndex:0] locationMarsFromEarth];
         WYLog(@"mars location = %@", marsLocation);
+        [self saveLastCLLocation:marsLocation];
         [self notifyAllSucessCallBack:marsLocation];
     }else{
         [self notifyAllCallBack:@"未获取到有效位置"];

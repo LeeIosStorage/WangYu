@@ -64,9 +64,10 @@ static WYShareManager* wy_shareManager = nil;
     }
     
     if (scene == WXSceneTimeline) {
-        if (msg.description.length > 0) {
-            msg.title = [msg.description substringToIndex:MIN(msg.description.length, 512)];
-        }
+        msg.description = msg.title;
+//        if (msg.description.length > 0) {
+//            msg.title = [msg.description substringToIndex:MIN(msg.description.length, 512)];
+//        }
     }
     
     WXWebpageObject *ext = [WXWebpageObject object];
@@ -259,8 +260,6 @@ static WYShareManager* wy_shareManager = nil;
 - (void)isOnlineResponse:(NSDictionary *)response{
     
 }
-
-
 
 #pragma mark - custom
 -(void)shareAlertWithTitle:(NSString *)title{

@@ -60,6 +60,8 @@
     _historyInfos = [[NSMutableArray alloc] init];
     _nearbyNetBarInfos = [[NSMutableArray alloc] init];
     
+    self.currentLocation = [WYLocationServiceUtil getLastRecordLocation];
+    
     [self initControlUI];
     [self refreshHistorySearchData:NO];
     

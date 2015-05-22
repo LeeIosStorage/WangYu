@@ -18,6 +18,8 @@
 #import "WeiboSDK.h"
 #import "WYPhotoGroup.h"
 #import "WYPhotoItem.h"
+#import "WYAlertView.h"
+#import "NetbarMapViewController.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate>
 {
@@ -45,11 +47,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *collectButton;
 @property (strong, nonatomic) IBOutlet UIButton *shareButton;
 
-
 - (IBAction)bookAction:(id)sender;
 - (IBAction)payAction:(id)sender;
 - (IBAction)collectAction:(id)sender;
 - (IBAction)shareAction:(id)sender;
+- (IBAction)locationAction:(id)sender;
+- (IBAction)phoneAction:(id)sender;
 
 @end
 
@@ -277,11 +280,18 @@
 }
 
 - (IBAction)collectAction:(id)sender {
+    
+    self.collectButton.enabled = NO;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] collectionNetbarWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];
+    if (weakSelf.netbarInfo.isFaved) {
+        [[WYEngine shareInstance] unCollectionNetbarWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];
+    }else{
+        [[WYEngine shareInstance] collectionNetbarWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];
+    }
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        [WYProgressHUD AlertLoadDone];
+//        [WYProgressHUD AlertLoadDone];
+        self.collectButton.enabled = YES;
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -290,9 +300,16 @@
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
             return;
         }
-        NSString *result = [jsonRet objectForKey:@"result"];
-        if ([result isEqualToString:@"success"]) {
-            weakSelf.netbarInfo.isFaved = YES;
+        int code = [jsonRet intValueForKey:@"code"];
+        if (code == 0) {
+            if (weakSelf.netbarInfo.isFaved) {
+                [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromTop ForView:self.collectButton];
+                [WYProgressHUD AlertSuccess:@"取消收藏成功" At:weakSelf.view];
+            }else{
+                [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromBottom ForView:self.collectButton];
+                [WYProgressHUD AlertSuccess:@"收藏成功" At:weakSelf.view];
+            }
+            weakSelf.netbarInfo.isFaved = !weakSelf.netbarInfo.isFaved;
             [weakSelf refreshHeaderView];
         }
     }tag:tag];
@@ -300,8 +317,26 @@
 
 - (IBAction)shareAction:(id)sender {
     _shareAction = [[WYShareActionSheet alloc] init];
+    _shareAction.netbarInfo = self.netbarInfo;
     _shareAction.owner = self;
     [_shareAction showShareAction];
+}
+
+- (IBAction)locationAction:(id)sender {
+    NetbarMapViewController *nmVc = [[NetbarMapViewController alloc] init];
+    CLLocationCoordinate2D coordinate;
+    coordinate.latitude = [self.netbarInfo.latitude doubleValue];
+    coordinate.longitude = [self.netbarInfo.longitude doubleValue];
+    [nmVc setShowLocation:coordinate.latitude longitute:coordinate.longitude];
+    [self.navigationController pushViewController:nmVc animated:YES];
+}
+
+- (IBAction)phoneAction:(id)sender {
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"联系网吧" message:self.netbarInfo.telephone cancelButtonTitle:@"取消" cancelBlock:nil okButtonTitle:@"呼叫" okBlock:^{
+        NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", self.netbarInfo.telephone]];
+        [[UIApplication sharedApplication] openURL:URL];
+    }];
+    [alertView show];
 }
 
 -(void)dealloc{

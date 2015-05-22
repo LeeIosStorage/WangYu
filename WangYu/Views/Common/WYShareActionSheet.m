@@ -9,12 +9,19 @@
 #import "WYShareActionSheet.h"
 #import "WYCustomerWindow.h"
 #import "WYShareManager.h"
+#import "SDImageCache.h"
+#import "WYEngine.h"
 
 @interface WYShareActionSheet() <WYCustomerWindowDelg>
 {
     NSMutableDictionary* _actionSheetIndexSelDic;
     WYCustomerWindow *_csheet;
 }
+
+@property (nonatomic, strong) NSString *shareTitle;
+@property (nonatomic, strong) NSString *shareDescription;
+@property (nonatomic, strong) NSString *shareWebpageUrl;
+@property (nonatomic, strong) UIImage *shareImage;
 
 @end
 
@@ -31,8 +38,22 @@
     _csheet = [[[NSBundle mainBundle] loadNibNamed:@"WYCustomerWindow" owner:nil options:nil] objectAtIndex:0];
     _csheet.sheetDelg = self;
     [_csheet setCustomerSheet];
+    
+    [self shareContent];
 }
 
+- (void)shareContent{
+    self.shareTitle = [NSString stringWithFormat:@"网娱大师-%@|快来定座吧",_netbarInfo.netbarName];
+    self.shareDescription = [NSString stringWithFormat:@"上网价格￥%d/小时\n%@",_netbarInfo.price,_netbarInfo.address];
+    self.shareWebpageUrl = [NSString stringWithFormat:@"%@/share/netbar/%@",[WYEngine shareInstance].baseUrl,_netbarInfo.nid];
+    
+    if (![self.netbarInfo.smallImageUrl isEqual:[NSNull null]]) {
+        self.shareImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[self.netbarInfo.smallImageUrl absoluteString]];
+    }
+    if (!self.shareImage) {
+        self.shareImage = [UIImage imageNamed:@"netbar_load_icon"];
+    }
+}
 
 #pragma mark -- LSCustomerSheetDelg
 -(void)customerWindowClickAt:(NSIndexPath *)indexPath action:(NSString *)action{
@@ -60,16 +81,16 @@
 
 #pragma mark - share
 -(void)shareToWX:(int)scene{
-    [[WYShareManager shareInstance] shareToWXWithScene:scene title:@"网娱大师" description:@"一款前所未有的网吧产品" webpageUrl:@"http://www.baidu.com" image:nil];
+    [[WYShareManager shareInstance] shareToWXWithScene:scene title:self.shareTitle description:self.shareDescription webpageUrl:self.shareWebpageUrl image:self.shareImage];
 }
 
 -(void)shareToWeiBo{
     [[WYShareManager shareInstance] shareToWb:^(WBSendMessageToWeiboResponse *response) {
         
-    } title:@"网娱大师" description:@"一款前所未有的网吧产品" webpageUrl:@"http://xiaor123.cn:801/api/share/topic/0/318" image:nil VC:_owner];
+    } title:self.shareTitle description:self.shareDescription webpageUrl:self.shareWebpageUrl image:self.shareImage VC:_owner];
 }
 
 -(void)shareToQQ{
-    [[WYShareManager shareInstance] shareToQQTitle:@"网娱大师" description:@"一款前所未有的网吧产品" webpageUrl:@"http://xiaor123.cn:801/api/share/topic/0/318" image:nil];
+    [[WYShareManager shareInstance] shareToQQTitle:self.shareTitle description:self.shareDescription webpageUrl:self.shareWebpageUrl image:self.shareImage];
 }
 @end

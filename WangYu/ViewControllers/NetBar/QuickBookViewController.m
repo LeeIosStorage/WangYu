@@ -77,7 +77,6 @@
     self.hintLabel.textColor = SKIN_TEXT_COLOR2;
     seatNum = 1;
     _dateArray = [NSArray arrayWithObjects:@"今天",@"明天",@"后天",nil];
-//    _timeArray = @[@(1),@(2),@(3),@(4),@(5),@(6),@(7),@(8)];
     _durationArray = @[@(1),@(2),@(3),@(4),@(5),@(6),@(7),@(8),@(9),@(10),@(11),@(12)];
     _seatnumArray = @[@(1),@(2),@(3),@(4),@(5),@(6),@(7),@(8),@(9),@(10)];
     _addcostArray = @[@(0),@(1),@(2),@(3),@(4),@(5),@(6)];
@@ -175,10 +174,10 @@
     }
     
     NSString *tempString = [NSString stringWithFormat:@"%@ %@",dateTempString, startTimeString];
-    NSLog(@"========%@",tempString);
+    //NSLog(@"========%@",tempString);
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] quickBookingWithUid:[WYEngine shareInstance].uid reserveDate:tempString amount:seatNum*addCost netbarId:_netbarInfo.nid hours:hours num:seatNum remark:_descTextView.text tag:tag];
+    [[WYEngine shareInstance] quickBookingWithUid:[WYEngine shareInstance].uid reserveDate:tempString amount:(double)seatNum*addCost netbarId:_netbarInfo.nid hours:hours num:seatNum remark:_descTextView.text tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [WYProgressHUD AlertLoadDone];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
