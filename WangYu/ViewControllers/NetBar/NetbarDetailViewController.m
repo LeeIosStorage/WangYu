@@ -33,6 +33,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImage;
 @property (strong, nonatomic) IBOutlet UITableView *teamTable;
 @property (strong, nonatomic) IBOutlet UIView *sectionView;
+@property (strong, nonatomic) IBOutlet UIView *sectionView2;
 @property (strong, nonatomic) IBOutlet UIButton *bookButton;
 @property (strong, nonatomic) IBOutlet UIButton *payButton;
 
@@ -47,6 +48,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) IBOutlet UIButton *collectButton;
 @property (strong, nonatomic) IBOutlet UIButton *shareButton;
+@property (strong, nonatomic) IBOutlet UIButton *publicButton;
 
 - (IBAction)bookAction:(id)sender;
 - (IBAction)payAction:(id)sender;
@@ -54,6 +56,8 @@
 - (IBAction)shareAction:(id)sender;
 - (IBAction)locationAction:(id)sender;
 - (IBAction)phoneAction:(id)sender;
+- (IBAction)publicAction:(id)sender;
+- (IBAction)detailAction:(id)sender;
 
 @end
 
@@ -107,7 +111,13 @@
     self.payButton.backgroundColor = SKIN_COLOR;
     self.payButton.layer.cornerRadius = 4.0;
     self.payButton.layer.masksToBounds = YES;
-
+    
+    self.publicButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
+    [self.publicButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
+    [self.publicButton.layer setMasksToBounds:YES];
+    [self.publicButton.layer setCornerRadius:4.0];
+    [self.publicButton.layer setBorderWidth:0.5];
+    [self.publicButton.layer setBorderColor:UIColorToRGB(0xadadad).CGColor];
 }
 
 - (void)refreshHeaderView {
@@ -155,7 +165,6 @@
         if(self.netbarInfo.picIds.count > 3){
             [self.imageScrollView setContentSize:CGSizeMake(12 + self.netbarInfo.picIds.count*(80+7), self.imageScrollView.frame.size.height)];
         }
-        self.imageScrollView.pagingEnabled = YES;
         self.imageScrollView.showsHorizontalScrollIndicator = NO;
         
         WYPhotoGroup *photoGroup = [[WYPhotoGroup alloc] init];
@@ -226,11 +235,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20;
+    return self.netbarInfo.matcheArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
+    if (self.netbarInfo.matcheArray.count == 0) {
+        return 83;
+    }
     return 39;
 }
 
@@ -240,11 +251,21 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 39)];
-    CGRect frame = self.sectionView.frame;
-    frame.size.width = SCREEN_WIDTH;
-    self.sectionView.frame = frame;
-    [view addSubview:self.sectionView];
+    UIView *view = [[UIView alloc] init];
+    if (self.netbarInfo.matcheArray.count == 0) {
+        view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 83);
+        CGRect frame = self.sectionView2.frame;
+        frame.size.width = SCREEN_WIDTH;
+        self.sectionView2.frame = frame;
+        [view addSubview:self.sectionView2];
+    }else {
+        view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 39);
+        CGRect frame = self.sectionView.frame;
+        frame.size.width = SCREEN_WIDTH;
+        self.sectionView.frame = frame;
+        [view addSubview:self.sectionView];
+    }
+    
     return view;
 }
 
@@ -340,6 +361,16 @@
     [alertView show];
 }
 
+- (IBAction)publicAction:(id)sender {
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"发布约战" message:@"H5跳转" cancelButtonTitle:@"确定"];
+    [alertView show];
+}
+
+- (IBAction)detailAction:(id)sender {
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"详细介绍" message:@"H5跳转" cancelButtonTitle:@"确定"];
+    [alertView show];
+}
+
 -(void)dealloc{
     WYLog(@"NetbarDetailViewController dealloc!!!");
     _teamTable.delegate = nil;
@@ -349,6 +380,7 @@
 - (void)controllerStatusBarHidden:(BOOL)bHidden{
     _bHidden = bHidden;
     [self prefersStatusBarHidden];
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (BOOL)prefersStatusBarHidden{

@@ -156,7 +156,7 @@
 - (void)photoClick:(UITapGestureRecognizer *)recognizer
 {
     _scrollView.hidden = YES;
-    
+    _indexLabel.hidden = YES;
     WYBrowserImageView *currentImageView = (WYBrowserImageView *)recognizer.view;
     NSInteger currentIndex = currentImageView.tag;
     
@@ -181,12 +181,13 @@
     [UIView animateWithDuration:WYPhotoBrowserHideImageAnimationDuration animations:^{
         tempView.frame = targetTemp;
         self.backgroundColor = [UIColor clearColor];
+        if ([self.delegate respondsToSelector:@selector(statusBarNeedsHidden:)]) {
+            return [self.delegate statusBarNeedsHidden:NO];
+        }
+        
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
-    if ([self.delegate respondsToSelector:@selector(statusBarNeedsHidden:)]) {
-        return [self.delegate statusBarNeedsHidden:NO];
-    }
 }
 
 - (void)imageViewDoubleTaped:(UITapGestureRecognizer *)recognizer
@@ -270,6 +271,7 @@
     tempView.frame = rect;
     tempView.contentMode = [_scrollView.subviews[self.currentImageIndex] contentMode];
     _scrollView.hidden = YES;
+    _indexLabel.hidden = NO;
     
     [UIView animateWithDuration:WYPhotoBrowserShowImageAnimationDuration animations:^{
         tempView.center = self.center;
