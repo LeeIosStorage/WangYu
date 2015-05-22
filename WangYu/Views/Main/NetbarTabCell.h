@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *payImage;
 @property (strong, nonatomic) IBOutlet UIImageView *bookImage;
 @property (strong, nonatomic) IBOutlet UIImageView *mapImage;
+@property (strong, nonatomic) IBOutlet UIButton *mapButton;
 
 @property (strong, nonatomic) IBOutlet UILabel *netbarDistance;
 
