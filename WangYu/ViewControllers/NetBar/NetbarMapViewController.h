@@ -8,6 +8,7 @@
 
 #import "WYSuperViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "WYNetbarInfo.h"
 
 @interface NetbarMapViewController : WYSuperViewController
 
@@ -15,6 +16,7 @@
 
 @property (strong, nonatomic) NSString* netbarName;//网吧名称
 @property (strong, nonatomic) NSString* showPlaceTitle;//地址信息
+@property (strong, nonatomic) WYNetbarInfo *netbarInfo;
 -(void)setShowLocation:(double)lat longitute:(double)log;//显示具体某个位置
 
 @end

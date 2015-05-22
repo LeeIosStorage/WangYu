@@ -20,6 +20,7 @@
     _isValid = [dic intValueForKey:@"is_valid"];
     _isRelated = [dic intValueForKey:@"is_related"];
     _overpay = [dic intValueForKey:@"overpay"];
+    _hours = [dic intValueForKey:@"hours"];
     _seating = [dic intValueForKey:@"seating"];
     _status = [dic intValueForKey:@"status"];
     
@@ -41,6 +42,9 @@
     }
     if ([dic stringObjectForKey:@"name"]) {
         _netbarName = [dic stringObjectForKey:@"name"];
+    }
+    if ([dic stringObjectForKey:@"netbar_name"]) {
+        _netbarName = [dic stringObjectForKey:@"netbar_name"];
     }
     if ([dic stringObjectForKey:@"icon"]) {
         _icon = [dic stringObjectForKey:@"icon"];

@@ -236,7 +236,7 @@
     [manager stopUpdatingLocation];
     if (locations.count) {
         //把标准坐标转成火星坐标返回
-        CLLocation *marsLocation = [[locations objectAtIndex:0] locationBearPawFromMars];
+        CLLocation *marsLocation = [[[locations objectAtIndex:0] locationMarsFromEarth] locationBearPawFromMars];
         WYLog(@"mars location = %@", marsLocation);
         [self saveLastCLLocation:marsLocation];
         [self notifyAllSucessCallBack:marsLocation];

@@ -16,6 +16,10 @@
 #import "WYEngine.h"
 #import "MapChooseAnnotationView.h"
 #import "CLLocation+Sino.h"
+#import "CallOutAnnotationView.h"
+#import "CalloutMapAnnotation.h"
+#import "BasicMapAnnotation.h"
+#import "CustomMapCell.h"
 
 @interface WYMapPlaceMark : NSObject<MKAnnotation>
 
@@ -35,7 +39,7 @@
 @end
 
 
-@interface NetbarMapViewController ()<MKMapViewDelegate,CLLocationManagerDelegate>
+@interface NetbarMapViewController ()<MKMapViewDelegate,CLLocationManagerDelegate,CallOutAnnotationViewDelegate>
 {
     WYActionSheet* _acsheet;
 }
@@ -53,6 +57,8 @@
 @property (nonatomic, assign) CLLocationCoordinate2D showLocation;
 @property (strong, nonatomic) CLGeocoder *mRgeo;
 @property (nonatomic, assign) CLLocationCoordinate2D reseverLocation; // 当前解析的坐标
+
+@property (nonatomic,strong)CalloutMapAnnotation *calloutAnnotation;
 
 @end
 
@@ -75,6 +81,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.pois = [[NSMutableArray alloc] init];
     
     self.titleNavBarRightBtn.hidden = YES;
     self.mapView.delegate = self;
@@ -173,30 +181,41 @@
         [WYProgressHUD AlertSuccess:@"完成" At:weakSelf.view];
         
         NSArray* pois = [jsonRet arrayObjectForKey:@"object"];
-        _pois = [[NSMutableArray alloc] initWithArray:pois];
-        
-        
-        if (self.annotations) {
-            [self.mapView removeAnnotations:self.annotations];
+        weakSelf.pois = [[NSMutableArray alloc] init];
+        for (NSDictionary *dic in pois) {
+            if (![dic isKindOfClass:[NSDictionary class]]) {
+                continue;
+            }
+            WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
+            [netbarInfo setNetbarInfoByJsonDic:dic];
+            [weakSelf.pois addObject:netbarInfo];
         }
         
-        NSMutableArray *annotations = [[NSMutableArray alloc] initWithCapacity:_pois.count];
-        for (NSDictionary* dic in _pois) {
-            WYMapPlaceMark* placeMark = [[WYMapPlaceMark alloc] init];
-            placeMark.title = @"网吧信息";
-            placeMark.subtitle = [[dic objectForKey:@"netbar_name"] description];
-//            placeMark.addressPoiid = [[dic objectForKey:@"poiid"] description];
+        if (weakSelf.annotations) {
+            [weakSelf.mapView removeAnnotations:weakSelf.annotations];
+        }
+        
+        NSMutableArray *annotations = [[NSMutableArray alloc] initWithCapacity:weakSelf.pois.count];
+        int index = 0;
+        for (WYNetbarInfo *netbarInfo in weakSelf.pois) {
+//            WYMapPlaceMark* placeMark = [[WYMapPlaceMark alloc] init];
+//            placeMark.title = @"网吧信息";
+//            placeMark.subtitle = [[dic objectForKey:@"netbar_name"] description];
+////            placeMark.addressPoiid = [[dic objectForKey:@"poiid"] description];
             CLLocationCoordinate2D coordinate;
-            coordinate.latitude = [[dic objectForKey:@"latitude"] doubleValue];
-            coordinate.longitude = [[dic objectForKey:@"longitude"] doubleValue];
+            coordinate.latitude = [netbarInfo.latitude doubleValue];
+            coordinate.longitude = [netbarInfo.longitude doubleValue];
             
             coordinate = [WYLocationServiceUtil convertNewCoordinateWith:coordinate];
-            
-            placeMark.coordinate = coordinate;
-            [annotations addObject:placeMark];
+//
+//            placeMark.coordinate = coordinate;
+//            [annotations addObject:placeMark];
+            BasicMapAnnotation *  annotation=[[BasicMapAnnotation alloc] initWithLatitude:coordinate.latitude andLongitude:coordinate.longitude tag:index];
+            [annotations addObject:annotation];
+            index ++;
         }
-        self.annotations = annotations;
-        [self.mapView addAnnotations:annotations];
+        weakSelf.annotations = annotations;
+        [weakSelf.mapView addAnnotations:annotations];
         if (annotations.count > 0) {
             [self.mapView selectAnnotation:[annotations objectAtIndex:0] animated:YES];
         }
@@ -277,7 +296,9 @@
 #pragma mark - 定位具体某个位置
 -(void)setShowLocation:(double)lat longitute:(double)log{
     _showMode = YES;
-    
+    if (_pois == nil) {
+        _pois = [[NSMutableArray alloc] init];
+    }
     CLLocationCoordinate2D location;
     location.latitude = lat;
     location.longitude = log;
@@ -316,8 +337,8 @@
         }
     }
     
-    [self getCurrentCity:location];
-//    [self addCustomMark:location];
+//    [self getCurrentCity:location];
+    [self addCustomMark:location];
     
 }
 -(void)getCurrentCity:(CLLocationCoordinate2D)location
@@ -402,11 +423,15 @@
     self.titleNavBarRightBtn.hidden = NO;
     [self.titleNavBarRightBtn setTitle:@"路线" forState:UIControlStateNormal];
     
-    MapChooseAnnotationView *annotation = [[MapChooseAnnotationView alloc] init];
-    [annotation setCoordinate:location];
-    annotation.title = _netbarName;
-    NSString *detail = _showPlaceTitle;
-    annotation.subtitle = detail;
+    if (!_netbarInfo) {
+        return;
+    }
+    [_pois addObject:_netbarInfo];
+    CLLocationCoordinate2D coordinate;
+    coordinate.latitude = [_netbarInfo.latitude doubleValue];
+    coordinate.longitude = [_netbarInfo.longitude doubleValue];
+    coordinate = [WYLocationServiceUtil convertNewCoordinateWith:coordinate];
+    BasicMapAnnotation *  annotation=[[BasicMapAnnotation alloc] initWithLatitude:coordinate.latitude andLongitude:coordinate.longitude tag:0];
     [self.mapView addAnnotation:annotation];
     
     MKCoordinateRegion region = self.mapView.region;
@@ -570,32 +595,32 @@
 }
 
 #pragma mark - MKMapViewDelegate
--(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
-{
-    if ([annotation isKindOfClass:[MKUserLocation class]]) {
-        return nil;
-    }
-    BOOL isMapAn = [annotation isKindOfClass:[MapChooseAnnotationView class]];
-    static NSString * const kPinAnnotationIdentifier = @"PinIdentifier";
-    MKAnnotationView *draggablePinView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:kPinAnnotationIdentifier];
-    if (draggablePinView) {
-        if (isMapAn) {
-            draggablePinView.leftCalloutAccessoryView = [self isNeedAddIndicatorView:annotation];
-        }
-        draggablePinView.annotation = annotation;
-    } else {
-        draggablePinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPinAnnotationIdentifier];
-        draggablePinView.canShowCallout = YES;
-        draggablePinView.userInteractionEnabled = NO;
-        draggablePinView.draggable = NO;
-        draggablePinView.image=[UIImage imageNamed:@"Pin_Ios7"];
-        if (isMapAn) {
-            draggablePinView.leftCalloutAccessoryView =  [self isNeedAddIndicatorView:annotation];
-        }
-    }
-    
-    return draggablePinView;
-}
+//-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+//{
+//    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+//        return nil;
+//    }
+//    BOOL isMapAn = [annotation isKindOfClass:[MapChooseAnnotationView class]];
+//    static NSString * const kPinAnnotationIdentifier = @"PinIdentifier";
+//    MKAnnotationView *draggablePinView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:kPinAnnotationIdentifier];
+//    if (draggablePinView) {
+//        if (isMapAn) {
+//            draggablePinView.leftCalloutAccessoryView = [self isNeedAddIndicatorView:annotation];
+//        }
+//        draggablePinView.annotation = annotation;
+//    } else {
+//        draggablePinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPinAnnotationIdentifier];
+//        draggablePinView.canShowCallout = YES;
+//        draggablePinView.userInteractionEnabled = NO;
+//        draggablePinView.draggable = NO;
+//        draggablePinView.image=[UIImage imageNamed:@"Pin_Ios7"];
+//        if (isMapAn) {
+//            draggablePinView.leftCalloutAccessoryView =  [self isNeedAddIndicatorView:annotation];
+//        }
+//    }
+//    
+//    return draggablePinView;
+//}
 
 -(void)mapViewWillStartLoadingMap:(MKMapView *)mapView1
 {
@@ -628,6 +653,96 @@
 //            [self.mapView removeAnnotation:annotion];
 //        }
 //    }
+}
+
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    if ([view.annotation isKindOfClass:[BasicMapAnnotation class]]) {
+        
+        BasicMapAnnotation *annotation = (BasicMapAnnotation *)view.annotation;
+        
+        if (_calloutAnnotation.coordinate.latitude == annotation.latitude&&
+            _calloutAnnotation.coordinate.longitude == annotation.longitude)
+        {
+            return;
+        }
+        if (_calloutAnnotation) {
+            [mapView removeAnnotation:_calloutAnnotation];
+            self.calloutAnnotation = nil;
+        }
+        self.calloutAnnotation = [[CalloutMapAnnotation alloc]
+                                  initWithLatitude:annotation.latitude
+                                  andLongitude:annotation.longitude
+                                  tag:annotation.tag];
+        [mapView addAnnotation:_calloutAnnotation];
+        
+        [mapView setCenterCoordinate:_calloutAnnotation.coordinate animated:YES];
+    }
+}
+
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
+{
+    if (_calloutAnnotation)
+    {
+        if (_calloutAnnotation.coordinate.latitude == view.annotation.coordinate.latitude&&
+            _calloutAnnotation.coordinate.longitude == view.annotation.coordinate.longitude)
+        {
+            [mapView removeAnnotation:_calloutAnnotation];
+            self.calloutAnnotation = nil;
+        }
+    }
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    if ([annotation isKindOfClass:[CalloutMapAnnotation class]])
+    {
+        CalloutMapAnnotation *calloutAnnotation = (CalloutMapAnnotation *)annotation;
+        
+        CallOutAnnotationView *annotationView = (CallOutAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"CalloutView"];
+        if (!annotationView)
+        {
+            annotationView = [[CallOutAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CalloutView" delegate:self];
+        }
+        for (UIView *view in  annotationView.contentView.subviews) {
+            [view removeFromSuperview];
+        }
+        [annotationView.contentView addSubview:[self mapViewCalloutContentViewWithIndex:calloutAnnotation.tag]];
+        return annotationView;
+    } else if ([annotation isKindOfClass:[BasicMapAnnotation class]])
+    {
+        BasicMapAnnotation *basicMapAnnotation = (BasicMapAnnotation *)annotation;
+        MKAnnotationView *annotationView =[self.mapView dequeueReusableAnnotationViewWithIdentifier:@"CustomAnnotation"];
+        if (!annotationView)
+        {
+            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation
+                                                          reuseIdentifier:@"CustomAnnotation"];
+            annotationView.canShowCallout = NO;
+            WYLog(@"basicMapAnnotation = %d",basicMapAnnotation.tag);
+            annotationView.image = [UIImage imageNamed:@"Pin_Ios7"];
+        }
+        
+        return annotationView;
+    }
+    return nil;
+}
+
+#pragma mark - CallOutAnnotationViewDelegate
+- (void)didSelectAnnotationView:(CallOutAnnotationView *)view
+{
+    CalloutMapAnnotation *annotation = (CalloutMapAnnotation *)view.annotation;
+    WYLog(@"annotation.tag = %d",annotation.tag);
+    [self mapView:_mapView didDeselectAnnotationView:view];
+}
+
+- (UIView *)mapViewCalloutContentViewWithIndex:(NSInteger)index
+{
+    WYNetbarInfo *netbarInfo = [_pois objectAtIndex:index];
+    CustomMapCell  *cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomMapCell" owner:self options:nil] objectAtIndex:0];
+    cell.title.text = netbarInfo.netbarName;
+    cell.subtitle.text = [NSString stringWithFormat:@"￥%d/小时",netbarInfo.price];
+    return cell;
 }
 
 @end

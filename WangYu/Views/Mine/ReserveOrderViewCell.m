@@ -75,6 +75,15 @@
     frame.origin.x = self.netbarNameLabel.frame.origin.x + self.netbarNameLabel.frame.size.width + 6;
     self.indicatorImageView.frame = frame;
     
+    frame = self.openImageViewIcon.frame;
+    frame.origin.x = SCREEN_WIDTH/2 - frame.size.width-5;
+    self.openImageViewIcon.frame = frame;
+    NSString *hoursText = [NSString stringWithFormat:@"%d小时",orderInfo.hours];
+    self.openTimeLabel.text = hoursText;
+    frame = self.openTimeLabel.frame;
+    frame.origin.x = self.openImageViewIcon.frame.origin.x + self.openImageViewIcon.frame.size.width + 5;
+    self.openTimeLabel.frame = frame;
+    
     NSString *seatText = [NSString stringWithFormat:@"%d个座位",orderInfo.seating];
     self.seatLabel.text = seatText;
     width = [WYCommonUtils widthWithText:seatText font:self.seatLabel.font lineBreakMode:NSLineBreakByWordWrapping];

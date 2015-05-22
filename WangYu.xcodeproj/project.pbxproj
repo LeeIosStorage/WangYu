@@ -33,6 +33,11 @@
 		07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07203A131AF1D63B0056A74B /* NetbarTabCell.xib */; };
 		07203A171AF1F7710056A74B /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07203A161AF1F7710056A74B /* CoreText.framework */; };
 		07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */ = {isa = PBXBuildFile; fileRef = 07203A191AF1FE8C0056A74B /* dqw3.otf */; };
+		0723DDFE1B0F19830040295B /* BasicMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0723DDF91B0F19830040295B /* BasicMapAnnotation.m */; };
+		0723DDFF1B0F19830040295B /* CallOutAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0723DDFB1B0F19830040295B /* CallOutAnnotationView.m */; };
+		0723DE001B0F19830040295B /* CalloutMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0723DDFD1B0F19830040295B /* CalloutMapAnnotation.m */; };
+		0723DE081B0F2F5D0040295B /* CustomMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0723DE071B0F2F5D0040295B /* CustomMapCell.m */; };
+		0723DE0A1B0F2F720040295B /* CustomMapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0723DE091B0F2F720040295B /* CustomMapCell.xib */; };
 		07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 07358A961AF760D000D546E5 /* SKSplashIcon.m */; };
 		07358A9A1AF760D000D546E5 /* SKSplashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07358A981AF760D000D546E5 /* SKSplashView.m */; };
 		073DBCE21AE7492A009B49EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 073DBCE11AE7492A009B49EB /* main.m */; };
@@ -262,6 +267,15 @@
 		07203A131AF1D63B0056A74B /* NetbarTabCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarTabCell.xib; path = Main/NetbarTabCell.xib; sourceTree = "<group>"; };
 		07203A161AF1F7710056A74B /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		07203A191AF1FE8C0056A74B /* dqw3.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dqw3.otf; path = Assets/dqw3.otf; sourceTree = "<group>"; };
+		0723DDF81B0F19830040295B /* BasicMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicMapAnnotation.h; sourceTree = "<group>"; };
+		0723DDF91B0F19830040295B /* BasicMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicMapAnnotation.m; sourceTree = "<group>"; };
+		0723DDFA1B0F19830040295B /* CallOutAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallOutAnnotationView.h; sourceTree = "<group>"; };
+		0723DDFB1B0F19830040295B /* CallOutAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallOutAnnotationView.m; sourceTree = "<group>"; };
+		0723DDFC1B0F19830040295B /* CalloutMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutMapAnnotation.h; sourceTree = "<group>"; };
+		0723DDFD1B0F19830040295B /* CalloutMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalloutMapAnnotation.m; sourceTree = "<group>"; };
+		0723DE061B0F2F5D0040295B /* CustomMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomMapCell.h; sourceTree = "<group>"; };
+		0723DE071B0F2F5D0040295B /* CustomMapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomMapCell.m; sourceTree = "<group>"; };
+		0723DE091B0F2F720040295B /* CustomMapCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomMapCell.xib; sourceTree = "<group>"; };
 		07358A951AF760D000D546E5 /* SKSplashIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSplashIcon.h; sourceTree = "<group>"; };
 		07358A961AF760D000D546E5 /* SKSplashIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSplashIcon.m; sourceTree = "<group>"; };
 		07358A971AF760D000D546E5 /* SKSplashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSplashView.h; sourceTree = "<group>"; };
@@ -762,6 +776,22 @@
 			name = Assets;
 			sourceTree = "<group>";
 		};
+		0723DDF71B0F19830040295B /* MapCalloutView */ = {
+			isa = PBXGroup;
+			children = (
+				0723DDF81B0F19830040295B /* BasicMapAnnotation.h */,
+				0723DDF91B0F19830040295B /* BasicMapAnnotation.m */,
+				0723DDFA1B0F19830040295B /* CallOutAnnotationView.h */,
+				0723DDFB1B0F19830040295B /* CallOutAnnotationView.m */,
+				0723DDFC1B0F19830040295B /* CalloutMapAnnotation.h */,
+				0723DDFD1B0F19830040295B /* CalloutMapAnnotation.m */,
+				0723DE061B0F2F5D0040295B /* CustomMapCell.h */,
+				0723DE071B0F2F5D0040295B /* CustomMapCell.m */,
+				0723DE091B0F2F720040295B /* CustomMapCell.xib */,
+			);
+			path = MapCalloutView;
+			sourceTree = "<group>";
+		};
 		07358A941AF760D000D546E5 /* SKSplashView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1142,6 +1172,7 @@
 		076C8CE91B048BBB00421460 /* MapChoose */ = {
 			isa = PBXGroup;
 			children = (
+				0723DDF71B0F19830040295B /* MapCalloutView */,
 				0715C3A31B09AD6F00C37F82 /* Pin_Ios7@2x.png */,
 				0715C3A01B09AD6F00C37F82 /* MapChooseViewController.h */,
 				0715C3A11B09AD6F00C37F82 /* MapChooseViewController.m */,
@@ -1700,6 +1731,7 @@
 				0777DFD11B01C4CB00E1E314 /* QuickPayViewController.xib in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
 				0791AB341AE8B7DD0009A5A7 /* AboutViewController.xib in Resources */,
+				0723DE0A1B0F2F720040295B /* CustomMapCell.xib in Resources */,
 				071923E21AF7771A00432531 /* RegisterViewController.xib in Resources */,
 				07566CAC1AFC663600F93B58 /* SettingViewCell.xib in Resources */,
 				07868DEB1AF8581100160070 /* WYTitleNavBarView.xib in Resources */,
@@ -1750,6 +1782,7 @@
 				07868DE91AF8581100160070 /* WYSuperViewController.m in Sources */,
 				076F82861B059CB700CACF0D /* WYNetBarManager.m in Sources */,
 				073DBD631AE7717D009B49EB /* PathHelper.m in Sources */,
+				0723DE081B0F2F5D0040295B /* CustomMapCell.m in Sources */,
 				0790494D1AEA236100E46795 /* WYService.m in Sources */,
 				3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */,
 				078EDBD91AEF1EF800E93EE8 /* ASIDataDecompressor.m in Sources */,
@@ -1838,6 +1871,7 @@
 				07868DEA1AF8581100160070 /* WYTitleNavBarView.m in Sources */,
 				0790494A1AEA226B00E46795 /* NSData+Base64.m in Sources */,
 				07203A0E1AF1CE460056A74B /* NetbarTabViewController.m in Sources */,
+				0723DE001B0F19830040295B /* CalloutMapAnnotation.m in Sources */,
 				079D52521B01E48600DF4D6B /* GameCommendCardView.m in Sources */,
 				076195EC1B008FAC00397711 /* PayOrderViewCell.m in Sources */,
 				07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */,
@@ -1849,6 +1883,7 @@
 				073DBDB71AE794C4009B49EB /* PullToRefreshView.m in Sources */,
 				0794938B1B0D9C3D008152A6 /* DataVerifier.m in Sources */,
 				07868DEC1AF8581100160070 /* WYCommonVcTransition.m in Sources */,
+				0723DDFF1B0F19830040295B /* CallOutAnnotationView.m in Sources */,
 				0791AB5D1AE8DE260009A5A7 /* AFURLSessionManager.m in Sources */,
 				078EDBD71AEF1EF800E93EE8 /* ASIAuthenticationDialog.m in Sources */,
 				0791AB581AE8DE260009A5A7 /* AFNetworkReachabilityManager.m in Sources */,
@@ -1875,6 +1910,7 @@
 				07CB97661AFC5D3400928CB7 /* MMMaterialDesignSpinner.m in Sources */,
 				079049411AE9DF5A00E46795 /* WYOAuthService.m in Sources */,
 				073DBD501AE7712F009B49EB /* UIImageView+HighlightedWebCache.m in Sources */,
+				0723DDFE1B0F19830040295B /* BasicMapAnnotation.m in Sources */,
 				074DDC871B0080140081AFA4 /* NetbarDetailViewController.m in Sources */,
 				073DBD4D1AE7712F009B49EB /* UIImage+GIF.m in Sources */,
 			);
