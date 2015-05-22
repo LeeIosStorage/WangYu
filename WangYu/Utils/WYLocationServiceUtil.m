@@ -153,14 +153,14 @@
     __weak WYLocationServiceUtil *weakSelf = self;
     [_mRgeo reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         if (placemarks.count && !error) {
-            WYLog(@"didFindPlacemark: placemarks.count = %d, %@", (int)placemarks.count, placemarks);
+//            WYLog(@"didFindPlacemark: placemarks.count = %d, %@", (int)placemarks.count, placemarks);
         }else {
             WYLog(@"did not FindPlacemark, error = %@",error);
 //            [WYProgressHUD AlertError:@"位置获取失败" At:weakSelf.view];
             return;
         }
         CLPlacemark *placemark = [placemarks objectAtIndex:0];
-        WYLog(@"didFindPlacemark des: %@", placemark.description);
+//        WYLog(@"didFindPlacemark des: %@", placemark.description);
         
         dispatch_async(dispatch_get_main_queue(), ^(){
             if (!weakSelf.reverseSucessCallbackArray.count) {
