@@ -192,6 +192,11 @@
 		07CB97661AFC5D3400928CB7 /* MMMaterialDesignSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97651AFC5D3400928CB7 /* MMMaterialDesignSpinner.m */; };
 		07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97681AFC5D4C00928CB7 /* DeformationButton.m */; };
 		07EEF6C21B0C789000DBC511 /* WYPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EEF6C11B0C789000DBC511 /* WYPayManager.m */; };
+		3BBE46271B0CE79B009EAE02 /* WYPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46261B0CE79B009EAE02 /* WYPhotoItem.m */; };
+		3BBE462A1B0CE8BA009EAE02 /* WYPhotoGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46291B0CE8BA009EAE02 /* WYPhotoGroup.m */; };
+		3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE462C1B0CE9AB009EAE02 /* WYPhotoBrowser.m */; };
+		3BBE46321B0CF44A009EAE02 /* WYWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46311B0CF44A009EAE02 /* WYWaitingView.m */; };
+		3BBE46351B0CF92A009EAE02 /* WYBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46341B0CF92A009EAE02 /* WYBrowserImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -540,6 +545,17 @@
 		07CB97681AFC5D4C00928CB7 /* DeformationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeformationButton.m; sourceTree = "<group>"; };
 		07EEF6C01B0C789000DBC511 /* WYPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPayManager.h; sourceTree = "<group>"; };
 		07EEF6C11B0C789000DBC511 /* WYPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPayManager.m; sourceTree = "<group>"; };
+		3BBE46251B0CE79B009EAE02 /* WYPhotoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYPhotoItem.h; path = WYPhotoBrower/WYPhotoItem.h; sourceTree = "<group>"; };
+		3BBE46261B0CE79B009EAE02 /* WYPhotoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYPhotoItem.m; path = WYPhotoBrower/WYPhotoItem.m; sourceTree = "<group>"; };
+		3BBE46281B0CE8BA009EAE02 /* WYPhotoGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYPhotoGroup.h; path = WYPhotoBrower/WYPhotoGroup.h; sourceTree = "<group>"; };
+		3BBE46291B0CE8BA009EAE02 /* WYPhotoGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYPhotoGroup.m; path = WYPhotoBrower/WYPhotoGroup.m; sourceTree = "<group>"; };
+		3BBE462B1B0CE9AB009EAE02 /* WYPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYPhotoBrowser.h; path = WYPhotoBrower/WYPhotoBrowser.h; sourceTree = "<group>"; };
+		3BBE462C1B0CE9AB009EAE02 /* WYPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYPhotoBrowser.m; path = WYPhotoBrower/WYPhotoBrowser.m; sourceTree = "<group>"; };
+		3BBE462F1B0CF1F5009EAE02 /* WYPhotoBrowserConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WYPhotoBrowserConfig.h; path = WYPhotoBrower/WYPhotoBrowserConfig.h; sourceTree = "<group>"; };
+		3BBE46301B0CF44A009EAE02 /* WYWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYWaitingView.h; path = WYPhotoBrower/WYWaitingView.h; sourceTree = "<group>"; };
+		3BBE46311B0CF44A009EAE02 /* WYWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYWaitingView.m; path = WYPhotoBrower/WYWaitingView.m; sourceTree = "<group>"; };
+		3BBE46331B0CF92A009EAE02 /* WYBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYBrowserImageView.h; path = WYPhotoBrower/WYBrowserImageView.h; sourceTree = "<group>"; };
+		3BBE46341B0CF92A009EAE02 /* WYBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYBrowserImageView.m; path = WYPhotoBrower/WYBrowserImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -717,6 +733,7 @@
 		073DBD091AE77058009B49EB /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3BBE46241B0CE720009EAE02 /* WYPhotoBrower */,
 				077D83831AF9AF1200AAF31F /* WYProgressHUD */,
 				0791AB271AE89B960009A5A7 /* WYActionSheetWithBlock */,
 				0791AB2A1AE89B960009A5A7 /* WYAlertViewWithBlock */,
@@ -1326,6 +1343,24 @@
 			path = MMMaterialDesignSpinner;
 			sourceTree = "<group>";
 		};
+		3BBE46241B0CE720009EAE02 /* WYPhotoBrower */ = {
+			isa = PBXGroup;
+			children = (
+				3BBE46251B0CE79B009EAE02 /* WYPhotoItem.h */,
+				3BBE46261B0CE79B009EAE02 /* WYPhotoItem.m */,
+				3BBE46281B0CE8BA009EAE02 /* WYPhotoGroup.h */,
+				3BBE46291B0CE8BA009EAE02 /* WYPhotoGroup.m */,
+				3BBE462B1B0CE9AB009EAE02 /* WYPhotoBrowser.h */,
+				3BBE462C1B0CE9AB009EAE02 /* WYPhotoBrowser.m */,
+				3BBE46301B0CF44A009EAE02 /* WYWaitingView.h */,
+				3BBE46311B0CF44A009EAE02 /* WYWaitingView.m */,
+				3BBE46331B0CF92A009EAE02 /* WYBrowserImageView.h */,
+				3BBE46341B0CF92A009EAE02 /* WYBrowserImageView.m */,
+				3BBE462F1B0CF1F5009EAE02 /* WYPhotoBrowserConfig.h */,
+			);
+			name = WYPhotoBrower;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1478,8 +1513,10 @@
 				076F82861B059CB700CACF0D /* WYNetBarManager.m in Sources */,
 				073DBD631AE7717D009B49EB /* PathHelper.m in Sources */,
 				0790494D1AEA236100E46795 /* WYService.m in Sources */,
+				3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */,
 				078EDBD91AEF1EF800E93EE8 /* ASIDataDecompressor.m in Sources */,
 				077D83821AF9AED800AAF31F /* ProgressHUDJF.m in Sources */,
+				3BBE46351B0CF92A009EAE02 /* WYBrowserImageView.m in Sources */,
 				0790493E1AE9DF3000E46795 /* WYOAuthStore.m in Sources */,
 				078EDBDD1AEF1EF800E93EE8 /* ASIInputStream.m in Sources */,
 				073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */,
@@ -1576,13 +1613,16 @@
 				073DBD641AE7717D009B49EB /* UIColor+bit.m in Sources */,
 				073DBDF51AE7A1B0009B49EB /* UIImage+Alpha.m in Sources */,
 				073DBD4E1AE7712F009B49EB /* UIImage+MultiFormat.m in Sources */,
+				3BBE462A1B0CE8BA009EAE02 /* WYPhotoGroup.m in Sources */,
 				079049501AEA28E100E46795 /* WYHttpRequest.m in Sources */,
 				07566CAB1AFC663600F93B58 /* SettingViewCell.m in Sources */,
 				078EDBDB1AEF1EF800E93EE8 /* ASIFormDataRequest.m in Sources */,
+				3BBE46271B0CE79B009EAE02 /* WYPhotoItem.m in Sources */,
 				073DBD801AE77A3C009B49EB /* MineTabViewController.m in Sources */,
 				0715C3A51B09AD6F00C37F82 /* MapChooseViewController.m in Sources */,
 				071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */,
 				071923D21AF74D8400432531 /* WelcomeViewController.m in Sources */,
+				3BBE46321B0CF44A009EAE02 /* WYWaitingView.m in Sources */,
 				0791AB5C1AE8DE260009A5A7 /* AFURLResponseSerialization.m in Sources */,
 				076E22531B03187100F33815 /* WYSearchBar.m in Sources */,
 				07CB97661AFC5D3400928CB7 /* MMMaterialDesignSpinner.m in Sources */,

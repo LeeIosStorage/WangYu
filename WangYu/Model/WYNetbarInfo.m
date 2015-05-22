@@ -84,7 +84,7 @@
 - (NSArray *)picURLs{
     NSMutableArray* urls = [[NSMutableArray alloc] init];
     for (NSString* picId in _picIds) {
-        [urls addObject:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl] ,picId]]];
+        [urls addObject:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl] ,picId]];
     }
     return urls;
 }

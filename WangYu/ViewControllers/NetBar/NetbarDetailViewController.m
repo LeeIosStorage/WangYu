@@ -16,6 +16,8 @@
 #import "UIImageView+WebCache.h"
 #import "WYShareActionSheet.h"
 #import "WeiboSDK.h"
+#import "WYPhotoGroup.h"
+#import "WYPhotoItem.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate>
 {
@@ -134,23 +136,35 @@
     
     [self.imageScrollView removeFromSuperview];
     [self.headerView addSubview:self.imageScrollView];
-    int index = 0;
+//    int index = 0;
     if(self.netbarInfo.picIds.count > 0){
-        for (NSString *picUrl in self.netbarInfo.picIds) {
-            WYLog(@"picUrl = %@",picUrl);
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12 + index*(80+7), 12, 80, 76)];
-            imageView.contentMode = UIViewContentModeScaleAspectFill;
-            imageView.clipsToBounds = YES;
-            imageView.userInteractionEnabled = YES;
-            [imageView sd_setImageWithURL:[self.netbarInfo.picURLs objectAtIndex:index] placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
-            [self.imageScrollView addSubview:imageView];
-            index ++;
-        }
-        if(index > 4){
-            [self.imageScrollView setContentSize:CGSizeMake(12 + index*(80+7), self.imageScrollView.frame.size.height)];
-        }
-        self.imageScrollView.pagingEnabled = YES;
-        self.imageScrollView.showsHorizontalScrollIndicator = NO;
+//        for (NSString *picUrl in self.netbarInfo.picIds) {
+//            WYLog(@"picUrl = %@",picUrl);
+//            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12 + index*(80+7), 12, 80, 76)];
+//            imageView.contentMode = UIViewContentModeScaleAspectFill;
+//            imageView.clipsToBounds = YES;
+//            imageView.userInteractionEnabled = YES;
+//            [imageView sd_setImageWithURL:[self.netbarInfo.picURLs objectAtIndex:index] placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
+//            [self.imageScrollView addSubview:imageView];
+//            index ++;
+//        }
+//        if(index > 4){
+//            [self.imageScrollView setContentSize:CGSizeMake(12 + index*(80+7), self.imageScrollView.frame.size.height)];
+//        }
+//        self.imageScrollView.pagingEnabled = YES;
+//        self.imageScrollView.showsHorizontalScrollIndicator = NO;
+        
+        WYPhotoGroup *photoGroup = [[WYPhotoGroup alloc] init];
+        
+        NSMutableArray *temp = [NSMutableArray array];
+        [self.netbarInfo.picURLs enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
+            WYPhotoItem *item = [[WYPhotoItem alloc] init];
+            item.thumbnail_pic = src;
+            [temp addObject:item];
+        }];
+        
+        photoGroup.photoItemArray = [temp copy];
+        [self.imageScrollView addSubview:photoGroup];
     }
 }
 
