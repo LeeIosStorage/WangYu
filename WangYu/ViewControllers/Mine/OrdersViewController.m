@@ -184,13 +184,14 @@
             [weakSelf.reserveOrderList addObject:orderInfo];
         }
 //
-//        weakSelf.reserveCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"end"] boolValue];
-//        if (!weakSelf.reserveCanLoadMore) {
+        weakSelf.reserveCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (!weakSelf.reserveCanLoadMore) {
 //            weakSelf.reserveOrderTableView.showsInfiniteScrolling = NO;
-//        }else{
+        }else{
 //            weakSelf.reserveOrderTableView.showsInfiniteScrolling = YES;
+            //可以加载更多
 //            weakSelf.reserveNextCursor ++;
-//        }
+        }
         
         [weakSelf.reserveOrderTableView reloadData];
         
@@ -244,13 +245,14 @@
             [weakSelf.payOrderList addObject:orderInfo];
         }
 //
-//        weakSelf.payCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"end"] boolValue];
-//        if (!weakSelf.payCanLoadMore) {
+        weakSelf.payCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (!weakSelf.payCanLoadMore) {
 //            weakSelf.payOrderTableView.showsInfiniteScrolling = NO;
-//        }else{
+        }else{
 //            weakSelf.payOrderTableView.showsInfiniteScrolling = YES;
+             //可以加载更多
 //            weakSelf.payNextCursor ++;
-//        }
+        }
         
         [weakSelf.payOrderTableView reloadData];
         

@@ -617,14 +617,16 @@ static int historyLabel_Tag = 201;
     }
     
     NetbarMapViewController *nmVc = [[NetbarMapViewController alloc] init];
+    nmVc.netbarInfo = netbarInfo;
     CLLocationCoordinate2D coordinate;
     coordinate.latitude = [netbarInfo.latitude doubleValue];
     coordinate.longitude = [netbarInfo.longitude doubleValue];
     [nmVc setShowLocation:coordinate.latitude longitute:coordinate.longitude];
-    nmVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self.navigationController presentViewController:nmVc animated:YES completion:^{
-        
-    }];
+    [self.navigationController pushViewController:nmVc animated:YES];
+//    nmVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+//    [self.navigationController presentViewController:nmVc animated:YES completion:^{
+//        
+//    }];
 }
 
 @end

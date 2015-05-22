@@ -276,6 +276,7 @@
     }
     WYNetbarInfo* netbarInfo = _netbarArray[indexPath.row];
     NetbarMapViewController *nmVc = [[NetbarMapViewController alloc] init];
+    nmVc.netbarInfo = netbarInfo;
     CLLocationCoordinate2D coordinate;
     coordinate.latitude = [netbarInfo.latitude doubleValue];
     coordinate.longitude = [netbarInfo.longitude doubleValue];

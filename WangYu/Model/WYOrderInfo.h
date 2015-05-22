@@ -18,6 +18,7 @@
 @property(nonatomic, assign) int isRelated;                         //
 @property(nonatomic, assign) int overpay;                           //多付款金额
 @property(nonatomic, assign) int seating;                           //座位
+@property(nonatomic, assign) int hours;                             //上网时间
 @property(nonatomic, assign) int status;                            //状态 -1支付失败0新建订单1支付成功
 @property(nonatomic, strong) NSDate* createDate;                    //
 @property(nonatomic, strong) NSDate* reservationDate;               //上机时间

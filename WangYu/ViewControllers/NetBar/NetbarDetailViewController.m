@@ -346,6 +346,7 @@
 
 - (IBAction)locationAction:(id)sender {
     NetbarMapViewController *nmVc = [[NetbarMapViewController alloc] init];
+    nmVc.netbarInfo = _netbarInfo;
     CLLocationCoordinate2D coordinate;
     coordinate.latitude = [self.netbarInfo.latitude doubleValue];
     coordinate.longitude = [self.netbarInfo.longitude doubleValue];
