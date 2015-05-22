@@ -9,8 +9,8 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface CLLocation (Sino)
-- (CLLocation*)locationMarsFromEarth;
+- (CLLocation*)locationMarsFromEarth;//标准坐标转成火星坐标
 
-- (CLLocation*)locationBearPawFromMars;
-- (CLLocation*)locationMarsFromBearPaw;
+- (CLLocation*)locationBearPawFromMars;//GCJ-02(火星坐标)坐标转换成 BD-09(百度坐标)坐标
+- (CLLocation*)locationMarsFromBearPaw;//BD-09(百度坐标)坐标转换成 GCJ-02(火星坐标)坐标
 @end

@@ -61,7 +61,7 @@
 
 +(CLLocationCoordinate2D)convertNewCoordinateWith:(CLLocationCoordinate2D)location{
     CLLocation *clLocation = [[CLLocation alloc] initWithLatitude:location.latitude longitude:location.longitude];
-    CLLocation *marsLocation = [clLocation locationMarsFromEarth];
+    CLLocation *marsLocation = [clLocation locationMarsFromBearPaw];
     CLLocationCoordinate2D coordinate = [marsLocation coordinate];
     return coordinate;
 }
@@ -236,7 +236,7 @@
     [manager stopUpdatingLocation];
     if (locations.count) {
         //把标准坐标转成火星坐标返回
-        CLLocation *marsLocation = [[locations objectAtIndex:0] locationMarsFromEarth];
+        CLLocation *marsLocation = [[locations objectAtIndex:0] locationBearPawFromMars];
         WYLog(@"mars location = %@", marsLocation);
         [self saveLastCLLocation:marsLocation];
         [self notifyAllSucessCallBack:marsLocation];

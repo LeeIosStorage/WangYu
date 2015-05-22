@@ -26,6 +26,7 @@
 
 @property(nonatomic, assign) id<NetbarTabCellDelegate> delegate;
 
+@property (assign, nonatomic) BOOL isSearchCell;
 @property (strong, nonatomic) WYNetbarInfo *netbarInfo;
 - (IBAction)mapAction:(id)sender;
 

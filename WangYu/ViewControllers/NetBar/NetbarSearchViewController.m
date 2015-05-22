@@ -18,7 +18,7 @@
 #import "WYNetBarManager.h"
 #import "NetbarMapViewController.h"
 
-@interface NetbarSearchViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface NetbarSearchViewController ()<UITableViewDataSource,UITableViewDelegate,NetbarTabCellDelegate>
 {
     BOOL _searchBarIsEditing;
 }
@@ -533,8 +533,10 @@ static int historyLabel_Tag = 201;
             NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
             cell = [cells objectAtIndex:0];
         }
+        cell.delegate = self;
         WYNetbarInfo *netbarInfo = _netBarInfos[indexPath.row];
         cell.netbarInfo = netbarInfo;
+        cell.isSearchCell = NO;
         return cell;
     }else if (tableView == self.searchTableView){
         static NSString *CellIdentifier = @"NetbarTabCell";
@@ -545,6 +547,8 @@ static int historyLabel_Tag = 201;
             NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
             cell = [cells objectAtIndex:0];
         }
+        cell.delegate = self;
+        cell.isSearchCell = YES;
         WYNetbarInfo *netbarInfo = _searchNetBarInfos[indexPath.row];
         cell.netbarInfo = netbarInfo;
         return cell;
@@ -584,6 +588,43 @@ static int historyLabel_Tag = 201;
         ndVc.netbarInfo = netbarInfo;
         [self.navigationController pushViewController:ndVc animated:YES];
     }
+}
+
+#pragma mark - NetbarTabCellDelegate
+- (void)netbarTabCellMapClickWithCell:(id)cell {
+    
+    NetbarTabCell *netbarCell = (NetbarTabCell *)cell;
+    UITableView *tableView;
+    if (netbarCell.isSearchCell) {
+        tableView = self.searchTableView;
+    }else {
+        tableView = self.netBarTable;
+    }
+    
+    NSIndexPath* indexPath = [tableView indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+    WYNetbarInfo* netbarInfo;
+    if (tableView == self.netBarTable){
+        netbarInfo = _netBarInfos[indexPath.row];
+    }else if (tableView == self.searchTableView){
+        netbarInfo = _searchNetBarInfos[indexPath.row];
+    }
+    
+    if (!netbarInfo || netbarInfo.nid.length == 0) {
+        return;
+    }
+    
+    NetbarMapViewController *nmVc = [[NetbarMapViewController alloc] init];
+    CLLocationCoordinate2D coordinate;
+    coordinate.latitude = [netbarInfo.latitude doubleValue];
+    coordinate.longitude = [netbarInfo.longitude doubleValue];
+    [nmVc setShowLocation:coordinate.latitude longitute:coordinate.longitude];
+    nmVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self.navigationController presentViewController:nmVc animated:YES completion:^{
+        
+    }];
 }
 
 @end

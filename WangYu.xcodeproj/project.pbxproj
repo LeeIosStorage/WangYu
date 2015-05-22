@@ -91,7 +91,6 @@
 		0745B3881B007AF3006D6853 /* NetbarDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0745B3861B007AF3006D6853 /* NetbarDetailCell.m */; };
 		0745B3891B007AF3006D6853 /* NetbarDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0745B3871B007AF3006D6853 /* NetbarDetailCell.xib */; };
 		074DDC871B0080140081AFA4 /* NetbarDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074DDC851B0080140081AFA4 /* NetbarDetailViewController.m */; };
-		074DDC881B0080140081AFA4 /* NetbarDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074DDC861B0080140081AFA4 /* NetbarDetailViewController.xib */; };
 		07566CA51AFC648B00F93B58 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07566CA31AFC648B00F93B58 /* SettingViewController.m */; };
 		07566CA61AFC648B00F93B58 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07566CA41AFC648B00F93B58 /* SettingViewController.xib */; };
 		07566CAB1AFC663600F93B58 /* SettingViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07566CA91AFC663600F93B58 /* SettingViewCell.m */; };
@@ -100,6 +99,7 @@
 		076195E81B008F8C00397711 /* ReserveOrderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076195E61B008F8C00397711 /* ReserveOrderViewCell.xib */; };
 		076195EC1B008FAC00397711 /* PayOrderViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 076195EA1B008FAC00397711 /* PayOrderViewCell.m */; };
 		076195ED1B008FAC00397711 /* PayOrderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076195EB1B008FAC00397711 /* PayOrderViewCell.xib */; };
+		0766C2971B0EF9390051A897 /* NetbarDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0766C2961B0EF9390051A897 /* NetbarDetailViewController.xib */; };
 		07695CDF1B03231000F4806C /* WYNetbarInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 07695CDE1B03231000F4806C /* WYNetbarInfo.m */; };
 		076C8CE81B048A5C00421460 /* WYLocationServiceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C8CE71B048A5C00421460 /* WYLocationServiceUtil.m */; };
 		076C8CEC1B048BBB00421460 /* CLLocation+Sino.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C8CEB1B048BBB00421460 /* CLLocation+Sino.m */; };
@@ -367,7 +367,6 @@
 		0745B3871B007AF3006D6853 /* NetbarDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarDetailCell.xib; path = Netbar/NetbarDetailCell.xib; sourceTree = "<group>"; };
 		074DDC841B0080140081AFA4 /* NetbarDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetbarDetailViewController.h; path = NetBar/NetbarDetailViewController.h; sourceTree = "<group>"; };
 		074DDC851B0080140081AFA4 /* NetbarDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetbarDetailViewController.m; path = NetBar/NetbarDetailViewController.m; sourceTree = "<group>"; };
-		074DDC861B0080140081AFA4 /* NetbarDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarDetailViewController.xib; path = NetBar/NetbarDetailViewController.xib; sourceTree = "<group>"; };
 		07566CA21AFC648B00F93B58 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		07566CA31AFC648B00F93B58 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		07566CA41AFC648B00F93B58 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
@@ -380,6 +379,7 @@
 		076195E91B008FAC00397711 /* PayOrderViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayOrderViewCell.h; sourceTree = "<group>"; };
 		076195EA1B008FAC00397711 /* PayOrderViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayOrderViewCell.m; sourceTree = "<group>"; };
 		076195EB1B008FAC00397711 /* PayOrderViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayOrderViewCell.xib; sourceTree = "<group>"; };
+		0766C2961B0EF9390051A897 /* NetbarDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetbarDetailViewController.xib; sourceTree = "<group>"; };
 		07695CDD1B03231000F4806C /* WYNetbarInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYNetbarInfo.h; sourceTree = "<group>"; };
 		07695CDE1B03231000F4806C /* WYNetbarInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYNetbarInfo.m; sourceTree = "<group>"; };
 		076C8CE61B048A5C00421460 /* WYLocationServiceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYLocationServiceUtil.h; sourceTree = "<group>"; };
@@ -1083,7 +1083,7 @@
 			children = (
 				074DDC841B0080140081AFA4 /* NetbarDetailViewController.h */,
 				074DDC851B0080140081AFA4 /* NetbarDetailViewController.m */,
-				074DDC861B0080140081AFA4 /* NetbarDetailViewController.xib */,
+				0766C2961B0EF9390051A897 /* NetbarDetailViewController.xib */,
 				0777DFC81B01C4AA00E1E314 /* QuickBookViewController.h */,
 				0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */,
 				0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */,
@@ -1681,6 +1681,7 @@
 				076E22501B02F73200F33815 /* NetbarSearchViewController.xib in Resources */,
 				0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */,
 				071923D01AF74D8400432531 /* LoginViewController.xib in Resources */,
+				0766C2971B0EF9390051A897 /* NetbarDetailViewController.xib in Resources */,
 				071923D31AF74D8400432531 /* WelcomeViewController.xib in Resources */,
 				079D52531B01E48600DF4D6B /* GameCommendCardView.xib in Resources */,
 				077D83801AF9AED800AAF31F /* ProgressHUD.bundle in Resources */,
@@ -1710,7 +1711,6 @@
 				076195E81B008F8C00397711 /* ReserveOrderViewCell.xib in Resources */,
 				079493841B0D9C3C008152A6 /* AlipaySDK.bundle in Resources */,
 				07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */,
-				074DDC881B0080140081AFA4 /* NetbarDetailViewController.xib in Resources */,
 				0777DFD61B01C7E100E1E314 /* QuickBookCell.xib in Resources */,
 				078FD0411B05FC8D00CBD699 /* LocationViewController.xib in Resources */,
 				07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */,
