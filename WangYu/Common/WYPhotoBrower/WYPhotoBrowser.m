@@ -11,7 +11,8 @@
 #import "WYBrowserImageView.h"
 #import "WYPhotoBrowserConfig.h"
 
-@implementation WYPhotoBrowser{
+@implementation WYPhotoBrowser
+{
     UIScrollView *_scrollView;
     BOOL _hasShowedFistView;
     BOOL _hasScaleled;
@@ -20,7 +21,8 @@
     UIActivityIndicatorView *_indicatorView;
 }
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = WYPhotoBrowserBackgrounColor;
@@ -28,8 +30,11 @@
     return self;
 }
 
-- (void)didMoveToSuperview {
+
+- (void)didMoveToSuperview
+{
     [self setupScrollView];
+    
     [self setupToolbars];
 }
 
@@ -38,8 +43,9 @@
     [[UIApplication sharedApplication].keyWindow removeObserver:self forKeyPath:@"frame"];
 }
 
-- (void) setupToolbars {
-    //序标
+- (void)setupToolbars
+{
+    // 1. 序标
     UILabel *indexLabel = [[UILabel alloc] init];
     indexLabel.bounds = CGRectMake(0, 0, 80, 30);
     indexLabel.textAlignment = NSTextAlignmentCenter;
@@ -47,11 +53,12 @@
     indexLabel.font = [UIFont boldSystemFontOfSize:20];
     indexLabel.backgroundColor = [UIColor clearColor];
     if (self.imageCount > 1) {
-        indexLabel.text = [NSString stringWithFormat:@"1/%ld",(long)self.imageCount];
+        indexLabel.text = [NSString stringWithFormat:@"1/%ld", (long)self.imageCount];
     }
     _indexLabel = indexLabel;
     [self addSubview:indexLabel];
     
+    // 2.保存按钮
     UIButton *saveButton = [[UIButton alloc] init];
     [saveButton setTitle:@"保存" forState:UIControlStateNormal];
     [saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -78,7 +85,8 @@
     [indicator startAnimating];
 }
 
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
+{
     [_indicatorView removeFromSuperview];
     
     UILabel *label = [[UILabel alloc] init];
@@ -100,7 +108,8 @@
     [label performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:1.0];
 }
 
-- (void)setupScrollView {
+- (void)setupScrollView
+{
     _scrollView = [[UIScrollView alloc] init];
     _scrollView.delegate = self;
     _scrollView.showsHorizontalScrollIndicator = NO;
@@ -111,9 +120,11 @@
     for (int i = 0; i < self.imageCount; i++) {
         WYBrowserImageView *imageView = [[WYBrowserImageView alloc] init];
         imageView.tag = i;
-        //单击图片
+        
+        // 单击图片
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoClick:)];
-        //双击放大图片
+        
+        // 双击放大图片
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewDoubleTaped:)];
         doubleTap.numberOfTapsRequired = 2;
         [self addGestureRecognizer:doubleTap];
@@ -124,40 +135,49 @@
         [imageView addGestureRecognizer:doubleTap];
         [_scrollView addSubview:imageView];
     }
+    
     [self setupImageOfImageViewForIndex:self.currentImageIndex];
+    
 }
 
-//加载图片
-- (void)setupImageOfImageViewForIndex:(NSInteger)index{
+// 加载图片
+- (void)setupImageOfImageViewForIndex:(NSInteger)index
+{
     WYBrowserImageView *imageView = _scrollView.subviews[index];
-    if (imageView.hasLoadedImage)
-        return;
+    if (imageView.hasLoadedImage) return;
     if ([self highQualityImageURLForIndex:index]) {
         [imageView setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:[self placeholderImageForIndex:index]];
-    }else {
+    } else {
         imageView.image = [self placeholderImageForIndex:index];
     }
     imageView.hasLoadedImage = YES;
 }
 
-- (void)photoClick:(UITapGestureRecognizer *)recongnizer {
+- (void)photoClick:(UITapGestureRecognizer *)recognizer
+{
     _scrollView.hidden = YES;
-    WYBrowserImageView *currentImageView = (WYBrowserImageView *)recongnizer.view;
+    
+    WYBrowserImageView *currentImageView = (WYBrowserImageView *)recognizer.view;
     NSInteger currentIndex = currentImageView.tag;
+    
     UIView *sourceView = self.sourceImagesContainerView.subviews[currentIndex];
     CGRect targetTemp = [self.sourceImagesContainerView convertRect:sourceView.frame toView:self];
     
     UIImageView *tempView = [[UIImageView alloc] init];
     tempView.image = currentImageView.image;
     CGFloat h = (self.bounds.size.width / currentImageView.image.size.width) * currentImageView.image.size.height;
-    if (!currentImageView.image) {//防止因imageview的image加载失败 导致崩溃
+    
+    if (!currentImageView.image) { // 防止 因imageview的image加载失败 导致 崩溃
         h = self.bounds.size.height;
     }
+    
     tempView.bounds = CGRectMake(0, 0, self.bounds.size.width, h);
     tempView.center = self.center;
     
     [self addSubview:tempView];
+    
     _saveButton.hidden = YES;
+    
     [UIView animateWithDuration:WYPhotoBrowserHideImageAnimationDuration animations:^{
         tempView.frame = targetTemp;
         self.backgroundColor = [UIColor clearColor];
@@ -196,17 +216,19 @@
     _scrollView.bounds = rect;
     _scrollView.center = self.center;
     
-    CGFloat y = WYPhotoBrowserImageViewMargin;
+//    CGFloat y = WYPhotoBrowserImageViewMargin;
     __block CGFloat w = _scrollView.frame.size.width - WYPhotoBrowserImageViewMargin * 2;
-    CGFloat h = _scrollView.frame.size.height - WYPhotoBrowserImageViewMargin * 2;
+    CGFloat h = _scrollView.frame.size.height;
     
     [_scrollView.subviews enumerateObjectsUsingBlock:^(WYBrowserImageView *obj, NSUInteger idx, BOOL *stop) {
         CGFloat x = WYPhotoBrowserImageViewMargin + idx * (WYPhotoBrowserImageViewMargin * 2 + w);
-        obj.frame = CGRectMake(x, y, w, h);
+        obj.frame = CGRectMake(x, 0, w, h);
     }];
     
-    _scrollView.contentSize = CGSizeMake(self.currentImageIndex * _scrollView.frame.size.width, 0);
+    _scrollView.contentSize = CGSizeMake(_scrollView.subviews.count * _scrollView.frame.size.width, 0);
     _scrollView.contentOffset = CGPointMake(self.currentImageIndex * _scrollView.frame.size.width, 0);
+    
+    
     if (!_hasShowedFistView) {
         [self showFirstImage];
     }
@@ -233,7 +255,7 @@
 - (void)showFirstImage
 {
     UIView *sourceView = self.sourceImagesContainerView.subviews[self.currentImageIndex];
-    CGRect rect = [self.sourceImagesContainerView convertRect:sourceView.frame fromView:self];
+    CGRect rect = [self.sourceImagesContainerView convertRect:sourceView.frame toView:self];
     
     UIImageView *tempView = [[UIImageView alloc] init];
     tempView.image = [self placeholderImageForIndex:self.currentImageIndex];
@@ -241,9 +263,11 @@
     [self addSubview:tempView];
     
     CGRect targetTemp = [_scrollView.subviews[self.currentImageIndex] bounds];
+    
     tempView.frame = rect;
     tempView.contentMode = [_scrollView.subviews[self.currentImageIndex] contentMode];
     _scrollView.hidden = YES;
+    
     
     [UIView animateWithDuration:WYPhotoBrowserShowImageAnimationDuration animations:^{
         tempView.center = self.center;
@@ -271,11 +295,13 @@
     return nil;
 }
 
-#pragma mark - scrollviewDelegate
+#pragma mark - scrollview代理方法
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     int index = (scrollView.contentOffset.x + _scrollView.bounds.size.width * 0.5) / _scrollView.bounds.size.width;
-    //有过缩放的图片在拖动一定距离后清除缩放
+    
+    // 有过缩放的图片在拖动一定距离后清除缩放
     CGFloat margin = 150;
     CGFloat x = scrollView.contentOffset.x;
     if ((x - index * self.bounds.size.width) > margin || (x - index * self.bounds.size.width) < - margin) {
@@ -288,6 +314,7 @@
             }];
         }
     }
+    
     
     _indexLabel.text = [NSString stringWithFormat:@"%d/%ld", index + 1, (long)self.imageCount];
     [self setupImageOfImageViewForIndex:index];

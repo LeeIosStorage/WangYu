@@ -10,9 +10,10 @@
 #import "UIImageView+WebCache.h"
 #import "WYPhotoBrowserConfig.h"
 
-static const CGFloat kBrowserImageViewWidth = 320;
+//static const CGFloat kBrowserImageViewWidth = 320;
 
-@implementation WYBrowserImageView{
+@implementation WYBrowserImageView
+{
     WYWaitingView *_waitingView;
     BOOL _didCheckSize;
     UIScrollView *_scroll;
@@ -21,6 +22,7 @@ static const CGFloat kBrowserImageViewWidth = 320;
     UIImageView *_zoomingImageView;
     CGFloat _totalScale;
 }
+
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -61,10 +63,11 @@ static const CGFloat kBrowserImageViewWidth = 320;
             [self addSubview:scroll];
         }
         _scroll.frame = self.bounds;
-        _scrollImageView.bounds = CGRectMake(0, 0, kBrowserImageViewWidth, self.image.size.height);
-        _scrollImageView.center = CGPointMake(_scroll.frame.size.width * 0.5, _scrollImageView.frame.size.height * 0.5);
-        _scroll.contentSize = CGSizeMake(0, self.image.size.height);
         
+        CGFloat imageHeight = SCREEN_WIDTH / self.image.size.width * self.image.size.height;
+        _scrollImageView.bounds = CGRectMake(0, (SCREEN_HEIGHT - imageHeight)/2, SCREEN_WIDTH, imageHeight);
+        _scrollImageView.center = CGPointMake(_scroll.frame.size.width * 0.5, SCREEN_HEIGHT * 0.5);
+        _scroll.contentSize = CGSizeMake(0, self.image.size.height);
         
     } else {
         if (_scroll) [_scroll removeFromSuperview]; // 防止旋转时适配的scrollView的影响
@@ -75,6 +78,7 @@ static const CGFloat kBrowserImageViewWidth = 320;
 {
     _progress = progress;
     _waitingView.progress = progress;
+    
 }
 
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder
@@ -108,6 +112,7 @@ static const CGFloat kBrowserImageViewWidth = 320;
             label.textAlignment = NSTextAlignmentCenter;
             [imageViewWeak addSubview:label];
         }
+        
     }];
 }
 
@@ -171,12 +176,10 @@ static const CGFloat kBrowserImageViewWidth = 320;
     [_zoomingScroolView removeFromSuperview];
     _zoomingScroolView = nil;
     _zoomingImageView = nil;
-    
 }
 
 - (void)removeWaitingView
 {
     [_waitingView removeFromSuperview];
 }
-
 @end
