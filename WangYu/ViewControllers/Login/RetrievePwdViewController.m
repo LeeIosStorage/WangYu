@@ -88,12 +88,12 @@
 
 -(void)refreshUIControl{
     
-    self.phoneTextField.font = SKIN_FONT(15);
-    self.codeTextField.font = SKIN_FONT(15);
-    self.getCodeButton.titleLabel.font = SKIN_FONT(18);
-    self.resetPasswordButton.titleLabel.font = SKIN_FONT(18);
-    self.phoneTipLabel.font = SKIN_FONT(16);
-    self.codeTipLabel.font = SKIN_FONT(14);
+    self.phoneTextField.font = SKIN_FONT_FROMNAME(15);
+    self.codeTextField.font = SKIN_FONT_FROMNAME(15);
+    self.getCodeButton.titleLabel.font = SKIN_FONT_FROMNAME(18);
+    self.resetPasswordButton.titleLabel.font = SKIN_FONT_FROMNAME(18);
+    self.phoneTipLabel.font = SKIN_FONT_FROMNAME(16);
+    self.codeTipLabel.font = SKIN_FONT_FROMNAME(14);
     
     
     self.getCodeButton.backgroundColor = SKIN_COLOR;

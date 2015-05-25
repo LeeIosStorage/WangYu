@@ -104,11 +104,11 @@
 #pragma mark - custom
 -(void)refreshUIControl{
     
-    self.accountTextField.font = SKIN_FONT(15);
-    self.passwordTextField.font = SKIN_FONT(15);
-    self.loginButton.titleLabel.font = SKIN_FONT(18);
-    self.quickRegisterButton.titleLabel.font = SKIN_FONT(12);
-    self.forgetPasswordButton.titleLabel.font = SKIN_FONT(12);
+    self.accountTextField.font = SKIN_FONT_FROMNAME(15);
+    self.passwordTextField.font = SKIN_FONT_FROMNAME(15);
+    self.loginButton.titleLabel.font = SKIN_FONT_FROMNAME(18);
+    self.quickRegisterButton.titleLabel.font = SKIN_FONT_FROMNAME(12);
+    self.forgetPasswordButton.titleLabel.font = SKIN_FONT_FROMNAME(12);
     
     self.loginButton.backgroundColor = SKIN_COLOR;
     self.loginButton.layer.cornerRadius = 4;

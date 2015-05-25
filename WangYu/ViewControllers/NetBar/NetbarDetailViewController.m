@@ -49,6 +49,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *collectButton;
 @property (strong, nonatomic) IBOutlet UIButton *shareButton;
 @property (strong, nonatomic) IBOutlet UIButton *publicButton;
+@property (strong, nonatomic) IBOutlet UILabel *picLabel;
 
 - (IBAction)bookAction:(id)sender;
 - (IBAction)payAction:(id)sender;
@@ -79,35 +80,35 @@
     self.netbarImage.layer.masksToBounds = YES;
     
     self.netbarLabel.textColor = SKIN_TEXT_COLOR1;
-    self.netbarLabel.font = SKIN_FONT(15);
+    self.netbarLabel.font = SKIN_FONT_FROMNAME(15);
 
     self.priceLabel1.textColor = SKIN_TEXT_COLOR2;
-    self.priceLabel1.font = SKIN_FONT(12);
+    self.priceLabel1.font = SKIN_FONT_FROMNAME(12);
     
     self.addressLabel.textColor = SKIN_TEXT_COLOR1;
-    self.addressLabel.font = SKIN_FONT(12);
+    self.addressLabel.font = SKIN_FONT_FROMNAME(12);
     self.phoneLabel.textColor = SKIN_TEXT_COLOR1;
-    self.phoneLabel.font = SKIN_FONT(12);
+    self.phoneLabel.font = SKIN_FONT_FROMNAME(12);
     self.descLabel.textColor =SKIN_TEXT_COLOR1;
-    self.descLabel.font = SKIN_FONT(12);
+    self.descLabel.font = SKIN_FONT_FROMNAME(12);
     self.timeLabel.textColor = SKIN_TEXT_COLOR2;
-    self.timeLabel.font = SKIN_FONT(12);
+    self.timeLabel.font = SKIN_FONT_FROMNAME(12);
     
     self.colorLabel.backgroundColor = UIColorToRGB(0xfac402);
     self.colorLabel.layer.cornerRadius = 1.0;
     self.colorLabel.layer.masksToBounds = YES;
     
     self.sectionLabel.textColor = SKIN_TEXT_COLOR1;
-    self.sectionLabel.font = SKIN_FONT(15);
+    self.sectionLabel.font = SKIN_FONT_FROMNAME(15);
     
     [self.bookButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
-    self.bookButton.titleLabel.font = SKIN_FONT(14);
+    self.bookButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
     self.bookButton.backgroundColor = SKIN_COLOR;
     self.bookButton.layer.cornerRadius = 4.0;
     self.bookButton.layer.masksToBounds = YES;
     
     [self.payButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
-    self.payButton.titleLabel.font = SKIN_FONT(14);
+    self.payButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
     self.payButton.backgroundColor = SKIN_COLOR;
     self.payButton.layer.cornerRadius = 4.0;
     self.payButton.layer.masksToBounds = YES;
@@ -150,18 +151,8 @@
     
     [self.imageScrollView removeFromSuperview];
     [self.headerView addSubview:self.imageScrollView];
-//    int index = 0;
     if(self.netbarInfo.picIds.count > 0){
-//        for (NSString *picUrl in self.netbarInfo.picIds) {
-//            WYLog(@"picUrl = %@",picUrl);
-//            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12 + index*(80+7), 12, 80, 76)];
-//            imageView.contentMode = UIViewContentModeScaleAspectFill;
-//            imageView.clipsToBounds = YES;
-//            imageView.userInteractionEnabled = YES;
-//            [imageView sd_setImageWithURL:[self.netbarInfo.picURLs objectAtIndex:index] placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
-//            [self.imageScrollView addSubview:imageView];
-//            index ++;
-//        }
+        self.picLabel.hidden = YES;
         if(self.netbarInfo.picIds.count > 3){
             [self.imageScrollView setContentSize:CGSizeMake(12 + self.netbarInfo.picIds.count*(80+7), self.imageScrollView.frame.size.height)];
         }
@@ -178,6 +169,8 @@
         
         photoGroup.photoItemArray = [temp copy];
         [self.imageScrollView addSubview:photoGroup];
+    }else {
+        self.picLabel.hidden = NO;
     }
 }
 
@@ -240,7 +233,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (self.netbarInfo.matcheArray.count == 0) {
-        return 83;
+        return 93;
     }
     return 39;
 }
@@ -253,7 +246,7 @@
 {
     UIView *view = [[UIView alloc] init];
     if (self.netbarInfo.matcheArray.count == 0) {
-        view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 83);
+        view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 93);
         CGRect frame = self.sectionView2.frame;
         frame.size.width = SCREEN_WIDTH;
         self.sectionView2.frame = frame;

@@ -37,18 +37,8 @@
 @property (strong, nonatomic) IBOutlet UITableView *netBarTable;
 @property (strong, nonatomic) SKSplashView *splashView;
 
-//@property (strong, nonatomic) IBOutlet UILabel *currentLabel;
-//@property (strong, nonatomic) IBOutlet UILabel *statusLabel;
-//@property (strong, nonatomic) IBOutlet UILabel *cityLabel;
-//@property (strong, nonatomic) IBOutlet UILabel *noticeLabel;
-//@property (strong, nonatomic) IBOutlet UILabel *hintLabel;
-//@property (strong, nonatomic) IBOutlet UIButton *currentCityButton;
-//@property (strong, nonatomic) IBOutlet UIView *lightupCityView;
-//@property (strong, nonatomic) IBOutlet UIView *noticeView;
-
 @property (nonatomic, assign) CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic) NSMutableArray *netbarArray;
-//@property (nonatomic, strong) NSArray *cityArray;
 
 - (IBAction)orderAction:(id)sender;
 - (IBAction)packetAction:(id)sender;
@@ -68,38 +58,22 @@
     [self refreshUI];
     [self getCacheNetbarInfos];
     [self getNetbarInfos];
-    WS(weakSelf);
-    //获取用户位置
-    [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString) {
-        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:errorString cancelButtonTitle:@"取消" cancelBlock:^{
-        } okButtonTitle:@"确定" okBlock:^{
-            LocationViewController *lVc = [[LocationViewController alloc] init];
-            [self.navigationController pushViewController:lVc animated:YES];
-        }];
-        [alertView show];
-        return;
-    } location:^(CLLocation *location) {
-        weakSelf.currentLocation = [location coordinate];//当前经纬
-        [weakSelf getNetbarInfos];
-        [weakSelf placemarkReverseLocation:location];
-    }];
-
 }
 
 -(void)refreshUI
 {
     self.netBarTable.tableHeaderView = self.headView;
-    self.orderLabel.font = SKIN_FONT(15);
+    self.orderLabel.font = SKIN_FONT_FROMNAME(15);
     self.orderLabel.textColor = SKIN_TEXT_COLOR1;
-    self.packetLabel.font = SKIN_FONT(14);
+    self.packetLabel.font = SKIN_FONT_FROMNAME(14);
     self.packetLabel.textColor = SKIN_TEXT_COLOR1;
-    self.bookLabel.font = SKIN_FONT(14);
+    self.bookLabel.font = SKIN_FONT_FROMNAME(14);
     self.bookLabel.textColor = SKIN_TEXT_COLOR1;
-    self.bookDecLabel.font = SKIN_FONT(12);
+    self.bookDecLabel.font = SKIN_FONT_FROMNAME(12);
     self.bookDecLabel.textColor = SKIN_TEXT_COLOR2;
-    self.guessLabel.font = SKIN_FONT(15);
+    self.guessLabel.font = SKIN_FONT_FROMNAME(15);
     self.guessLabel.textColor = SKIN_TEXT_COLOR1;
-    self.hotLabel.font = SKIN_FONT(12);
+    self.hotLabel.font = SKIN_FONT_FROMNAME(12);
     self.hotLabel.layer.cornerRadius = 2;
     self.hotLabel.clipsToBounds = YES;
     self.colorLabel.backgroundColor = UIColorToRGB(0xfac402);
@@ -122,7 +96,21 @@
         frame.origin.y -= 50.0;
         self.tabController.tabBar.frame = frame;
     } completion:^(BOOL finished) {
-        
+        WS(weakSelf);
+        //获取用户位置
+        [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString) {
+            WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:errorString cancelButtonTitle:@"取消" cancelBlock:^{
+            } okButtonTitle:@"确定" okBlock:^{
+                LocationViewController *lVc = [[LocationViewController alloc] init];
+                [self.navigationController pushViewController:lVc animated:YES];
+            }];
+            [alertView show];
+            return;
+        } location:^(CLLocation *location) {
+            weakSelf.currentLocation = [location coordinate];//当前经纬
+            [weakSelf getNetbarInfos];
+            [weakSelf placemarkReverseLocation:location];
+        }];
     }];
 }
 
@@ -299,7 +287,8 @@
 }
 
 - (IBAction)packetAction:(id)sender {
-    
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"每周领红包" message:@"H5跳转" cancelButtonTitle:@"确定"];
+    [alertView show];
 }
 
 -(void)dealloc{

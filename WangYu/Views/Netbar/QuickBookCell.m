@@ -13,10 +13,10 @@
 - (void)awakeFromNib {
     // Initialization code
     
-    self.titleName.font = SKIN_FONT(14);
+    self.titleName.font = SKIN_FONT_FROMNAME(14);
     self.titleName.textColor = SKIN_TEXT_COLOR1;
     
-    self.rightLabel.font = SKIN_FONT(12);
+    self.rightLabel.font = SKIN_FONT_FROMNAME(12);
     self.rightLabel.textColor = SKIN_TEXT_COLOR3;
     
 }

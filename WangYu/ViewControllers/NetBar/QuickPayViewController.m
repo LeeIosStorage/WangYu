@@ -47,15 +47,15 @@
     self.netbarImage.layer.cornerRadius = 4.0;
     self.netbarImage.layer.masksToBounds = YES;
     
-    self.netbarLabel.font = SKIN_FONT(15);
+    self.netbarLabel.font = SKIN_FONT_FROMNAME(15);
     self.netbarLabel.textColor = SKIN_TEXT_COLOR1;
-    self.addressLabel.font = SKIN_FONT(12);
+    self.addressLabel.font = SKIN_FONT_FROMNAME(12);
     self.addressLabel.textColor = SKIN_TEXT_COLOR2;
-    self.payforLabel.font = SKIN_FONT(12);
+    self.payforLabel.font = SKIN_FONT_FROMNAME(12);
     self.payforLabel.textColor = SKIN_TEXT_COLOR1;
-    self.priceLabel.font = SKIN_FONT(12);
+    self.priceLabel.font = SKIN_FONT_FROMNAME(12);
     self.priceLabel.textColor = SKIN_TEXT_COLOR1;
-    self.packetLabel.font = SKIN_FONT(12);
+    self.packetLabel.font = SKIN_FONT_FROMNAME(12);
     self.packetLabel.textColor = SKIN_TEXT_COLOR1;
     
     self.colorLabel.backgroundColor = UIColorToRGB(0xfac402);
@@ -63,7 +63,7 @@
     self.colorLabel.layer.masksToBounds = YES;
     
     [self.payButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
-    self.payButton.titleLabel.font = SKIN_FONT(18);
+    self.payButton.titleLabel.font = SKIN_FONT_FROMNAME(18);
     self.payButton.backgroundColor = SKIN_COLOR;
     self.payButton.layer.cornerRadius = 4.0;
     self.payButton.layer.masksToBounds = YES;
