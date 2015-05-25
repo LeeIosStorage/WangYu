@@ -25,8 +25,8 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.canShowCallout = NO;
-        self.centerOffset = CGPointMake(0, -55);
-        self.frame = CGRectMake(0, 0, 240, 80);
+        self.centerOffset = CGPointMake(0, -50);
+        self.frame = CGRectMake(0, 0, 184, 68);
         if (delegate) {
             self.delegate = delegate;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
@@ -54,7 +54,7 @@
 - (void)getDrawPath:(CGContextRef)context rect:(CGRect)rect
 {
     CGRect rrect = rect;
-	CGFloat radius = 6.0;
+	CGFloat radius = 4.0;
     
 	CGFloat minx = CGRectGetMinX(rrect),
     midx = CGRectGetMidX(rrect), 
@@ -76,17 +76,20 @@
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 2.0);
+    CGContextSetLineWidth(context, 1.0);
     
-    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextSetFillColorWithColor(context, [UIColor colorWithRed:58/255.0 green:58/255.0 blue:58/255.0 alpha:0.8].CGColor);
     [self getDrawPath:context rect:self.bounds];
     CGContextFillPath(context);
     
     CGPathRef path = CGContextCopyPath(context);
     
-    self.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.layer.shadowOffset = CGSizeMake(0, 0);
-    self.layer.shadowOpacity = 1;
+//    self.layer.shadowColor = [UIColor blackColor].CGColor;
+//    self.layer.shadowOffset = CGSizeMake(0, 0);
+//    self.layer.shadowOpacity = 0.0;
+    
+//    [self.layer setBorderWidth:0.5]; //边框宽度
+//    [self.layer setBorderColor:UIColorRGB(51, 51, 51).CGColor];
     
     //insert
     self.layer.shadowPath = path;

@@ -7,12 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "mubiao@2x.png"
+      "filename" : "nav_map_back@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "mubiao@3x.png"
+      "filename" : "nav_map_back@3x.png"
     }
   ],
   "info" : {

@@ -12,5 +12,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImage;
 @property (nonatomic,strong)IBOutlet UILabel *title;
 @property (nonatomic,strong)IBOutlet UILabel *subtitle;
+@property (nonatomic,strong)IBOutlet UILabel *hoursLabel;
 
 @end

@@ -88,7 +88,7 @@
     self.mapView.delegate = self;
     
     _currentLocationBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    CGRect frame = CGRectMake(11, self.mapView.bounds.size.height - 51, 40, 40);
+    CGRect frame = CGRectMake(SCREEN_WIDTH - 70, self.mapView.bounds.size.height - 74, 36, 36);
     _currentLocationBtn.frame = frame;
     
     [_currentLocationBtn setBackgroundImage:[UIImage imageNamed:@"s_location_back_no"] forState:UIControlStateNormal];
@@ -118,7 +118,7 @@
 -(void)initNormalTitleNavBarSubviews
 {
     [self setTitle:@"附近网吧"];
-    [self setRightButtonWithTitle:@"路线" selector:@selector(sendPosition:)];
+    [self setRightButtonWithTitle:@"导航" selector:@selector(sendPosition:)];
 }
 
 - (void)backAction:(id)sender{
@@ -413,7 +413,7 @@
         self.titleNavBarRightBtn.hidden = NO;
     }else{
         self.titleNavBarRightBtn.hidden = NO;
-        [self.titleNavBarRightBtn setTitle:@"路线" forState:UIControlStateNormal];
+        [self.titleNavBarRightBtn setTitle:@"导航" forState:UIControlStateNormal];
     }
     [self hideProgressBar];
 }
@@ -421,7 +421,7 @@
 -(void) addCustomMark:(CLLocationCoordinate2D)location
 {
     self.titleNavBarRightBtn.hidden = NO;
-    [self.titleNavBarRightBtn setTitle:@"路线" forState:UIControlStateNormal];
+    [self.titleNavBarRightBtn setTitle:@"导航" forState:UIControlStateNormal];
     
     if (!_netbarInfo) {
         return;
@@ -723,7 +723,7 @@
                                                           reuseIdentifier:@"CustomAnnotation"];
             annotationView.canShowCallout = NO;
             WYLog(@"basicMapAnnotation = %d",basicMapAnnotation.tag);
-            annotationView.image = [UIImage imageNamed:@"Pin_Ios7"];
+            annotationView.image = [UIImage imageNamed:@"netbar_location_icon"];
         }
         
         return annotationView;
@@ -744,7 +744,17 @@
     WYNetbarInfo *netbarInfo = [_pois objectAtIndex:index];
     CustomMapCell  *cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomMapCell" owner:self options:nil] objectAtIndex:0];
     cell.title.text = netbarInfo.netbarName;
-    cell.subtitle.text = [NSString stringWithFormat:@"￥%d/小时",netbarInfo.price];
+    NSString *price = [NSString stringWithFormat:@"%d",netbarInfo.price];
+    cell.subtitle.text = price;
+    float width = [WYCommonUtils widthWithText:price font:cell.subtitle.font lineBreakMode:NSLineBreakByWordWrapping];
+    CGRect frame = cell.subtitle.frame;
+    frame.size.width = width;
+    cell.subtitle.frame = frame;
+    
+    frame = cell.hoursLabel.frame;
+    frame.origin.x = cell.subtitle.frame.origin.x + cell.subtitle.frame.size.width;
+    cell.hoursLabel.frame = frame;
+    
     return cell;
 }
 
