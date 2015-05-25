@@ -88,7 +88,7 @@
     self.mapView.delegate = self;
     
     _currentLocationBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    CGRect frame = CGRectMake(11, self.mapView.bounds.size.height - 51, 40, 40);
+    CGRect frame = CGRectMake(SCREEN_WIDTH - 70, self.mapView.bounds.size.height - 74, 36, 36);
     _currentLocationBtn.frame = frame;
     
     [_currentLocationBtn setBackgroundImage:[UIImage imageNamed:@"s_location_back_no"] forState:UIControlStateNormal];
@@ -118,7 +118,7 @@
 -(void)initNormalTitleNavBarSubviews
 {
     [self setTitle:@"附近网吧"];
-    [self setRightButtonWithTitle:@"路线" selector:@selector(sendPosition:)];
+    [self setRightButtonWithTitle:@"导航" selector:@selector(sendPosition:)];
 }
 
 - (void)backAction:(id)sender{
@@ -153,7 +153,7 @@
     
     if ((_location.longitude > -180 || _location.longitude < 180) && (_location.latitude > -90 || _location.latitude < 90)) {
         
-        [[WYEngine shareInstance] searchMapNetbarWithUid:[WYEngine shareInstance].uid city:@"杭州" latitude:_location.latitude longitude:_location.longitude tag:tag];
+        [[WYEngine shareInstance] searchMapNetbarWithUid:[WYEngine shareInstance].uid city:nil latitude:_location.latitude longitude:_location.longitude tag:tag];
         
         MKCoordinateRegion theRegion;
         MKCoordinateSpan theSpan;
@@ -235,7 +235,7 @@
         [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString){
             
         } location:^(CLLocation *location) {
-            weakSelf.currentLocation = [location coordinate];//当前经纬
+            weakSelf.currentLocation = [[location locationMarsFromBearPaw] coordinate];//当前经纬
             MKCoordinateRegion region = weakSelf.mapView.region;
             region.center = weakSelf.currentLocation;
             [weakSelf.mapView setRegion:region];
@@ -272,12 +272,12 @@
     LocationSucessBlock block = nil;
     block = ^(CLLocation *location) {
         
-        weakself.currentLocation = [location coordinate];
+        weakself.currentLocation = [[location locationMarsFromBearPaw] coordinate];
         if(fabs(weakself.location.latitude) > 0 && fabs(weakself.location.longitude)){
             //有经纬度时，直接返回
             return;
         }
-        weakself.location = [location coordinate];
+        weakself.location = [[location locationBearPawFromMars] coordinate];
 //        [weakself useNewReverseGeoLocation:location];
         [weakself refreshData];
     };
@@ -413,7 +413,7 @@
         self.titleNavBarRightBtn.hidden = NO;
     }else{
         self.titleNavBarRightBtn.hidden = NO;
-        [self.titleNavBarRightBtn setTitle:@"路线" forState:UIControlStateNormal];
+        [self.titleNavBarRightBtn setTitle:@"导航" forState:UIControlStateNormal];
     }
     [self hideProgressBar];
 }
@@ -421,7 +421,7 @@
 -(void) addCustomMark:(CLLocationCoordinate2D)location
 {
     self.titleNavBarRightBtn.hidden = NO;
-    [self.titleNavBarRightBtn setTitle:@"路线" forState:UIControlStateNormal];
+    [self.titleNavBarRightBtn setTitle:@"导航" forState:UIControlStateNormal];
     
     if (!_netbarInfo) {
         return;
@@ -506,7 +506,7 @@
             }
         } location:^(CLLocation *location) {
             
-            weakSelf.currentLocation = [location coordinate];//当前经纬
+            weakSelf.currentLocation = [[location locationMarsFromBearPaw] coordinate];//当前经纬
             [weakSelf userOtherMap:buttonIndex];
         }];
     }else{
@@ -696,6 +696,9 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
     if ([annotation isKindOfClass:[CalloutMapAnnotation class]])
     {
         CalloutMapAnnotation *calloutAnnotation = (CalloutMapAnnotation *)annotation;
@@ -720,7 +723,7 @@
                                                           reuseIdentifier:@"CustomAnnotation"];
             annotationView.canShowCallout = NO;
             WYLog(@"basicMapAnnotation = %d",basicMapAnnotation.tag);
-            annotationView.image = [UIImage imageNamed:@"Pin_Ios7"];
+            annotationView.image = [UIImage imageNamed:@"netbar_location_icon"];
         }
         
         return annotationView;
@@ -741,7 +744,17 @@
     WYNetbarInfo *netbarInfo = [_pois objectAtIndex:index];
     CustomMapCell  *cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomMapCell" owner:self options:nil] objectAtIndex:0];
     cell.title.text = netbarInfo.netbarName;
-    cell.subtitle.text = [NSString stringWithFormat:@"￥%d/小时",netbarInfo.price];
+    NSString *price = [NSString stringWithFormat:@"%d",netbarInfo.price];
+    cell.subtitle.text = price;
+    float width = [WYCommonUtils widthWithText:price font:cell.subtitle.font lineBreakMode:NSLineBreakByWordWrapping];
+    CGRect frame = cell.subtitle.frame;
+    frame.size.width = width;
+    cell.subtitle.frame = frame;
+    
+    frame = cell.hoursLabel.frame;
+    frame.origin.x = cell.subtitle.frame.origin.x + cell.subtitle.frame.size.width;
+    cell.hoursLabel.frame = frame;
+    
     return cell;
 }
 

@@ -8,7 +8,7 @@
 //
 #import <MapKit/MapKit.h>
 
-#define  Arror_height 15
+#define  Arror_height 10
 
 @protocol CallOutAnnotationViewDelegate;
 @interface CallOutAnnotationView : MKAnnotationView

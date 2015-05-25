@@ -30,7 +30,7 @@ typedef void(^ReverseGeoLocationSucessBlock)(CLPlacemark *placemark);
 //经纬度反解码地址信息
 -(void)placemarkReverseGeoLocation:(CLLocation *)location placemark:(ReverseGeoLocationSucessBlock)placemarkSucess;
 
-//获取用户地址
+//获取用户地址 百度坐标
 -(void) getUserCurrentLocation:(LocationBlock) block location:(LocationSucessBlock) locationSucess;
 
 @end
