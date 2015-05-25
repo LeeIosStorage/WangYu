@@ -68,6 +68,9 @@
     _netbarTime.text = [NSString stringWithFormat:@"/小时"];
     
     if (netbarInfo.distance != nil) {
+        _mapImage.hidden = NO;
+        _netbarDistance.hidden = NO;
+        _mapButton.hidden = NO;
         _netbarDistance.text = [NSString stringWithFormat:@"%@m",netbarInfo.distance];
         NSArray *array = [netbarInfo.distance componentsSeparatedByString:@"."];
         if ([array[0] intValue] == 0) {
@@ -82,19 +85,21 @@
                 _netbarDistance.text = [NSString stringWithFormat:@"%@km" ,array[0]];
             }
         }
+        CGFloat distanceWidth = .0;
+        distanceWidth = [WYCommonUtils widthWithText:_netbarDistance.text font:_netbarDistance.font lineBreakMode:_netbarDistance.lineBreakMode];
+        frame = _netbarDistance.frame;
+        frame.size.width = distanceWidth;
+        frame.origin.x = SCREEN_WIDTH - 12 - distanceWidth;
+        _netbarDistance.frame = frame;
+        
+        frame = _mapImage.frame;
+        frame.origin.x = SCREEN_WIDTH - 12 - distanceWidth - 7 - _mapImage.frame.size.width;
+        _mapImage.frame = frame;
     }else {
-        _netbarDistance.text = @"";
+        _mapImage.hidden = YES;
+        _netbarDistance.hidden = YES;
+        _mapButton.hidden = YES;
     }
-    
-    CGFloat distanceWidth = [WYCommonUtils widthWithText:_netbarDistance.text font:_netbarDistance.font lineBreakMode:_netbarDistance.lineBreakMode];
-    frame = _netbarDistance.frame;
-    frame.size.width = distanceWidth;
-    frame.origin.x = SCREEN_WIDTH - 12 - distanceWidth;
-    _netbarDistance.frame = frame;
-    
-    frame = _mapImage.frame;
-    frame.origin.x = _netbarDistance.frame.origin.x - 7 - _mapImage.frame.size.width;
-    _mapImage.frame = frame;
     
     frame = _bookImage.frame;
     if (netbarInfo.isOrder) {
