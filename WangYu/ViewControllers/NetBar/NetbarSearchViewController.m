@@ -291,10 +291,10 @@
         return;
     }
     NetbarMapViewController *mapVc = [[NetbarMapViewController alloc] init];
-    CLLocationCoordinate2D location;
-    location.latitude = 30.19185;
-    location.longitude = 120.14598;
-    mapVc.location = location;
+//    CLLocationCoordinate2D location;
+//    location.latitude = 30.19185;
+//    location.longitude = 120.14598;
+    mapVc.location = self.currentLocation;
     mapVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self.navigationController presentViewController:mapVc animated:YES completion:^{
         

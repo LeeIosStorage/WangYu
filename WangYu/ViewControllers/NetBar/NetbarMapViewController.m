@@ -153,7 +153,7 @@
     
     if ((_location.longitude > -180 || _location.longitude < 180) && (_location.latitude > -90 || _location.latitude < 90)) {
         
-        [[WYEngine shareInstance] searchMapNetbarWithUid:[WYEngine shareInstance].uid city:@"杭州" latitude:_location.latitude longitude:_location.longitude tag:tag];
+        [[WYEngine shareInstance] searchMapNetbarWithUid:[WYEngine shareInstance].uid city:nil latitude:_location.latitude longitude:_location.longitude tag:tag];
         
         MKCoordinateRegion theRegion;
         MKCoordinateSpan theSpan;
@@ -235,7 +235,7 @@
         [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString){
             
         } location:^(CLLocation *location) {
-            weakSelf.currentLocation = [location coordinate];//当前经纬
+            weakSelf.currentLocation = [[location locationMarsFromBearPaw] coordinate];//当前经纬
             MKCoordinateRegion region = weakSelf.mapView.region;
             region.center = weakSelf.currentLocation;
             [weakSelf.mapView setRegion:region];
@@ -272,12 +272,12 @@
     LocationSucessBlock block = nil;
     block = ^(CLLocation *location) {
         
-        weakself.currentLocation = [location coordinate];
+        weakself.currentLocation = [[location locationMarsFromBearPaw] coordinate];
         if(fabs(weakself.location.latitude) > 0 && fabs(weakself.location.longitude)){
             //有经纬度时，直接返回
             return;
         }
-        weakself.location = [location coordinate];
+        weakself.location = [[location locationBearPawFromMars] coordinate];
 //        [weakself useNewReverseGeoLocation:location];
         [weakself refreshData];
     };
@@ -506,7 +506,7 @@
             }
         } location:^(CLLocation *location) {
             
-            weakSelf.currentLocation = [location coordinate];//当前经纬
+            weakSelf.currentLocation = [[location locationMarsFromBearPaw] coordinate];//当前经纬
             [weakSelf userOtherMap:buttonIndex];
         }];
     }else{
@@ -696,6 +696,9 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
     if ([annotation isKindOfClass:[CalloutMapAnnotation class]])
     {
         CalloutMapAnnotation *calloutAnnotation = (CalloutMapAnnotation *)annotation;
