@@ -18,6 +18,7 @@
 @property (nonatomic, strong) IBOutlet UIImageView *backgroundImageView;
 //line image
 @property (nonatomic, strong) IBOutlet UIImageView *lineImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *lineImageView2;
 
 @end
 
@@ -38,7 +39,18 @@
         //load view
         _owner = owner;
         self.backgroundImageView.backgroundColor = SKIN_COLOR;
-        self.lineImageView.hidden = YES;
+        //self.lineImageView.hidden = YES;
+        
+        CGRect frame = self.lineImageView2.frame;
+        frame.origin.y = 43.0f;
+        frame.size.height = 0.5f;
+        self.lineImageView2.frame = frame;
+        
+        frame = self.lineImageView.frame;
+        frame.origin.y = 43.5f;
+        frame.size.height = 0.5f;
+        self.lineImageView.frame = frame;
+        
         self.titleLabel.font = SKIN_FONT_FROMNAME(18);
     }
     return self;
@@ -58,10 +70,11 @@
 
 -(void) setBarBackgroundColor:(UIColor *)bgColor showLine:(BOOL)showLine{
     self.backgroundImageView.backgroundColor = bgColor;
+    self.lineImageView2.hidden = YES;
     self.lineImageView.hidden = !showLine;
     self.lineImageView.backgroundColor = UIColorToRGB(0xadadad);
     CGRect frame = self.lineImageView.frame;
-    frame.size.height = 1.0f;
+    frame.size.height = 0.5f;
     self.lineImageView.frame = frame;
     
 }

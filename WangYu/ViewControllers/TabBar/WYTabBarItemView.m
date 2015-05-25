@@ -22,6 +22,9 @@
         // Initialization code
         _itemLabel.font = SKIN_FONT_FROMNAME(11);
         _itemLabel.textColor = SKIN_TEXT_COLOR1;
+        CGRect frameLine = _lineImageView.frame;
+        frameLine.size.height = 0.1f;
+        _lineImageView.frame = frameLine;
     }
     return self;
 }

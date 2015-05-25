@@ -22,7 +22,7 @@
 //        UIImageView* imageView = [[UIImageView alloc] initWithFrame:self.bounds];
 //        imageView.contentMode = UIViewContentModeScaleToFill;
 //        [imageView setImage:[UIImage imageNamed:@"tabbar_bg"]];
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = UIColorToRGB(0xf1f1f1);
 //        [self addSubview:imageView];
     }
     return self;
@@ -52,6 +52,12 @@
     for (WYTabBarItemView *tabBarItem in self.items) {
         tabBarItem.userInteractionEnabled = YES;
         tabBarItem.delegate = self;
+        tabBarItem.itemLabel.font = SKIN_FONT_FROMNAME(11);
+        tabBarItem.itemLabel.textColor = SKIN_TEXT_COLOR1;
+        CGRect frameLine = tabBarItem.lineImageView.frame;
+        frameLine.size.height = 0.5f;
+        tabBarItem.lineImageView.frame = frameLine;
+        tabBarItem.lineImageView.backgroundColor = UIColorToRGB(0xadadad);
     }
     [self setNeedsLayout];
 }

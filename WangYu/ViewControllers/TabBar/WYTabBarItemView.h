@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *itemIconImageView;
 @property (strong, nonatomic) IBOutlet UILabel *itemLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *bkImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *lineImageView;
 
 @property(nonatomic,assign) id<WYTabBarItemViewProtocol> delegate;
 @property(nonatomic,assign) bool selected;

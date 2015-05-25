@@ -53,8 +53,8 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="DiY-WQ-895">
-                    <rect key="frame" x="-5" y="0.0" width="330" height="1"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="DiY-WQ-895">
+                    <rect key="frame" x="0.0" y="0.0" width="80" height="1"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
@@ -66,13 +66,11 @@
                 <outlet property="itemBtn" destination="chy-qV-0oy" id="6Ou-L3-ZZO"/>
                 <outlet property="itemIconImageView" destination="R4l-Cc-Ruz" id="YDS-S3-QC4"/>
                 <outlet property="itemLabel" destination="Qkq-e6-jh4" id="l64-6A-6Oo"/>
+                <outlet property="lineImageView" destination="DiY-WQ-895" id="U1c-r9-6JN"/>
             </connections>
             <point key="canvasLocation" x="276" y="333"/>
         </view>
     </objects>
-    <resources>
-        <image name="s_n_set_line" width="300" height="1"/>
-    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
