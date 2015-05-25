@@ -19,7 +19,7 @@
 - (void)awakeFromNib {
     // Initialization code
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        self.font = SKIN_FONT(12);
+        self.font = SKIN_FONT_FROMNAME(12);
         dispatch_async(dispatch_get_main_queue(),^{
             self.teamLabel.font = self.font;
             self.dateLabel.font = self.font;

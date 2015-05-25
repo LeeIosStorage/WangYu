@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     // Initialization code
     
-    self.payLabel.font = SKIN_FONT(12);
+    self.payLabel.font = SKIN_FONT_FROMNAME(12);
     self.payLabel.textColor = SKIN_TEXT_COLOR1;
     
     self.payImage.layer.cornerRadius = 2.0;

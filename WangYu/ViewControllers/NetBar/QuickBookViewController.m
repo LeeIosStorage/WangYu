@@ -63,13 +63,13 @@
     self.bookTable.tableFooterView = self.footerView;
     
     [self.bookButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
-    self.bookButton.titleLabel.font = SKIN_FONT(18);
+    self.bookButton.titleLabel.font = SKIN_FONT_FROMNAME(18);
     self.bookButton.backgroundColor = SKIN_COLOR;
     self.bookButton.layer.cornerRadius = 4.0;
     self.bookButton.layer.masksToBounds = YES;
     
     self.descTextView.textColor = SKIN_TEXT_COLOR2;
-    self.descTextView.font = SKIN_FONT(12);
+    self.descTextView.font = SKIN_FONT_FROMNAME(12);
     [self.descTextView.layer setBorderWidth:0.5];
     [self.descTextView.layer setBorderColor:UIColorToRGB(0xadadad).CGColor];
     

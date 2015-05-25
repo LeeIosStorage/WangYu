@@ -93,7 +93,6 @@
     frame = self.noticeView.frame;
     frame.origin.y = self.lightupCityView.frame.origin.y + self.lightupCityView.frame.size.height;
     self.noticeView.frame = frame;
-    
 }
 
 - (IBAction)locationAction:(id)sender {

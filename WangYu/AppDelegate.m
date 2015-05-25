@@ -159,11 +159,12 @@ void uncaughtExceptionHandler(NSException *exception) {
             switch (status) {
                 case 9000:
                 {
-                    NSLog(@"==================支付成功");
+                    [WYProgressHUD AlertSuccess:@"支付成功"];
                 }
                     break;
                 default:
                 {
+                    [WYProgressHUD AlertSuccess:@"支付失败"];
                     NSLog(@"==================失败=======%@",[resultDic objectForKey:@"memo"]);
                 }
                     break;

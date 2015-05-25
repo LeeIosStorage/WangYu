@@ -182,19 +182,19 @@
 #pragma mark - custom
 -(void)refreshUIControl{
     
-    self.phoneTextField.font = SKIN_FONT(15);
-    self.codeTextField.font = SKIN_FONT(15);
-    self.getCodeButton.titleLabel.font = SKIN_FONT(16);
-    self.registerButton.titleLabel.font = SKIN_FONT(18);
-    self.protocolButton.titleLabel.font = SKIN_FONT(12);
-    self.invitationCodeTextField.font = SKIN_FONT(15);
-    self.invitationAffirmButton.titleLabel.font = SKIN_FONT(18);
-    self.redPacketHelpButton.titleLabel.font = SKIN_FONT(12);
-    self.phoneTipLabel.font = SKIN_FONT(16);
-    self.codeTipLabel.font = SKIN_FONT(14);
+    self.phoneTextField.font = SKIN_FONT_FROMNAME(15);
+    self.codeTextField.font = SKIN_FONT_FROMNAME(15);
+    self.getCodeButton.titleLabel.font = SKIN_FONT_FROMNAME(16);
+    self.registerButton.titleLabel.font = SKIN_FONT_FROMNAME(18);
+    self.protocolButton.titleLabel.font = SKIN_FONT_FROMNAME(12);
+    self.invitationCodeTextField.font = SKIN_FONT_FROMNAME(15);
+    self.invitationAffirmButton.titleLabel.font = SKIN_FONT_FROMNAME(18);
+    self.redPacketHelpButton.titleLabel.font = SKIN_FONT_FROMNAME(12);
+    self.phoneTipLabel.font = SKIN_FONT_FROMNAME(16);
+    self.codeTipLabel.font = SKIN_FONT_FROMNAME(14);
 //    self.symbolIconLabel.font = SKIN_FONT(33);
 //    self.moneyLabel.font = SKIN_FONT(66);
-    self.redPacketTipLabel.font = SKIN_FONT(12);
+    self.redPacketTipLabel.font = SKIN_FONT_FROMNAME(12);
     
     self.getCodeButton.backgroundColor = SKIN_COLOR;
     self.getCodeButton.layer.cornerRadius = 4;

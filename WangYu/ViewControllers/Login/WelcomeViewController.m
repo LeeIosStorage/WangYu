@@ -47,21 +47,21 @@
     [_loginBtn setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
     [_loginBtn setBackgroundImage:[UIImage imageNamed:@"login_btn_icon"] forState:UIControlStateNormal];
     [_loginBtn setBackgroundImage:[UIImage imageNamed:@"login_btn_icon_hover"] forState:UIControlStateHighlighted];
-    _loginBtn.titleLabel.font = SKIN_FONT(18);
+    _loginBtn.titleLabel.font = SKIN_FONT_FROMNAME(18);
     
     _registerBtn.layer.cornerRadius = 4.0;
     _registerBtn.layer.masksToBounds = YES;
     [_registerBtn setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
     [_registerBtn setBackgroundImage:[UIImage imageNamed:@"login_btn_icon"] forState:UIControlStateNormal];
     [_registerBtn setBackgroundImage:[UIImage imageNamed:@"login_btn_icon_hover"] forState:UIControlStateHighlighted];
-    _registerBtn.titleLabel.font = SKIN_FONT(18);
+    _registerBtn.titleLabel.font = SKIN_FONT_FROMNAME(18);
     
     _visitorBtn.layer.cornerRadius = 4.0;
     _visitorBtn.layer.masksToBounds = YES;
     [_visitorBtn setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
     [_visitorBtn setBackgroundImage:[UIImage imageNamed:@"login_btn_icon"] forState:UIControlStateNormal];
     [_visitorBtn setBackgroundImage:[UIImage imageNamed:@"login_btn_icon_hover"] forState:UIControlStateHighlighted];
-    _visitorBtn.titleLabel.font = SKIN_FONT(18);
+    _visitorBtn.titleLabel.font = SKIN_FONT_FROMNAME(18);
     
     
     [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
