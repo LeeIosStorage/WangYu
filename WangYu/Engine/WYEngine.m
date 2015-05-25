@@ -706,11 +706,11 @@ static WYEngine* s_ShareInstance = nil;
 }
 
 //预订订单支付
-- (BOOL)reservePayWithUid:(NSString *)uid body:(NSString *)body orderId:(long)orderId type:(int)type tag:(int)tag {
+- (BOOL)reservePayWithUid:(NSString *)uid body:(NSString *)body orderId:(NSString *)orderId type:(int)type tag:(int)tag {
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     [params setObject:uid forKey:@"userId"];
     [params setObject:body forKey:@"body"];
-    [params setObject:[NSNumber numberWithLong:orderId] forKey:@"netbarId"];
+    [params setObject:orderId forKey:@"orderId"];
     [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
     if (_token) {
         [params setObject:_token forKey:@"token"];
@@ -735,10 +735,10 @@ static WYEngine* s_ShareInstance = nil;
 }
 
 //定金支付
-- (BOOL)reserveToOrderWithUid:(NSString *)uid reserveId:(long)reserveId tag:(int)tag {
+- (BOOL)reserveToOrderWithUid:(NSString *)uid reserveId:(NSString *)reserveId tag:(int)tag {
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     [params setObject:uid forKey:@"userId"];
-    [params setObject:[NSNumber numberWithLong:reserveId] forKey:@"reserveId"];
+    [params setObject:reserveId forKey:@"reserveId"];
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }

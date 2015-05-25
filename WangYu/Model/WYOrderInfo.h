@@ -10,7 +10,8 @@
 
 @interface WYOrderInfo : NSObject
 
-@property(nonatomic, strong) NSString* orderId;                     //订单id
+@property(nonatomic, strong) NSString* orderId;                     //支付订单id
+@property(nonatomic, strong) NSString* reserveId;                   //预订订单id
 @property(nonatomic, strong) NSString* amount;                      //金额
 @property(nonatomic, assign) int price;
 @property(nonatomic, assign) int isReceive;                         // 1已接单0待处理-1已拒单

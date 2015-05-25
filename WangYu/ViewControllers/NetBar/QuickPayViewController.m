@@ -12,6 +12,7 @@
 #import "WYProgressHUD.h"
 #import "OrdersViewController.h"
 #import "WYPayManager.h"
+#import "WYAlertView.h"
 
 @interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -31,6 +32,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *amountField;
 
 - (IBAction)payAction:(id)sender;
+- (IBAction)packetAction:(id)sender;
 
 @end
 
@@ -75,7 +77,13 @@
 }
 
 -(void)initNormalTitleNavBarSubviews{
-    [self setTitle:@"一键支付"];
+    if (self.isBooked) {
+        [self setTitle:@"定金支付"];
+        self.amountField.text = self.orderInfo.amount;
+        self.amountField.enabled = NO;
+    }else{
+        [self setTitle:@"一键支付"];
+    }
 }
 
 #pragma mark - Table view data source
@@ -164,29 +172,64 @@
 - (IBAction)payAction:(id)sender {
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:@"qeqe" amount:[_amountField.text doubleValue] netbarId:self.netbarInfo.nid type:self.isWeixin?0:1 tag:tag];
-    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        [WYProgressHUD AlertLoadDone];
-        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
-        if (!jsonRet || errorMsg) {
-            if (!errorMsg.length) {
-                errorMsg = @"请求失败";
+    if (self.isBooked) {
+        [[WYEngine shareInstance] reservePayWithUid:[WYEngine shareInstance].uid body:self.orderInfo.netbarName orderId:self.orderInfo.orderId type:self.isWeixin?0:1 tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            [WYProgressHUD AlertLoadDone];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
             }
-            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            if (weakSelf.isWeixin) {
+                dic = [jsonRet objectForKey:@"object"];
+                [[WYPayManager shareInstance] payForWinxinWith:dic];
+            }else {
+                [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"orderId"] forKey:@"orderId"];
+                [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"out_trade_no"] forKey:@"out_trade_no"];
+                [dic setValue:weakSelf.netbarInfo.netbarName forKey:@"netbarName"];
+                [dic setValue:weakSelf.amountField.text forKey:@"amount"];
+                [[WYPayManager shareInstance] payForAlipayWith:dic];
+            }
+        }tag:tag];
+    }else {
+        if (_amountField.text.length == 0) {
+            [WYProgressHUD lightAlert:@"请输入上网金额"];
             return;
         }
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        if (weakSelf.isWeixin) {
-            dic = [jsonRet objectForKey:@"object"];
-            [[WYPayManager shareInstance] payForWinxinWith:dic];
-        }else {
-            [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"orderId"] forKey:@"orderId"];
-            [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"out_trade_no"] forKey:@"out_trade_no"];
-            [dic setValue:weakSelf.netbarInfo.netbarName forKey:@"netbarName"];
-            [dic setValue:weakSelf.amountField.text forKey:@"amount"];
-            [[WYPayManager shareInstance] payForAlipayWith:dic];
-        }
-    }tag:tag];
+        [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:self.netbarInfo.netbarName amount:[_amountField.text doubleValue] netbarId:self.netbarInfo.nid type:self.isWeixin?0:1 tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            [WYProgressHUD AlertLoadDone];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            if (weakSelf.isWeixin) {
+                dic = [jsonRet objectForKey:@"object"];
+                [[WYPayManager shareInstance] payForWinxinWith:dic];
+            }else {
+                [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"orderId"] forKey:@"orderId"];
+                [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"out_trade_no"] forKey:@"out_trade_no"];
+                [dic setValue:weakSelf.netbarInfo.netbarName forKey:@"netbarName"];
+                [dic setValue:weakSelf.amountField.text forKey:@"amount"];
+                [[WYPayManager shareInstance] payForAlipayWith:dic];
+            }
+        }tag:tag];
+    }
+}
+
+- (IBAction)packetAction:(id)sender {
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"选择红包" message:@"跳转我的红包页" cancelButtonTitle:@"确定"];
+    [alertView show];
 }
 
 @end
