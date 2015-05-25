@@ -20,6 +20,7 @@
 #import "CalloutMapAnnotation.h"
 #import "BasicMapAnnotation.h"
 #import "CustomMapCell.h"
+#import "NetbarDetailViewController.h"
 
 @interface WYMapPlaceMark : NSObject<MKAnnotation>
 
@@ -229,7 +230,7 @@
     if (_currentLocation.longitude != 0 && _currentLocation.latitude != 0) {
         MKCoordinateRegion region = self.mapView.region;
         region.center = self.currentLocation;
-        [self.mapView setRegion:region];
+        [self.mapView setRegion:region animated:YES];
     }else{
         __weak NetbarMapViewController *weakSelf = self;
         [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString){
@@ -238,7 +239,7 @@
             weakSelf.currentLocation = [[location locationMarsFromBearPaw] coordinate];//当前经纬
             MKCoordinateRegion region = weakSelf.mapView.region;
             region.center = weakSelf.currentLocation;
-            [weakSelf.mapView setRegion:region];
+            [weakSelf.mapView setRegion:region animated:YES];
         }];
     }
     
@@ -420,12 +421,14 @@
 
 -(void) addCustomMark:(CLLocationCoordinate2D)location
 {
-    self.titleNavBarRightBtn.hidden = NO;
-    [self.titleNavBarRightBtn setTitle:@"导航" forState:UIControlStateNormal];
-    
     if (!_netbarInfo) {
+        self.titleNavBarRightBtn.hidden = YES;
         return;
     }
+    self.titleNavBarRightBtn.hidden = NO;
+    [self.titleNavBarRightBtn setTitle:@"导航" forState:UIControlStateNormal];
+    self.showPlaceTitle = _netbarInfo.address;
+    
     [_pois addObject:_netbarInfo];
     CLLocationCoordinate2D coordinate;
     coordinate.latitude = [_netbarInfo.latitude doubleValue];
@@ -683,15 +686,15 @@
 
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
 {
-    if (_calloutAnnotation)
-    {
-        if (_calloutAnnotation.coordinate.latitude == view.annotation.coordinate.latitude&&
-            _calloutAnnotation.coordinate.longitude == view.annotation.coordinate.longitude)
-        {
-            [mapView removeAnnotation:_calloutAnnotation];
-            self.calloutAnnotation = nil;
-        }
-    }
+//    if (_calloutAnnotation)
+//    {
+//        if (_calloutAnnotation.coordinate.latitude == view.annotation.coordinate.latitude&&
+//            _calloutAnnotation.coordinate.longitude == view.annotation.coordinate.longitude)
+//        {
+//            [mapView removeAnnotation:_calloutAnnotation];
+//            self.calloutAnnotation = nil;
+//        }
+//    }
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
@@ -736,6 +739,12 @@
 {
     CalloutMapAnnotation *annotation = (CalloutMapAnnotation *)view.annotation;
     WYLog(@"annotation.tag = %d",annotation.tag);
+    if (annotation.tag >= 0 && annotation.tag < _pois.count) {
+        WYNetbarInfo *netbarInfo = [_pois objectAtIndex:annotation.tag];
+        NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
+        ndVc.netbarInfo = netbarInfo;
+        [self.navigationController pushViewController:ndVc animated:YES];
+    }
     [self mapView:_mapView didDeselectAnnotationView:view];
 }
 

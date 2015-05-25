@@ -117,7 +117,7 @@
 
 - (void)placemarkReverseLocation:(CLLocation *)location{
     [[WYLocationServiceUtil shareInstance] placemarkReverseGeoLocation:location placemark:^(CLPlacemark *placemark) {
-        WYLog(@"Placemark des: %@", placemark.description);
+//        WYLog(@"Placemark des: %@", placemark.description);
         NSDictionary *addressDictionary = placemark.addressDictionary;
         WYLog(@"Placemark addressDictionary: %@", addressDictionary);
     }];
