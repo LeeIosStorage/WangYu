@@ -135,6 +135,8 @@
         stateLabelText = @"已支付";
         introLabelText = @"您已支付成功，请到网吧退还押金";
     }
+    if([orderInfo.amount isEqualToString:@"0"])
+        state = 2;
     self.stateLabel.text = stateLabelText;
     self.introLabel.text = introLabelText;
     

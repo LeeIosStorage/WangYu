@@ -360,8 +360,32 @@
         [WYProgressHUD AlertSuccess:@"该网吧不需要支付定金" At:self.view];
         return;
     }
-    QuickPayViewController *payVc = [[QuickPayViewController alloc] init];
-    [self.navigationController pushViewController:payVc animated:YES];
+    [self reserveToOrder:orderInfo];
+}
+
+#pragma mark - 根据预订订单生成支付订单
+- (void)reserveToOrder:(WYOrderInfo *)orderInfo{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] reserveToOrderWithUid:[WYEngine shareInstance].uid reserveId:orderInfo.reserveId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        //        [WYProgressHUD AlertLoadDone];
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        
+        orderInfo.orderId = [[jsonRet objectForKey:@"object"] stringObjectForKey:@"order_id"];
+        
+        QuickPayViewController *payVc = [[QuickPayViewController alloc] init];
+        payVc.isBooked = YES;
+        payVc.orderInfo = orderInfo;
+        [self.navigationController pushViewController:payVc animated:YES];
+    }tag:tag];
 }
 
 #pragma mark - PayOrderViewCellDelegate
@@ -399,7 +423,7 @@
 -(void)cancelReserveOrder:(WYOrderInfo *)orderInfo{
     __weak OrdersViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] cancelReserveOrderWithUid:[WYEngine shareInstance].uid reserveId:orderInfo.orderId tag:tag];
+    [[WYEngine shareInstance] cancelReserveOrderWithUid:[WYEngine shareInstance].uid reserveId:orderInfo.reserveId tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {

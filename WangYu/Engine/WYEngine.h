@@ -102,11 +102,11 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //一键预订
 - (BOOL)quickBookingWithUid:(NSString *)uid reserveDate:(NSString *)date amount:(double)amount netbarId:(NSString *)nid hours:(int)hours num:(int)num remark:(NSString *)remark tag:(int)tag;
 //预订订单支付
-- (BOOL)reservePayWithUid:(NSString *)uid body:(NSString *)body orderId:(long)orderId type:(int)type tag:(int)tag;
+- (BOOL)reservePayWithUid:(NSString *)uid body:(NSString *)body orderId:(NSString *)orderId type:(int)type tag:(int)tag;
 //支付订单支付
 - (BOOL)orderPayWithUid:(NSString *)uid body:(NSString *)body amount:(double)amount netbarId:(NSString *)nid type:(int)type tag:(int)tag;
 //定金支付
-- (BOOL)reserveToOrderWithUid:(NSString *)uid reserveId:(long)reserveId tag:(int)tag;
+- (BOOL)reserveToOrderWithUid:(NSString *)uid reserveId:(NSString *)reserveId tag:(int)tag;
 //网吧收藏
 - (BOOL)collectionNetbarWithUid:(NSString *)uid netbarId:(NSString *)nid tag:(int)tag;
 - (BOOL)unCollectionNetbarWithUid:(NSString *)uid netbarId:(NSString *)nid tag:(int)tag;

@@ -8,9 +8,12 @@
 
 #import "WYSuperViewController.h"
 #import "WYNetbarInfo.h"
+#import "WYOrderInfo.h"
 
 @interface QuickPayViewController : WYSuperViewController
 
 @property (nonatomic, strong) WYNetbarInfo *netbarInfo;
+@property (nonatomic, assign) BOOL isBooked;
+@property (nonatomic, strong) WYOrderInfo *orderInfo;
 
 @end

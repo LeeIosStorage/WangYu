@@ -63,8 +63,8 @@
         return;
     }
     _orderInfoByJsonDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
-    _orderId = [[dic objectForKey:@"id"] description];
-    
+    _orderId = [[dic objectForKey:@"order_id"] description];
+    _reserveId = [[dic objectForKey:@"reserve_id"] description];
     @try {
         [self doSetOrderInfoByJsonDic:dic];
     }

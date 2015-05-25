@@ -39,7 +39,7 @@
 #define LOADING_INFO    @"加载中..."
 
 //#define TEXT_COLOR	 [UIColor colorWithRed:(87.0/255.0) green:(108.0/255.0) blue:(137.0/255.0) alpha:1.0]
-#define TEXT_COLOR  [UIColor colorWithRed:(1.0*0x1b/0xff) green:(1.0*0xb9/0xff) blue:(1.0*0xe8/0xff) alpha:1]
+#define TEXT_COLOR  [UIColor colorWithRed:(1.0*0x9a/0xff) green:(1.0*0x9a/0xff) blue:(1.0*0x9a/0xff) alpha:1]
 #define FLIP_ANIMATION_DURATION 0.18f
 
 

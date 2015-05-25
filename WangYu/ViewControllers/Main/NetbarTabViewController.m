@@ -58,6 +58,11 @@
     [self refreshUI];
     [self getCacheNetbarInfos];
     [self getNetbarInfos];
+    
+    self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.netBarTable];
+    self.pullRefreshView.delegate = self;
+    [self.netBarTable addSubview:self.pullRefreshView];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
 }
 
@@ -145,7 +150,8 @@
 }
 
 - (void)serviceAction {
-    
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"客服" message:@"H5页跳转" cancelButtonTitle:@"确定"];
+    [alertView show];
 }
 
 -(void)getCacheNetbarInfos{
@@ -178,7 +184,8 @@
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] getNetbarListWithUid:[WYEngine shareInstance].uid latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        [WYProgressHUD AlertLoadDone];
+//        [WYProgressHUD AlertLoadDone];
+        [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -288,7 +295,7 @@
 }
 
 - (IBAction)packetAction:(id)sender {
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"每周领红包" message:@"H5跳转" cancelButtonTitle:@"确定"];
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"每周领红包" message:@"H5页跳转" cancelButtonTitle:@"确定"];
     [alertView show];
 }
 
@@ -311,6 +318,17 @@
     if (viewController == self) {
         [self.netBarTable setContentOffset:CGPointMake(0, 0 - self.netBarTable.contentInset.top) animated:NO];
     }
+}
+
+#pragma mark PullToRefreshViewDelegate
+- (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {
+    if (view == self.pullRefreshView) {
+        [self getNetbarInfos];
+    }
+}
+
+- (NSDate *)pullToRefreshViewLastUpdated:(PullToRefreshView *)view {
+    return [NSDate date];
 }
 
 @end
