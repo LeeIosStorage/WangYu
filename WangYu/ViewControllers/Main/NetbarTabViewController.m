@@ -58,6 +58,7 @@
     [self refreshUI];
     [self getCacheNetbarInfos];
     [self getNetbarInfos];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
 }
 
 -(void)refreshUI
@@ -291,12 +292,25 @@
     [alertView show];
 }
 
--(void)dealloc{
+- (void)dealloc{
     WYLog(@"NetbarTabViewController dealloc!!!");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     _splashView.delegate = nil;
     _splashView = nil;
     _netBarTable.delegate = nil;
     _netBarTable.dataSource = nil;
+}
+
+- (void)handleUserInfoChanged:(NSNotification *)notification{
+    [self getNetbarInfos];
+    [self.netBarTable reloadData];
+}
+
+#pragma mark -XETabBarControllerSubVcProtocol
+- (void)tabBarController:(WYTabBarViewController *)tabBarController reSelectVc:(UIViewController *)viewController {
+    if (viewController == self) {
+        [self.netBarTable setContentOffset:CGPointMake(0, 0 - self.netBarTable.contentInset.top) animated:NO];
+    }
 }
 
 @end

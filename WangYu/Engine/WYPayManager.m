@@ -11,6 +11,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "Order.h"
 #import "DataSigner.h"
+#import "WYProgressHUD.h"
 
 #define APP_ID          @"wxb10451ed2c4a6ce3"
 //商户号
@@ -119,11 +120,13 @@ static WYPayManager* wy_payManager = nil;
              switch (status) {
                  case 9000:
                  {
-                     NSLog(@"===============支付成功");
+//                     NSLog(@"===============支付成功");
+                     [WYProgressHUD AlertSuccess:@"支付宝支付成功"];
                  }
                      break;
                  default:
                  {
+                     [WYProgressHUD AlertSuccess:@"支付宝支付失败"];
                      NSLog(@"===============支付失败%@", [resultDic objectForKey:@"memo"]);
                  }
                      break;
@@ -149,6 +152,7 @@ static WYPayManager* wy_payManager = nil;
         switch (resp.errCode) {
             case WXSuccess:{
                 strMsg = @"支付结果：成功！";
+                [WYProgressHUD AlertSuccess:@"微信支付成功"];
                 NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
                 //                PayResp *payResp = (PayResp *)resp;
                 //                NSDictionary *respDic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:payResp.errCode],@"code",payResp.returnKey,@"message", nil];
@@ -161,6 +165,7 @@ static WYPayManager* wy_payManager = nil;
                 break;
                 
             default:
+                [WYProgressHUD AlertError:@"微信支付失败"];
                 strMsg = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
                 NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
                 //                NSDictionary *respDic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:resp.errCode],@"code",resp.errStr,@"message", nil];

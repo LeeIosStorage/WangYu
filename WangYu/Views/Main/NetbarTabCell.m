@@ -75,7 +75,7 @@
         _netbarDistance.text = [NSString stringWithFormat:@"%@m",netbarInfo.distance];
         NSArray *array = [netbarInfo.distance componentsSeparatedByString:@"."];
         if ([array[0] intValue] == 0) {
-            _netbarDistance.text = [NSString stringWithFormat:@"%@m" ,[array[1] substringToIndex:3]];
+            _netbarDistance.text = [NSString stringWithFormat:@"%dm" ,[[array[1] substringToIndex:3] intValue]];
         }else {
             NSString *strTemp = array[0];
             if (strTemp.length == 1) {
