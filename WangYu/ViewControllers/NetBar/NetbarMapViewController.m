@@ -99,7 +99,7 @@
     
     if(_showMode){
 //        [WYProgressHUD AlertLoading:@"正在获取位置信息..." At:self.view];
-        [self setTitle:@"位置信息"];
+        [self setTitle:@"网吧地图"];
         [self updateAnnotationByLocation:_showLocation isNeedAnimation:NO];
     }else{
         [WYProgressHUD AlertLoading:@"定位中..."];
@@ -118,7 +118,7 @@
 
 -(void)initNormalTitleNavBarSubviews
 {
-    [self setTitle:@"附近网吧"];
+    [self setTitle:@"网吧地图"];
     [self setRightButtonWithTitle:@"导航" selector:@selector(sendPosition:)];
 }
 

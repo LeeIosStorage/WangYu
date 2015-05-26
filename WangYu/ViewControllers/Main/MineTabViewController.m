@@ -35,8 +35,7 @@
 
 -(void)initNormalTitleNavBarSubviews{
     [self setTitle:@"我的"];
-    [self setRightButtonWithTitle:@"设置" selector:@selector(settingAction:)];
-    [self.titleNavBarRightBtn setTitleColor:UIColorToRGB(0x387cbc) forState:0];
+    [self setRightButtonWithImageName:@"netbar_service_icon" selector:@selector(serviceAction:)];
 }
 
 - (UINavigationController *)navigationController{
@@ -66,6 +65,10 @@
 }
 
 #pragma mark - IBAction
+- (void)serviceAction:(id)sender{
+    SettingViewController *setVc = [[SettingViewController alloc] init];
+    [self.navigationController pushViewController:setVc animated:YES];
+}
 - (IBAction)editAction:(id)sender{
     
     OrdersViewController *orderVc = [[OrdersViewController alloc] init];

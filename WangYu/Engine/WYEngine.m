@@ -24,7 +24,7 @@
 #define CONNECT_TIMEOUT 20
 
 static NSString* IMG_URL = @"http://img.wangyuhudong.com";
-static NSString* API_URL = @"http://192.168.17.204";
+static NSString* API_URL = @"http://api.test.wangyuhudong.com";
 
 static WYEngine* s_ShareInstance = nil;
 
@@ -918,4 +918,17 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
+- (BOOL)getAllValidCityListWithTag:(int)tag{
+//    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/common/area/allvalidcity",API_URL] type:1 parameters:nil];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+- (BOOL)validateAreaWithAreaName:(NSString *)areaName tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (areaName) {
+        [params setObject:areaName forKey:@"areaName"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/validateArea",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
 @end
