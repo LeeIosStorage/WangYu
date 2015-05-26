@@ -121,4 +121,8 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //验证城市是否开通
 - (BOOL)validateAreaWithAreaName:(NSString *)areaName tag:(int)tag;
 
+#pragma mark - mine
+//完善资料
+- (BOOL)editUserInfoWithUid:(NSString *)uid nickName:(NSString *)nickName avatar:(NSArray *)avatar tag:(int)tag;
+
 @end

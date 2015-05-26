@@ -110,6 +110,13 @@
 		07695CDF1B03231000F4806C /* WYNetbarInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 07695CDE1B03231000F4806C /* WYNetbarInfo.m */; };
 		076C8CE81B048A5C00421460 /* WYLocationServiceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C8CE71B048A5C00421460 /* WYLocationServiceUtil.m */; };
 		076C8CEC1B048BBB00421460 /* CLLocation+Sino.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C8CEB1B048BBB00421460 /* CLLocation+Sino.m */; };
+		076E0DEB1B1475FE00E4363A /* PersonalEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E0DE91B1475FE00E4363A /* PersonalEditViewController.m */; };
+		076E0DEC1B1475FE00E4363A /* PersonalEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076E0DEA1B1475FE00E4363A /* PersonalEditViewController.xib */; };
+		076E0DF81B147FD600E4363A /* AVCamCaptureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E0DF01B147FD600E4363A /* AVCamCaptureManager.m */; };
+		076E0DF91B147FD600E4363A /* AVCamRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E0DF21B147FD600E4363A /* AVCamRecorder.m */; };
+		076E0DFA1B147FD600E4363A /* AVCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E0DF41B147FD600E4363A /* AVCamUtilities.m */; };
+		076E0DFB1B147FD600E4363A /* DDExpandableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E0DF71B147FD600E4363A /* DDExpandableButton.m */; };
+		076E0DFE1B14804000E4363A /* WYImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E0DFD1B14804000E4363A /* WYImagePickerController.m */; };
 		076E224F1B02F73200F33815 /* NetbarSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E224D1B02F73200F33815 /* NetbarSearchViewController.m */; };
 		076E22501B02F73200F33815 /* NetbarSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076E224E1B02F73200F33815 /* NetbarSearchViewController.xib */; };
 		076E22531B03187100F33815 /* WYSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 076E22521B03187100F33815 /* WYSearchBar.m */; };
@@ -405,6 +412,19 @@
 		076C8CE71B048A5C00421460 /* WYLocationServiceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYLocationServiceUtil.m; sourceTree = "<group>"; };
 		076C8CEA1B048BBB00421460 /* CLLocation+Sino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+Sino.h"; sourceTree = "<group>"; };
 		076C8CEB1B048BBB00421460 /* CLLocation+Sino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+Sino.m"; sourceTree = "<group>"; };
+		076E0DE81B1475FE00E4363A /* PersonalEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalEditViewController.h; sourceTree = "<group>"; };
+		076E0DE91B1475FE00E4363A /* PersonalEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalEditViewController.m; sourceTree = "<group>"; };
+		076E0DEA1B1475FE00E4363A /* PersonalEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalEditViewController.xib; sourceTree = "<group>"; };
+		076E0DEF1B147FD600E4363A /* AVCamCaptureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamCaptureManager.h; sourceTree = "<group>"; };
+		076E0DF01B147FD600E4363A /* AVCamCaptureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamCaptureManager.m; sourceTree = "<group>"; };
+		076E0DF11B147FD600E4363A /* AVCamRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamRecorder.h; sourceTree = "<group>"; };
+		076E0DF21B147FD600E4363A /* AVCamRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamRecorder.m; sourceTree = "<group>"; };
+		076E0DF31B147FD600E4363A /* AVCamUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamUtilities.h; sourceTree = "<group>"; };
+		076E0DF41B147FD600E4363A /* AVCamUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamUtilities.m; sourceTree = "<group>"; };
+		076E0DF61B147FD600E4363A /* DDExpandableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDExpandableButton.h; sourceTree = "<group>"; };
+		076E0DF71B147FD600E4363A /* DDExpandableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDExpandableButton.m; sourceTree = "<group>"; };
+		076E0DFC1B14804000E4363A /* WYImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYImagePickerController.h; sourceTree = "<group>"; };
+		076E0DFD1B14804000E4363A /* WYImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYImagePickerController.m; sourceTree = "<group>"; };
 		076E224C1B02F73200F33815 /* NetbarSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetbarSearchViewController.h; path = NetBar/NetbarSearchViewController.h; sourceTree = "<group>"; };
 		076E224D1B02F73200F33815 /* NetbarSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetbarSearchViewController.m; path = NetBar/NetbarSearchViewController.m; sourceTree = "<group>"; };
 		076E224E1B02F73200F33815 /* NetbarSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarSearchViewController.xib; path = NetBar/NetbarSearchViewController.xib; sourceTree = "<group>"; };
@@ -732,6 +752,9 @@
 				070DCBDC1B00762F00B27C19 /* OrdersViewController.h */,
 				070DCBDD1B00762F00B27C19 /* OrdersViewController.m */,
 				070DCBDE1B00762F00B27C19 /* OrdersViewController.xib */,
+				076E0DE81B1475FE00E4363A /* PersonalEditViewController.h */,
+				076E0DE91B1475FE00E4363A /* PersonalEditViewController.m */,
+				076E0DEA1B1475FE00E4363A /* PersonalEditViewController.xib */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -979,6 +1002,7 @@
 		073DBD171AE770F1009B49EB /* External */ = {
 			isa = PBXGroup;
 			children = (
+				076E0DED1B147FD600E4363A /* MyAVCameraView */,
 				077E60731B0B11430079BC9E /* ThridApp */,
 				076C8CE91B048BBB00421460 /* MapChoose */,
 				07CB97631AFC5D3400928CB7 /* MMMaterialDesignSpinner */,
@@ -1193,6 +1217,37 @@
 			path = MapChoose;
 			sourceTree = "<group>";
 		};
+		076E0DED1B147FD600E4363A /* MyAVCameraView */ = {
+			isa = PBXGroup;
+			children = (
+				076E0DEE1B147FD600E4363A /* AVCameraManager */,
+				076E0DF51B147FD600E4363A /* DDExpandable */,
+			);
+			path = MyAVCameraView;
+			sourceTree = "<group>";
+		};
+		076E0DEE1B147FD600E4363A /* AVCameraManager */ = {
+			isa = PBXGroup;
+			children = (
+				076E0DEF1B147FD600E4363A /* AVCamCaptureManager.h */,
+				076E0DF01B147FD600E4363A /* AVCamCaptureManager.m */,
+				076E0DF11B147FD600E4363A /* AVCamRecorder.h */,
+				076E0DF21B147FD600E4363A /* AVCamRecorder.m */,
+				076E0DF31B147FD600E4363A /* AVCamUtilities.h */,
+				076E0DF41B147FD600E4363A /* AVCamUtilities.m */,
+			);
+			path = AVCameraManager;
+			sourceTree = "<group>";
+		};
+		076E0DF51B147FD600E4363A /* DDExpandable */ = {
+			isa = PBXGroup;
+			children = (
+				076E0DF61B147FD600E4363A /* DDExpandableButton.h */,
+				076E0DF71B147FD600E4363A /* DDExpandableButton.m */,
+			);
+			path = DDExpandable;
+			sourceTree = "<group>";
+		};
 		077D83761AF9AED800AAF31F /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -1275,6 +1330,8 @@
 			children = (
 				07868DDB1AF8581100160070 /* WYCommonVcTransition.h */,
 				07868DDC1AF8581100160070 /* WYCommonVcTransition.m */,
+				076E0DFC1B14804000E4363A /* WYImagePickerController.h */,
+				076E0DFD1B14804000E4363A /* WYImagePickerController.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1758,6 +1815,7 @@
 				07868DF01AF8581100160070 /* WYTabBarView.xib in Resources */,
 				073DBDB41AE794C4009B49EB /* arrow.png in Resources */,
 				073DBDB51AE794C4009B49EB /* arrow@2x.png in Resources */,
+				076E0DEC1B1475FE00E4363A /* PersonalEditViewController.xib in Resources */,
 				07B48B4A1B0C6E9D0000857F /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				076195ED1B008FAC00397711 /* PayOrderViewCell.xib in Resources */,
 				07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */,
@@ -1782,6 +1840,7 @@
 				073DBCE81AE7492A009B49EB /* ViewController.m in Sources */,
 				079D52571B01E52900DF4D6B /* WYSegmentedView.m in Sources */,
 				073DBD4A1AE7712F009B49EB /* SDWebImageManager.m in Sources */,
+				076E0DF91B147FD600E4363A /* AVCamRecorder.m in Sources */,
 				073DBD741AE778CF009B49EB /* WYUserInfo.m in Sources */,
 				078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */,
 				0791AB5A1AE8DE260009A5A7 /* AFURLConnectionOperation.m in Sources */,
@@ -1831,7 +1890,9 @@
 				07868DEF1AF8581100160070 /* WYTabBarView.m in Sources */,
 				071923CF1AF74D8400432531 /* LoginViewController.m in Sources */,
 				073DBD441AE7712F009B49EB /* NSData+ImageContentType.m in Sources */,
+				076E0DFA1B147FD600E4363A /* AVCamUtilities.m in Sources */,
 				073DBD4B1AE7712F009B49EB /* SDWebImagePrefetcher.m in Sources */,
+				076E0DFE1B14804000E4363A /* WYImagePickerController.m in Sources */,
 				07203A141AF1D63B0056A74B /* NetbarTabCell.m in Sources */,
 				073DBD771AE77929009B49EB /* WYEngine.m in Sources */,
 				0794938F1B0D9C3D008152A6 /* RSADataSigner.m in Sources */,
@@ -1846,6 +1907,7 @@
 				07868DF11AF8581100160070 /* WYTabBarViewController.m in Sources */,
 				07695CDF1B03231000F4806C /* WYNetbarInfo.m in Sources */,
 				077D83811AF9AED800AAF31F /* ProgressHUD.m in Sources */,
+				076E0DEB1B1475FE00E4363A /* PersonalEditViewController.m in Sources */,
 				07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */,
 				07C4C9FD1AF9B283008DA5D3 /* ColorGradView.m in Sources */,
 				0791AB591AE8DE260009A5A7 /* AFSecurityPolicy.m in Sources */,
@@ -1862,6 +1924,7 @@
 				07566CA51AFC648B00F93B58 /* SettingViewController.m in Sources */,
 				073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */,
 				0715C3AA1B09ECB200C37F82 /* WYCustomerWindow.m in Sources */,
+				076E0DF81B147FD600E4363A /* AVCamCaptureManager.m in Sources */,
 				073DBDAC1AE79457009B49EB /* WYUIUtils.m in Sources */,
 				0799C8AF1AF1D88E00E407BB /* GameCommendViewController.m in Sources */,
 				073DBD511AE7712F009B49EB /* UIImageView+WebCache.m in Sources */,
@@ -1905,6 +1968,7 @@
 				0794938E1B0D9C3D008152A6 /* openssl_wrapper.m in Sources */,
 				073DBD4E1AE7712F009B49EB /* UIImage+MultiFormat.m in Sources */,
 				3BBE462A1B0CE8BA009EAE02 /* WYPhotoGroup.m in Sources */,
+				076E0DFB1B147FD600E4363A /* DDExpandableButton.m in Sources */,
 				079049501AEA28E100E46795 /* WYHttpRequest.m in Sources */,
 				07566CAB1AFC663600F93B58 /* SettingViewCell.m in Sources */,
 				078EDBDB1AEF1EF800E93EE8 /* ASIFormDataRequest.m in Sources */,

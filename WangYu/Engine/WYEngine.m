@@ -488,7 +488,7 @@ static WYEngine* s_ShareInstance = nil;
             NSLog(@"postFullUrl=%@",postFullUrl);
         }
         if (dataArray) {
-            [QHQnetworkingTool postWithURL:fullUrl params:nil formDataArray:dataArray success:^(id response) {
+            [QHQnetworkingTool postWithURL:fullUrl params:params formDataArray:dataArray success:^(id response) {
                 NSLog(@"postFullUrl===========%@ response%@",fullUrl,response);
                 [self onResponse:response withTag:tag withError:errPtr];
             } failure:^(NSError *error) {
@@ -931,4 +931,21 @@ static WYEngine* s_ShareInstance = nil;
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/validateArea",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
+
+#pragma mark - mine
+- (BOOL)editUserInfoWithUid:(NSString *)uid nickName:(NSString *)nickName avatar:(NSArray *)avatar tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (nickName) {
+        [params setObject:nickName forKey:@"nickname"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/my/editUser",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:avatar withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 @end

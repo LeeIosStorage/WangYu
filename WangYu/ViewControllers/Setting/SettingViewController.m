@@ -18,13 +18,19 @@
 #import "WYProgressHUD.h"
 #import "WYActionSheet.h"
 #import "WYSettingConfig.h"
+#import "LocationViewController.h"
 
-@interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate,LocationViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *setTableView;
+@property (strong, nonatomic) IBOutlet UIView *footerView;
+@property (strong, nonatomic) IBOutlet UIButton *exitButton;
 
+@property (strong, nonatomic) NSString *cityName;
+@property (strong, nonatomic) NSString *cityCode;
 @property (assign, nonatomic) unsigned long long cacheSize;
 
+- (IBAction)exitAction:(id)sender;
 @end
 
 @implementation SettingViewController
@@ -32,8 +38,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self.view setBackgroundColor:UIColorRGB(234, 234, 234)];
+//    [self.view setBackgroundColor:UIColorRGB(234, 234, 234)];
     [self getCacheSize];
+    [self refreshUI];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,26 +77,43 @@
     });
 }
 
+-(void)refreshUI{
+    
+    self.setTableView.tableFooterView = self.footerView;
+    
+    self.exitButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
+    self.exitButton.backgroundColor = SKIN_COLOR;
+    self.exitButton.layer.cornerRadius = 4;
+    self.exitButton.layer.masksToBounds = YES;
+    if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
+        self.exitButton.titleLabel.text = @"注册或登录";
+    }else{
+        self.exitButton.titleLabel.text = @"退出当前帐号";
+    }
+}
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
+        return 1;
+    }else if (section == 1){
         return 3;
     }
 #ifdef DEBUG
-    return 2;
-#endif
     return 1;
+#endif
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    return 20;
+    return 10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -97,7 +121,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 20)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 10)];
     view.backgroundColor = [UIColor clearColor];
     return view;
 }
@@ -112,9 +136,18 @@
         NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
         cell = [cells objectAtIndex:0];
     }
-    
+    cell.rightLabel.hidden = YES;
+    cell.avatarImageView.hidden = YES;
     switch (indexPath.section) {
         case 0:{
+            if (indexPath.row == 0){
+                cell.titleLabel.text = @"切换城市";
+                cell.rightLabel.text = _cityName;
+                cell.rightLabel.hidden = NO;
+                break;
+            }
+        }
+        case 1:{
             if (indexPath.row == 0) {
                 cell.titleLabel.text = @"清理缓存";
                 if (self.cacheSize != UINT64_MAX) {
@@ -141,26 +174,19 @@
                 cell.titleLabel.text = @"关于我们";
                 break;
             }
+            
         }
-        case 1:{
-            if (indexPath.row == 0) {
-                if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
-                    cell.titleLabel.text = @"注册或登录";
-                }else{
-                    cell.titleLabel.text = @"退出当前帐号";
-                }
-                cell.indicatorImage.hidden = YES;
-                break;
-            }else if (indexPath.row == 1){
+        case 2:{
+            if (indexPath.row == 0){
                 if ([WYEngine shareInstance].serverPlatform == OnlinePlatform) {
                     cell.titleLabel.text = @"测试环境";
                 }else{
                     cell.titleLabel.text = @"线上环境";
                 }
                 cell.indicatorImage.hidden = YES;
-                break;
             }
         }
+            break;
         default:
             break;
     }
@@ -175,14 +201,16 @@
 {
     switch (indexPath.section) {
         case 0:{
+            LocationViewController *locationChooseVc = [[LocationViewController alloc] init];
+            locationChooseVc.delagte = self;
+            [self.navigationController pushViewController:locationChooseVc animated:YES];
+            break;
+        }
+        case 1:{
             if (indexPath.row == 0) {
                 [self showClearCacheAction];
                 break;
             }
-            //            else if (indexPath.row == 1){
-            //                [self checkVersion];
-            //                break;
-            //            }
             else if (indexPath.row == 1){
                 [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id986749236"]];//
                 break;
@@ -192,29 +220,8 @@
                 break;
             }
         }
-        case 1:{
-            if (indexPath.row == 0) {
-                __weak SettingViewController *weakSelf = self;
-                if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
-                    [self signOutAndLogin];
-                }else{
-                    WYActionSheet *sheet = [[WYActionSheet alloc] initWithTitle:nil actionBlock:^(NSInteger buttonIndex) {
-                        if (buttonIndex == 1) {
-                            return;
-                        }
-                        if (buttonIndex == 0) {
-                            [weakSelf signOutAndLogin];
-                        }
-                    }];
-                    [sheet addButtonWithTitle:@"退出登录"];
-                    sheet.destructiveButtonIndex = sheet.numberOfButtons - 1;
-                    
-                    [sheet addButtonWithTitle:@"取消"];
-                    sheet.cancelButtonIndex = sheet.numberOfButtons -1;
-                    [sheet showInView:self.view];
-                }
-                break;
-            }else if (indexPath.row == 1){
+        case 2:{
+            if (indexPath.row == 0){
                 [self onLogoutWithError:nil];
                 break;
             }
@@ -303,4 +310,36 @@
     [WYProgressHUD AlertSuccess:@"缓存已清空"];
 }
 
+#pragma mark - LocationViewControllerDelegate
+- (void)locationViewControllerWith:(LocationViewController*)vc selectCity:(NSDictionary *)cityDic{
+    
+    [vc.navigationController popViewControllerAnimated:YES];
+    
+    _cityName = [cityDic stringObjectForKey:@"name"];
+    _cityCode = [cityDic stringObjectForKey:@"areaCode"];
+    [self.setTableView reloadData];
+}
+
+- (IBAction)exitAction:(id)sender {
+    
+    __weak SettingViewController *weakSelf = self;
+    if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
+        [self signOutAndLogin];
+    }else{
+        WYActionSheet *sheet = [[WYActionSheet alloc] initWithTitle:nil actionBlock:^(NSInteger buttonIndex) {
+            if (buttonIndex == 1) {
+                return;
+            }
+            if (buttonIndex == 0) {
+                [weakSelf signOutAndLogin];
+            }
+        }];
+        [sheet addButtonWithTitle:@"退出登录"];
+        sheet.destructiveButtonIndex = sheet.numberOfButtons - 1;
+        
+        [sheet addButtonWithTitle:@"取消"];
+        sheet.cancelButtonIndex = sheet.numberOfButtons -1;
+        [sheet showInView:self.view];
+    }
+}
 @end
