@@ -919,7 +919,7 @@ static WYEngine* s_ShareInstance = nil;
 }
 
 - (BOOL)getAllValidCityListWithTag:(int)tag{
-//    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    //    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/common/area/allvalidcity",API_URL] type:1 parameters:nil];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
@@ -935,17 +935,59 @@ static WYEngine* s_ShareInstance = nil;
 #pragma mark - mine
 - (BOOL)editUserInfoWithUid:(NSString *)uid nickName:(NSString *)nickName avatar:(NSArray *)avatar tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-    if (uid) {
-        [params setObject:uid forKey:@"userId"];
+    if (nickName) {
+        [params setObject:nickName forKey:@"nickname"];
     }
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
-    if (nickName) {
-        [params setObject:nickName forKey:@"nickname"];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
     }
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/my/editUser",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:avatar withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+#pragma mark - 活动
+- (BOOL)getActivityListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (page > 0) {
+        [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    }
+    if (pageSize > 0) {
+        [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"rows"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/list",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)getInfoListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (page > 0) {
+        [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    }
+    if (pageSize > 0) {
+        [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"rows"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/info/list",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)getMatchListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (page > 0) {
+        [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    }
+    if (pageSize > 0) {
+        [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"rows"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/list",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
 @end
