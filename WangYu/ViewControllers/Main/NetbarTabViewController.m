@@ -22,9 +22,17 @@
 #import "LocationViewController.h"
 #import "NetbarMapViewController.h"
 #import <MapKit/MapKit.h>
+#import "LocationViewController.h"
 
-@interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate,NetbarTabCellDelegate>
-
+@interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate,NetbarTabCellDelegate,LocationViewControllerDelegate>
+{
+    NSString *_chooseCityName;
+    UIImageView *_chooseCityIconImgView;
+    
+    BOOL _isOpen;
+    UIButton *_bgMarkButtonView;
+    LocationViewController *_locationChooseVc;
+}
 @property (strong, nonatomic) IBOutlet UILabel *orderLabel;
 @property (strong, nonatomic) IBOutlet UILabel *packetLabel;
 @property (strong, nonatomic) IBOutlet UILabel *bookLabel;
@@ -55,6 +63,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self setTilteLeftViewHide:NO];
+    _isOpen = NO;
+    _chooseCityName = @"选择城市";
+    [self refreshLeftIconViewUI];
     [self refreshUI];
     [self getCacheNetbarInfos];
     [self getNetbarInfos];
@@ -107,8 +119,9 @@
         [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString) {
             WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:errorString cancelButtonTitle:@"取消" cancelBlock:^{
             } okButtonTitle:@"确定" okBlock:^{
-                LocationViewController *lVc = [[LocationViewController alloc] init];
-                [self.navigationController pushViewController:lVc animated:YES];
+//                LocationViewController *lVc = [[LocationViewController alloc] init];
+//                [self.navigationController pushViewController:lVc animated:YES];
+                [weakSelf chooseCityAction:nil];
             }];
             [alertView show];
             return;
@@ -125,6 +138,8 @@
 //        WYLog(@"Placemark des: %@", placemark.description);
         NSDictionary *addressDictionary = placemark.addressDictionary;
         WYLog(@"Placemark addressDictionary: %@", addressDictionary);
+        _chooseCityName = placemark.locality;
+        [self refreshLeftIconViewUI];
     }];
 }
 
@@ -139,7 +154,35 @@
     self.tabController.tabBar.frame = frame;
     [self viewSplash];
     self.titleNavImageView.hidden = NO;
-    [self setRightButtonWithImageName:@"netbar_service_icon" selector:@selector(serviceAction)];
+    [self setRightButtonWithImageName:@"netbar_nav_search" selector:@selector(serviceAction)];
+    
+    [self setLeftButtonTitle:_chooseCityName];
+    [self setLeftButtonWithImageName:nil];
+    [self setLeftButtonWithSelector:@selector(chooseCityAction:)];
+    [self refreshLeftIconViewUI];
+}
+
+-(void)refreshLeftIconViewUI{
+    if (_chooseCityIconImgView == nil) {
+        _chooseCityIconImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"city_choose_down_icon"]];
+        _chooseCityIconImgView.frame = CGRectMake(0, 0, 14, 14);
+        _chooseCityIconImgView.center = self.titleNavBarLeftButton.center;
+        [self.titleNavBar addSubview:_chooseCityIconImgView];
+    }
+    [self setLeftButtonTitle:_chooseCityName];
+    float width = [WYCommonUtils widthWithText:_chooseCityName font:self.titleNavBarLeftButton.titleLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+    if (width > 65) {
+        width = 65;
+    }
+    CGRect frame = self.titleNavBarLeftButton.frame;
+    frame.size.width = width+13;
+    self.titleNavBarLeftButton.frame = frame;
+    
+    frame = _chooseCityIconImgView.frame;
+    frame.origin.x = self.titleNavBarLeftButton.frame.origin.x + self.titleNavBarLeftButton.frame.size.width + 2;
+    frame.origin.y = self.titleNavBarLeftButton.center.y;
+    _chooseCityIconImgView.frame = frame;
+    
 }
 
 - (UINavigationController *)navigationController{
@@ -150,8 +193,61 @@
 }
 
 - (void)serviceAction {
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"客服" message:@"H5页跳转" cancelButtonTitle:@"确定"];
-    [alertView show];
+    [self searchNetbarAction:nil];
+//    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"客服" message:@"H5页跳转" cancelButtonTitle:@"确定"];
+//    [alertView show];
+}
+
+- (void)chooseCityAction:(id)sender{
+    if (!_isOpen) {
+        
+        if (_locationChooseVc.view.superview) {
+            [_locationChooseVc.view removeFromSuperview];
+        }
+        if (_bgMarkButtonView.superview) {
+            [_bgMarkButtonView removeFromSuperview];
+        }
+        
+        _locationChooseVc = [[LocationViewController alloc] init];
+        _locationChooseVc.delagte = self;
+        _locationChooseVc.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, 0);
+        [self.view addSubview:_locationChooseVc.view];
+        [self.view insertSubview:_locationChooseVc.view belowSubview:self.titleNavBar];
+        
+        _bgMarkButtonView = [UIButton buttonWithType:UIButtonTypeCustom];
+        _bgMarkButtonView.frame = self.view.bounds;
+        [_bgMarkButtonView addTarget:self action:@selector(cancelChooseCity) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_bgMarkButtonView];
+        [self.view insertSubview:_bgMarkButtonView belowSubview:_locationChooseVc.view];
+        _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+        [UIView animateWithDuration:0.4 animations:^{
+            CGRect frame = _locationChooseVc.view.frame;
+            frame.size.height = 380;
+            _locationChooseVc.view.frame = frame;
+            _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.5];
+        } completion:^(BOOL finished) {
+            
+        }];
+    }else{
+        if (_locationChooseVc.view.superview) {
+            [UIView animateWithDuration:0.4 animations:^{
+                CGRect frame = _locationChooseVc.view.frame;
+                frame.size.height = 0;
+                _locationChooseVc.view.frame = frame;
+                _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+            } completion:^(BOOL finished) {
+                [_locationChooseVc.view removeFromSuperview];
+                [_bgMarkButtonView removeFromSuperview];
+            }];
+        }
+    }
+    
+    _isOpen = !_isOpen;
+}
+
+-(void)cancelChooseCity{
+    _isOpen = YES;
+    [self chooseCityAction:nil];
 }
 
 -(void)getCacheNetbarInfos{
@@ -277,10 +373,11 @@
     coordinate.latitude = [netbarInfo.latitude doubleValue];
     coordinate.longitude = [netbarInfo.longitude doubleValue];
     [nmVc setShowLocation:coordinate.latitude longitute:coordinate.longitude];
-    nmVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self.navigationController presentViewController:nmVc animated:YES completion:^{
-        
-    }];
+    [self.navigationController pushViewController:nmVc animated:YES];
+//    nmVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+//    [self.navigationController presentViewController:nmVc animated:YES completion:^{
+//        
+//    }];
 }
 
 #pragma mark - IBAction
@@ -311,6 +408,13 @@
 - (void)handleUserInfoChanged:(NSNotification *)notification{
     [self getNetbarInfos];
     [self.netBarTable reloadData];
+}
+
+#pragma mark - LocationViewControllerDelegate
+- (void)locationViewControllerWith:(LocationViewController*)vc selectCity:(NSDictionary *)cityDic{
+    [self cancelChooseCity];
+    _chooseCityName = [cityDic stringObjectForKey:@"name"];
+    [self refreshLeftIconViewUI];
 }
 
 #pragma mark -XETabBarControllerSubVcProtocol

@@ -95,17 +95,7 @@
     int state = 1;
     NSString *stateLabelText = @"";
     NSString *introLabelText = @"";
-    int isValid = orderInfo.isValid;
-    if (isValid == 0) {
-        stateLabelText = @"已取消";
-        introLabelText = @"您已取消该预订";
-    }else if (isValid == 1){
-        stateLabelText = @"待处理";
-        introLabelText = @"您已提交订单，请等待网吧处理";
-        state = 2;
-    }else if (isValid == 2){
-        stateLabelText = @"支付成功";
-    }
+    
     int isReceive = orderInfo.isReceive;
     if (isReceive == 1) {
         stateLabelText = @"已接单";
@@ -125,6 +115,7 @@
         stateLabelText = @"已拒单";
         introLabelText = @"网吧已拒单，原因：";
     }
+    
     int status = orderInfo.status;
     if (status == -1) {
         stateLabelText = @"支付失败";
@@ -134,9 +125,26 @@
     }else if (status == 1){
         stateLabelText = @"已支付";
         introLabelText = @"您已支付成功，请到网吧退还押金";
+        state = 1;
     }
-    if([orderInfo.amount isEqualToString:@"0"])
+    
+    int isValid = orderInfo.isValid;
+    if (isValid == 0) {
+        stateLabelText = @"已取消";
+        introLabelText = @"您已取消该预订";
+        state = 1;
+    }else if (isValid == 1){
+        stateLabelText = @"待处理";
+        introLabelText = @"您已提交订单，请等待网吧处理";
         state = 2;
+    }else if (isValid == 2){
+        stateLabelText = @"已支付";
+        introLabelText = @"您已支付成功，请到网吧退还押金";
+        state = 1;
+    }
+    
+//    if([orderInfo.amount isEqualToString:@"0"])
+//        state = 2;
     self.stateLabel.text = stateLabelText;
     self.introLabel.text = introLabelText;
     

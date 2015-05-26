@@ -8,6 +8,15 @@
 
 #import "WYSuperViewController.h"
 
+@protocol LocationViewControllerDelegate;
+
 @interface LocationViewController : WYSuperViewController
 
+@property (nonatomic, assign) id<LocationViewControllerDelegate> delagte;
+
+@end
+
+@protocol LocationViewControllerDelegate <NSObject>
+@optional
+- (void)locationViewControllerWith:(LocationViewController*)vc selectCity:(NSDictionary *)cityDic;//areaCode,name
 @end

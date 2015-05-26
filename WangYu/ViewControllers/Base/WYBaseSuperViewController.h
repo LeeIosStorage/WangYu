@@ -17,6 +17,7 @@
 @interface WYBaseSuperViewController : UIViewController <PullToRefreshViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView *titleNavBar;
+@property (nonatomic, strong) UIButton  *titleNavBarLeftButton;
 @property (nonatomic, strong) IBOutlet UIButton *titleNavBarRightBtn;
 @property (nonatomic, strong) IBOutlet UIButton *titleNavBarRightBtn2;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *segmentedControl;

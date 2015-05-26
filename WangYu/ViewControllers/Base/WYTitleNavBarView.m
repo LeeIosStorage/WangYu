@@ -52,6 +52,10 @@
         self.lineImageView.frame = frame;
         
         self.titleLabel.font = SKIN_FONT_FROMNAME(18);
+        self.toolBarLeftButton.titleLabel.font = SKIN_FONT_FROMNAME(15);
+        self.toolBarLeftButton2.titleLabel.font = SKIN_FONT_FROMNAME(15);
+        self.toolBarRightButton.titleLabel.font = SKIN_FONT_FROMNAME(15);
+        self.toolBarRightButton2.titleLabel.font = SKIN_FONT_FROMNAME(15);
     }
     return self;
 }

@@ -434,6 +434,7 @@
             return;
         }
         [WYProgressHUD AlertSuccess:@"取消订单成功" At:weakSelf.view];
+        orderInfo.isValid = 0;
         [weakSelf.reserveOrderTableView reloadData];
         
     } tag:tag];
@@ -453,14 +454,16 @@
             return;
         }
         [WYProgressHUD AlertSuccess:@"删除订单成功" At:weakSelf.view];
+        orderInfo.isValid = 0;
+        [weakSelf.payOrderTableView reloadData];
         
-        NSInteger index = [weakSelf.payOrderList indexOfObject:orderInfo];
-        if (index == NSNotFound || index < 0 || index >= weakSelf.payOrderList.count) {
-            return;
-        }
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-        [weakSelf.payOrderList removeObjectAtIndex:indexPath.row];
-        [weakSelf.payOrderTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        NSInteger index = [weakSelf.payOrderList indexOfObject:orderInfo];
+//        if (index == NSNotFound || index < 0 || index >= weakSelf.payOrderList.count) {
+//            return;
+//        }
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+//        [weakSelf.payOrderList removeObjectAtIndex:indexPath.row];
+//        [weakSelf.payOrderTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
     } tag:tag];
 }

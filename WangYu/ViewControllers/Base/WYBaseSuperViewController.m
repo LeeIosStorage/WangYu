@@ -12,7 +12,6 @@
 @interface WYBaseSuperViewController ()
 
 @property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UIButton  *titleNavBarLeftButton;
 @property (nonatomic, strong) UIButton  *titleNavBarLeftButton2;
 @property (nonatomic, strong) UIView  *titleNavBarLeftCustomView;
 

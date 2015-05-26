@@ -115,9 +115,12 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)getPayOrderListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
 - (BOOL)cancelReserveOrderWithUid:(NSString *)uid reserveId:(NSString *)reserveId tag:(int)tag;
 - (BOOL)deletePayOrderWithUid:(NSString *)uid orderId:(NSString *)orderId tag:(int)tag;
+//有效的二级城市
+- (BOOL)getAllValidCityListWithTag:(int)tag;
+//验证城市是否开通
+- (BOOL)validateAreaWithAreaName:(NSString *)areaName tag:(int)tag;
 
 #pragma mark - 活动
 - (BOOL)getActivityListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
-
 
 @end
