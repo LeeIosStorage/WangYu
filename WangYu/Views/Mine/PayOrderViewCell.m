@@ -88,25 +88,33 @@
     frame.size.width = width;
     self.priceLabel.frame = frame;
     
-    NSString *privilegeYuanText = [NSString stringWithFormat:@"%d元",orderInfo.scoreAmount];
-    self.privilegeYuanLabel.text = privilegeYuanText;
-    width = [WYCommonUtils widthWithText:privilegeYuanText font:self.privilegeYuanLabel.font lineBreakMode:NSLineBreakByWordWrapping];
-    frame = self.privilegeYuanLabel.frame;
-    frame.origin.x = self.priceLabel.frame.origin.x + self.priceLabel.frame.size.width + 7;
-    frame.size.width = width;
-    self.privilegeYuanLabel.frame = frame;
+    self.privilegeYuanLabel.hidden = YES;
+    if (orderInfo.scoreAmount > 0) {
+        self.privilegeYuanLabel.hidden = NO;
+        NSString *privilegeYuanText = [NSString stringWithFormat:@"%d元",orderInfo.scoreAmount];
+        self.privilegeYuanLabel.text = privilegeYuanText;
+        width = [WYCommonUtils widthWithText:privilegeYuanText font:self.privilegeYuanLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+        frame = self.privilegeYuanLabel.frame;
+        frame.origin.x = self.priceLabel.frame.origin.x + self.priceLabel.frame.size.width + 7;
+        frame.size.width = width;
+        self.privilegeYuanLabel.frame = frame;
+        
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:privilegeYuanText];
+        [attrString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:NSMakeRange(0, privilegeYuanText.length)];
+        self.privilegeYuanLabel.attributedText = attrString;
+    }
     
-    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:privilegeYuanText];
-    [attrString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:NSMakeRange(0, privilegeYuanText.length)];
-    self.privilegeYuanLabel.attributedText = attrString;
-    
-    NSString *redPacketText = [NSString stringWithFormat:@"使用%d元红包",orderInfo.redbagAmount];
-    self.redPacketLabel.text = redPacketText;
-    width = [WYCommonUtils widthWithText:redPacketText font:self.redPacketLabel.font lineBreakMode:NSLineBreakByWordWrapping];
-    frame = self.redPacketLabel.frame;
-    frame.origin.x = self.privilegeYuanLabel.frame.origin.x + self.privilegeYuanLabel.frame.size.width + 7;
-    frame.size.width = width+10;
-    self.redPacketLabel.frame = frame;
+    self.redPacketLabel.hidden = YES;
+    if (orderInfo.redbagAmount > 0) {
+        self.redPacketLabel.hidden = NO;
+        NSString *redPacketText = [NSString stringWithFormat:@"使用%d元红包",orderInfo.redbagAmount];
+        self.redPacketLabel.text = redPacketText;
+        width = [WYCommonUtils widthWithText:redPacketText font:self.redPacketLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+        frame = self.redPacketLabel.frame;
+        frame.origin.x = self.privilegeYuanLabel.frame.origin.x + self.privilegeYuanLabel.frame.size.width + 7;
+        frame.size.width = width+10;
+        self.redPacketLabel.frame = frame;
+    }
     
     self.cancelOrderButton.hidden = YES;
     self.payOrderButton.hidden = YES;
@@ -117,6 +125,10 @@
     if (status > 1) {
         status = 1;
     }
+    if (orderInfo.isValid == 0) {
+        self.stateLabel.text = @"已删除";
+        status = 2;//订单已删除
+    }
     if (status == 0) {
         self.cancelOrderButton.hidden = NO;
         self.payOrderButton.hidden = YES;
@@ -124,24 +136,17 @@
         CGRect buttonFrame = self.cancelOrderButton.frame;
         buttonFrame.origin.x = SCREEN_WIDTH - buttonFrame.size.width - 12;
         self.cancelOrderButton.frame = buttonFrame;
-        
+
     }else if (status == 1){
+        //有删除没支付
         self.cancelOrderButton.hidden = NO;
         self.payOrderButton.hidden = YES;
         CGRect buttonFrame = self.cancelOrderButton.frame;
         buttonFrame.origin.x = SCREEN_WIDTH - buttonFrame.size.width - 12;
         self.cancelOrderButton.frame = buttonFrame;
         
-    }
-//    else if (status == 3){
-//        self.cancelOrderButton.hidden = YES;
-//        self.payOrderButton.hidden = NO;
-//        CGRect buttonFrame = self.payOrderButton.frame;
-//        buttonFrame.origin.x = SCREEN_WIDTH - buttonFrame.size.width - 12;
-//        self.payOrderButton.frame = buttonFrame;
-//        
-//    }
-    else if (status == -1){
+    }else if (status == -1){
+        //有删除有支付
         self.cancelOrderButton.hidden = NO;
         self.payOrderButton.hidden = NO;
         self.stateLabel.textColor = SKIN_TEXT_COLOR1;
@@ -154,6 +159,10 @@
         buttonFrame.origin.x = self.payOrderButton.frame.origin.x - buttonFrame.size.width - 12;
         self.cancelOrderButton.frame = buttonFrame;
         
+    }else if (status ==2){
+        //没删除没支付
+        self.cancelOrderButton.hidden = YES;
+        self.payOrderButton.hidden = YES;
     }else{
         self.stateLabel.hidden = YES;
     }

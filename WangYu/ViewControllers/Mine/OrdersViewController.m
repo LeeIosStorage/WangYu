@@ -434,6 +434,7 @@
             return;
         }
         [WYProgressHUD AlertSuccess:@"取消订单成功" At:weakSelf.view];
+        orderInfo.isValid = 0;
         [weakSelf.reserveOrderTableView reloadData];
         
     } tag:tag];
@@ -453,6 +454,7 @@
             return;
         }
         [WYProgressHUD AlertSuccess:@"删除订单成功" At:weakSelf.view];
+        orderInfo.isValid = 0;
         [weakSelf.payOrderTableView reloadData];
         
 //        NSInteger index = [weakSelf.payOrderList indexOfObject:orderInfo];
