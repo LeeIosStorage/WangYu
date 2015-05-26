@@ -116,4 +116,8 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)cancelReserveOrderWithUid:(NSString *)uid reserveId:(NSString *)reserveId tag:(int)tag;
 - (BOOL)deletePayOrderWithUid:(NSString *)uid orderId:(NSString *)orderId tag:(int)tag;
 
+#pragma mark - 活动
+- (BOOL)getActivityListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
+
+
 @end
