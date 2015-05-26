@@ -122,5 +122,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 
 #pragma mark - 活动
 - (BOOL)getActivityListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
+- (BOOL)getInfoListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
+- (BOOL)getMatchListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
 
 @end

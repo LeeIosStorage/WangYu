@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *stateImage;
+@property (strong, nonatomic) IBOutlet UILabel *stateLabel;
 
 @property (strong, nonatomic) WYActivityInfo *activityInfo;
 

@@ -29,10 +29,24 @@
         [_activityImage sd_setImageWithURL:nil];
         [_activityImage setImage:[UIImage imageNamed:@"netbar_load_icon"]];
     }
+    _activityImage.layer.cornerRadius = 4.0;
+    _activityImage.layer.masksToBounds = YES;
     
     _nameLabel.text = _activityInfo.title;
     _timeLabel.text = _activityInfo.startTime;
+    if (_activityInfo.status == 1) {
+        _stateLabel.text = @"报名进行中";
+        [_stateImage setImage:[UIImage imageNamed:@"activity_league_start_icon"]];
+    }else if (_activityInfo.status == 2) {
+        _stateLabel.text = @"报名未开始";
+        [_stateImage setImage:[UIImage imageNamed:@"activity_league_start_icon"]];
+    }else if (_activityInfo.status == 3) {
+        _stateLabel.text = @"报名已截止";
+        [_stateImage setImage:[UIImage imageNamed:@"activity_league_end_icon"]];
+    }else if (_activityInfo.status == 4) {
+        _stateLabel.text = @"赛事已结束";
+        [_stateImage setImage:[UIImage imageNamed:@"activity_league_end_icon"]];
+    }
 }
-
 
 @end

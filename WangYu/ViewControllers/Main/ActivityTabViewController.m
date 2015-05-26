@@ -15,6 +15,7 @@
 
 @interface ActivityTabViewController ()<UITableViewDataSource,UITableViewDelegate>
 
+@property (strong, nonatomic) IBOutlet UIView *sectionView;
 @property (strong, nonatomic) IBOutlet UITableView *leagueTableView;
 @property (strong, nonatomic) NSMutableArray *activityInfos;
 
@@ -71,7 +72,6 @@
         }
         [weakSelf.leagueTableView reloadData];
     }tag:tag];
-
 }
 
 #pragma mark - Table view data source
@@ -88,34 +88,26 @@
     return 10;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 39;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+//    return 44;
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 158;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
 //    UIView *view = [[UIView alloc] init];
-//    if (self.netbarInfo.matcheArray.count == 0) {
-//        view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 93);
-//        CGRect frame = self.sectionView2.frame;
-//        frame.size.width = SCREEN_WIDTH;
-//        self.sectionView2.frame = frame;
-//        [view addSubview:self.sectionView2];
-//    }else {
-//        view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 39);
-//        CGRect frame = self.sectionView.frame;
-//        frame.size.width = SCREEN_WIDTH;
-//        self.sectionView.frame = frame;
-//        [view addSubview:self.sectionView];
-//    }
+//
+//    view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
+//    CGRect frame = self.sectionView.frame;
+//    frame.size.width = SCREEN_WIDTH;
+//    self.sectionView.frame = frame;
+//    [view addSubview:self.sectionView];
 //    
 //    return view;
-    return nil;
-}
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
