@@ -16,6 +16,9 @@
 #import "UIImageView+WebCache.h"
 #import "SettingViewCell.h"
 #import "PersonalEditViewController.h"
+#import "MessageListViewController.h"
+#import "CollectListViewController.h"
+#import "RedPacketViewController.h"
 
 enum TABLEVIEW_SECTION_INDEX {
     kMessage = 0,
@@ -40,12 +43,14 @@ enum TABLEVIEW_SECTION_INDEX {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self setTilteLeftViewHide:NO];
-    
-    [self getCacheTopicInfo];
-    [self refreshTopicList];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
     
     [self refreshUI];
     
+}
+
+- (void)handleUserInfoChanged:(NSNotification *)notification{
+    [self refreshUI];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,20 +100,14 @@ enum TABLEVIEW_SECTION_INDEX {
 }
 
 #pragma mark - request
-- (void)getCacheTopicInfo{
-    
-}
-
-- (void)refreshTopicList{
-    
-}
 
 #pragma mark - IBAction
 - (void)serviceAction:(id)sender{
     
 }
 - (void)messageAction:(id)sender{
-    
+    MessageListViewController *messageVc = [[MessageListViewController alloc] init];
+    [self.navigationController pushViewController:messageVc animated:YES];
 }
 - (IBAction)editAction:(id)sender{
     PersonalEditViewController *personalEditVc = [[PersonalEditViewController alloc] init];
@@ -229,13 +228,15 @@ enum TABLEVIEW_SECTION_INDEX {
             }else if (indexPath.row == 1){
                 
             }else if (indexPath.row == 2){
-                
+                RedPacketViewController *vc = [[RedPacketViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }
             break;
         case kCollect:{
             if (indexPath.row == 0){
-                
+                CollectListViewController *vc = [[CollectListViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }
             break;

@@ -27,6 +27,7 @@
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate,NetbarTabCellDelegate,LocationViewControllerDelegate>
 {
     NSString *_chooseCityName;
+    NSString *_chooseAreaCode;
     UIImageView *_chooseCityIconImgView;
     
     BOOL _isOpen;
@@ -225,6 +226,10 @@
             frame.size.height = 380;
             _locationChooseVc.view.frame = frame;
             _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.5];
+            _chooseCityIconImgView.transform = CGAffineTransformMakeRotation(180 *M_PI / 180.0);
+            frame = _chooseCityIconImgView.frame;
+            frame.origin.y = self.titleNavBarLeftButton.center.y + 4;
+            _chooseCityIconImgView.frame = frame;
         } completion:^(BOOL finished) {
             
         }];
@@ -235,6 +240,10 @@
                 frame.size.height = 0;
                 _locationChooseVc.view.frame = frame;
                 _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+                _chooseCityIconImgView.transform = CGAffineTransformMakeRotation(0 *M_PI / 180.0);
+                frame = _chooseCityIconImgView.frame;
+                frame.origin.y = self.titleNavBarLeftButton.center.y;
+                _chooseCityIconImgView.frame = frame;
             } completion:^(BOOL finished) {
                 [_locationChooseVc.view removeFromSuperview];
                 [_bgMarkButtonView removeFromSuperview];
@@ -254,7 +263,7 @@
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getNetbarListWithUid:[WYEngine shareInstance].uid latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude tag:tag];
+    [[WYEngine shareInstance] getNetbarListWithUid:[WYEngine shareInstance].uid latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_chooseAreaCode tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -278,7 +287,7 @@
 - (void)getNetbarInfos{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getNetbarListWithUid:[WYEngine shareInstance].uid latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude tag:tag];
+    [[WYEngine shareInstance] getNetbarListWithUid:[WYEngine shareInstance].uid latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_chooseAreaCode tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
 //        [WYProgressHUD AlertLoadDone];
         [self.pullRefreshView finishedLoading];
@@ -388,6 +397,7 @@
 
 - (IBAction)searchNetbarAction:(id)sender {
     NetbarSearchViewController *searchVc = [[NetbarSearchViewController alloc] init];
+    searchVc.areaCode = _chooseAreaCode;
     [self.navigationController pushViewController:searchVc animated:YES];
 }
 
@@ -414,7 +424,9 @@
 - (void)locationViewControllerWith:(LocationViewController*)vc selectCity:(NSDictionary *)cityDic{
     [self cancelChooseCity];
     _chooseCityName = [cityDic stringObjectForKey:@"name"];
+    _chooseAreaCode = [[cityDic objectForKey:@"areaCode"] description];
     [self refreshLeftIconViewUI];
+    [self getNetbarInfos];
 }
 
 #pragma mark -XETabBarControllerSubVcProtocol
