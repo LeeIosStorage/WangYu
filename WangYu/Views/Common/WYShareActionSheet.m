@@ -43,17 +43,32 @@
 }
 
 - (void)shareContent{
-    self.shareTitle = [NSString stringWithFormat:@"网娱大师-%@|快来定座吧",_netbarInfo.netbarName];
-    self.shareDescription = [NSString stringWithFormat:@"上网价格￥%d/小时\n%@",_netbarInfo.price,_netbarInfo.address];
-    self.shareWebpageUrl = [NSString stringWithFormat:@"%@/share/netbar/%@",[WYEngine shareInstance].baseUrl,_netbarInfo.nid];
-    
-    if (![self.netbarInfo.smallImageUrl isEqual:[NSNull null]]) {
-        self.shareImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[self.netbarInfo.smallImageUrl absoluteString]];
+    if (self.netbarInfo) {
+        self.shareTitle = [NSString stringWithFormat:@"网娱大师-%@|快来定座吧",_netbarInfo.netbarName];
+        self.shareDescription = [NSString stringWithFormat:@"上网价格￥%d/小时\n%@",_netbarInfo.price,_netbarInfo.address];
+        self.shareWebpageUrl = [NSString stringWithFormat:@"%@/share/netbar/%@",[WYEngine shareInstance].baseUrl,_netbarInfo.nid];
+        
+        if (![self.netbarInfo.smallImageUrl isEqual:[NSNull null]]) {
+            self.shareImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[self.netbarInfo.smallImageUrl absoluteString]];
+        }
+        if (!self.shareImage) {
+            self.shareImage = [UIImage imageNamed:@"netbar_load_icon"];
+        }
     }
-    if (!self.shareImage) {
-        self.shareImage = [UIImage imageNamed:@"netbar_load_icon"];
+    if (self.activityInfo) {
+        self.shareTitle = [NSString stringWithFormat:@"网娱大师-%@|快来加入约战吧",_activityInfo.title];
+        self.shareDescription = [NSString stringWithFormat:@"开始时间：%@结束时间：\n%@",_activityInfo.startTime,_activityInfo.endTime];
+        self.shareWebpageUrl = [NSString stringWithFormat:@"%@/share/activity/%@",[WYEngine shareInstance].baseUrl,_activityInfo.aId];
+        
+        if (![self.activityInfo.activityImageUrl isEqual:[NSNull null]]) {
+            self.shareImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[self.activityInfo.smallImageURL absoluteString]];
+        }
+        if (!self.shareImage) {
+            self.shareImage = [UIImage imageNamed:@"activity_load_icon"];
+        }
     }
 }
+
 
 #pragma mark -- LSCustomerSheetDelg
 -(void)customerWindowClickAt:(NSIndexPath *)indexPath action:(NSString *)action{

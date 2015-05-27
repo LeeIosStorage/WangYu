@@ -12,6 +12,7 @@
 #import "WYEngine.h"
 #import "WYActivityInfo.h"
 #import "WYProgressHUD.h"
+#import "MatchDetailViewController.h"
 
 @interface ActivityTabViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -130,6 +131,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    WYActivityInfo *activityInfo = _activityInfos[indexPath.row];
+    MatchDetailViewController *mdVc = [[MatchDetailViewController alloc] init];
+    mdVc.activityInfo = activityInfo;
+    [self.navigationController pushViewController:mdVc animated:YES];
+    
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
