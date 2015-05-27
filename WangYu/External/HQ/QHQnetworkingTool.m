@@ -18,6 +18,9 @@
     // 1.创建请求管理对象
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
     // 2.发送请求
     [manager POST:url parameters:params
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -37,6 +40,9 @@
     
     // 1.创建请求管理对象
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     
     // 2.发送请求
     [manager POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> totalFormData) {

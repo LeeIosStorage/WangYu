@@ -141,7 +141,7 @@
     __weak NetbarSearchViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:1 pageSize:10 latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude tag:tag];
+    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:1 pageSize:10 latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -166,7 +166,7 @@
     _netBarNextCursor = 1;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)_netBarNextCursor pageSize:10 latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude tag:tag];
+    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)_netBarNextCursor pageSize:10 latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {

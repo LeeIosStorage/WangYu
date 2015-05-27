@@ -88,11 +88,11 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 
 #pragma mark - 网吧
 //首页网吧list
-- (BOOL)getNetbarListWithUid:(NSString *)uid latitude:(float)latitude longitude:(float)longitude tag:(int)tag;
+- (BOOL)getNetbarListWithUid:(NSString *)uid latitude:(float)latitude longitude:(float)longitude areaCode:(NSString *)areaCode tag:(int)tag;
 //网吧详情
 - (BOOL)getNetbarDetailWithUid:(NSString *)uid netbarId:(NSString *)nid tag:(int)tag;
 //网吧列表(全部)
-- (BOOL)getNetbarAllListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize latitude:(float)latitude longitude:(float)longitude tag:(int)tag;
+- (BOOL)getNetbarAllListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize latitude:(float)latitude longitude:(float)longitude areaCode:(NSString *)areaCode tag:(int)tag;
 //搜索网吧(网吧名称)
 - (BOOL)searchNetbarWithUid:(NSString *)uid netbarName:(NSString *)netbarName latitude:(float)latitude longitude:(float)longitude tag:(int)tag;
 //附近网吧(经纬度)
@@ -123,6 +123,15 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 #pragma mark - mine
 //完善资料
 - (BOOL)editUserInfoWithUid:(NSString *)uid nickName:(NSString *)nickName avatar:(NSArray *)avatar tag:(int)tag;
+//消息
+- (BOOL)getMessageListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
+//收藏的网吧
+- (BOOL)getCollectNetBarListWithUid:(NSString *)uid latitude:(float)latitude longitude:(float)longitude page:(int)page pageSize:(int)pageSize tag:(int)tag;
+//收藏的游戏
+- (BOOL)getCollectGameListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
+- (BOOL)getFreeRedPacketListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
+- (BOOL)getHistoryRedPacketListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
+
 #pragma mark - 活动
 - (BOOL)getActivityListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
 - (BOOL)getInfoListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;

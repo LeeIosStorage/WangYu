@@ -34,6 +34,8 @@
 #define MAX_WX_IMAGE_SIZE 32*1024
 #define WY_IMAGE_COMPRESSION_QUALITY 0.4
 
+#define DATA_LOAD_PAGESIZE_COUNT 10
+
 #define SKIN_COLOR [UIColor colorWithRed:(1.0*0xfd/0xff) green:(1.0*0xd6/0xff) blue:(1.0*0x44/0xff) alpha:1]
 
 #define SKIN_TEXT_COLOR1 [UIColor colorWithRed:(1.0*0x33/0xff) green:(1.0*0x33/0xff) blue:(1.0*0x33/0xff) alpha:1]
