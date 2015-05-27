@@ -13,6 +13,7 @@
 #import "UIImageView+WebCache.h"
 #import "WYAlertView.h"
 #import "WYShareActionSheet.h"
+#import "MatchPlaceViewController.h"
 
 @interface MatchDetailViewController ()<UITableViewDelegate,UITableViewDataSource,WYShareActionSheetDelegate>{
     WYShareActionSheet *_shareAction;
@@ -275,7 +276,8 @@
             if (indexPath.row == 0){
                 break;
             }else if (indexPath.row == 1){
-                [self showAlertView];
+                MatchPlaceViewController *mpVc = [[MatchPlaceViewController alloc] init];
+                [self.navigationController pushViewController:mpVc animated:YES];
                 break;
             }else if (indexPath.row == 2){
                 [self showAlertView];
@@ -348,6 +350,12 @@
 
 - (IBAction)joinAction:(id)sender {
     
+}
+
+-(void)dealloc{
+    WYLog(@"MatchDetailViewController dealloc!!!");
+    _matchTableView.delegate = nil;
+    _matchTableView.dataSource = nil;
 }
 
 @end

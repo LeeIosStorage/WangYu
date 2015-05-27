@@ -221,6 +221,10 @@
 		07C4C9FD1AF9B283008DA5D3 /* ColorGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C4C9FC1AF9B283008DA5D3 /* ColorGradView.m */; };
 		07CB97661AFC5D3400928CB7 /* MMMaterialDesignSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97651AFC5D3400928CB7 /* MMMaterialDesignSpinner.m */; };
 		07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97681AFC5D4C00928CB7 /* DeformationButton.m */; };
+		07E96B891B15BB8B006ED6B7 /* MatchPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E96B871B15BB8B006ED6B7 /* MatchPlaceViewController.m */; };
+		07E96B8A1B15BB8B006ED6B7 /* MatchPlaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E96B881B15BB8B006ED6B7 /* MatchPlaceViewController.xib */; };
+		07E96B8E1B15BD35006ED6B7 /* MatchPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E96B8C1B15BD35006ED6B7 /* MatchPlaceCell.m */; };
+		07E96B8F1B15BD35006ED6B7 /* MatchPlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E96B8D1B15BD35006ED6B7 /* MatchPlaceCell.xib */; };
 		07EEF6C21B0C789000DBC511 /* WYPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EEF6C11B0C789000DBC511 /* WYPayManager.m */; };
 		3BBE46271B0CE79B009EAE02 /* WYPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46261B0CE79B009EAE02 /* WYPhotoItem.m */; };
 		3BBE462A1B0CE8BA009EAE02 /* WYPhotoGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46291B0CE8BA009EAE02 /* WYPhotoGroup.m */; };
@@ -705,6 +709,12 @@
 		07CB97651AFC5D3400928CB7 /* MMMaterialDesignSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMaterialDesignSpinner.m; sourceTree = "<group>"; };
 		07CB97671AFC5D4C00928CB7 /* DeformationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeformationButton.h; sourceTree = "<group>"; };
 		07CB97681AFC5D4C00928CB7 /* DeformationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeformationButton.m; sourceTree = "<group>"; };
+		07E96B861B15BB8B006ED6B7 /* MatchPlaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchPlaceViewController.h; path = Activity/MatchPlaceViewController.h; sourceTree = "<group>"; };
+		07E96B871B15BB8B006ED6B7 /* MatchPlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchPlaceViewController.m; path = Activity/MatchPlaceViewController.m; sourceTree = "<group>"; };
+		07E96B881B15BB8B006ED6B7 /* MatchPlaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchPlaceViewController.xib; path = Activity/MatchPlaceViewController.xib; sourceTree = "<group>"; };
+		07E96B8B1B15BD35006ED6B7 /* MatchPlaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchPlaceCell.h; path = Activity/MatchPlaceCell.h; sourceTree = "<group>"; };
+		07E96B8C1B15BD35006ED6B7 /* MatchPlaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchPlaceCell.m; path = Activity/MatchPlaceCell.m; sourceTree = "<group>"; };
+		07E96B8D1B15BD35006ED6B7 /* MatchPlaceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchPlaceCell.xib; path = Activity/MatchPlaceCell.xib; sourceTree = "<group>"; };
 		07EEF6C01B0C789000DBC511 /* WYPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPayManager.h; sourceTree = "<group>"; };
 		07EEF6C11B0C789000DBC511 /* WYPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPayManager.m; sourceTree = "<group>"; };
 		3BBE46251B0CE79B009EAE02 /* WYPhotoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYPhotoItem.h; path = WYPhotoBrower/WYPhotoItem.h; sourceTree = "<group>"; };
@@ -1725,6 +1735,9 @@
 				3BE090841B14CC7500DCAB3C /* MatchDetailViewController.h */,
 				3BE090851B14CC7500DCAB3C /* MatchDetailViewController.m */,
 				3BE090861B14CC7500DCAB3C /* MatchDetailViewController.xib */,
+				07E96B861B15BB8B006ED6B7 /* MatchPlaceViewController.h */,
+				07E96B871B15BB8B006ED6B7 /* MatchPlaceViewController.m */,
+				07E96B881B15BB8B006ED6B7 /* MatchPlaceViewController.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -1735,6 +1748,9 @@
 				3BE0908A1B14CD3A00DCAB3C /* MatchDetailCell.h */,
 				3BE0908B1B14CD3A00DCAB3C /* MatchDetailCell.m */,
 				3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */,
+				07E96B8B1B15BD35006ED6B7 /* MatchPlaceCell.h */,
+				07E96B8C1B15BD35006ED6B7 /* MatchPlaceCell.m */,
+				07E96B8D1B15BD35006ED6B7 /* MatchPlaceCell.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -1829,6 +1845,7 @@
 				0799C8B01AF1D88E00E407BB /* GameCommendViewController.xib in Resources */,
 				077E608C1B0B2D5F0079BC9E /* WeiboSDK.bundle in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
+				07E96B8A1B15BB8B006ED6B7 /* MatchPlaceViewController.xib in Resources */,
 				077E4ACF1B14461D009D1692 /* ActivityViewCell.xib in Resources */,
 				071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */,
 				0715C3A71B09AD6F00C37F82 /* Pin_Ios7@2x.png in Resources */,
@@ -1839,6 +1856,7 @@
 				07566CA61AFC648B00F93B58 /* SettingViewController.xib in Resources */,
 				076F82901B05E0CB00CACF0D /* NetbarMapViewController.xib in Resources */,
 				0745B3891B007AF3006D6853 /* NetbarDetailCell.xib in Resources */,
+				07E96B8F1B15BD35006ED6B7 /* MatchPlaceCell.xib in Resources */,
 				0777DFD11B01C4CB00E1E314 /* QuickPayViewController.xib in Resources */,
 				0728D03C1B0F252A00239D96 /* ActivityTabViewController.xib in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
@@ -1922,6 +1940,7 @@
 				079493881B0D9C3D008152A6 /* Order.m in Sources */,
 				073DBD491AE7712F009B49EB /* SDWebImageDownloaderOperation.m in Sources */,
 				073DBD521AE7712F009B49EB /* UIView+WebCacheOperation.m in Sources */,
+				07E96B891B15BB8B006ED6B7 /* MatchPlaceViewController.m in Sources */,
 				073DBD651AE7717D009B49EB /* UIImage+ProportionalFill.m in Sources */,
 				076C8CEC1B048BBB00421460 /* CLLocation+Sino.m in Sources */,
 				0791AB5B1AE8DE260009A5A7 /* AFURLRequestSerialization.m in Sources */,
@@ -1987,6 +2006,7 @@
 				0791AB5E1AE8DE260009A5A7 /* QHQnetworkingTool.m in Sources */,
 				076C8CE81B048A5C00421460 /* WYLocationServiceUtil.m in Sources */,
 				076E224F1B02F73200F33815 /* NetbarSearchViewController.m in Sources */,
+				07E96B8E1B15BD35006ED6B7 /* MatchPlaceCell.m in Sources */,
 				073DBD431AE7712F009B49EB /* NSData+GIF.m in Sources */,
 				073DBD461AE7712F009B49EB /* SDWebImageCompat.m in Sources */,
 				071923D71AF76C6C00432531 /* RetrievePwdViewController.m in Sources */,
