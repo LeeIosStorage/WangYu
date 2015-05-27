@@ -7,6 +7,7 @@
 //
 
 #import "WYActivityInfo.h"
+#import "WYUserInfo.h"
 #import "WYEngine.h"
 
 @implementation WYActivityInfo
@@ -33,6 +34,18 @@
     }
     if ([dic stringObjectForKey:@"item_pic"]) {
         _itemPicUrl = [dic stringObjectForKey:@"item_pic"];
+    }
+    if ([dic intValueForKey:@"has_favor"]) {
+        _favored = [dic intValueForKey:@"has_favor"];
+    }
+    
+    if ([dic arrayObjectForKey:@"members"]) {
+        _members = [[NSMutableArray alloc] init];
+        for (NSDictionary *memberDic in [dic arrayObjectForKey:@"members"]) {
+            WYUserInfo *userInfo = [[WYUserInfo alloc] init];
+            [userInfo setUserInfoByJsonDic:memberDic];
+            [_members addObject:userInfo];
+        }
     }
 }
 

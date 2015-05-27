@@ -24,10 +24,10 @@
 -(void)setActivityInfo:(WYActivityInfo *)activityInfo{
     _activityInfo = activityInfo;
     if (![activityInfo.activityImageUrl isEqual:[NSNull null]]) {
-        [_activityImage sd_setImageWithURL:activityInfo.smallImageURL placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
+        [_activityImage sd_setImageWithURL:activityInfo.smallImageURL placeholderImage:[UIImage imageNamed:@"activity_load_icon"]];
     }else{
         [_activityImage sd_setImageWithURL:nil];
-        [_activityImage setImage:[UIImage imageNamed:@"netbar_load_icon"]];
+        [_activityImage setImage:[UIImage imageNamed:@"activity_load_icon"]];
     }
     _activityImage.layer.cornerRadius = 4.0;
     _activityImage.layer.masksToBounds = YES;

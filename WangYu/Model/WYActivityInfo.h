@@ -18,8 +18,10 @@
 @property (nonatomic, strong) NSString *itemPicUrl;         //赛事项目图片
 @property (nonatomic, strong) NSString *itemName;           //赛事项目名称
 @property (nonatomic, assign) int status;                   //赛事状态
-@property(nonatomic, readonly) NSURL* smallImageURL;        //图片网络地址
-@property(nonatomic, readonly) NSURL* itemPicURL;           //图片网络地址
+@property (nonatomic, readonly) NSURL* smallImageURL;       //图片网络地址
+@property (nonatomic, readonly) NSURL* itemPicURL;          //图片网络地址
+@property (nonatomic, strong) NSMutableArray* members;      //报名成员
+@property (nonatomic, assign) int favored;                  //是否收藏
 
 @property(nonatomic, strong) NSDictionary* activityInfoByJsonDic;     //活动字典
 

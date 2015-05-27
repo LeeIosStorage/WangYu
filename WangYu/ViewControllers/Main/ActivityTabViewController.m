@@ -131,7 +131,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    WYActivityInfo *activityInfo = _activityInfos[indexPath.row];
     MatchDetailViewController *mdVc = [[MatchDetailViewController alloc] init];
+    mdVc.activityInfo = activityInfo;
     [self.navigationController pushViewController:mdVc animated:YES];
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
