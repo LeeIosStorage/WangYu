@@ -227,6 +227,10 @@
 		3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE462C1B0CE9AB009EAE02 /* WYPhotoBrowser.m */; };
 		3BBE46321B0CF44A009EAE02 /* WYWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46311B0CF44A009EAE02 /* WYWaitingView.m */; };
 		3BBE46351B0CF92A009EAE02 /* WYBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46341B0CF92A009EAE02 /* WYBrowserImageView.m */; };
+		3BE090871B14CC7500DCAB3C /* MatchDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE090851B14CC7500DCAB3C /* MatchDetailViewController.m */; };
+		3BE090881B14CC7500DCAB3C /* MatchDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BE090861B14CC7500DCAB3C /* MatchDetailViewController.xib */; };
+		3BE0908D1B14CD3A00DCAB3C /* MatchDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0908B1B14CD3A00DCAB3C /* MatchDetailCell.m */; };
+		3BE0908E1B14CD3A00DCAB3C /* MatchDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -714,6 +718,12 @@
 		3BBE46311B0CF44A009EAE02 /* WYWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYWaitingView.m; path = WYPhotoBrower/WYWaitingView.m; sourceTree = "<group>"; };
 		3BBE46331B0CF92A009EAE02 /* WYBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYBrowserImageView.h; path = WYPhotoBrower/WYBrowserImageView.h; sourceTree = "<group>"; };
 		3BBE46341B0CF92A009EAE02 /* WYBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYBrowserImageView.m; path = WYPhotoBrower/WYBrowserImageView.m; sourceTree = "<group>"; };
+		3BE090841B14CC7500DCAB3C /* MatchDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchDetailViewController.h; path = Activity/MatchDetailViewController.h; sourceTree = "<group>"; };
+		3BE090851B14CC7500DCAB3C /* MatchDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchDetailViewController.m; path = Activity/MatchDetailViewController.m; sourceTree = "<group>"; };
+		3BE090861B14CC7500DCAB3C /* MatchDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchDetailViewController.xib; path = Activity/MatchDetailViewController.xib; sourceTree = "<group>"; };
+		3BE0908A1B14CD3A00DCAB3C /* MatchDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchDetailCell.h; path = Activity/MatchDetailCell.h; sourceTree = "<group>"; };
+		3BE0908B1B14CD3A00DCAB3C /* MatchDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchDetailCell.m; path = Activity/MatchDetailCell.m; sourceTree = "<group>"; };
+		3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchDetailCell.xib; path = Activity/MatchDetailCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -952,6 +962,7 @@
 				0791AB2F1AE8B7A10009A5A7 /* Setting */,
 				073DBD791AE77982009B49EB /* Main */,
 				0745B37E1B005646006D6853 /* NetBar */,
+				3BE090831B14CAF400DCAB3C /* Activity */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -959,6 +970,7 @@
 		073DBD141AE770C0009B49EB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3BE090891B14CCDA00DCAB3C /* Activity */,
 				079D524C1B01E48600DF4D6B /* Common */,
 				0745B3841B007A9C006D6853 /* Netbar */,
 				076195E31B008F4800397711 /* Mine */,
@@ -1707,6 +1719,26 @@
 			name = WYPhotoBrower;
 			sourceTree = "<group>";
 		};
+		3BE090831B14CAF400DCAB3C /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				3BE090841B14CC7500DCAB3C /* MatchDetailViewController.h */,
+				3BE090851B14CC7500DCAB3C /* MatchDetailViewController.m */,
+				3BE090861B14CC7500DCAB3C /* MatchDetailViewController.xib */,
+			);
+			name = Activity;
+			sourceTree = "<group>";
+		};
+		3BE090891B14CCDA00DCAB3C /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				3BE0908A1B14CD3A00DCAB3C /* MatchDetailCell.h */,
+				3BE0908B1B14CD3A00DCAB3C /* MatchDetailCell.m */,
+				3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */,
+			);
+			name = Activity;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1823,9 +1855,11 @@
 				076195E81B008F8C00397711 /* ReserveOrderViewCell.xib in Resources */,
 				079493841B0D9C3C008152A6 /* AlipaySDK.bundle in Resources */,
 				07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */,
+				3BE0908E1B14CD3A00DCAB3C /* MatchDetailCell.xib in Resources */,
 				0777DFD61B01C7E100E1E314 /* QuickBookCell.xib in Resources */,
 				078FD0411B05FC8D00CBD699 /* LocationViewController.xib in Resources */,
 				07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */,
+				3BE090881B14CC7500DCAB3C /* MatchDetailViewController.xib in Resources */,
 				07868DF01AF8581100160070 /* WYTabBarView.xib in Resources */,
 				073DBDB41AE794C4009B49EB /* arrow.png in Resources */,
 				073DBDB51AE794C4009B49EB /* arrow@2x.png in Resources */,
@@ -1870,6 +1904,7 @@
 				078EDBD91AEF1EF800E93EE8 /* ASIDataDecompressor.m in Sources */,
 				077E4ACE1B14461D009D1692 /* ActivityViewCell.m in Sources */,
 				077D83821AF9AED800AAF31F /* ProgressHUDJF.m in Sources */,
+				3BE090871B14CC7500DCAB3C /* MatchDetailViewController.m in Sources */,
 				3BBE46351B0CF92A009EAE02 /* WYBrowserImageView.m in Sources */,
 				0790493E1AE9DF3000E46795 /* WYOAuthStore.m in Sources */,
 				0794938C1B0D9C3D008152A6 /* MD5DataSigner.m in Sources */,
@@ -1916,6 +1951,7 @@
 				0728D03B1B0F252A00239D96 /* ActivityTabViewController.m in Sources */,
 				0791AB381AE8CF4C0009A5A7 /* EGOCache.m in Sources */,
 				077E607E1B0B2B310079BC9E /* WYShareManager.m in Sources */,
+				3BE0908D1B14CD3A00DCAB3C /* MatchDetailCell.m in Sources */,
 				0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */,
 				0715C3A41B09AD6F00C37F82 /* MapChooseAnnotationView.m in Sources */,
 				076195E71B008F8C00397711 /* ReserveOrderViewCell.m in Sources */,
