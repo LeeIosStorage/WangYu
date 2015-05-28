@@ -23,6 +23,9 @@
     if ([dic stringObjectForKey:@"icon"]) {
         _avatar = [dic stringObjectForKey:@"icon"];
     }
+    if ([dic stringObjectForKey:@"cityCode"]) {
+        _cityCode = [dic stringObjectForKey:@"cityCode"];
+    }
     
     _score = [dic intValueForKey:@"score"];
     _valid = [dic intValueForKey:@"valid"];

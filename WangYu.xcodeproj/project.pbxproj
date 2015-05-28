@@ -139,6 +139,11 @@
 		076F82861B059CB700CACF0D /* WYNetBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 076F82851B059CB700CACF0D /* WYNetBarManager.m */; };
 		076F828F1B05E0CB00CACF0D /* NetbarMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076F828D1B05E0CB00CACF0D /* NetbarMapViewController.m */; };
 		076F82901B05E0CB00CACF0D /* NetbarMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076F828E1B05E0CB00CACF0D /* NetbarMapViewController.xib */; };
+		077570491B16B4CF005C9DC7 /* ApplyActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077570471B16B4CF005C9DC7 /* ApplyActivityViewController.m */; };
+		0775704A1B16B4CF005C9DC7 /* ApplyActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 077570481B16B4CF005C9DC7 /* ApplyActivityViewController.xib */; };
+		0775704E1B16B982005C9DC7 /* ApplyActivityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0775704C1B16B982005C9DC7 /* ApplyActivityViewCell.m */; };
+		0775704F1B16B982005C9DC7 /* ApplyActivityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0775704D1B16B982005C9DC7 /* ApplyActivityViewCell.xib */; };
+		077570521B16DC9B005C9DC7 /* WYMatchWarInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 077570511B16DC9B005C9DC7 /* WYMatchWarInfo.m */; };
 		0777DFCB1B01C4AA00E1E314 /* QuickBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */; };
 		0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */; };
 		0777DFD01B01C4CB00E1E314 /* QuickPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777DFCE1B01C4CB00E1E314 /* QuickPayViewController.m */; };
@@ -488,6 +493,14 @@
 		076F828C1B05E0CB00CACF0D /* NetbarMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetbarMapViewController.h; path = NetBar/NetbarMapViewController.h; sourceTree = "<group>"; };
 		076F828D1B05E0CB00CACF0D /* NetbarMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetbarMapViewController.m; path = NetBar/NetbarMapViewController.m; sourceTree = "<group>"; };
 		076F828E1B05E0CB00CACF0D /* NetbarMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarMapViewController.xib; path = NetBar/NetbarMapViewController.xib; sourceTree = "<group>"; };
+		077570461B16B4CF005C9DC7 /* ApplyActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyActivityViewController.h; sourceTree = "<group>"; };
+		077570471B16B4CF005C9DC7 /* ApplyActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyActivityViewController.m; sourceTree = "<group>"; };
+		077570481B16B4CF005C9DC7 /* ApplyActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplyActivityViewController.xib; sourceTree = "<group>"; };
+		0775704B1B16B982005C9DC7 /* ApplyActivityViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyActivityViewCell.h; sourceTree = "<group>"; };
+		0775704C1B16B982005C9DC7 /* ApplyActivityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyActivityViewCell.m; sourceTree = "<group>"; };
+		0775704D1B16B982005C9DC7 /* ApplyActivityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplyActivityViewCell.xib; sourceTree = "<group>"; };
+		077570501B16DC9B005C9DC7 /* WYMatchWarInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYMatchWarInfo.h; sourceTree = "<group>"; };
+		077570511B16DC9B005C9DC7 /* WYMatchWarInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYMatchWarInfo.m; sourceTree = "<group>"; };
 		0777DFC81B01C4AA00E1E314 /* QuickBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickBookViewController.h; path = NetBar/QuickBookViewController.h; sourceTree = "<group>"; };
 		0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickBookViewController.m; path = NetBar/QuickBookViewController.m; sourceTree = "<group>"; };
 		0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuickBookViewController.xib; path = NetBar/QuickBookViewController.xib; sourceTree = "<group>"; };
@@ -822,6 +835,9 @@
 				070DCBDC1B00762F00B27C19 /* OrdersViewController.h */,
 				070DCBDD1B00762F00B27C19 /* OrdersViewController.m */,
 				070DCBDE1B00762F00B27C19 /* OrdersViewController.xib */,
+				077570461B16B4CF005C9DC7 /* ApplyActivityViewController.h */,
+				077570471B16B4CF005C9DC7 /* ApplyActivityViewController.m */,
+				077570481B16B4CF005C9DC7 /* ApplyActivityViewController.xib */,
 				076219361B15C19600D912A1 /* RedPacketViewController.h */,
 				076219371B15C19600D912A1 /* RedPacketViewController.m */,
 				076219381B15C19600D912A1 /* RedPacketViewController.xib */,
@@ -1052,6 +1068,8 @@
 				076E22551B03512700F33815 /* WYOrderInfo.m */,
 				077E4AD01B146562009D1692 /* WYActivityInfo.h */,
 				077E4AD11B146562009D1692 /* WYActivityInfo.m */,
+				077570501B16DC9B005C9DC7 /* WYMatchWarInfo.h */,
+				077570511B16DC9B005C9DC7 /* WYMatchWarInfo.m */,
 				076219261B15A64600D912A1 /* WYMessageInfo.h */,
 				076219271B15A64600D912A1 /* WYMessageInfo.m */,
 				0762192E1B15B4D700D912A1 /* WYGameInfo.h */,
@@ -1300,6 +1318,9 @@
 				0762193E1B15C7FD00D912A1 /* RedPacketViewCell.h */,
 				0762193F1B15C7FD00D912A1 /* RedPacketViewCell.m */,
 				076219401B15C7FD00D912A1 /* RedPacketViewCell.xib */,
+				0775704B1B16B982005C9DC7 /* ApplyActivityViewCell.h */,
+				0775704C1B16B982005C9DC7 /* ApplyActivityViewCell.m */,
+				0775704D1B16B982005C9DC7 /* ApplyActivityViewCell.xib */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -1937,6 +1958,7 @@
 				071923E21AF7771A00432531 /* RegisterViewController.xib in Resources */,
 				07566CAC1AFC663600F93B58 /* SettingViewCell.xib in Resources */,
 				07868DEB1AF8581100160070 /* WYTitleNavBarView.xib in Resources */,
+				0775704A1B16B4CF005C9DC7 /* ApplyActivityViewController.xib in Resources */,
 				071923DD1AF7738900432531 /* SetPwdViewController.xib in Resources */,
 				076219201B15A0CB00D912A1 /* MessageListViewController.xib in Resources */,
 				0715C3AC1B09ECE000C37F82 /* WYCustomerWindow.xib in Resources */,
@@ -1958,6 +1980,7 @@
 				076E0DEC1B1475FE00E4363A /* PersonalEditViewController.xib in Resources */,
 				07B48B4A1B0C6E9D0000857F /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				076195ED1B008FAC00397711 /* PayOrderViewCell.xib in Resources */,
+				0775704F1B16B982005C9DC7 /* ApplyActivityViewCell.xib in Resources */,
 				07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2006,6 +2029,7 @@
 				073DBDF71AE7A1B0009B49EB /* UIImage+RoundedCorner.m in Sources */,
 				076E22561B03512700F33815 /* WYOrderInfo.m in Sources */,
 				0791AB2D1AE89B960009A5A7 /* WYActionSheet.m in Sources */,
+				077570491B16B4CF005C9DC7 /* ApplyActivityViewController.m in Sources */,
 				0794938A1B0D9C3D008152A6 /* DataSigner.m in Sources */,
 				0715C3AF1B09EF7300C37F82 /* WYShareActionSheet.m in Sources */,
 				07EEF6C21B0C789000DBC511 /* WYPayManager.m in Sources */,
@@ -2110,8 +2134,10 @@
 				073DBDB71AE794C4009B49EB /* PullToRefreshView.m in Sources */,
 				0794938B1B0D9C3D008152A6 /* DataVerifier.m in Sources */,
 				07868DEC1AF8581100160070 /* WYCommonVcTransition.m in Sources */,
+				077570521B16DC9B005C9DC7 /* WYMatchWarInfo.m in Sources */,
 				076219301B15B4D700D912A1 /* WYGameInfo.m in Sources */,
 				0723DDFF1B0F19830040295B /* CallOutAnnotationView.m in Sources */,
+				0775704E1B16B982005C9DC7 /* ApplyActivityViewCell.m in Sources */,
 				0791AB5D1AE8DE260009A5A7 /* AFURLSessionManager.m in Sources */,
 				078EDBD71AEF1EF800E93EE8 /* ASIAuthenticationDialog.m in Sources */,
 				0791AB581AE8DE260009A5A7 /* AFNetworkReachabilityManager.m in Sources */,

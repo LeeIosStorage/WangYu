@@ -19,6 +19,7 @@
 #import "MessageListViewController.h"
 #import "CollectListViewController.h"
 #import "RedPacketViewController.h"
+#import "ApplyActivityViewController.h"
 
 enum TABLEVIEW_SECTION_INDEX {
     kMessage = 0,
@@ -226,7 +227,8 @@ enum TABLEVIEW_SECTION_INDEX {
             if (indexPath.row == 0){
                 
             }else if (indexPath.row == 1){
-                
+                ApplyActivityViewController *vc = [[ApplyActivityViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
             }else if (indexPath.row == 2){
                 RedPacketViewController *vc = [[RedPacketViewController alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];

@@ -318,6 +318,33 @@
     _cityName = [cityDic stringObjectForKey:@"name"];
     _cityCode = [cityDic stringObjectForKey:@"areaCode"];
     [self.setTableView reloadData];
+    [self updateUserCity:_cityCode];
+}
+
+- (void)updateUserCity:(NSString*)cityCode{
+    
+    [WYProgressHUD AlertLoading:@"正在切换城市..." At:self.view];
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] editUserCityWithUid:[WYEngine shareInstance].uid cityCode:_cityCode tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"切换城市成功" At:weakSelf.view];
+        
+        NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
+        WYUserInfo *userInfo = [[WYUserInfo alloc] init];
+        [userInfo setUserInfoByJsonDic:object];
+        [WYEngine shareInstance].userInfo = userInfo;
+        
+    }tag:tag];
+    
 }
 
 - (IBAction)exitAction:(id)sender {
