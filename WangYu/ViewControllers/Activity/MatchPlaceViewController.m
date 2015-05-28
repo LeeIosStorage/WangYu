@@ -8,10 +8,16 @@
 
 #import "MatchPlaceViewController.h"
 #import "MatchPlaceCell.h"
+#import "WYEngine.h"
+#import "WYProgressHUD.h"
+#import "WYMatchInfo.h"
+#import "WYAlertView.h"
 
-@interface MatchPlaceViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface MatchPlaceViewController ()<UITableViewDelegate,UITableViewDataSource,MatchPlaceCellDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *placeTableView;
+
+@property (strong, nonatomic) NSMutableArray *matchInfos;
 
 @end
 
@@ -20,6 +26,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self getMatchInfos];
+    
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 19)];
+    footer.userInteractionEnabled = NO;
+    footer.backgroundColor = [UIColor clearColor];
+    _placeTableView.tableFooterView = footer;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,6 +44,35 @@
     [self setTitle:@"比赛地点"];
 }
 
+- (void)getMatchInfos {
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getActivityAddressWithAid:self.activityId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        [WYProgressHUD AlertLoadDone];
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        weakSelf.matchInfos = [NSMutableArray array];
+        NSArray *matchDicArray = [jsonRet arrayObjectForKey:@"object"];
+        for (NSDictionary *dic in matchDicArray) {
+            if (![dic isKindOfClass:[NSDictionary class]]) {
+                continue;
+            }
+            WYMatchInfo *matchInfo = [[WYMatchInfo alloc] init];
+            [matchInfo setMatchInfoByJsonDic:dic];
+            [weakSelf.matchInfos addObject:matchInfo];
+        }
+        [weakSelf.placeTableView reloadData];
+    }tag:tag];
+
+}
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -39,36 +81,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return self.matchInfos.count;
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-//    return 10;
-//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 187;
 }
-
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView *view = [[UIView alloc] init];
-////    if (self.netbarInfo.matcheArray.count == 0) {
-////        view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 93);
-////        CGRect frame = self.sectionView2.frame;
-////        frame.size.width = SCREEN_WIDTH;
-////        self.sectionView2.frame = frame;
-////        [view addSubview:self.sectionView2];
-////    }else {
-////        view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 39);
-////        CGRect frame = self.sectionView.frame;
-////        frame.size.width = SCREEN_WIDTH;
-////        self.sectionView.frame = frame;
-////        [view addSubview:self.sectionView];
-////    }
-//    
-//    return view;
-//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -80,7 +98,9 @@
         NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
         cell = [cells objectAtIndex:0];
     }
-    
+    cell.delegate = self;
+    WYMatchInfo *matchInfo = _matchInfos[indexPath.row];
+    cell.matchInfo = matchInfo;
     return cell;
 }
 
@@ -90,5 +110,15 @@
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
 
+#pragma mark - MatchPlaceCellDelegate
+- (void)matchPlaceCellClickWithCell:(id)cell{
+    NSIndexPath* indexPath = [self.placeTableView indexPathForCell:cell];
+    if (indexPath == nil) {
+        return;
+    }
+    WYMatchInfo* matchInfo = _matchInfos[indexPath.row];
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:matchInfo.mid message:@"H5页跳转" cancelButtonTitle:@"确定"];
+    [alertView show];
+}
 
 @end

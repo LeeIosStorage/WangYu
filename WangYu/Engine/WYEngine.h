@@ -148,5 +148,8 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)getActivityDetailWithUid:(NSString *)uid activityId:(NSString *)aId tag:(int)tag;
 //收藏/取消收藏 赛事
 - (BOOL)collectionActivityWithUid:(NSString *)uid activityId:(NSString *)aId tag:(int)tag;
+//赛事地点
+- (BOOL)getActivityAddressWithAid:(NSString *)aId tag:(int)tag;
+
 
 @end

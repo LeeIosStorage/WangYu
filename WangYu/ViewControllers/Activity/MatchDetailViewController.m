@@ -277,6 +277,7 @@
                 break;
             }else if (indexPath.row == 1){
                 MatchPlaceViewController *mpVc = [[MatchPlaceViewController alloc] init];
+                mpVc.activityId = self.activityInfo.aId;
                 [self.navigationController pushViewController:mpVc animated:YES];
                 break;
             }else if (indexPath.row == 2){
@@ -307,7 +308,8 @@
 }
 
 - (IBAction)showMatchAction:(id)sender {
-    
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"赛事资讯" message:@"H5页跳转" cancelButtonTitle:@"确定"];
+    [alertView show];
 }
 
 - (IBAction)collectAction:(id)sender {
@@ -349,7 +351,9 @@
 }
 
 - (IBAction)joinAction:(id)sender {
-    
+    MatchPlaceViewController *mpVc = [[MatchPlaceViewController alloc] init];
+    mpVc.activityId = self.activityInfo.aId;
+    [self.navigationController pushViewController:mpVc animated:YES];
 }
 
 -(void)dealloc{

@@ -10,4 +10,6 @@
 
 @interface MatchPlaceViewController : WYSuperViewController
 
+@property (nonatomic, strong) NSString *activityId;
+
 @end
