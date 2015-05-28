@@ -8,6 +8,7 @@
 
 #import "MatchWarViewCell.h"
 #import "UIImageView+WebCache.h"
+#import "WYCommonUtils.h"
 
 @implementation MatchWarViewCell
 
@@ -62,6 +63,21 @@
     self.applyCountLabel.text = applyCount;
     self.totalCountLabel.text = totalCount;
     
+    float width = [WYCommonUtils widthWithText:totalCount font:self.totalCountLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+    CGRect frame = self.totalCountLabel.frame;
+    frame.origin.x = SCREEN_WIDTH - width - 12;
+    frame.size.width = width;
+    self.totalCountLabel.frame = frame;
+    
+    width = [WYCommonUtils widthWithText:applyCount font:self.applyCountLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+    frame = self.applyCountLabel.frame;
+    frame.origin.x = self.totalCountLabel.frame.origin.x - width;
+    frame.size.width = width;
+    self.applyCountLabel.frame = frame;
+    
+    frame = self.matchWarHotIocnImgView.frame;
+    frame.origin.x = self.applyCountLabel.frame.origin.x -self.matchWarHotIocnImgView.frame.size.width - 7;
+    self.matchWarHotIocnImgView.frame = frame;
 }
 
 @end
