@@ -25,12 +25,11 @@
     if ([dic objectForKey:@"inApply"]) {
         _isApply = [dic boolValueForKey:@"inApply"];
     }
+    if ([dic objectForKey:@"hasApply"]) {
+        _hasApply = [dic intValueForKey:@"hasApply"];
+    }
     if ([dic objectForKey:@"areas"]) {
-        _areas = [NSMutableArray array];
-        for (NSDictionary *areasDic in [dic arrayObjectForKey:@"areas"]) {
-            NSDictionary *dic = [NSDictionary dictionaryWithDictionary:areasDic];
-            [_areas addObject:dic];
-        }
+        _areas = [dic stringObjectForKey:@"areas"];
     }
     if ([dic objectForKey:@"netbars"]) {
         _netbars = [[NSMutableArray alloc] init];
@@ -44,10 +43,10 @@
 
 - (void)setMatchInfoByJsonDic:(NSDictionary*)dic{
     if (![dic isKindOfClass:[NSDictionary class]]) {
-        return;
+        return;      
     }
     _matchInfoByJsonDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
-    _mid = [[dic objectForKey:@"id"] description];
+//    _mid = [[dic objectForKey:@"id"] description];
     
     @try {
         [self doSetMatchInfoByJsonDic:dic];
