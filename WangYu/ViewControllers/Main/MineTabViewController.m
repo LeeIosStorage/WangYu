@@ -20,6 +20,7 @@
 #import "CollectListViewController.h"
 #import "RedPacketViewController.h"
 #import "ApplyActivityViewController.h"
+#import "MineMatchWarViewController.h"
 
 enum TABLEVIEW_SECTION_INDEX {
     kMessage = 0,
@@ -225,7 +226,8 @@ enum TABLEVIEW_SECTION_INDEX {
             break;
         case kEvents:{
             if (indexPath.row == 0){
-                
+                MineMatchWarViewController *vc = [[MineMatchWarViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
             }else if (indexPath.row == 1){
                 ApplyActivityViewController *vc = [[ApplyActivityViewController alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];
