@@ -15,6 +15,7 @@
 @property(nonatomic, strong) NSString* nickName;
 @property(nonatomic, strong) NSString* telephone;
 @property(nonatomic, strong) NSString* avatar;
+@property(nonatomic, strong) NSString* cityCode;
 @property(nonatomic, strong) NSDate* createDate;
 @property(nonatomic, strong) NSDate* updateDate;
 @property(nonatomic, assign) int score;

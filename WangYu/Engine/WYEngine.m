@@ -87,7 +87,7 @@ static WYEngine* s_ShareInstance = nil;
 
 + (NSString*)getErrorCodeWithReponseDic:(NSDictionary*)dic {
     
-    return [[[dic dictionaryObjectForKey:@"result"] stringObjectForKey:@"error_code"] description];
+    return [[dic stringObjectForKey:@"code"] description];
 }
 
 + (NSString*)getSuccessMsgWithReponseDic:(NSDictionary*)dic{
@@ -329,19 +329,23 @@ static WYEngine* s_ShareInstance = nil;
         }
         WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:message cancelButtonTitle:@"取消" cancelBlock:^{
         } okButtonTitle:@"登录" okBlock:^{
-            AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            WelcomeViewController *welcomeVc = [[WelcomeViewController alloc] init];
-            welcomeVc.showBackButton = YES;
-            WYNavigationController* navigationController = [[WYNavigationController alloc] initWithRootViewController:welcomeVc];
-            navigationController.navigationBarHidden = YES;
-            [appDelegate.mainTabViewController.navigationController presentViewController:navigationController animated:YES completion:^{
-                
-            }];
+            [self gotoLogin];
         }];
         [alertView show];
         return YES;
     }
     return NO;
+}
+
+-(void)gotoLogin{
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    WelcomeViewController *welcomeVc = [[WelcomeViewController alloc] init];
+    welcomeVc.showBackButton = YES;
+    WYNavigationController* navigationController = [[WYNavigationController alloc] initWithRootViewController:welcomeVc];
+    navigationController.navigationBarHidden = YES;
+    [appDelegate.mainTabViewController.navigationController presentViewController:navigationController animated:YES completion:^{
+        
+    }];
 }
 
 #pragma mark - request
@@ -546,6 +550,11 @@ static WYEngine* s_ShareInstance = nil;
             if (timeout) {
                 block(tag, nil, [NSError errorWithDomain:@"timeout" code:408 userInfo:nil]);
             }else{
+                int code = [[WYEngine getErrorCodeWithReponseDic:jsonRet] intValue];
+                if (code == -1) {
+                    [self gotoLogin];
+                    return;
+                }
                 block(tag, jsonRet, errPtr);
             }
         }
@@ -953,6 +962,21 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:avatar withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
+- (BOOL)editUserCityWithUid:(NSString *)uid cityCode:(NSString *)cityCode tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (cityCode) {
+        [params setObject:cityCode forKey:@"cityCode"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/my/editCity",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 - (BOOL)getMessageListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (_token) {
@@ -1041,6 +1065,24 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
     }
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/my/historyRedbag",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)getApplyActivityListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (page > 0) {
+        [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    }
+    if (pageSize > 0) {
+        [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"rows"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/reged",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 

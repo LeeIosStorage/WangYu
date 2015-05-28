@@ -57,7 +57,7 @@
 
 - (void)initNormalTitleNavBarSubviews{
     
-//    [self setRightButtonWithImageName:@"netbar_service_icon" selector:@selector(aboutRedPacketAction:)];
+    [self setRightButtonWithImageName:@"redpacket_help_icon" selector:@selector(aboutRedPacketAction:)];
     
     WYSegmentedView *segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
     segmentedView.items = @[@"可用红包",@"历史红包"];
