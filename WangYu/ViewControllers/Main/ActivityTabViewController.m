@@ -10,6 +10,7 @@
 #import "WYTabBarViewController.h"
 #import "ActivityViewCell.h"
 #import "NewsViewCell.h"
+#import "MatchWarViewCell.h"
 #import "WYEngine.h"
 #import "WYActivityInfo.h"
 #import "WYNewsInfo.h"
@@ -36,11 +37,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-//    [self getLeagueInfo];
-    self.leagueTableView.hidden = YES;
+    [self getLeagueInfo];
+//    self.leagueTableView.hidden = YES;
     self.newsTableView.hidden = YES;
-//    self.promiseTableView.hidden = YES;
+    self.matchTableView.hidden = YES;
 //    [self getNewsInfo];
+//    [self getMatchInfo];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -123,7 +125,7 @@
     [[WYEngine shareInstance] getMatchListWithPage:1 pageSize:10 tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         //        [WYProgressHUD AlertLoadDone];
-        [self.pullRefreshView finishedLoading];
+//        [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -172,7 +174,7 @@
     }else if(tableView == self.newsTableView) {
         return 83;
     }
-    return 44;
+    return 138;
 }
 
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -215,16 +217,16 @@
         cell.newsInfo = newsInfo;
         return cell;
     }else if (tableView == self.matchTableView) {
-        static NSString *CellIdentifier = @"ActivityViewCell";
-        ActivityViewCell *cell;
+        static NSString *CellIdentifier = @"MatchWarViewCell";
+        MatchWarViewCell *cell;
         
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
             cell = [cells objectAtIndex:0];
         }
-        WYActivityInfo *activityInfo = _activityInfos[indexPath.row];
-        cell.activityInfo = activityInfo;
+        WYMatchWarInfo *matchInfo = _matchInfos[indexPath.row];
+        cell.matchWarInfo = matchInfo;
         return cell;
     }
     
@@ -248,6 +250,16 @@
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+}
+
+- (void)dealloc {
+    WYLog(@"ActivityTabViewController dealloc!!!");
+    _leagueTableView.delegate = nil;
+    _leagueTableView.dataSource = nil;
+    _newsTableView.delegate = nil;
+    _newsTableView.dataSource = nil;
+    _matchTableView.delegate = nil;
+    _matchTableView.dataSource = nil;
 }
 
 @end

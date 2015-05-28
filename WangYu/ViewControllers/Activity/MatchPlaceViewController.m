@@ -59,7 +59,7 @@
             return;
         }
         weakSelf.matchInfos = [NSMutableArray array];
-        NSArray *matchDicArray = [jsonRet arrayObjectForKey:@"object"];
+        NSArray *matchDicArray = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"address"];
         for (NSDictionary *dic in matchDicArray) {
             if (![dic isKindOfClass:[NSDictionary class]]) {
                 continue;
@@ -117,7 +117,7 @@
         return;
     }
     WYMatchInfo* matchInfo = _matchInfos[indexPath.row];
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:matchInfo.mid message:@"H5页跳转" cancelButtonTitle:@"确定"];
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:matchInfo.areas message:@"H5页跳转" cancelButtonTitle:@"确定"];
     [alertView show];
 }
 

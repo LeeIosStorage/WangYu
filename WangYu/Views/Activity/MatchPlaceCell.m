@@ -34,7 +34,7 @@
     _matchInfo = matchInfo;
     self.roundLabel.text = [NSString stringWithFormat:@"第%d场",_matchInfo.round];
     self.timeLabel.text = [NSString stringWithFormat:@"%@～%@",_matchInfo.startTime,_matchInfo.endTime];
-    self.placeLabel.text = [_matchInfo.areas[0] valueForKey:@"name"];
+    self.placeLabel.text = _matchInfo.areas;
     _matchInfo.isApply = NO;
     if(_matchInfo.isApply){
         self.applyButton.enabled = NO;
