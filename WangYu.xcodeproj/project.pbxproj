@@ -148,6 +148,7 @@
 		077570571B16E0A8005C9DC7 /* MineMatchWarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 077570551B16E0A8005C9DC7 /* MineMatchWarViewController.xib */; };
 		077570601B16EDF2005C9DC7 /* MatchWarViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0775705E1B16EDF2005C9DC7 /* MatchWarViewCell.m */; };
 		077570611B16EDF2005C9DC7 /* MatchWarViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0775705F1B16EDF2005C9DC7 /* MatchWarViewCell.xib */; };
+		077570641B1719CE005C9DC7 /* WYBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 077570631B1719CE005C9DC7 /* WYBadgeView.m */; };
 		0777DFCB1B01C4AA00E1E314 /* QuickBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */; };
 		0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */; };
 		0777DFD01B01C4CB00E1E314 /* QuickPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777DFCE1B01C4CB00E1E314 /* QuickPayViewController.m */; };
@@ -511,6 +512,8 @@
 		0775705D1B16EDF2005C9DC7 /* MatchWarViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchWarViewCell.h; path = Activity/MatchWarViewCell.h; sourceTree = "<group>"; };
 		0775705E1B16EDF2005C9DC7 /* MatchWarViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchWarViewCell.m; path = Activity/MatchWarViewCell.m; sourceTree = "<group>"; };
 		0775705F1B16EDF2005C9DC7 /* MatchWarViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchWarViewCell.xib; path = Activity/MatchWarViewCell.xib; sourceTree = "<group>"; };
+		077570621B1719CE005C9DC7 /* WYBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYBadgeView.h; sourceTree = "<group>"; };
+		077570631B1719CE005C9DC7 /* WYBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYBadgeView.m; sourceTree = "<group>"; };
 		0777DFC81B01C4AA00E1E314 /* QuickBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickBookViewController.h; path = NetBar/QuickBookViewController.h; sourceTree = "<group>"; };
 		0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickBookViewController.m; path = NetBar/QuickBookViewController.m; sourceTree = "<group>"; };
 		0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuickBookViewController.xib; path = NetBar/QuickBookViewController.xib; sourceTree = "<group>"; };
@@ -1769,6 +1772,8 @@
 				079D524F1B01E48600DF4D6B /* GameCommendCardView.xib */,
 				079D52501B01E48600DF4D6B /* HotUpButton.h */,
 				079D52511B01E48600DF4D6B /* HotUpButton.m */,
+				077570621B1719CE005C9DC7 /* WYBadgeView.h */,
+				077570631B1719CE005C9DC7 /* WYBadgeView.m */,
 				079D52551B01E52900DF4D6B /* WYSegmentedView.h */,
 				079D52561B01E52900DF4D6B /* WYSegmentedView.m */,
 				076E22511B03187100F33815 /* WYSearchBar.h */,
@@ -2034,6 +2039,7 @@
 				0723DE081B0F2F5D0040295B /* CustomMapCell.m in Sources */,
 				0790494D1AEA236100E46795 /* WYService.m in Sources */,
 				3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */,
+				077570641B1719CE005C9DC7 /* WYBadgeView.m in Sources */,
 				076219241B15A29400D912A1 /* MessageViewCell.m in Sources */,
 				078EDBD91AEF1EF800E93EE8 /* ASIDataDecompressor.m in Sources */,
 				077E4ACE1B14461D009D1692 /* ActivityViewCell.m in Sources */,

@@ -122,9 +122,11 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 
 #pragma mark - mine
 //完善资料
-- (BOOL)editUserInfoWithUid:(NSString *)uid nickName:(NSString *)nickName avatar:(NSArray *)avatar tag:(int)tag;
+- (BOOL)editUserInfoWithUid:(NSString *)uid nickName:(NSString *)nickName avatar:(NSArray *)avatar userHead:(NSString *)userHead tag:(int)tag;
 //更换城市
 - (BOOL)editUserCityWithUid:(NSString *)uid cityCode:(NSString *)cityCode tag:(int)tag;
+//头像列表
+- (BOOL)getHeadAvatarListWithTag:(int)tag;
 //消息
 - (BOOL)getMessageListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
 //收藏的网吧

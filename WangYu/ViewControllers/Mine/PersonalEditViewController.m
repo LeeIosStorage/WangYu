@@ -16,11 +16,13 @@
 #import "UIImage+ProportionalFill.h"
 #import "WYUserInfo.h"
 #import "UIImageView+WebCache.h"
+#import "WYAlertView.h"
 
 @interface PersonalEditViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     UIImage *_avatarImage;
     NSData *_avatarData;
+    NSString *_recommendUserHeadPic;
     
     WYUserInfo *_oldUserInfo;
 }
@@ -62,6 +64,7 @@
     _oldUserInfo = [[WYUserInfo alloc] init];
     [_oldUserInfo setUserInfoByJsonDic:tmpUserInfo.userInfoByJsonDic];
     
+    
     _nickNameTextField.text = _oldUserInfo.nickName;
     _maxTextLength = 16;
     [self refreshUI];
@@ -74,6 +77,29 @@
 
 - (void)initNormalTitleNavBarSubviews{
     [self setTitle:@"设置"];
+}
+
+- (void)backAction:(id)sender{
+    if ([self userInfoIsChange]) {
+        WS(weakSelf);
+        WYAlertView *alert = [[WYAlertView alloc] initWithTitle:nil message:@"信息已修改还没保存哦！" cancelButtonTitle:@"取消" cancelBlock:^{
+            [super backAction:sender];
+        } okButtonTitle:@"保存" okBlock:^{
+            [weakSelf affirmAction:nil];
+        }];
+        [alert show];
+    }else{
+        
+        [super backAction:sender];
+    }
+}
+
+-(BOOL)userInfoIsChange{
+    BOOL isNickNameChange = (![_nickNameTextField.text isEqualToString:_oldUserInfo.nickName]);
+    if (isNickNameChange || _avatarImage || _recommendUserHeadPic.length > 0) {
+        return YES;
+    }
+    return NO;
 }
 
 /*
@@ -111,16 +137,26 @@
 - (IBAction)albumAction:(id)sender{
     __weak PersonalEditViewController *weakSelf = self;
     WYActionSheet *sheet = [[WYActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"设置%@",@"头像"] actionBlock:^(NSInteger buttonIndex) {
-        if (2 == buttonIndex) {
+        if (3 == buttonIndex) {
             return;
         }
         
         [weakSelf doActionSheetClickedButtonAtIndex:buttonIndex];
-    } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从手机相册选择", @"拍一张", nil];
+    } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从手机相册选择", @"拍一张",@"推荐头像", nil];
     [sheet showInView:self.view];
 }
 - (IBAction)affirmAction:(id)sender{
-    [self editUserInfo];
+    
+    _nickNameTextField.text = [_nickNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (_nickNameTextField.text.length == 0) {
+        [WYProgressHUD lightAlert:@"输个昵称吧~~"];
+        return;
+    }
+    if ([self userInfoIsChange]) {
+        [self editUserInfo];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)editUserInfo{
@@ -139,7 +175,7 @@
     [WYProgressHUD AlertLoading:@"资料修改中..." At:self.view];
     __weak PersonalEditViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] editUserInfoWithUid:[WYEngine shareInstance].uid nickName:_nickNameTextField.text avatar:dataArray tag:tag];
+    [[WYEngine shareInstance] editUserInfoWithUid:[WYEngine shareInstance].uid nickName:_nickNameTextField.text avatar:dataArray userHead:_recommendUserHeadPic tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
@@ -166,6 +202,10 @@
 }
 
 -(void)doActionSheetClickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (2 == buttonIndex) {
+        
+        return;
+    }
     if (1 == buttonIndex ) {
         //检查设备是否有相机功能
         if (![AVCamUtilities userCameraIsUsable]) {

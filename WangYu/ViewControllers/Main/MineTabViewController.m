@@ -21,6 +21,7 @@
 #import "RedPacketViewController.h"
 #import "ApplyActivityViewController.h"
 #import "MineMatchWarViewController.h"
+#import "WYBadgeView.h"
 
 enum TABLEVIEW_SECTION_INDEX {
     kMessage = 0,
@@ -35,6 +36,7 @@ enum TABLEVIEW_SECTION_INDEX {
 @property (strong, nonatomic) IBOutlet UIView *headView;
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (strong, nonatomic) WYBadgeView *badgeView;
 
 - (IBAction)editAction:(id)sender;
 @end
@@ -65,6 +67,12 @@ enum TABLEVIEW_SECTION_INDEX {
     [self setRightButtonWithImageName:@"netbar_service_icon" selector:@selector(serviceAction:)];
     [self setLeftButtonWithImageName:@"personal_email_icon"];
     [self setLeftButtonWithSelector:@selector(messageAction:)];
+    
+    CGRect messageIconFrame = CGRectMake(27 ,29, 35, 20);
+    _badgeView = [[WYBadgeView alloc] initWithFrame:messageIconFrame];
+    _badgeView.hidden = YES;
+    [self.titleNavBar addSubview:_badgeView];
+    
 }
 
 - (UINavigationController *)navigationController{
@@ -105,7 +113,9 @@ enum TABLEVIEW_SECTION_INDEX {
 
 #pragma mark - IBAction
 - (void)serviceAction:(id)sender{
-    
+    _badgeView.unreadNum = 2;
+    _badgeView.hidden = NO;
+    [WYUIUtils transitionWithType:@"rippleEffect" WithSubtype:kCATransitionFromTop ForView:_badgeView];
 }
 - (void)messageAction:(id)sender{
     MessageListViewController *messageVc = [[MessageListViewController alloc] init];

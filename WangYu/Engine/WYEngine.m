@@ -947,10 +947,13 @@ static WYEngine* s_ShareInstance = nil;
 }
 
 #pragma mark - mine
-- (BOOL)editUserInfoWithUid:(NSString *)uid nickName:(NSString *)nickName avatar:(NSArray *)avatar tag:(int)tag{
+- (BOOL)editUserInfoWithUid:(NSString *)uid nickName:(NSString *)nickName avatar:(NSArray *)avatar userHead:(NSString *)userHead tag:(int)tag;{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (nickName) {
         [params setObject:nickName forKey:@"nickname"];
+    }
+    if (userHead) {
+        [params setObject:userHead forKey:@"userhead"];
     }
     if (_token) {
         [params setObject:_token forKey:@"token"];
@@ -974,6 +977,11 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:uid forKey:@"userId"];
     }
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/my/editCity",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)getHeadAvatarListWithTag:(int)tag{
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/my/heads",API_URL] type:1 parameters:nil];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 

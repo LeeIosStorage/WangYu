@@ -197,7 +197,7 @@
 
 #pragma mark - old
 -(void)backTOCurrentLocation{
-    [self.backCurrentBtn setBackgroundImage:[UIImage imageNamed:@"s_location_back@2x.png"] forState:UIControlStateNormal];
+    [self.backCurrentBtn setBackgroundImage:[UIImage imageNamed:@"s_location_back"] forState:UIControlStateNormal];
     if (_currentLocation.longitude != 0 && _currentLocation.latitude != 0) {
         MKCoordinateRegion region = self.mapView.region;
         region.center = self.currentLocation;
@@ -789,7 +789,7 @@
     if (changeLat == 0 && changeLong == 0) {
         //        return;
     }else{
-        [_backCurrentBtn setBackgroundImage:[UIImage imageNamed:@"s_location_back_no@2x.png"] forState:UIControlStateNormal];
+        [_backCurrentBtn setBackgroundImage:[UIImage imageNamed:@"s_location_back_no"] forState:UIControlStateNormal];
     }
     
     //    NSLog(@"regionDidChangeAnimated \n");

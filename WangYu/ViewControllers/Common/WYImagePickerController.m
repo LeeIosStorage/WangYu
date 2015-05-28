@@ -30,13 +30,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    self.navigationBar.barStyle = UIBarStyleDefault;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
         [[UINavigationBar appearance] setBarTintColor:SKIN_COLOR];
         [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     } else {
         [[UINavigationBar appearance] setTintColor:SKIN_COLOR];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     }
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
