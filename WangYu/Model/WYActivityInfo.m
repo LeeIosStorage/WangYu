@@ -60,7 +60,7 @@
         [self doSetActivityInfoByJsonDic:dic];
     }
     @catch (NSException *exception) {
-        NSLog(@"####WYNetbarInfo setActivityInfoByJsonDic exception:%@", exception);
+        NSLog(@"####WYActivityInfo setActivityInfoByJsonDic exception:%@", exception);
     }
 }
 

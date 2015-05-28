@@ -236,6 +236,7 @@
 		07C4C9FD1AF9B283008DA5D3 /* ColorGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C4C9FC1AF9B283008DA5D3 /* ColorGradView.m */; };
 		07CB97661AFC5D3400928CB7 /* MMMaterialDesignSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97651AFC5D3400928CB7 /* MMMaterialDesignSpinner.m */; };
 		07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CB97681AFC5D4C00928CB7 /* DeformationButton.m */; };
+		07DE269D1B16B0AC007667DB /* WYMatchInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DE269C1B16B0AC007667DB /* WYMatchInfo.m */; };
 		07E96B891B15BB8B006ED6B7 /* MatchPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E96B871B15BB8B006ED6B7 /* MatchPlaceViewController.m */; };
 		07E96B8A1B15BB8B006ED6B7 /* MatchPlaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E96B881B15BB8B006ED6B7 /* MatchPlaceViewController.xib */; };
 		07E96B8E1B15BD35006ED6B7 /* MatchPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E96B8C1B15BD35006ED6B7 /* MatchPlaceCell.m */; };
@@ -748,6 +749,8 @@
 		07CB97651AFC5D3400928CB7 /* MMMaterialDesignSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMaterialDesignSpinner.m; sourceTree = "<group>"; };
 		07CB97671AFC5D4C00928CB7 /* DeformationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeformationButton.h; sourceTree = "<group>"; };
 		07CB97681AFC5D4C00928CB7 /* DeformationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeformationButton.m; sourceTree = "<group>"; };
+		07DE269B1B16B0AC007667DB /* WYMatchInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYMatchInfo.h; sourceTree = "<group>"; };
+		07DE269C1B16B0AC007667DB /* WYMatchInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYMatchInfo.m; sourceTree = "<group>"; };
 		07E96B861B15BB8B006ED6B7 /* MatchPlaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchPlaceViewController.h; path = Activity/MatchPlaceViewController.h; sourceTree = "<group>"; };
 		07E96B871B15BB8B006ED6B7 /* MatchPlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchPlaceViewController.m; path = Activity/MatchPlaceViewController.m; sourceTree = "<group>"; };
 		07E96B881B15BB8B006ED6B7 /* MatchPlaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchPlaceViewController.xib; path = Activity/MatchPlaceViewController.xib; sourceTree = "<group>"; };
@@ -1055,6 +1058,8 @@
 				0762192F1B15B4D700D912A1 /* WYGameInfo.m */,
 				0762193B1B15C58700D912A1 /* RedPacketInfo.h */,
 				0762193C1B15C58700D912A1 /* RedPacketInfo.m */,
+				07DE269B1B16B0AC007667DB /* WYMatchInfo.h */,
+				07DE269C1B16B0AC007667DB /* WYMatchInfo.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1994,6 +1999,7 @@
 				077D83821AF9AED800AAF31F /* ProgressHUDJF.m in Sources */,
 				3BE090871B14CC7500DCAB3C /* MatchDetailViewController.m in Sources */,
 				3BBE46351B0CF92A009EAE02 /* WYBrowserImageView.m in Sources */,
+				07DE269D1B16B0AC007667DB /* WYMatchInfo.m in Sources */,
 				0790493E1AE9DF3000E46795 /* WYOAuthStore.m in Sources */,
 				0794938C1B0D9C3D008152A6 /* MD5DataSigner.m in Sources */,
 				078EDBDD1AEF1EF800E93EE8 /* ASIInputStream.m in Sources */,

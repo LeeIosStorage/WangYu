@@ -1115,7 +1115,18 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:_token forKey:@"token"];
     }
     
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/favor",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/favor",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)getActivityAddressWithAid:(NSString *)aId tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+
+    if (aId) {
+        [params setObject:aId forKey:@"id"];
+    }
+
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/address",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
