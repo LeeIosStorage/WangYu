@@ -40,11 +40,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _selectedIndex = 0;
-    // Do any additional setup after loading the view from its nib.
-    [self refreshDataSourceWithIndex:_selectedIndex];
     [self initSwitchView];
     [self initContainerScrollView];
+    _selectedIndex = 0;
+    [self refreshDataSourceWithIndex:_selectedIndex];
 }
 
 - (void)initSwitchView{
@@ -118,6 +117,36 @@
     }
     return self.tabController.navigationController;
 }
+
+//- (void)getHotActivityInfo{
+//    WS(weakSelf);
+//    int tag = [[WYEngine shareInstance] getConnectTag];
+//    [[WYEngine shareInstance] getActivityHotListWithTag:tag];
+//    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+//        //        [WYProgressHUD AlertLoadDone];
+//        [self.pullRefreshView finishedLoading];
+//        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+//        if (!jsonRet || errorMsg) {
+//            if (!errorMsg.length) {
+//                errorMsg = @"请求失败";
+//            }
+//            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+//            return;
+//        }
+//        
+//        weakSelf.activityInfos = [NSMutableArray array];
+//        NSArray *activityDicArray = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"list"];
+//        for (NSDictionary *dic in activityDicArray) {
+//            if (![dic isKindOfClass:[NSDictionary class]]) {
+//                continue;
+//            }
+//            WYActivityInfo *activityInfo = [[WYActivityInfo alloc] init];
+//            [activityInfo setActivityInfoByJsonDic:dic];
+//            [weakSelf.activityInfos addObject:activityInfo];
+//        }
+//        [weakSelf.leagueTableView reloadData];
+//    }tag:tag];
+//}
 
 - (void)getCacheLeagueInfo{
     WS(weakSelf);
@@ -428,6 +457,19 @@
 //            [cv.pullRefreshView triggerPullToRefresh];
 //            //[self getCategoryInfoWithTag:_titles[_selectedIndex-1] andIndex:_selectedIndex-1];
 //        }
+    }
+}
+
+#pragma mark -XETabBarControllerSubVcProtocol
+- (void)tabBarController:(WYTabBarViewController *)tabBarController reSelectVc:(UIViewController *)viewController {
+    if (viewController == self) {
+        if (_selectedIndex == 0) {
+            [self.leagueTableView setContentOffset:CGPointMake(0, 0 - self.leagueTableView.contentInset.top) animated:NO];
+        }else if (_selectedIndex == 1) {
+            [self.newsTableView setContentOffset:CGPointMake(0, 0 - self.newsTableView.contentInset.top) animated:NO];
+        }else if (_selectedIndex == 2) {
+            [self.matchTableView setContentOffset:CGPointMake(0, 0 - self.matchTableView.contentInset.top) animated:NO];
+        }
     }
 }
 

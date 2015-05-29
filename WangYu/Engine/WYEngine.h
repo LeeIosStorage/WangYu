@@ -143,8 +143,11 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)getApplyMatchWarListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
 
 #pragma mark - 活动
+//赛事列表
 - (BOOL)getActivityListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
+//资讯列表
 - (BOOL)getInfoListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
+//约战列表
 - (BOOL)getMatchListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
 //赛事详情
 - (BOOL)getActivityDetailWithUid:(NSString *)uid activityId:(NSString *)aId tag:(int)tag;
@@ -152,6 +155,11 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)collectionActivityWithUid:(NSString *)uid activityId:(NSString *)aId tag:(int)tag;
 //赛事地点
 - (BOOL)getActivityAddressWithAid:(NSString *)aId tag:(int)tag;
-
+//热门 赛事资讯
+- (BOOL)getActivityHotListWithTag:(int)tag;
+//专题详情
+- (BOOL)getTopicsInfoWithTag:(int)tag;
+//专题资讯列表
+- (BOOL)getTopicsListWithTid:(NSString *)tid Tag:(int)tag;
 
 @end
