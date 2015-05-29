@@ -159,6 +159,13 @@
 		0777DFDB1B01D6DF00E1E314 /* QuickPayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0777DFD91B01D6DF00E1E314 /* QuickPayCell.xib */; };
 		077BF39B1B18016B00450174 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF3981B18016B00450174 /* UIScrollView+SVInfiniteScrolling.m */; };
 		077BF39C1B18016B00450174 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF39A1B18016B00450174 /* UIScrollView+SVPullToRefresh.m */; };
+		077BF3A01B1865E400450174 /* AvatarListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF39E1B1865E400450174 /* AvatarListViewController.m */; };
+		077BF3A11B1865E400450174 /* AvatarListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 077BF39F1B1865E400450174 /* AvatarListViewController.xib */; };
+		077BF3AF1B186BFC00450174 /* GMGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF3A51B186BFC00450174 /* GMGridView.m */; };
+		077BF3B01B186BFC00450174 /* GMGridViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF3A81B186BFC00450174 /* GMGridViewCell.m */; };
+		077BF3B11B186BFC00450174 /* GMGridViewLayoutStrategies.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF3AA1B186BFC00450174 /* GMGridViewLayoutStrategies.m */; };
+		077BF3B21B186BFD00450174 /* UIGestureRecognizer+GMGridViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF3AC1B186BFC00450174 /* UIGestureRecognizer+GMGridViewAdditions.m */; };
+		077BF3B31B186BFD00450174 /* UIView+GMGridViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF3AE1B186BFC00450174 /* UIView+GMGridViewAdditions.m */; };
 		077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D83781AF9AED800AAF31F /* MBProgressHUD.m */; };
 		077D83801AF9AED800AAF31F /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 077D837A1AF9AED800AAF31F /* ProgressHUD.bundle */; };
 		077D83811AF9AED800AAF31F /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D837C1AF9AED800AAF31F /* ProgressHUD.m */; };
@@ -537,6 +544,21 @@
 		077BF3981B18016B00450174 /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
 		077BF3991B18016B00450174 /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
 		077BF39A1B18016B00450174 /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
+		077BF39D1B1865E400450174 /* AvatarListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarListViewController.h; sourceTree = "<group>"; };
+		077BF39E1B1865E400450174 /* AvatarListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatarListViewController.m; sourceTree = "<group>"; };
+		077BF39F1B1865E400450174 /* AvatarListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AvatarListViewController.xib; sourceTree = "<group>"; };
+		077BF3A31B186BFC00450174 /* GMGridView-Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GMGridView-Constants.h"; sourceTree = "<group>"; };
+		077BF3A41B186BFC00450174 /* GMGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMGridView.h; sourceTree = "<group>"; };
+		077BF3A51B186BFC00450174 /* GMGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMGridView.m; sourceTree = "<group>"; };
+		077BF3A61B186BFC00450174 /* GMGridViewCell+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GMGridViewCell+Extended.h"; sourceTree = "<group>"; };
+		077BF3A71B186BFC00450174 /* GMGridViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMGridViewCell.h; sourceTree = "<group>"; };
+		077BF3A81B186BFC00450174 /* GMGridViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMGridViewCell.m; sourceTree = "<group>"; };
+		077BF3A91B186BFC00450174 /* GMGridViewLayoutStrategies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMGridViewLayoutStrategies.h; sourceTree = "<group>"; };
+		077BF3AA1B186BFC00450174 /* GMGridViewLayoutStrategies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMGridViewLayoutStrategies.m; sourceTree = "<group>"; };
+		077BF3AB1B186BFC00450174 /* UIGestureRecognizer+GMGridViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+GMGridViewAdditions.h"; sourceTree = "<group>"; };
+		077BF3AC1B186BFC00450174 /* UIGestureRecognizer+GMGridViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+GMGridViewAdditions.m"; sourceTree = "<group>"; };
+		077BF3AD1B186BFC00450174 /* UIView+GMGridViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GMGridViewAdditions.h"; sourceTree = "<group>"; };
+		077BF3AE1B186BFC00450174 /* UIView+GMGridViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GMGridViewAdditions.m"; sourceTree = "<group>"; };
 		077D83771AF9AED800AAF31F /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		077D83781AF9AED800AAF31F /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		077D837A1AF9AED800AAF31F /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
@@ -884,6 +906,9 @@
 				076E0DE81B1475FE00E4363A /* PersonalEditViewController.h */,
 				076E0DE91B1475FE00E4363A /* PersonalEditViewController.m */,
 				076E0DEA1B1475FE00E4363A /* PersonalEditViewController.xib */,
+				077BF39D1B1865E400450174 /* AvatarListViewController.h */,
+				077BF39E1B1865E400450174 /* AvatarListViewController.m */,
+				077BF39F1B1865E400450174 /* AvatarListViewController.xib */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -1150,6 +1175,7 @@
 		073DBD171AE770F1009B49EB /* External */ = {
 			isa = PBXGroup;
 			children = (
+				077BF3A21B186BFC00450174 /* GMGridView */,
 				07A4279A1B183AEA009197D5 /* DVSwitch */,
 				076E0DED1B147FD600E4363A /* MyAVCameraView */,
 				077E60731B0B11430079BC9E /* ThridApp */,
@@ -1420,6 +1446,25 @@
 				077BF39A1B18016B00450174 /* UIScrollView+SVPullToRefresh.m */,
 			);
 			path = SVPullToRefresh;
+			sourceTree = "<group>";
+		};
+		077BF3A21B186BFC00450174 /* GMGridView */ = {
+			isa = PBXGroup;
+			children = (
+				077BF3A31B186BFC00450174 /* GMGridView-Constants.h */,
+				077BF3A41B186BFC00450174 /* GMGridView.h */,
+				077BF3A51B186BFC00450174 /* GMGridView.m */,
+				077BF3A61B186BFC00450174 /* GMGridViewCell+Extended.h */,
+				077BF3A71B186BFC00450174 /* GMGridViewCell.h */,
+				077BF3A81B186BFC00450174 /* GMGridViewCell.m */,
+				077BF3A91B186BFC00450174 /* GMGridViewLayoutStrategies.h */,
+				077BF3AA1B186BFC00450174 /* GMGridViewLayoutStrategies.m */,
+				077BF3AB1B186BFC00450174 /* UIGestureRecognizer+GMGridViewAdditions.h */,
+				077BF3AC1B186BFC00450174 /* UIGestureRecognizer+GMGridViewAdditions.m */,
+				077BF3AD1B186BFC00450174 /* UIView+GMGridViewAdditions.h */,
+				077BF3AE1B186BFC00450174 /* UIView+GMGridViewAdditions.m */,
+			);
+			path = GMGridView;
 			sourceTree = "<group>";
 		};
 		077D83761AF9AED800AAF31F /* MBProgressHUD */ = {
@@ -2038,6 +2083,7 @@
 				079493841B0D9C3C008152A6 /* AlipaySDK.bundle in Resources */,
 				07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */,
 				3BE0908E1B14CD3A00DCAB3C /* MatchDetailCell.xib in Resources */,
+				077BF3A11B1865E400450174 /* AvatarListViewController.xib in Resources */,
 				0777DFD61B01C7E100E1E314 /* QuickBookCell.xib in Resources */,
 				078FD0411B05FC8D00CBD699 /* LocationViewController.xib in Resources */,
 				07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */,
@@ -2074,6 +2120,7 @@
 				079D52571B01E52900DF4D6B /* WYSegmentedView.m in Sources */,
 				073DBD4A1AE7712F009B49EB /* SDWebImageManager.m in Sources */,
 				076E0DF91B147FD600E4363A /* AVCamRecorder.m in Sources */,
+				077BF3A01B1865E400450174 /* AvatarListViewController.m in Sources */,
 				073DBD741AE778CF009B49EB /* WYUserInfo.m in Sources */,
 				078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */,
 				0791AB5A1AE8DE260009A5A7 /* AFURLConnectionOperation.m in Sources */,
@@ -2083,6 +2130,7 @@
 				07868DE91AF8581100160070 /* WYSuperViewController.m in Sources */,
 				076F82861B059CB700CACF0D /* WYNetBarManager.m in Sources */,
 				07DE26A41B16FFB0007667DB /* NewsViewCell.m in Sources */,
+				077BF3B11B186BFC00450174 /* GMGridViewLayoutStrategies.m in Sources */,
 				073DBD631AE7717D009B49EB /* PathHelper.m in Sources */,
 				0723DE081B0F2F5D0040295B /* CustomMapCell.m in Sources */,
 				0790494D1AEA236100E46795 /* WYService.m in Sources */,
@@ -2177,6 +2225,7 @@
 				073DBDAC1AE79457009B49EB /* WYUIUtils.m in Sources */,
 				0799C8AF1AF1D88E00E407BB /* GameCommendViewController.m in Sources */,
 				073DBD511AE7712F009B49EB /* UIImageView+WebCache.m in Sources */,
+				077BF3B21B186BFD00450174 /* UIGestureRecognizer+GMGridViewAdditions.m in Sources */,
 				078FD0401B05FC8D00CBD699 /* LocationViewController.m in Sources */,
 				0777DFD51B01C7E100E1E314 /* QuickBookCell.m in Sources */,
 				079049461AEA15EB00E46795 /* WYQuery.m in Sources */,
@@ -2200,6 +2249,8 @@
 				0723DE001B0F19830040295B /* CalloutMapAnnotation.m in Sources */,
 				079D52521B01E48600DF4D6B /* GameCommendCardView.m in Sources */,
 				076195EC1B008FAC00397711 /* PayOrderViewCell.m in Sources */,
+				077BF3AF1B186BFC00450174 /* GMGridView.m in Sources */,
+				077BF3B31B186BFD00450174 /* UIView+GMGridViewAdditions.m in Sources */,
 				07A4279D1B183AEA009197D5 /* DVSwitch.m in Sources */,
 				07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */,
 				077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */,
@@ -2222,6 +2273,7 @@
 				0762192C1B15AEB200D912A1 /* CollectListViewController.m in Sources */,
 				0791AB3B1AE8D8600009A5A7 /* WYSettingConfig.m in Sources */,
 				0745B3881B007AF3006D6853 /* NetbarDetailCell.m in Sources */,
+				077BF3B01B186BFC00450174 /* GMGridViewCell.m in Sources */,
 				073DBD421AE7712F009B49EB /* MKAnnotationView+WebCache.m in Sources */,
 				073DBD641AE7717D009B49EB /* UIColor+bit.m in Sources */,
 				073DBDF51AE7A1B0009B49EB /* UIImage+Alpha.m in Sources */,

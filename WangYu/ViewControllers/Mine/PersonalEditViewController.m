@@ -17,8 +17,9 @@
 #import "WYUserInfo.h"
 #import "UIImageView+WebCache.h"
 #import "WYAlertView.h"
+#import "AvatarListViewController.h"
 
-@interface PersonalEditViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface PersonalEditViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,AvatarListViewControllerDelegate>
 {
     UIImage *_avatarImage;
     NSData *_avatarData;
@@ -129,21 +130,27 @@
     
     if (_avatarImage) {
         [self.avatarImageView setImage:_avatarImage];
+    }else if (_recommendUserHeadPic.length > 0){
+        NSURL *headUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",[[WYEngine shareInstance] baseImgUrl],_recommendUserHeadPic]];
+        [self.avatarImageView sd_setImageWithURL:headUrl placeholderImage:[UIImage imageNamed:@"personal_avatar_default_icon"]];
     }else{
         [self.avatarImageView sd_setImageWithURL:[WYEngine shareInstance].userInfo.smallAvatarUrl placeholderImage:[UIImage imageNamed:@"personal_avatar_default_icon"]];
     }
 }
 
 - (IBAction)albumAction:(id)sender{
-    __weak PersonalEditViewController *weakSelf = self;
-    WYActionSheet *sheet = [[WYActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"设置%@",@"头像"] actionBlock:^(NSInteger buttonIndex) {
-        if (3 == buttonIndex) {
-            return;
-        }
-        
-        [weakSelf doActionSheetClickedButtonAtIndex:buttonIndex];
-    } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从手机相册选择", @"拍一张",@"推荐头像", nil];
-    [sheet showInView:self.view];
+    AvatarListViewController *avatarListVc = [[AvatarListViewController alloc] init];
+    avatarListVc.delagte = self;
+    [self.navigationController pushViewController:avatarListVc animated:YES];
+//    __weak PersonalEditViewController *weakSelf = self;
+//    WYActionSheet *sheet = [[WYActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"设置%@",@"头像"] actionBlock:^(NSInteger buttonIndex) {
+//        if (2 == buttonIndex) {
+//            return;
+//        }
+//        
+//        [weakSelf doActionSheetClickedButtonAtIndex:buttonIndex];
+//    } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从手机相册选择", @"拍一张", nil];
+//    [sheet showInView:self.view];
 }
 - (IBAction)affirmAction:(id)sender{
     
@@ -202,10 +209,6 @@
 }
 
 -(void)doActionSheetClickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (2 == buttonIndex) {
-        
-        return;
-    }
     if (1 == buttonIndex ) {
         //检查设备是否有相机功能
         if (![AVCamUtilities userCameraIsUsable]) {
@@ -248,6 +251,16 @@
     [picker dismissModalViewControllerAnimated:YES];
     //    [LSCommonUtils saveImageToAlbum:picker Img:image];
     
+}
+
+#pragma mark - AvatarListViewControllerDelegate
+- (void)avatarListViewControllerWith:(AvatarListViewController*)vc selectAvatarId:(NSString *)selectAvatarId avatarImage:(UIImage*)avatarImage avatarData:(NSData*)avatarData{
+    
+    [vc.navigationController popViewControllerAnimated:YES];
+    _recommendUserHeadPic = selectAvatarId;
+    _avatarImage = avatarImage;
+    _avatarData = avatarData;
+    [self refreshUI];
 }
 
 #pragma mark - UITextFieldDelegate
