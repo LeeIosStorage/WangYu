@@ -157,6 +157,8 @@
 		0777DFD61B01C7E100E1E314 /* QuickBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0777DFD41B01C7E100E1E314 /* QuickBookCell.xib */; };
 		0777DFDA1B01D6DF00E1E314 /* QuickPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777DFD81B01D6DF00E1E314 /* QuickPayCell.m */; };
 		0777DFDB1B01D6DF00E1E314 /* QuickPayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0777DFD91B01D6DF00E1E314 /* QuickPayCell.xib */; };
+		077BF39B1B18016B00450174 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF3981B18016B00450174 /* UIScrollView+SVInfiniteScrolling.m */; };
+		077BF39C1B18016B00450174 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF39A1B18016B00450174 /* UIScrollView+SVPullToRefresh.m */; };
 		077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D83781AF9AED800AAF31F /* MBProgressHUD.m */; };
 		077D83801AF9AED800AAF31F /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 077D837A1AF9AED800AAF31F /* ProgressHUD.bundle */; };
 		077D83811AF9AED800AAF31F /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D837C1AF9AED800AAF31F /* ProgressHUD.m */; };
@@ -529,6 +531,11 @@
 		0777DFD71B01D6DF00E1E314 /* QuickPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickPayCell.h; path = Netbar/QuickPayCell.h; sourceTree = "<group>"; };
 		0777DFD81B01D6DF00E1E314 /* QuickPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickPayCell.m; path = Netbar/QuickPayCell.m; sourceTree = "<group>"; };
 		0777DFD91B01D6DF00E1E314 /* QuickPayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuickPayCell.xib; path = Netbar/QuickPayCell.xib; sourceTree = "<group>"; };
+		077BF3961B18016B00450174 /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
+		077BF3971B18016B00450174 /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
+		077BF3981B18016B00450174 /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
+		077BF3991B18016B00450174 /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
+		077BF39A1B18016B00450174 /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
 		077D83771AF9AED800AAF31F /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		077D83781AF9AED800AAF31F /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		077D837A1AF9AED800AAF31F /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
@@ -1155,6 +1162,7 @@
 				0791AB351AE8CF4C0009A5A7 /* EGOCache */,
 				073DBDEC1AE7A1B0009B49EB /* UIImage-Categories-master */,
 				073DBDAD1AE794C4009B49EB /* PullToRefresh */,
+				077BF3951B18016B00450174 /* SVPullToRefresh */,
 				073DBD671AE771AC009B49EB /* JSONKit */,
 				073DBD181AE7712F009B49EB /* SDWebImage */,
 			);
@@ -1396,6 +1404,18 @@
 				076E0DF71B147FD600E4363A /* DDExpandableButton.m */,
 			);
 			path = DDExpandable;
+			sourceTree = "<group>";
+		};
+		077BF3951B18016B00450174 /* SVPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				077BF3961B18016B00450174 /* SVPullToRefresh.h */,
+				077BF3971B18016B00450174 /* UIScrollView+SVInfiniteScrolling.h */,
+				077BF3981B18016B00450174 /* UIScrollView+SVInfiniteScrolling.m */,
+				077BF3991B18016B00450174 /* UIScrollView+SVPullToRefresh.h */,
+				077BF39A1B18016B00450174 /* UIScrollView+SVPullToRefresh.m */,
+			);
+			path = SVPullToRefresh;
 			sourceTree = "<group>";
 		};
 		077D83761AF9AED800AAF31F /* MBProgressHUD */ = {
@@ -2056,6 +2076,7 @@
 				3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */,
 				077570641B1719CE005C9DC7 /* WYBadgeView.m in Sources */,
 				076219241B15A29400D912A1 /* MessageViewCell.m in Sources */,
+				077BF39C1B18016B00450174 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				078EDBD91AEF1EF800E93EE8 /* ASIDataDecompressor.m in Sources */,
 				077E4ACE1B14461D009D1692 /* ActivityViewCell.m in Sources */,
 				077D83821AF9AED800AAF31F /* ProgressHUDJF.m in Sources */,
@@ -2160,6 +2181,7 @@
 				07868DEA1AF8581100160070 /* WYTitleNavBarView.m in Sources */,
 				0790494A1AEA226B00E46795 /* NSData+Base64.m in Sources */,
 				076219281B15A64600D912A1 /* WYMessageInfo.m in Sources */,
+				077BF39B1B18016B00450174 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				07DE26A01B16F846007667DB /* WYNewsInfo.m in Sources */,
 				07203A0E1AF1CE460056A74B /* NetbarTabViewController.m in Sources */,
 				0723DE001B0F19830040295B /* CalloutMapAnnotation.m in Sources */,

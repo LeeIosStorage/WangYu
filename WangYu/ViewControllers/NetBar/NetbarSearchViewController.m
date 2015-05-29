@@ -17,6 +17,7 @@
 #import <MapKit/MapKit.h>
 #import "WYNetBarManager.h"
 #import "NetbarMapViewController.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 @interface NetbarSearchViewController ()<UITableViewDataSource,UITableViewDelegate,NetbarTabCellDelegate>
 {
@@ -79,6 +80,54 @@
         [weakSelf getNearbyNetBars];
     }];
     
+    [self.netBarTable addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.netBarCanLoadMore) {
+            [weakSelf.netBarTable.infiniteScrollingView stopAnimating];
+            weakSelf.netBarTable.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:weakSelf.areaCode tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.netBarTable.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *netbarDicArray = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in netbarDicArray) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
+                [netbarInfo setNetbarInfoByJsonDic:dic];
+                [weakSelf.netBarInfos addObject:netbarInfo];
+            }
+            
+            weakSelf.netBarCanLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.netBarCanLoadMore) {
+                weakSelf.netBarTable.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.netBarTable.showsInfiniteScrolling = YES;
+                weakSelf.netBarNextCursor ++;
+            }
+            
+            [weakSelf.netBarTable reloadData];
+            
+        } tag:tag];
+    }];
+    weakSelf.netBarTable.showsInfiniteScrolling = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -141,7 +190,7 @@
     __weak NetbarSearchViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:1 pageSize:10 latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode tag:tag];
+    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -166,7 +215,7 @@
     _netBarNextCursor = 1;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)_netBarNextCursor pageSize:10 latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode tag:tag];
+    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)_netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
@@ -186,6 +235,14 @@
             WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
             [netbarInfo setNetbarInfoByJsonDic:dic];
             [weakSelf.netBarInfos addObject:netbarInfo];
+        }
+        
+        weakSelf.netBarCanLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.netBarCanLoadMore) {
+            weakSelf.netBarTable.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.netBarTable.showsInfiniteScrolling = YES;
+            weakSelf.netBarNextCursor ++;
         }
         
         [weakSelf.netBarTable reloadData];

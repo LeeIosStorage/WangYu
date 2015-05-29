@@ -15,6 +15,7 @@
 #import "WYOrderInfo.h"
 #import "NetbarDetailViewController.h"
 #import "QuickPayViewController.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 #define ORDER_TYPE_RESERVE     0
 #define ORDER_TYPE_PAY         1
@@ -51,6 +52,99 @@
     [self.payOrderTableView addSubview:self.pullRefreshView2];
     
     [self feedsTypeSwitch:ORDER_TYPE_RESERVE needRefreshFeeds:YES];
+    
+    WS(weakSelf);
+    [self.reserveOrderTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.reserveCanLoadMore) {
+            [weakSelf.reserveOrderTableView.infiniteScrollingView stopAnimating];
+            weakSelf.reserveOrderTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getReserveOrderListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.reserveNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.reserveOrderTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
+                [orderInfo setOrderInfoByJsonDic:dic];
+                [weakSelf.reserveOrderList addObject:orderInfo];
+            }
+            
+            weakSelf.reserveCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.reserveCanLoadMore) {
+                weakSelf.reserveOrderTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.reserveOrderTableView.showsInfiniteScrolling = YES;
+                weakSelf.reserveNextCursor ++;
+            }
+            
+            [weakSelf.reserveOrderTableView reloadData];
+            
+        } tag:tag];
+    }];
+    
+    [self.payOrderTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.payCanLoadMore) {
+            [weakSelf.payOrderTableView.infiniteScrollingView stopAnimating];
+            weakSelf.payOrderTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getPayOrderListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.payNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.payOrderTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
+                [orderInfo setOrderInfoByJsonDic:dic];
+                [weakSelf.payOrderList addObject:orderInfo];
+            }
+            
+            weakSelf.payCanLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.payCanLoadMore) {
+                weakSelf.payOrderTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.payOrderTableView.showsInfiniteScrolling = YES;
+                weakSelf.payNextCursor ++;
+            }
+            
+            [weakSelf.payOrderTableView reloadData];
+            
+        } tag:tag];
+    }];
+    weakSelf.reserveOrderTableView.showsInfiniteScrolling = NO;
+    weakSelf.payOrderTableView.showsInfiniteScrolling = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -143,7 +237,7 @@
     __weak OrdersViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getReserveOrderListWithUid:[WYEngine shareInstance].uid page:1 pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getReserveOrderListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -165,7 +259,7 @@
     _reserveNextCursor = 1;
     __weak OrdersViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getReserveOrderListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.reserveNextCursor pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getReserveOrderListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.reserveNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -174,7 +268,7 @@
                 errorMsg = @"请求失败";
             }
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
-//            return;
+            return;
         }
         weakSelf.reserveOrderList = [[NSMutableArray alloc] init];
         NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
@@ -185,12 +279,12 @@
         }
 //
         weakSelf.reserveCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
-        if (!weakSelf.reserveCanLoadMore) {
-//            weakSelf.reserveOrderTableView.showsInfiniteScrolling = NO;
+        if (weakSelf.reserveCanLoadMore) {
+            weakSelf.reserveOrderTableView.showsInfiniteScrolling = NO;
         }else{
-//            weakSelf.reserveOrderTableView.showsInfiniteScrolling = YES;
+            weakSelf.reserveOrderTableView.showsInfiniteScrolling = YES;
             //可以加载更多
-//            weakSelf.reserveNextCursor ++;
+            weakSelf.reserveNextCursor ++;
         }
         
         [weakSelf.reserveOrderTableView reloadData];
@@ -203,7 +297,7 @@
     __weak OrdersViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getPayOrderListWithUid:[WYEngine shareInstance].uid page:1 pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getPayOrderListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -224,7 +318,7 @@
     _payNextCursor = 1;
     __weak OrdersViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getPayOrderListWithUid:[WYEngine shareInstance].uid page:(int)_payNextCursor pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getPayOrderListWithUid:[WYEngine shareInstance].uid page:(int)_payNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
 
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [self.pullRefreshView2 finishedLoading];
@@ -245,13 +339,12 @@
             [weakSelf.payOrderList addObject:orderInfo];
         }
 //
-        weakSelf.payCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
-        if (!weakSelf.payCanLoadMore) {
-//            weakSelf.payOrderTableView.showsInfiniteScrolling = NO;
+        weakSelf.payCanLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.payCanLoadMore) {
+            weakSelf.payOrderTableView.showsInfiniteScrolling = NO;
         }else{
-//            weakSelf.payOrderTableView.showsInfiniteScrolling = YES;
-             //可以加载更多
-//            weakSelf.payNextCursor ++;
+            weakSelf.payOrderTableView.showsInfiniteScrolling = YES;
+            weakSelf.payNextCursor ++;
         }
         
         [weakSelf.payOrderTableView reloadData];

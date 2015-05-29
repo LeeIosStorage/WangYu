@@ -26,6 +26,9 @@
     if ([dic stringObjectForKey:@"cityCode"]) {
         _cityCode = [dic stringObjectForKey:@"cityCode"];
     }
+    if ([dic stringObjectForKey:@"cityName"]) {
+        _cityName = [dic stringObjectForKey:@"cityName"];
+    }
     
     _score = [dic intValueForKey:@"score"];
     _valid = [dic intValueForKey:@"valid"];

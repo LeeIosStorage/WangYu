@@ -12,6 +12,7 @@
 #import "WYProgressHUD.h"
 #import "WYMatchWarInfo.h"
 #import "MatchWarViewCell.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 #define MATCHWAR_TYPE_PULISH        0
 #define MATCHWAR_TYPE_APPLY         1
@@ -49,6 +50,104 @@
     
     [self feedsTypeSwitch:MATCHWAR_TYPE_PULISH needRefreshFeeds:YES];
     
+    WS(weakSelf);
+    [self.publishTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.publishCanLoadMore) {
+            [weakSelf.publishTableView.infiniteScrollingView stopAnimating];
+            weakSelf.publishTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getPulishMatchWarListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.publishNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.publishTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                WYMatchWarInfo *matchWarInfo = [[WYMatchWarInfo alloc] init];
+                [matchWarInfo setMatchWarInfoByJsonDic:dic];
+                [weakSelf.publishMatchList addObject:matchWarInfo];
+            }
+            
+            weakSelf.publishCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.publishCanLoadMore) {
+                weakSelf.publishTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.publishTableView.showsInfiniteScrolling = YES;
+                weakSelf.publishNextCursor ++;
+            }
+            
+            [weakSelf.publishTableView reloadData];
+            
+        } tag:tag];
+    }];
+    
+    [self.applyTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.applyCanLoadMore) {
+            [weakSelf.applyTableView.infiniteScrollingView stopAnimating];
+            weakSelf.applyTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getApplyMatchWarListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.applyNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.applyTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                WYMatchWarInfo *matchWarInfo = [[WYMatchWarInfo alloc] init];
+                [matchWarInfo setMatchWarInfoByJsonDic:dic];
+                [weakSelf.applyMatchList addObject:matchWarInfo];
+            }
+            
+            weakSelf.applyCanLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.applyCanLoadMore) {
+                weakSelf.applyTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.applyTableView.showsInfiniteScrolling = YES;
+                weakSelf.applyNextCursor ++;
+            }
+            
+            [weakSelf.applyTableView reloadData];
+            
+        } tag:tag];
+    }];
+    weakSelf.publishTableView.showsInfiniteScrolling = NO;
+    weakSelf.applyTableView.showsInfiniteScrolling = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -176,7 +275,6 @@
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] getPulishMatchWarListWithUid:[WYEngine shareInstance].uid page:(int)_publishNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
-//    [[WYEngine shareInstance] getMatchListWithPage:1 pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -197,6 +295,15 @@
             [matchWarInfo setMatchWarInfoByJsonDic:dic];
             [weakSelf.publishMatchList addObject:matchWarInfo];
         }
+        
+        weakSelf.publishCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.publishCanLoadMore) {
+            weakSelf.publishTableView.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.publishTableView.showsInfiniteScrolling = YES;
+            weakSelf.publishNextCursor ++;
+        }
+        
         [weakSelf.publishTableView reloadData];
         
     }tag:tag];
@@ -251,6 +358,15 @@
             [matchWarInfo setMatchWarInfoByJsonDic:dic];
             [weakSelf.applyMatchList addObject:matchWarInfo];
         }
+        
+        weakSelf.applyCanLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.applyCanLoadMore) {
+            weakSelf.applyTableView.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.applyTableView.showsInfiniteScrolling = YES;
+            weakSelf.applyNextCursor ++;
+        }
+        
         [weakSelf.applyTableView reloadData];
         
     }tag:tag];

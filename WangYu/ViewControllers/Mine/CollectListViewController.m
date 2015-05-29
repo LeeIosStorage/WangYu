@@ -16,6 +16,7 @@
 #import "NetbarTabCell.h"
 #import "UIImageView+WebCache.h"
 #import "GameCollectViewCell.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 #define COLLECT_TYPE_NETBAR       0
 #define COLLECT_TYPE_GAME         1
@@ -52,6 +53,102 @@
     [self.gameTableView addSubview:self.pullRefreshView2];
     
     [self feedsTypeSwitch:COLLECT_TYPE_NETBAR needRefreshFeeds:YES];
+    
+    WS(weakSelf);
+    [self.netbarTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.netbarCanLoadMore) {
+            [weakSelf.netbarTableView.infiniteScrollingView stopAnimating];
+            weakSelf.netbarTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getCollectNetBarListWithUid:[WYEngine shareInstance].uid latitude:0 longitude:0 page:(int)weakSelf.netbarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.netbarTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *netbarDicArray = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in netbarDicArray) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
+                [netbarInfo setNetbarInfoByJsonDic:dic];
+                [weakSelf.netbarCollectList addObject:netbarInfo];
+            }
+            
+            weakSelf.netbarCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.netbarCanLoadMore) {
+                weakSelf.netbarTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.netbarTableView.showsInfiniteScrolling = YES;
+                weakSelf.netbarNextCursor ++;
+            }
+            
+            [weakSelf.netbarTableView reloadData];
+            
+        } tag:tag];
+    }];
+    
+    [self.gameTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.gameCanLoadMore) {
+            [weakSelf.gameTableView.infiniteScrollingView stopAnimating];
+            weakSelf.gameTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getCollectGameListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.gameNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.gameTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYGameInfo *gameInfo = [[WYGameInfo alloc] init];
+                [gameInfo setGameInfoByJsonDic:dic];
+                [weakSelf.gameCollectList addObject:gameInfo];
+            }
+            
+            weakSelf.gameCanLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.gameCanLoadMore) {
+                weakSelf.gameTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.gameTableView.showsInfiniteScrolling = YES;
+                weakSelf.gameNextCursor ++;
+            }
+            
+            [weakSelf.gameTableView reloadData];
+            
+        } tag:tag];
+    }];
+    weakSelf.netbarTableView.showsInfiniteScrolling = NO;
+    weakSelf.gameTableView.showsInfiniteScrolling = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -200,6 +297,15 @@
             [netbarInfo setNetbarInfoByJsonDic:dic];
             [weakSelf.netbarCollectList addObject:netbarInfo];
         }
+        
+        weakSelf.netbarCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.netbarCanLoadMore) {
+            weakSelf.netbarTableView.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.netbarTableView.showsInfiniteScrolling = YES;
+            weakSelf.netbarNextCursor ++;
+        }
+        
         [weakSelf.netbarTableView reloadData];
         
     }tag:tag];
@@ -248,6 +354,14 @@
             WYGameInfo *gameInfo = [[WYGameInfo alloc] init];
             [gameInfo setGameInfoByJsonDic:dic];
             [weakSelf.gameCollectList addObject:gameInfo];
+        }
+        
+        weakSelf.gameCanLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.gameCanLoadMore) {
+            weakSelf.gameTableView.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.gameTableView.showsInfiniteScrolling = YES;
+            weakSelf.gameNextCursor ++;
         }
         
         [weakSelf.gameTableView reloadData];

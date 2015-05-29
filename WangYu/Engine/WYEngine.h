@@ -124,7 +124,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //完善资料
 - (BOOL)editUserInfoWithUid:(NSString *)uid nickName:(NSString *)nickName avatar:(NSArray *)avatar userHead:(NSString *)userHead tag:(int)tag;
 //更换城市
-- (BOOL)editUserCityWithUid:(NSString *)uid cityCode:(NSString *)cityCode tag:(int)tag;
+- (BOOL)editUserCityWithUid:(NSString *)uid cityCode:(NSString *)cityCode cityName:(NSString *)cityName tag:(int)tag;
 //头像列表
 - (BOOL)getHeadAvatarListWithTag:(int)tag;
 //消息

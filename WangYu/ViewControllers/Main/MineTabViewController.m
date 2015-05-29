@@ -115,7 +115,7 @@ enum TABLEVIEW_SECTION_INDEX {
 - (void)serviceAction:(id)sender{
     _badgeView.unreadNum = 2;
     _badgeView.hidden = NO;
-    [WYUIUtils transitionWithType:@"rippleEffect" WithSubtype:kCATransitionFromTop ForView:_badgeView];
+//    [WYUIUtils transitionWithType:@"rippleEffect" WithSubtype:kCATransitionFromTop ForView:_badgeView];
 }
 - (void)messageAction:(id)sender{
     MessageListViewController *messageVc = [[MessageListViewController alloc] init];

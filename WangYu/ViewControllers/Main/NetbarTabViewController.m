@@ -46,12 +46,16 @@
 @property (strong, nonatomic) IBOutlet UITableView *netBarTable;
 @property (strong, nonatomic) SKSplashView *splashView;
 
+@property (strong, nonatomic) IBOutlet UIView *footerView;
+@property (strong, nonatomic) IBOutlet UIButton *moreButton;
+
 @property (nonatomic, assign) CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic) NSMutableArray *netbarArray;
 
 - (IBAction)orderAction:(id)sender;
 - (IBAction)packetAction:(id)sender;
 - (IBAction)searchNetbarAction:(id)sender;
+- (IBAction)moreNetbarAction:(id)sender;
 
 @end
 
@@ -98,6 +102,15 @@
     self.colorLabel.backgroundColor = UIColorToRGB(0xfac402);
     self.colorLabel.layer.cornerRadius = 1.0;
     self.colorLabel.layer.masksToBounds = YES;
+    
+    [self.moreButton.layer setMasksToBounds:YES];
+    [self.moreButton.layer setCornerRadius:4.0];
+    [self.moreButton.layer setBorderWidth:0.5]; //边框宽度
+    [self.moreButton.layer setBorderColor:UIColorToRGB(0xadadad).CGColor];
+    self.moreButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
+    self.moreButton.titleLabel.textColor = SKIN_TEXT_COLOR1;
+    self.netBarTable.tableFooterView = self.footerView;
+    
 }
 
 - (void)viewSplash
@@ -396,6 +409,12 @@
 }
 
 - (IBAction)searchNetbarAction:(id)sender {
+    NetbarSearchViewController *searchVc = [[NetbarSearchViewController alloc] init];
+    searchVc.areaCode = _chooseAreaCode;
+    [self.navigationController pushViewController:searchVc animated:YES];
+}
+
+- (IBAction)moreNetbarAction:(id)sender{
     NetbarSearchViewController *searchVc = [[NetbarSearchViewController alloc] init];
     searchVc.areaCode = _chooseAreaCode;
     [self.navigationController pushViewController:searchVc animated:YES];

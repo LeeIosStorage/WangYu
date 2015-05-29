@@ -12,6 +12,7 @@
 #import "WYProgressHUD.h"
 #import "RedPacketInfo.h"
 #import "RedPacketViewCell.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 #define REDPACKET_TYPE_FREE            0
 #define REDPACKET_TYPE_HISTORY         1
@@ -48,6 +49,105 @@
     [self.historyRedPacketTableView addSubview:self.pullRefreshView2];
     
     [self feedsTypeSwitch:REDPACKET_TYPE_FREE needRefreshFeeds:YES];
+    
+    WS(weakSelf);
+    [self.freeRedPacketTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.freeCanLoadMore) {
+            [weakSelf.freeRedPacketTableView.infiniteScrollingView stopAnimating];
+            weakSelf.freeRedPacketTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getFreeRedPacketListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.freeNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.freeRedPacketTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                RedPacketInfo *redPacketInfo = [[RedPacketInfo alloc] init];
+                [redPacketInfo setRedPacketInfoByJsonDic:dic];
+                [weakSelf.freeRedPacketList addObject:redPacketInfo];
+            }
+            
+            weakSelf.freeCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.freeCanLoadMore) {
+                weakSelf.freeRedPacketTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.freeRedPacketTableView.showsInfiniteScrolling = YES;
+                weakSelf.freeNextCursor ++;
+            }
+            
+            [weakSelf.freeRedPacketTableView reloadData];
+            
+        } tag:tag];
+    }];
+    
+    [self.historyRedPacketTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.historyCanLoadMore) {
+            [weakSelf.historyRedPacketTableView.infiniteScrollingView stopAnimating];
+            weakSelf.historyRedPacketTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getHistoryRedPacketListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.historyNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.historyRedPacketTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                RedPacketInfo *redPacketInfo = [[RedPacketInfo alloc] init];
+                [redPacketInfo setRedPacketInfoByJsonDic:dic];
+                [weakSelf.historyRedPacketList addObject:redPacketInfo];
+            }
+            
+            weakSelf.historyCanLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.historyCanLoadMore) {
+                weakSelf.historyRedPacketTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.historyRedPacketTableView.showsInfiniteScrolling = YES;
+                weakSelf.historyNextCursor ++;
+            }
+            
+            [weakSelf.historyRedPacketTableView reloadData];
+            
+        } tag:tag];
+    }];
+    weakSelf.freeRedPacketTableView.showsInfiniteScrolling = NO;
+    weakSelf.historyRedPacketTableView.showsInfiniteScrolling = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -201,6 +301,15 @@
             [redPacketInfo setRedPacketInfoByJsonDic:dic];
             [weakSelf.freeRedPacketList addObject:redPacketInfo];
         }
+        
+        weakSelf.freeCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.freeCanLoadMore) {
+            weakSelf.freeRedPacketTableView.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.freeRedPacketTableView.showsInfiniteScrolling = YES;
+            weakSelf.freeNextCursor ++;
+        }
+        
         [weakSelf.freeRedPacketTableView reloadData];
         
     }tag:tag];
@@ -256,6 +365,15 @@
             [redPacketInfo setRedPacketInfoByJsonDic:dic];
             [weakSelf.historyRedPacketList addObject:redPacketInfo];
         }
+        
+        weakSelf.historyCanLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.historyCanLoadMore) {
+            weakSelf.historyRedPacketTableView.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.historyRedPacketTableView.showsInfiniteScrolling = YES;
+            weakSelf.historyNextCursor ++;
+        }
+        
         [weakSelf.historyRedPacketTableView reloadData];
         
     }tag:tag];

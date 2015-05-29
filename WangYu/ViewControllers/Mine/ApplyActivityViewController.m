@@ -13,6 +13,7 @@
 #import "ApplyActivityViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "MatchDetailViewController.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 @interface ApplyActivityViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -38,6 +39,52 @@
     [self getCacheApplyActivityList];
     [self refreshApplyActivityInfos];
     
+    WS(weakSelf);
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.applyCanLoadMore) {
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            weakSelf.tableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getApplyActivityListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.applyNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYActivityInfo *activityInfo = [[WYActivityInfo alloc] init];
+                [activityInfo setActivityInfoByJsonDic:dic];
+                [weakSelf.applyActivityInfos addObject:activityInfo];
+            }
+            
+            weakSelf.applyCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.applyCanLoadMore) {
+                weakSelf.tableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.tableView.showsInfiniteScrolling = YES;
+                weakSelf.applyNextCursor ++;
+            }
+            
+            [weakSelf.tableView reloadData];
+            
+        } tag:tag];
+    }];
+    weakSelf.tableView.showsInfiniteScrolling = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,7 +132,6 @@
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] getApplyActivityListWithUid:[WYEngine shareInstance].uid page:(int)_applyNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
-//    [[WYEngine shareInstance] getActivityListWithPage:1 pageSize:10 tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -104,14 +150,13 @@
             [activityInfo setActivityInfoByJsonDic:dic];
             [weakSelf.applyActivityInfos addObject:activityInfo];
         }
-        //
+        
         weakSelf.applyCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
-        if (!weakSelf.applyCanLoadMore) {
-            //            weakSelf.payOrderTableView.showsInfiniteScrolling = NO;
+        if (weakSelf.applyCanLoadMore) {
+            weakSelf.tableView.showsInfiniteScrolling = NO;
         }else{
-            //            weakSelf.payOrderTableView.showsInfiniteScrolling = YES;
-            //可以加载更多
-            //            weakSelf.payNextCursor ++;
+            weakSelf.tableView.showsInfiniteScrolling = YES;
+            weakSelf.applyNextCursor ++;
         }
         
         [weakSelf.tableView reloadData];

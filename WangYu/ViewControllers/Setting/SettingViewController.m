@@ -39,6 +39,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 //    [self.view setBackgroundColor:UIColorRGB(234, 234, 234)];
+    _cityCode = [WYEngine shareInstance].userInfo.cityCode;
+    _cityName = [WYEngine shareInstance].userInfo.cityName;
     [self getCacheSize];
     [self refreshUI];
 }
@@ -326,7 +328,7 @@
     [WYProgressHUD AlertLoading:@"正在切换城市..." At:self.view];
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] editUserCityWithUid:[WYEngine shareInstance].uid cityCode:_cityCode tag:tag];
+    [[WYEngine shareInstance] editUserCityWithUid:[WYEngine shareInstance].uid cityCode:_cityCode cityName:_cityName tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
@@ -342,6 +344,8 @@
         WYUserInfo *userInfo = [[WYUserInfo alloc] init];
         [userInfo setUserInfoByJsonDic:object];
         [WYEngine shareInstance].userInfo = userInfo;
+        
+        [weakSelf.setTableView reloadData];
         
     }tag:tag];
     

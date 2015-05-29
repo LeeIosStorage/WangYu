@@ -965,10 +965,13 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:avatar withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
-- (BOOL)editUserCityWithUid:(NSString *)uid cityCode:(NSString *)cityCode tag:(int)tag{
+- (BOOL)editUserCityWithUid:(NSString *)uid cityCode:(NSString *)cityCode cityName:(NSString *)cityName tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (cityCode) {
         [params setObject:cityCode forKey:@"cityCode"];
+    }
+    if (cityName) {
+        [params setObject:cityName forKey:@"cityName"];
     }
     if (_token) {
         [params setObject:_token forKey:@"token"];

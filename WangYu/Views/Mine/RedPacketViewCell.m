@@ -35,9 +35,11 @@
     self.redPagValidTimeLabel.text = validTimeText;
     
     self.redPagStaleLabel.hidden = YES;
-    UIImage *bgImage = [[UIImage imageNamed:@"redpacket_kuang_red"] stretchableImageWithLeftCapWidth:148 topCapHeight:80];
+    UIImage *bgImage = [UIImage imageNamed:@"redpacket_kuang_red"];
+//    [[UIImage imageNamed:@"redpacket_kuang_red"] stretchableImageWithLeftCapWidth:148 topCapHeight:80];
     if (_isPast) {
-        bgImage = [[UIImage imageNamed:@"redpacket_kuang_gray"] stretchableImageWithLeftCapWidth:148 topCapHeight:80];
+        bgImage = [UIImage imageNamed:@"redpacket_kuang_gray"];
+//        [[UIImage imageNamed:@"redpacket_kuang_gray"] stretchableImageWithLeftCapWidth:148 topCapHeight:80];
         self.redPagStaleLabel.hidden = NO;
     }
     self.redPacketBgImgView.image = bgImage;
