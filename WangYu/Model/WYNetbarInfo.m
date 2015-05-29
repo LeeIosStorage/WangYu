@@ -8,6 +8,7 @@
 
 #import "WYNetbarInfo.h"
 #import "WYEngine.h"
+#import "WYMatchWarInfo.h"
 
 @implementation WYNetbarInfo
 
@@ -55,6 +56,16 @@
         _picIds = [NSMutableArray array];
         for (NSDictionary *objectDic in objectForKey) {
             [_picIds addObject:[objectDic objectForKey:@"url"]];
+        }
+    }
+    
+    objectForKey = [dic arrayObjectForKey:@"matches"];
+    if (objectForKey) {
+        _matches = [[NSMutableArray alloc] init];
+        for (NSDictionary *warDic in objectForKey) {
+            WYMatchWarInfo *warInfo = [[WYMatchWarInfo alloc] init];
+            [warInfo setMatchWarInfoByJsonDic:warDic];
+            [_matches addObject:warInfo];
         }
     }
 }

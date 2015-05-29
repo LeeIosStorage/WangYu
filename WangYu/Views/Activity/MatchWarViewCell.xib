@@ -104,6 +104,7 @@
                     </view>
                 </subviews>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
                 <outlet property="applyCountLabel" destination="X3q-tu-5hc" id="TAD-D3-BT7"/>
                 <outlet property="gameImageView" destination="bQw-OU-GYf" id="ThO-aZ-uQ7"/>

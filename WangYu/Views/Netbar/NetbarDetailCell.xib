@@ -60,7 +60,7 @@
                 <outlet property="dateLabel" destination="pan-HC-tjP" id="z0J-hA-Lhi"/>
                 <outlet property="joinNumLabel" destination="IPh-5X-jzJ" id="G3i-NW-qmL"/>
                 <outlet property="nameLabel" destination="qCh-iz-VuH" id="EhG-do-N11"/>
-                <outlet property="teamLabel" destination="9ny-Fd-XG5" id="XSN-be-wsc"/>
+                <outlet property="titleLabel" destination="9ny-Fd-XG5" id="3Ph-sN-3jH"/>
             </connections>
             <point key="canvasLocation" x="471" y="281"/>
         </tableViewCell>

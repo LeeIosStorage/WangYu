@@ -19,7 +19,7 @@
 @property(nonatomic, strong) NSString* latitude;                    //纬度
 @property(nonatomic, strong) NSString* longitude;                   //经度
 @property(nonatomic, strong) NSMutableArray* picIds;                //图片信息
-@property(nonatomic, strong) NSMutableArray* matcheArray;           //战队信息
+@property(nonatomic, strong) NSMutableArray* matches;               //战队信息
 @property(nonatomic, assign) BOOL isOrder;                          //是否支持预订
 @property(nonatomic, assign) BOOL isPay;                            //是否支持支付
 @property(nonatomic, assign) BOOL isRecommend;                      //是否被推荐

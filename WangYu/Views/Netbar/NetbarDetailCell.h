@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WYMatchWarInfo.h"
 
 @interface NetbarDetailCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UILabel *teamLabel;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *joinNumLabel;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 
+@property (strong, nonatomic) WYMatchWarInfo *matchWarInfo;
 
 @end

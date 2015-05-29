@@ -19,6 +19,7 @@
 #import "WYPhotoGroup.h"
 #import "WYPhotoItem.h"
 #import "WYAlertView.h"
+#import "WYMatchWarInfo.h"
 #import "NetbarMapViewController.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate,WYPhotoGroupDelegate>
@@ -228,11 +229,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.netbarInfo.matcheArray.count;
+    return self.netbarInfo.matches.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (self.netbarInfo.matcheArray.count == 0) {
+    if (self.netbarInfo.matches.count == 0) {
         return 93;
     }
     return 39;
@@ -245,7 +246,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc] init];
-    if (self.netbarInfo.matcheArray.count == 0) {
+    if (self.netbarInfo.matches.count == 0) {
         view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 93);
         CGRect frame = self.sectionView2.frame;
         frame.size.width = SCREEN_WIDTH;
@@ -273,6 +274,8 @@
         cell = [cells objectAtIndex:0];
     }
     
+    WYMatchWarInfo *matchWarInfo = _netbarInfo.matches[indexPath.row];
+    cell.matchWarInfo = matchWarInfo;
     return cell;
 }
 
