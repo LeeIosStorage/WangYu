@@ -241,6 +241,7 @@
 		079D52531B01E48600DF4D6B /* GameCommendCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 079D524F1B01E48600DF4D6B /* GameCommendCardView.xib */; };
 		079D52541B01E48600DF4D6B /* HotUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 079D52511B01E48600DF4D6B /* HotUpButton.m */; };
 		079D52571B01E52900DF4D6B /* WYSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 079D52561B01E52900DF4D6B /* WYSegmentedView.m */; };
+		07A4279D1B183AEA009197D5 /* DVSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A4279C1B183AEA009197D5 /* DVSwitch.m */; };
 		07B48B3F1B0C4D1F0000857F /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B48B3B1B0C4D1F0000857F /* libWeChatSDK.a */; };
 		07B48B401B0C4D1F0000857F /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 07B48B3C1B0C4D1F0000857F /* read_me.txt */; };
 		07B48B4A1B0C6E9D0000857F /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 07B48B481B0C6E9D0000857F /* TencentOpenApi_IOS_Bundle.bundle */; };
@@ -773,6 +774,8 @@
 		079D52511B01E48600DF4D6B /* HotUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotUpButton.m; sourceTree = "<group>"; };
 		079D52551B01E52900DF4D6B /* WYSegmentedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYSegmentedView.h; sourceTree = "<group>"; };
 		079D52561B01E52900DF4D6B /* WYSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYSegmentedView.m; sourceTree = "<group>"; };
+		07A4279B1B183AEA009197D5 /* DVSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVSwitch.h; sourceTree = "<group>"; };
+		07A4279C1B183AEA009197D5 /* DVSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVSwitch.m; sourceTree = "<group>"; };
 		07B48B3B1B0C4D1F0000857F /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		07B48B3C1B0C4D1F0000857F /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
 		07B48B3D1B0C4D1F0000857F /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
@@ -1147,6 +1150,7 @@
 		073DBD171AE770F1009B49EB /* External */ = {
 			isa = PBXGroup;
 			children = (
+				07A4279A1B183AEA009197D5 /* DVSwitch */,
 				076E0DED1B147FD600E4363A /* MyAVCameraView */,
 				077E60731B0B11430079BC9E /* ThridApp */,
 				076C8CE91B048BBB00421460 /* MapChoose */,
@@ -1817,6 +1821,15 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		07A4279A1B183AEA009197D5 /* DVSwitch */ = {
+			isa = PBXGroup;
+			children = (
+				07A4279B1B183AEA009197D5 /* DVSwitch.h */,
+				07A4279C1B183AEA009197D5 /* DVSwitch.m */,
+			);
+			path = DVSwitch;
+			sourceTree = "<group>";
+		};
 		07B48B3A1B0C4D1F0000857F /* WeChatSDK_1.5 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2187,6 +2200,7 @@
 				0723DE001B0F19830040295B /* CalloutMapAnnotation.m in Sources */,
 				079D52521B01E48600DF4D6B /* GameCommendCardView.m in Sources */,
 				076195EC1B008FAC00397711 /* PayOrderViewCell.m in Sources */,
+				07A4279D1B183AEA009197D5 /* DVSwitch.m in Sources */,
 				07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */,
 				077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */,
 				077D83891AF9C3BC00AAF31F /* NSString+Value.m in Sources */,

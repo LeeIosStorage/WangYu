@@ -59,7 +59,7 @@
             return;
         }
         weakSelf.matchInfos = [NSMutableArray array];
-        NSArray *matchDicArray = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"address"];
+        NSArray *matchDicArray = [jsonRet arrayObjectForKey:@"object"];
         for (NSDictionary *dic in matchDicArray) {
             if (![dic isKindOfClass:[NSDictionary class]]) {
                 continue;
