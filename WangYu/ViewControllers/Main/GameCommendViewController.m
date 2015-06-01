@@ -50,11 +50,6 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate>
     [self getCacheGameList];
     [self refreshGameInfos];
     
-//    self.gameCommendInfos = @[@{@"gameName":@"网娱大师",@"pic":@"http://g.hiphotos.baidu.com/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=b7b1938d6e81800a7ae8815cd05c589f/bba1cd11728b4710dffb97cec1cec3fdfd0323df.jpg",@"des":@"网娱大师欢迎您快来下载吧 我擦我"},
-//                    @{@"gameName":@"全民突击",@"pic":@"http://www.fpwap.com/UploadFiles/news/yxgl/2015/01/19/07984252425d6a0664050fdead0fbeb0.jpg",@"des":@"不一样的捕鱼，不一样的欢乐 网娱大师欢迎您快来下载吧 我擦我擦不一样的捕鱼，不一样的欢乐 网娱大师欢迎您快来下载吧 我擦我"},
-//                    @{@"gameName":@"天天酷跑",@"pic":@"http://p3.image.hiapk.com/uploads/allimg/150130/930-150130134155.jpg",@"des":@"不一样的捕鱼，不一样的欢乐 网娱大师欢迎您快来下载吧 我擦我擦不一样的捕鱼，不一样的欢乐 网娱大师欢迎您快来下载吧 我擦我"},
-//                    @{@"gameName":@"美女约",@"pic":@"http://f.hiphotos.baidu.com/image/pic/item/32fa828ba61ea8d3b8462a09950a304e251f5852.jpg",@"des":@"约起来吧 朋友趁还年轻还能约得动 尽情的释放你的激情 哈哈哈哈哈哈哈哈"}
-//                    ];
     self.swipeableView.delegate = self;
     
     [self refreshUI];

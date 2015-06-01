@@ -12,17 +12,22 @@
 #import "GMGridViewLayoutStrategies.h"
 #import "GMGridViewCell+Extended.h"
 #import "UIImageView+WebCache.h"
+#import "WYShareActionSheet.h"
 
 #define ONE_IMAGE_HEIGHT  40
 #define item_spacing  15
 
-@interface GameDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,GMGridViewDataSource, GMGridViewActionDelegate,UIScrollViewDelegate>
-
+@interface GameDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,GMGridViewDataSource, GMGridViewActionDelegate,UIScrollViewDelegate,WYShareActionSheetDelegate>
+{
+    WYShareActionSheet *_shareAction;
+}
 @property (nonatomic, strong) NSMutableArray *likeImages;
+@property (nonatomic, strong) NSMutableArray *coverImages;
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UIView *headContainerView;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet GMGridView *coverGridView;
+@property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (strong, nonatomic) IBOutlet UIView *basicContainerView;
 @property (strong, nonatomic) IBOutlet UIImageView *gameIconImageView;
 @property (strong, nonatomic) IBOutlet UILabel *gameNameLabel;
@@ -36,6 +41,14 @@
 @property (strong, nonatomic) IBOutlet UILabel *likeTipLabel;
 @property (strong, nonatomic) IBOutlet GMGridView *likeImageGridView;
 
+@property (strong, nonatomic) IBOutlet UIButton *collectButton;
+@property (strong, nonatomic) IBOutlet UIButton *shareButton;
+@property (strong, nonatomic) IBOutlet UIButton *downloadButton;
+
+- (IBAction)collectAction:(id)sender;
+- (IBAction)shareAction:(id)sender;
+- (IBAction)downloadAction:(id)sender;
+
 @end
 
 @implementation GameDetailsViewController
@@ -45,6 +58,7 @@
     // Do any additional setup after loading the view from its nib.
     
     _likeImages = [[NSMutableArray alloc] init];
+    _coverImages = [[NSMutableArray alloc] init];
     
     self.gameIconImageView.clipsToBounds = YES;
     self.gameIconImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -62,6 +76,14 @@
     self.likeTipLabel.font = SKIN_FONT_FROMNAME(15);
     self.gameContentLabel.textColor = SKIN_TEXT_COLOR2;
     
+    [self.downloadButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
+    self.downloadButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
+    self.downloadButton.backgroundColor = SKIN_COLOR;
+    self.downloadButton.layer.cornerRadius = 4.0;
+    self.downloadButton.layer.masksToBounds = YES;
+    
+    self.pageControl.currentPageIndicatorTintColor = SKIN_COLOR;
+    self.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
     
     NSInteger spacing = item_spacing;
     _likeImageGridView.style = GMGridViewStyleSwap;
@@ -77,9 +99,23 @@
     _likeImageGridView.delegate = self;
     
     
+    _coverGridView.style = GMGridViewStyleSwap;
+    _coverGridView.itemSpacing = 0;
+    _coverGridView.minEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    _coverGridView.centerGrid = NO;
+    _coverGridView.layoutStrategy = [GMGridViewLayoutStrategyFactory strategyFromType:GMGridViewLayoutHorizontalPagedLTR];
+    _coverGridView.actionDelegate = self;
+    _coverGridView.showsHorizontalScrollIndicator = NO;
+    _coverGridView.showsVerticalScrollIndicator = NO;
+    _coverGridView.dataSource = self;
+    _coverGridView.scrollsToTop = NO;
+    _coverGridView.delegate = self;
+    
+    
     [self getCacheGameInfo];
     [self refreshGameInfo];
     
+//    [self setCoverImageURLs];
     [self refreshGameHeadViewShow];
     
 }
@@ -116,6 +152,8 @@
             NSDictionary *object = [[jsonRet dictionaryObjectForKey:@"object"] dictionaryObjectForKey:@"game"];
             [weakSelf.gameInfo setGameInfoByJsonDic:object];
             
+            [weakSelf setCoverImageURLs];
+            
             weakSelf.likeImages = [[NSMutableArray alloc] init];
             NSArray *likes = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"recommendations"];
             for (NSDictionary *dic in likes) {
@@ -145,6 +183,8 @@
         NSDictionary *object = [[jsonRet dictionaryObjectForKey:@"object"] dictionaryObjectForKey:@"game"];
         [weakSelf.gameInfo setGameInfoByJsonDic:object];
         
+        [weakSelf setCoverImageURLs];
+        
         weakSelf.likeImages = [[NSMutableArray alloc] init];
         NSArray *likes = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"recommendations"];
         for (NSDictionary *dic in likes) {
@@ -156,6 +196,46 @@
     }tag:tag];
 }
 
+-(void)setCoverImageURLs{
+    _coverImages = [[NSMutableArray alloc] init];
+    self.coverImages = [[NSMutableArray alloc] initWithArray:_gameInfo.coverURLs];
+//    NSURL *url = [NSURL URLWithString:@"http://b.hiphotos.baidu.com/image/pic/item/a044ad345982b2b799b52dbf34adcbef76099ba6.jpg"];
+//    [_coverImages addObject:url];
+//    url = [NSURL URLWithString:@"http://b.hiphotos.baidu.com/image/pic/item/c8177f3e6709c93de9bf1b8c9a3df8dcd100547f.jpg"];
+//    [_coverImages addObject:url];
+//    url = [NSURL URLWithString:@"http://f.hiphotos.baidu.com/image/pic/item/d52a2834349b033bd6710d1a11ce36d3d439bd71.jpg"];
+//    [_coverImages addObject:url];
+    
+}
+
+-(void)collectGame{
+    
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] collectGameWithUid:[WYEngine shareInstance].uid gameId:_gameInfo.gameId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        self.collectButton.enabled = YES;
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        BOOL isFavor = [[jsonRet dictionaryObjectForKey:@"object"] boolValueForKey:@"isFavor"];
+        if (isFavor) {
+            [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromBottom ForView:self.collectButton];
+            [WYProgressHUD AlertSuccess:@"游戏收藏成功" At:weakSelf.view];
+        }else{
+            [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromTop ForView:self.collectButton];
+            [WYProgressHUD AlertSuccess:@"游戏取消收藏成功" At:weakSelf.view];
+        }
+        
+    }tag:tag];
+    
+}
+
 #pragma mark - custom
 -(void)refreshGameHeadViewShow{
     
@@ -165,28 +245,74 @@
     self.gameDowloadCounLabel.text = [NSString stringWithFormat:@"%d",_gameInfo.downloadCount];
     self.gameContentLabel.text = _gameInfo.gameIntro;
     
-    
+    [self.coverGridView reloadData];
     [self.likeImageGridView reloadData];
+    
+    self.pageControl.hidden = YES;
+    if (_coverImages.count > 1) {
+        self.pageControl.hidden = NO;
+    }
+    self.pageControl.numberOfPages = _coverImages.count;
+    
     
     self.headContainerView.backgroundColor = self.view.backgroundColor;
     self.tableView.tableHeaderView = self.headContainerView;
 }
 
+#pragma mark - IBAction
+- (IBAction)collectAction:(id)sender {
+    
+    self.collectButton.enabled = NO;
+    [self collectGame];
+}
+
+- (IBAction)shareAction:(id)sender {
+    _shareAction = [[WYShareActionSheet alloc] init];
+    _shareAction.gameInfo = _gameInfo;
+    _shareAction.owner = self;
+    [_shareAction showShareAction];
+}
+
+- (IBAction)downloadAction:(id)sender {
+    
+}
+
 #pragma mark - GMGridViewDataSource
 - (NSInteger)numberOfItemsInGMGridView:(GMGridView *)gridView
 {
+    if (_coverGridView == gridView) {
+        return _coverImages.count;
+    }
     return _likeImages.count;
     
 }
 - (CGSize)GMGridView:(GMGridView *)gridView sizeForItemsInInterfaceOrientation:(UIInterfaceOrientation)orientation {
     
+    if (_coverGridView == gridView) {
+        return CGSizeMake(SCREEN_WIDTH, 150);
+    }
     return CGSizeMake(ONE_IMAGE_HEIGHT, ONE_IMAGE_HEIGHT);
 }
 
 - (GMGridViewCell *)GMGridView:(GMGridView *)gridView cellForItemAtIndex:(NSInteger)index
 {
     GMGridViewCell *cell = [gridView dequeueReusableCell];
-    
+    if (gridView == _coverGridView) {
+        if (!cell)
+        {
+            cell = [[GMGridViewCell alloc] init];
+            UIImageView* imageView = [[UIImageView alloc] init];
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.clipsToBounds = YES;
+            cell.contentView = imageView;
+            
+        }
+        UIImageView* imageView = (UIImageView* )cell.contentView;
+        NSURL *pidUrl = _coverImages[index];
+        [imageView sd_setImageWithURL:pidUrl placeholderImage:[UIImage imageNamed:@"activity_load_icon"]];
+        return cell;
+        
+    }
     if (!cell)
     {
         cell = [[GMGridViewCell alloc] init];
@@ -206,6 +332,11 @@
 - (void)GMGridView:(GMGridView *)gridView didTapOnItemAtIndex:(NSInteger)position
 {
     WYLog(@"Did tap at index %ld", position);
+    if (_coverGridView == gridView) {
+        
+        return;
+    }
+    
     NSDictionary *dic = _likeImages[position];
     GameDetailsViewController *gameVc = [[GameDetailsViewController alloc] init];
     WYGameInfo *gameInfo = [[WYGameInfo alloc] init];
@@ -213,6 +344,15 @@
     gameVc.gameInfo = gameInfo;
     
     [self.navigationController pushViewController:gameVc animated:YES];
+}
+
+#pragma mark - UIScrollViewDelegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView == _coverGridView) {
+        CGFloat pageWidth = _coverGridView.frame.size.width;
+        int currentPage = floor((_coverGridView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+        self.pageControl.currentPage = currentPage;
+    }
 }
 
 #pragma mark - Table view data source

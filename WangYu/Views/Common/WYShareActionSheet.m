@@ -67,6 +67,21 @@
             self.shareImage = [UIImage imageNamed:@"activity_load_icon"];
         }
     }
+    if (self.gameInfo) {
+        self.shareTitle = [NSString stringWithFormat:@"网娱大师-%@|手游推荐",_gameInfo.gameName];
+        self.shareDescription = [NSString stringWithFormat:@"赶紧去下载 嗨起吧!!"];
+        self.shareWebpageUrl = [NSString stringWithFormat:@"%@/share/game/%@",[WYEngine shareInstance].baseUrl,_gameInfo.gameId];
+        
+        if (![self.gameInfo.gameCoverUrl isEqual:[NSNull null]]) {
+            self.shareImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[self.gameInfo.gameCoverUrl absoluteString]];
+        }
+        if (![self.gameInfo.gameIconUrl isEqual:[NSNull null]]) {
+            self.shareImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[self.gameInfo.gameIconUrl absoluteString]];
+        }
+        if (!self.shareImage) {
+            self.shareImage = [UIImage imageNamed:@"netbar_load_icon"];
+        }
+    }
 }
 
 

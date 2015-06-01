@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "WYNetbarInfo.h"
 #import "WYActivityInfo.h"
+#import "WYGameInfo.h"
 
 @protocol WYShareActionSheetDelegate <NSObject>
-
 @optional
--(void) deleteTopicAction:(id)info;
+
 @end
 
 @interface WYShareActionSheet : NSObject
@@ -23,6 +23,8 @@
 @property (nonatomic, strong) WYNetbarInfo *netbarInfo;
 
 @property (nonatomic, strong) WYActivityInfo *activityInfo;
+
+@property (nonatomic, strong) WYGameInfo *gameInfo;
 
 -(void) showShareAction;
 
