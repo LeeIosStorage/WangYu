@@ -19,6 +19,7 @@
 #import "WYActionSheet.h"
 #import "WYSettingConfig.h"
 #import "LocationViewController.h"
+#import "WYLinkerHandler.h"
 
 @interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate,LocationViewControllerDelegate>
 
@@ -217,8 +218,12 @@
                 [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id986749236"]];//
                 break;
             }else if (indexPath.row == 2){
-                AboutViewController *aVc = [[AboutViewController alloc] init];
-                [self.navigationController pushViewController:aVc animated:YES];
+//                AboutViewController *aVc = [[AboutViewController alloc] init];
+//                [self.navigationController pushViewController:aVc animated:YES];
+                id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/my/web/about", [WYEngine shareInstance].baseUrl] From:self.navigationController];
+                if (vc) {
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
                 break;
             }
         }

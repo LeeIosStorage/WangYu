@@ -17,9 +17,11 @@
 #import "WYMatchWarInfo.h"
 #import "WYProgressHUD.h"
 #import "MatchDetailViewController.h"
+#import "TopicsViewController.h"
 #import "WYAlertView.h"
 #import "DVSwitch.h"
 #import "WYScrollPage.h"
+#import "WYLinkerHandler.h"
 
 @interface ActivityTabViewController ()<UITableViewDataSource,UITableViewDelegate,WYScrollPageDelegate>{
     WYScrollPage *scrollPageView;
@@ -54,10 +56,10 @@
 
 - (void)initSwitchView{
     self.switcher = [DVSwitch switchWithStringsArray:@[@"网竞联赛", @"赛事资讯", @"个人约战"]];
-    self.switcher.frame = CGRectMake(12, 7, SCREEN_WIDTH - 12 * 2, 29);
+    self.switcher.frame = CGRectMake(12, 7, SCREEN_WIDTH - 12 * 2, 30);
     self.switcher.font = SKIN_FONT_FROMNAME(14);
     self.switcher.cornerRadius = 4;
-    self.switcher.sliderOffset = .0;
+    self.switcher.sliderOffset = 0.5;
     [self.switcher.layer setMasksToBounds:YES];
     [self.switcher.layer setCornerRadius:4.0];
     [self.switcher.layer setBorderWidth:0.5]; //边框宽度
@@ -81,9 +83,12 @@
 }
 
 - (void)initContainerScrollView{
-    
+    CGRect frame = _containerView.frame;
+    frame.size.height = SCREEN_HEIGHT - 50 - CGRectGetHeight(self.titleNavBar.frame) - CGRectGetHeight(self.sectionView.frame);
+    _containerView.frame = frame;
     _containerView.contentSize = CGSizeMake(SCREEN_WIDTH * 3, _containerView.frame.size.height);
-    CGRect frame = self.newsTableView.frame;
+    
+    frame = self.newsTableView.frame;
     frame.origin.x = SCREEN_WIDTH;
     self.newsTableView.frame = frame;
     self.newsTableView.tableHeaderView = self.adsViewContainer;
@@ -113,7 +118,7 @@
     [_adsViewContainer addSubview:scrollPageView];
     
     self.newsTableView.tableHeaderView = _adsViewContainer;
-    [self.newsTableView reloadData];
+//    [self.newsTableView reloadData];
 }
 
 - (void)refreshDataSourceWithIndex:(NSUInteger)index{
@@ -150,36 +155,6 @@
     }
     return self.tabController.navigationController;
 }
-
-//- (void)getHotActivityInfo{
-//    WS(weakSelf);
-//    int tag = [[WYEngine shareInstance] getConnectTag];
-//    [[WYEngine shareInstance] getActivityHotListWithTag:tag];
-//    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-//        //        [WYProgressHUD AlertLoadDone];
-//        [self.pullRefreshView finishedLoading];
-//        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
-//        if (!jsonRet || errorMsg) {
-//            if (!errorMsg.length) {
-//                errorMsg = @"请求失败";
-//            }
-//            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
-//            return;
-//        }
-//        
-//        weakSelf.activityInfos = [NSMutableArray array];
-//        NSArray *activityDicArray = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"list"];
-//        for (NSDictionary *dic in activityDicArray) {
-//            if (![dic isKindOfClass:[NSDictionary class]]) {
-//                continue;
-//            }
-//            WYActivityInfo *activityInfo = [[WYActivityInfo alloc] init];
-//            [activityInfo setActivityInfoByJsonDic:dic];
-//            [weakSelf.activityInfos addObject:activityInfo];
-//        }
-//        [weakSelf.leagueTableView reloadData];
-//    }tag:tag];
-//}
 
 - (void)getCacheLeagueInfo{
     WS(weakSelf);
@@ -243,8 +218,23 @@
         if (jsonRet == nil) {
             //...
         }else{
+            //解析数据
+            weakSelf.adsNewsArray = [NSMutableArray array];
+            NSArray*themeDicArray = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"hots"];
+            for (NSDictionary *dic  in themeDicArray) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                WYNewsInfo *hotsInfo = [[WYNewsInfo alloc] init];
+                [hotsInfo setNewsInfoByJsonDic:dic];
+                [weakSelf.adsNewsArray addObject:hotsInfo];
+            }
+            if (weakSelf.adsNewsArray.count) {
+                [weakSelf refreshAdsScrollView];
+            }
+            
             weakSelf.newsInfos = [NSMutableArray array];
-            NSArray *newsDicArray = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"list"];
+            NSArray *newsDicArray = [[[jsonRet objectForKey:@"object"] objectForKey:@"infos"] arrayObjectForKey:@"list"];
             for (NSDictionary *dic in newsDicArray) {
                 if (![dic isKindOfClass:[NSDictionary class]]) {
                     continue;
@@ -273,8 +263,24 @@
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
             return;
         }
+        [weakSelf.adsNewsArray removeAllObjects];
+        //解析数据
+        weakSelf.adsNewsArray = [NSMutableArray array];
+        NSArray*themeDicArray = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"hots"];
+        for (NSDictionary *dic  in themeDicArray) {
+            if (![dic isKindOfClass:[NSDictionary class]]) {
+                continue;
+            }
+            WYNewsInfo *hotsInfo = [[WYNewsInfo alloc] init];
+            [hotsInfo setNewsInfoByJsonDic:dic];
+            [weakSelf.adsNewsArray addObject:hotsInfo];
+        }
+        if (weakSelf.adsNewsArray.count) {
+            [weakSelf refreshAdsScrollView];
+        }
+
         weakSelf.newsInfos = [NSMutableArray array];
-        NSArray *newsDicArray = [[jsonRet objectForKey:@"object"] arrayObjectForKey:@"list"];
+        NSArray *newsDicArray = [[[jsonRet objectForKey:@"object"] objectForKey:@"infos"] arrayObjectForKey:@"list"];
         for (NSDictionary *dic in newsDicArray) {
             if (![dic isKindOfClass:[NSDictionary class]]) {
                 continue;
@@ -433,11 +439,23 @@
         mdVc.activityInfo = activityInfo;
         [self.navigationController pushViewController:mdVc animated:YES];
     }else if (tableView == self.newsTableView) {
-        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"赛事资讯" message:@"H5页跳转" cancelButtonTitle:@"确定"];
-        [alertView show];
+        WYNewsInfo *newsInfo = _newsInfos[indexPath.row];
+        if (newsInfo.isSubject) {
+            TopicsViewController *tVc = [[TopicsViewController alloc] init];
+            tVc.newsInfo = newsInfo;
+            [self.navigationController pushViewController:tVc animated:YES];
+        }else {
+            id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/info/web/detail?id=%@", [WYEngine shareInstance].baseUrl, newsInfo.nid] From:self.navigationController];
+            if (vc) {
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
     }else {
-        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"个人约战" message:@"H5页跳转" cancelButtonTitle:@"确定"];
-        [alertView show];
+        WYMatchWarInfo *matchWarInfo = _matchInfos[indexPath.row];
+        id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/detail?id=%@&userId=%@&token=%@", [WYEngine shareInstance].baseUrl, matchWarInfo.mId, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
+        if (vc) {
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];

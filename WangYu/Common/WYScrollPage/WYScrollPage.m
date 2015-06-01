@@ -8,7 +8,7 @@
 
 #import "WYScrollPage.h"
 #import "UIImageView+WebCache.h"
-//#import "WYThemeInfo.h"
+#import "WYNewsInfo.h"
 #import "ActivityTabViewController.h"
 
 #define WY_ADS_BASE_TAG 10010
@@ -77,16 +77,16 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewStop:) name:WY_NEWS_STOP_ADS_VIEW_NOTIFICATION object:nil];
     }
 
-//    WYThemeInfo *theme;
-//    theme = [_dataArray lastObject];
-//    [self addSubviewToScrollView:_adsScrollView withURL:theme.originalThemeImageUrl withTag:-1];
-//    for (int i = 0; i < [_dataArray count]; i++) {
-//        theme = [_dataArray objectAtIndex:i];
-//        [self addSubviewToScrollView:_adsScrollView withURL:theme.originalThemeImageUrl withTag:i];
-//    }
-//    
-//    theme = [_dataArray firstObject];
-//    [self addSubviewToScrollView:_adsScrollView withURL:theme.originalThemeImageUrl withTag:_dataArray.count];
+    WYNewsInfo *newsInfo;
+    newsInfo = [_dataArray lastObject];
+    [self addSubviewToScrollView:_adsScrollView withURL:[newsInfo.hotImageURL absoluteString] withTag:-1];
+    for (int i = 0; i < [_dataArray count]; i++) {
+        newsInfo = [_dataArray objectAtIndex:i];
+        [self addSubviewToScrollView:_adsScrollView withURL:[newsInfo.hotImageURL absoluteString] withTag:i];
+    }
+    
+    newsInfo = [_dataArray firstObject];
+    [self addSubviewToScrollView:_adsScrollView withURL:[newsInfo.hotImageURL absoluteString] withTag:_dataArray.count];
     
     //多算两屏,默认第二屏
     _adsScrollView.contentSize = CGSizeMake((_dataArray.count + 2)*frame.size.width,frame.size.height);

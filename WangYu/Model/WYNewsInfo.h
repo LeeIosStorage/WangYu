@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSString *newsImageUrl;       //资讯URL
 @property (nonatomic, assign) BOOL isSubject;               //是否为专题
 @property (nonatomic, readonly) NSURL *smallImageURL;       //图片网络地址
+@property (nonatomic, strong) NSString *cover;              //hot图片
+@property (nonatomic, readonly) NSURL *hotImageURL;         //hot图片网址
 
 @property (nonatomic, strong) NSDictionary* newsInfoByJsonDic; //资讯字典
 

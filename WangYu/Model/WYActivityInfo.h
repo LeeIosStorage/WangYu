@@ -22,6 +22,7 @@
 @property (nonatomic, readonly) NSURL* itemPicURL;          //图片网络地址
 @property (nonatomic, strong) NSMutableArray* members;      //报名成员
 @property (nonatomic, assign) int favored;                  //是否收藏
+@property (nonatomic, strong) NSString *newsId;             //标识资讯Id 0-没有赛事资讯 不为0为存在的Id
 
 @property(nonatomic, strong) NSDictionary* activityInfoByJsonDic;     //活动字典
 

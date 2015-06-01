@@ -38,7 +38,9 @@
     if ([dic intValueForKey:@"has_favor"]) {
         _favored = [dic intValueForKey:@"has_favor"];
     }
-    
+    if ([dic objectForKey:@"info_id"]) {
+        _newsId = [dic stringObjectForKey:@"info_id"];
+    }
     if ([dic arrayObjectForKey:@"members"]) {
         _members = [[NSMutableArray alloc] init];
         for (NSDictionary *memberDic in [dic arrayObjectForKey:@"members"]) {

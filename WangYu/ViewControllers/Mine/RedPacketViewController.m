@@ -13,6 +13,7 @@
 #import "RedPacketInfo.h"
 #import "RedPacketViewCell.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "WYLinkerHandler.h"
 
 #define REDPACKET_TYPE_FREE            0
 #define REDPACKET_TYPE_HISTORY         1
@@ -240,7 +241,10 @@
 }
 
 -(void)aboutRedPacketAction:(id)sender{
-    
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/redbag/web/help", [WYEngine shareInstance].baseUrl] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 /*
 #pragma mark - Navigation
