@@ -23,6 +23,7 @@
 #import "NetbarMapViewController.h"
 #import <MapKit/MapKit.h>
 #import "LocationViewController.h"
+#import "WYLinkerHandler.h"
 
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate,NetbarTabCellDelegate,LocationViewControllerDelegate>
 {
@@ -421,8 +422,10 @@
 }
 
 - (IBAction)packetAction:(id)sender {
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"每周领红包" message:@"H5页跳转" cancelButtonTitle:@"确定"];
-    [alertView show];
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/redbag/web/getRedbag?userId=%@&token=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)dealloc{

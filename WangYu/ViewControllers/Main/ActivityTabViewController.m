@@ -21,6 +21,7 @@
 #import "WYAlertView.h"
 #import "DVSwitch.h"
 #import "WYScrollPage.h"
+#import "WYLinkerHandler.h"
 
 @interface ActivityTabViewController ()<UITableViewDataSource,UITableViewDelegate,WYScrollPageDelegate>{
     WYScrollPage *scrollPageView;
@@ -82,9 +83,12 @@
 }
 
 - (void)initContainerScrollView{
-    
+    CGRect frame = _containerView.frame;
+    frame.size.height = SCREEN_HEIGHT - 50 - CGRectGetHeight(self.titleNavBar.frame) - CGRectGetHeight(self.sectionView.frame);
+    _containerView.frame = frame;
     _containerView.contentSize = CGSizeMake(SCREEN_WIDTH * 3, _containerView.frame.size.height);
-    CGRect frame = self.newsTableView.frame;
+    
+    frame = self.newsTableView.frame;
     frame.origin.x = SCREEN_WIDTH;
     self.newsTableView.frame = frame;
     self.newsTableView.tableHeaderView = self.adsViewContainer;
@@ -441,12 +445,17 @@
             tVc.newsInfo = newsInfo;
             [self.navigationController pushViewController:tVc animated:YES];
         }else {
-            WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"赛事资讯" message:@"H5页跳转" cancelButtonTitle:@"确定"];
-            [alertView show];
+            id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/info/web/detail?id=%@", [WYEngine shareInstance].baseUrl, newsInfo.nid] From:self.navigationController];
+            if (vc) {
+                [self.navigationController pushViewController:vc animated:YES];
+            }
         }
     }else {
-        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"个人约战" message:@"H5页跳转" cancelButtonTitle:@"确定"];
-        [alertView show];
+        WYMatchWarInfo *matchWarInfo = _matchInfos[indexPath.row];
+        id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/detail?id=%@&userId=%@&token=%@", [WYEngine shareInstance].baseUrl, matchWarInfo.mId, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
+        if (vc) {
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];

@@ -22,6 +22,7 @@
 #import "ApplyActivityViewController.h"
 #import "MineMatchWarViewController.h"
 #import "WYBadgeView.h"
+#import "WYLinkerHandler.h"
 
 enum TABLEVIEW_SECTION_INDEX {
     kMessage = 0,
@@ -115,6 +116,10 @@ enum TABLEVIEW_SECTION_INDEX {
 - (void)serviceAction:(id)sender{
     _badgeView.unreadNum = 2;
     _badgeView.hidden = NO;
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/cs/web/detail", [WYEngine shareInstance].baseUrl] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 //    [WYUIUtils transitionWithType:@"rippleEffect" WithSubtype:kCATransitionFromTop ForView:_badgeView];
 }
 - (void)messageAction:(id)sender{

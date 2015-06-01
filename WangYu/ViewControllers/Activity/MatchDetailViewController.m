@@ -15,6 +15,7 @@
 #import "WYShareActionSheet.h"
 #import "MatchPlaceViewController.h"
 #import "TopicsViewController.h"
+#import "WYLinkerHandler.h"
 
 @interface MatchDetailViewController ()<UITableViewDelegate,UITableViewDataSource,WYShareActionSheetDelegate>{
     WYShareActionSheet *_shareAction;
@@ -282,16 +283,25 @@
                 [self.navigationController pushViewController:mpVc animated:YES];
                 break;
             }else if (indexPath.row == 2){
-                [self showAlertView];
+                id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/web/detail?id=%@", [WYEngine shareInstance].baseUrl ,self.activityInfo.aId] From:self.navigationController];
+                if (vc) {
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
                 break;
             }else if (indexPath.row == 3){
-                [self showAlertView];
+                id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/web/detail?id=%@", [WYEngine shareInstance].baseUrl ,self.activityInfo.aId] From:self.navigationController];
+                if (vc) {
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
                 break;
             }
         }
         case 1:{
             if (indexPath.row == 0) {
-                [self showAlertView];
+                id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/web/detail?id=%@", [WYEngine shareInstance].baseUrl ,self.activityInfo.aId] From:self.navigationController];
+                if (vc) {
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
                 break;
             }
         }
@@ -316,6 +326,10 @@
     }
     WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"赛事资讯" message:@"H5页跳转" cancelButtonTitle:@"确定"];
     [alertView show];
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/info/web/detail?id=%@", [WYEngine shareInstance].baseUrl, self.activityInfo.newsId] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (IBAction)collectAction:(id)sender {

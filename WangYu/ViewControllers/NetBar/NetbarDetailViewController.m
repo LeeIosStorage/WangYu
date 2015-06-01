@@ -21,6 +21,7 @@
 #import "WYAlertView.h"
 #import "WYMatchWarInfo.h"
 #import "NetbarMapViewController.h"
+#import "WYLinkerHandler.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate,WYPhotoGroupDelegate>
 {
@@ -361,8 +362,10 @@
 }
 
 - (IBAction)publicAction:(id)sender {
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"发布约战" message:@"H5页跳转" cancelButtonTitle:@"确定"];
-    [alertView show];
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/release?userId=%@&token=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (IBAction)detailAction:(id)sender {
