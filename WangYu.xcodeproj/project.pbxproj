@@ -193,6 +193,8 @@
 		07868DEF1AF8581100160070 /* WYTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DE21AF8581100160070 /* WYTabBarView.m */; };
 		07868DF01AF8581100160070 /* WYTabBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07868DE31AF8581100160070 /* WYTabBarView.xib */; };
 		07868DF11AF8581100160070 /* WYTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DE51AF8581100160070 /* WYTabBarViewController.m */; };
+		078E5AF71B1BF00E0041C7D2 /* WYLinkerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 078E5AF61B1BF00E0041C7D2 /* WYLinkerHandler.m */; };
+		078E5AFA1B1BF0B90041C7D2 /* WYCommonWebVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 078E5AF91B1BF0B90041C7D2 /* WYCommonWebVc.m */; };
 		078EDBD71AEF1EF800E93EE8 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBC21AEF1EF800E93EE8 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		078EDBD81AEF1EF800E93EE8 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBC51AEF1EF800E93EE8 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		078EDBD91AEF1EF800E93EE8 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 078EDBC71AEF1EF800E93EE8 /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -614,6 +616,10 @@
 		07868DE31AF8581100160070 /* WYTabBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYTabBarView.xib; sourceTree = "<group>"; };
 		07868DE41AF8581100160070 /* WYTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTabBarViewController.h; sourceTree = "<group>"; };
 		07868DE51AF8581100160070 /* WYTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTabBarViewController.m; sourceTree = "<group>"; };
+		078E5AF51B1BF00E0041C7D2 /* WYLinkerHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYLinkerHandler.h; sourceTree = "<group>"; };
+		078E5AF61B1BF00E0041C7D2 /* WYLinkerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYLinkerHandler.m; sourceTree = "<group>"; };
+		078E5AF81B1BF0B90041C7D2 /* WYCommonWebVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYCommonWebVc.h; sourceTree = "<group>"; };
+		078E5AF91B1BF0B90041C7D2 /* WYCommonWebVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYCommonWebVc.m; sourceTree = "<group>"; };
 		078EDBC11AEF1EF800E93EE8 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		078EDBC21AEF1EF800E93EE8 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		078EDBC31AEF1EF800E93EE8 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -1089,6 +1095,8 @@
 				077E607D1B0B2B310079BC9E /* WYShareManager.m */,
 				07EEF6C01B0C789000DBC511 /* WYPayManager.h */,
 				07EEF6C11B0C789000DBC511 /* WYPayManager.m */,
+				078E5AF51B1BF00E0041C7D2 /* WYLinkerHandler.h */,
+				078E5AF61B1BF00E0041C7D2 /* WYLinkerHandler.m */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -1557,6 +1565,8 @@
 				07868DDC1AF8581100160070 /* WYCommonVcTransition.m */,
 				076E0DFC1B14804000E4363A /* WYImagePickerController.h */,
 				076E0DFD1B14804000E4363A /* WYImagePickerController.m */,
+				078E5AF81B1BF0B90041C7D2 /* WYCommonWebVc.h */,
+				078E5AF91B1BF0B90041C7D2 /* WYCommonWebVc.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2142,6 +2152,7 @@
 				078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */,
 				0791AB5A1AE8DE260009A5A7 /* AFURLConnectionOperation.m in Sources */,
 				073DBD611AE7717D009B49EB /* NSDictionary+ObjectForKey.m in Sources */,
+				078E5AFA1B1BF0B90041C7D2 /* WYCommonWebVc.m in Sources */,
 				070DCBDF1B00762F00B27C19 /* OrdersViewController.m in Sources */,
 				07868DE71AF8581100160070 /* WYBaseSuperViewController.m in Sources */,
 				07868DE91AF8581100160070 /* WYSuperViewController.m in Sources */,
@@ -2271,6 +2282,7 @@
 				077BF3B31B186BFD00450174 /* UIView+GMGridViewAdditions.m in Sources */,
 				07A4279D1B183AEA009197D5 /* DVSwitch.m in Sources */,
 				07CB97691AFC5D4C00928CB7 /* DeformationButton.m in Sources */,
+				078E5AF71B1BF00E0041C7D2 /* WYLinkerHandler.m in Sources */,
 				077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */,
 				077D83891AF9C3BC00AAF31F /* NSString+Value.m in Sources */,
 				076219341B15BDC900D912A1 /* GameCollectViewCell.m in Sources */,

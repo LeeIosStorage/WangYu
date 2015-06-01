@@ -13,7 +13,7 @@ typedef enum AdsType_{
     AdsType_Theme,
 }AdsType;
 
-@protocol XEScrollPageDelegate<NSObject>
+@protocol WYScrollPageDelegate<NSObject>
 
 @optional
 - (void)didTouchPageView:(NSInteger)index;
@@ -29,6 +29,6 @@ typedef enum AdsType_{
 @property (nonatomic, assign) int duration;
 //广告种类
 @property (nonatomic, assign) AdsType adsType;
-@property (nonatomic, assign) id <XEScrollPageDelegate> delegate;
+@property (nonatomic, assign) id <WYScrollPageDelegate> delegate;
 
 @end

@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActivityTabViewController">
             <connections>
+                <outlet property="adsViewContainer" destination="bXG-1y-7FC" id="LYD-Oi-9KB"/>
                 <outlet property="containerView" destination="Cqn-8V-u94" id="tzx-vn-ERe"/>
                 <outlet property="leagueTableView" destination="aOu-sk-MKM" id="as8-jj-Fso"/>
                 <outlet property="matchTableView" destination="aQt-it-B9I" id="GO6-Io-C5Y"/>

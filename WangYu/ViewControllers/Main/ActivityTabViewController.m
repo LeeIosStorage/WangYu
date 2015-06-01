@@ -19,10 +19,14 @@
 #import "MatchDetailViewController.h"
 #import "WYAlertView.h"
 #import "DVSwitch.h"
+#import "WYScrollPage.h"
 
-@interface ActivityTabViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface ActivityTabViewController ()<UITableViewDataSource,UITableViewDelegate,WYScrollPageDelegate>{
+    WYScrollPage *scrollPageView;
+}
 
 @property (strong, nonatomic) IBOutlet UIView *sectionView;
+@property (nonatomic, strong) IBOutlet UIView *adsViewContainer;
 @property (strong, nonatomic) IBOutlet UITableView *leagueTableView;
 @property (strong, nonatomic) IBOutlet UITableView *newsTableView;
 @property (strong, nonatomic) IBOutlet UITableView *matchTableView;
@@ -31,9 +35,11 @@
 @property (strong, nonatomic) NSMutableArray *activityInfos;
 @property (strong, nonatomic) NSMutableArray *newsInfos;
 @property (strong, nonatomic) NSMutableArray *matchInfos;  //约战
+@property (nonatomic, strong) NSMutableArray* adsNewsArray;   //广告数据源
 
 @property (strong, nonatomic) DVSwitch *switcher;
 @property (assign, nonatomic) NSUInteger selectedIndex;
+
 @end
 
 @implementation ActivityTabViewController
@@ -69,6 +75,9 @@
         weakSelf.selectedIndex = index;
         [weakSelf refreshDataSourceWithIndex:index];
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)initContainerScrollView{
@@ -77,10 +86,34 @@
     CGRect frame = self.newsTableView.frame;
     frame.origin.x = SCREEN_WIDTH;
     self.newsTableView.frame = frame;
+    self.newsTableView.tableHeaderView = self.adsViewContainer;
     
     frame = self.matchTableView.frame;
     frame.origin.x = SCREEN_WIDTH*2;
     self.matchTableView.frame = frame;
+}
+
+///刷新广告位
+- (void)refreshAdsScrollView {
+    if (!_adsNewsArray.count) {
+        self.newsTableView.tableHeaderView = nil;
+        return;
+    }
+    //移除老view
+    for (UIView *view in _adsViewContainer.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    CGRect frame = _adsViewContainer.bounds;
+    scrollPageView = [[WYScrollPage alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+    scrollPageView.duration = 4;
+    scrollPageView.adsType = AdsType_Theme;
+    scrollPageView.dataArray = _adsNewsArray;
+    scrollPageView.delegate = self;
+    [_adsViewContainer addSubview:scrollPageView];
+    
+    self.newsTableView.tableHeaderView = _adsViewContainer;
+    [self.newsTableView reloadData];
 }
 
 - (void)refreshDataSourceWithIndex:(NSUInteger)index{
@@ -475,12 +508,31 @@
 
 - (void)dealloc {
     WYLog(@"ActivityTabViewController dealloc!!!");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     _leagueTableView.delegate = nil;
     _leagueTableView.dataSource = nil;
     _newsTableView.delegate = nil;
     _newsTableView.dataSource = nil;
     _matchTableView.delegate = nil;
     _matchTableView.dataSource = nil;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] postNotificationName:WY_NEWS_SHOW_ADS_VIEW_NOTIFICATION object:[NSNumber numberWithBool:YES]];
+    [super viewDidAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] postNotificationName:WY_NEWS_STOP_ADS_VIEW_NOTIFICATION object:[NSNumber numberWithBool:YES]];
+    [super viewDidDisappear:animated];
+}
+
+- (void)applicationWillResignActive:(NSNotification *)notification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:WY_NEWS_STOP_ADS_VIEW_NOTIFICATION object:[NSNumber numberWithBool:YES]];
+}
+
+- (void)appWillEnterForeground:(NSNotification *)notification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:WY_NEWS_SHOW_ADS_VIEW_NOTIFICATION object:[NSNumber numberWithBool:YES]];
 }
 
 @end

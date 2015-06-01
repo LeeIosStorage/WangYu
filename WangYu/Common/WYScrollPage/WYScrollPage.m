@@ -73,8 +73,8 @@
     
     if (_adsType == AdsType_Theme) {
         [_adsHideBtn setHidden:YES];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewShow:) name:WY_MAIN_SHOW_ADS_VIEW_NOTIFICATION object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewStop:) name:WY_MAIN_STOP_ADS_VIEW_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewShow:) name:WY_NEWS_SHOW_ADS_VIEW_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewStop:) name:WY_NEWS_STOP_ADS_VIEW_NOTIFICATION object:nil];
     }
 
 //    WYThemeInfo *theme;
