@@ -14,6 +14,7 @@
 #import "WYAlertView.h"
 #import "WYShareActionSheet.h"
 #import "MatchPlaceViewController.h"
+#import "TopicsViewController.h"
 
 @interface MatchDetailViewController ()<UITableViewDelegate,UITableViewDataSource,WYShareActionSheetDelegate>{
     WYShareActionSheet *_shareAction;
@@ -308,6 +309,11 @@
 }
 
 - (IBAction)showMatchAction:(id)sender {
+    if ([self.activityInfo.newsId isEqualToString:@"0"]) {
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"" message:@"暂无赛事资讯" cancelButtonTitle:@"确定"];
+        [alertView show];
+        return;
+    }
     WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"赛事资讯" message:@"H5页跳转" cancelButtonTitle:@"确定"];
     [alertView show];
 }

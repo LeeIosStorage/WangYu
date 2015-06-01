@@ -25,6 +25,9 @@
     if ([dic objectForKey:@"is_subject"]) {
         _isSubject = [dic boolValueForKey:@"is_subject"];
     }
+    if ([dic objectForKey:@"cover"]) {
+        _cover = [dic stringObjectForKey:@"cover"];
+    }
 }
 
 - (void)setNewsInfoByJsonDic:(NSDictionary*)dic{
@@ -47,6 +50,13 @@
         return nil;
     }
     return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _newsImageUrl]];
+}
+
+- (NSURL *)hotImageURL {
+    if (_cover == nil) {
+        return nil;
+    }
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _cover]];
 }
 
 @end

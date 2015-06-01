@@ -351,11 +351,13 @@
 }
 
 - (IBAction)phoneAction:(id)sender {
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"联系网吧" message:self.netbarInfo.telephone cancelButtonTitle:@"取消" cancelBlock:nil okButtonTitle:@"呼叫" okBlock:^{
-        NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", self.netbarInfo.telephone]];
-        [[UIApplication sharedApplication] openURL:URL];
-    }];
-    [alertView show];
+    if (![self.netbarInfo.telephone isEqualToString:@""]) {
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"联系网吧" message:self.netbarInfo.telephone cancelButtonTitle:@"取消" cancelBlock:nil okButtonTitle:@"呼叫" okBlock:^{
+            NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", self.netbarInfo.telephone]];
+            [[UIApplication sharedApplication] openURL:URL];
+        }];
+        [alertView show];
+    }
 }
 
 - (IBAction)publicAction:(id)sender {

@@ -161,7 +161,7 @@
     
     CGFloat sliderWidth = self.frame.size.width / [self.strings count];
     
-    self.sliderView.frame = CGRectMake(sliderWidth * self.selectedIndex + self.sliderOffset, self.backgroundView.frame.origin.y + self.sliderOffset, sliderWidth - self.sliderOffset * 2, self.frame.size.height - self.sliderOffset * 2);
+    self.sliderView.frame = CGRectMake(sliderWidth * self.selectedIndex , self.backgroundView.frame.origin.y + self.sliderOffset, sliderWidth, self.frame.size.height - self.sliderOffset * 2);
     
     for (int i = 0; i < [self.labels count]; i++) {
         
