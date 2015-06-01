@@ -33,6 +33,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *nickNameTextField;
 @property(nonatomic, assign) int maxTextLength;
 
+@property (nonatomic, assign) BOOL bViewDisappear;
+
 - (IBAction)albumAction:(id)sender;
 - (IBAction)affirmAction:(id)sender;
 
@@ -52,11 +54,32 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    [_nickNameTextField resignFirstResponder];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    _bViewDisappear = NO;
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    _bViewDisappear = YES;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
     WYUserInfo* tmpUserInfo = [WYEngine shareInstance].userInfo;
     if (tmpUserInfo == nil || tmpUserInfo.uid.length == 0) {
@@ -112,6 +135,69 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - KeyboardNotification
+-(void) keyboardWillShow:(NSNotification *)note{
+    
+    if (_bViewDisappear) {
+        return;
+    }
+    
+    // get keyboard size and loctaion
+    CGRect keyboardBounds;
+    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // Need to translate the bounds to account for rotation.
+    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+    
+    // get a rect for the textView frame
+    CGRect supViewFrame = _personalContainerView.frame;
+    float gapHeight = keyboardBounds.size.height - (self.view.bounds.size.height - supViewFrame.origin.y - supViewFrame.size.height);
+    BOOL isMove = (gapHeight > 0);
+    
+    
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    if (isMove) {
+        supViewFrame.origin.y -= gapHeight;
+        _personalContainerView.frame = supViewFrame;
+    }
+    
+    // commit animations
+    [UIView commitAnimations];
+}
+
+-(void) keyboardWillHide:(NSNotification *)note{
+    
+    if (_bViewDisappear) {
+        return;
+    }
+    
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    // set views with new info
+    
+    CGRect supViewFrame = _personalContainerView.frame;
+    supViewFrame.origin.y = 64;
+    _personalContainerView.frame = supViewFrame;
+    
+    // commit animations
+    [UIView commitAnimations];
+}
+
 #pragma mark - custom
 -(void)refreshUI{
     

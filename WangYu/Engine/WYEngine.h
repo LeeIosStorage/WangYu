@@ -162,4 +162,12 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //专题资讯列表
 - (BOOL)getTopicsListWithTid:(NSString *)tid Tag:(int)tag;
 
+#pragma mark - 手游
+//手游列表
+- (BOOL)getGameListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
+//手游详情
+- (BOOL)getGameDetailsWithGameId:(NSString *)gameId tag:(int)tag;
+//收藏-取消收藏
+- (BOOL)collectGameWithUid:(NSString *)uid gameId:(NSString *)gameId tag:(int)tag;
+
 @end

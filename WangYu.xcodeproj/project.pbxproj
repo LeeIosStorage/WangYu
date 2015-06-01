@@ -16,6 +16,8 @@
 		0715C3AA1B09ECB200C37F82 /* WYCustomerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0715C3A91B09ECB200C37F82 /* WYCustomerWindow.m */; };
 		0715C3AC1B09ECE000C37F82 /* WYCustomerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0715C3AB1B09ECE000C37F82 /* WYCustomerWindow.xib */; };
 		0715C3AF1B09EF7300C37F82 /* WYShareActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0715C3AE1B09EF7300C37F82 /* WYShareActionSheet.m */; };
+		071691EE1B1C4E49006A832E /* GameDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071691EC1B1C4E49006A832E /* GameDetailsViewController.m */; };
+		071691EF1B1C4E49006A832E /* GameDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071691ED1B1C4E49006A832E /* GameDetailsViewController.xib */; };
 		071923CF1AF74D8400432531 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923C81AF74D8400432531 /* LoginViewController.m */; };
 		071923D01AF74D8400432531 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071923C91AF74D8400432531 /* LoginViewController.xib */; };
 		071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923CB1AF74D8400432531 /* NewIntroViewController.m */; };
@@ -305,6 +307,9 @@
 		0715C3AB1B09ECE000C37F82 /* WYCustomerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYCustomerWindow.xib; sourceTree = "<group>"; };
 		0715C3AD1B09EF7300C37F82 /* WYShareActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYShareActionSheet.h; sourceTree = "<group>"; };
 		0715C3AE1B09EF7300C37F82 /* WYShareActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYShareActionSheet.m; sourceTree = "<group>"; };
+		071691EB1B1C4E49006A832E /* GameDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameDetailsViewController.h; sourceTree = "<group>"; };
+		071691EC1B1C4E49006A832E /* GameDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameDetailsViewController.m; sourceTree = "<group>"; };
+		071691ED1B1C4E49006A832E /* GameDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameDetailsViewController.xib; sourceTree = "<group>"; };
 		071923C71AF74D8400432531 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		071923C81AF74D8400432531 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		071923C91AF74D8400432531 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -924,6 +929,16 @@
 			path = Mine;
 			sourceTree = "<group>";
 		};
+		071691EA1B1C4E24006A832E /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				071691EB1B1C4E49006A832E /* GameDetailsViewController.h */,
+				071691EC1B1C4E49006A832E /* GameDetailsViewController.m */,
+				071691ED1B1C4E49006A832E /* GameDetailsViewController.xib */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
 		071923C61AF74D8400432531 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -1113,6 +1128,7 @@
 				073DBD791AE77982009B49EB /* Main */,
 				0745B37E1B005646006D6853 /* NetBar */,
 				3BE090831B14CAF400DCAB3C /* Activity */,
+				071691EA1B1C4E24006A832E /* Game */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2075,6 +2091,7 @@
 				077E608C1B0B2D5F0079BC9E /* WeiboSDK.bundle in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
 				07E96B8A1B15BB8B006ED6B7 /* MatchPlaceViewController.xib in Resources */,
+				071691EF1B1C4E49006A832E /* GameDetailsViewController.xib in Resources */,
 				077E4ACF1B14461D009D1692 /* ActivityViewCell.xib in Resources */,
 				076219351B15BDC900D912A1 /* GameCollectViewCell.xib in Resources */,
 				071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */,
@@ -2231,6 +2248,7 @@
 				07695CDF1B03231000F4806C /* WYNetbarInfo.m in Sources */,
 				077E4AD21B146562009D1692 /* WYActivityInfo.m in Sources */,
 				077D83811AF9AED800AAF31F /* ProgressHUD.m in Sources */,
+				071691EE1B1C4E49006A832E /* GameDetailsViewController.m in Sources */,
 				076E0DEB1B1475FE00E4363A /* PersonalEditViewController.m in Sources */,
 				07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */,
 				07C4C9FD1AF9B283008DA5D3 /* ColorGradView.m in Sources */,

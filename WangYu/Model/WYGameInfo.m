@@ -16,11 +16,45 @@
     if ([dic stringObjectForKey:@"game_name"]) {
         _gameName = [dic stringObjectForKey:@"game_name"];
     }
+    if ([dic stringObjectForKey:@"name"]) {
+        _gameName = [dic stringObjectForKey:@"name"];
+    }
     if ([dic stringObjectForKey:@"intro"]) {
         _gameIntro = [dic stringObjectForKey:@"intro"];
     }
     if ([dic stringObjectForKey:@"icon"]) {
         _gameIcon = [dic stringObjectForKey:@"icon"];
+    }
+    if ([dic stringObjectForKey:@"cover"]) {
+        _gameCover = [dic stringObjectForKey:@"cover"];
+    }
+    
+    
+    if ([dic stringObjectForKey:@"des"]) {
+        _gameDes = [dic stringObjectForKey:@"des"];
+    }
+    if ([dic stringObjectForKey:@"version"]) {
+        _version = [dic stringObjectForKey:@"version"];
+    }
+    if ([dic stringObjectForKey:@"url_ios"]) {
+        _downloadUrl = [dic stringObjectForKey:@"url_ios"];
+    }
+    if ([dic intValueForKey:@"ios_file_size"]) {
+        _iosFileSize = [dic intValueForKey:@"ios_file_size"];
+    }
+    if ([dic intValueForKey:@"download_count"]) {
+        _downloadCount = [dic intValueForKey:@"download_count"];
+    }
+    if ([dic intValueForKey:@"favor_count"]) {
+        _favorCount = [dic intValueForKey:@"favor_count"];
+    }
+    
+    id objectForKey = [dic arrayObjectForKey:@"imgs"];
+    if (objectForKey) {
+        _coverIds = [NSMutableArray array];
+        for (NSString *url in objectForKey) {
+            [_coverIds addObject:url];
+        }
     }
 }
 
@@ -29,6 +63,7 @@
         return;
     }
     _gameInfoByJsonDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
+    _gameId = [[dic objectForKey:@"id"] description];
     
     @try {
         [self doSetGameInfoByJsonDic:dic];
@@ -44,4 +79,19 @@
     }
     return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _gameIcon]];
 }
+- (NSURL *)gameCoverUrl {
+    if (_gameCover == nil) {
+        return nil;
+    }
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _gameCover]];
+}
+
+- (NSArray *)coverURLs{
+    NSMutableArray* urls = [[NSMutableArray alloc] init];
+    for (NSString* picId in _coverIds) {
+        [urls addObject:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl] ,picId]];
+    }
+    return urls;
+}
+
 @end
