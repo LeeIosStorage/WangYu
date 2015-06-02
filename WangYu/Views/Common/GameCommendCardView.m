@@ -77,6 +77,13 @@
     self.likeLabel.font = SKIN_FONT_FROMNAME(12);
     self.likeView.layer.masksToBounds = YES;
     self.likeView.layer.cornerRadius = 10;
+    
+    CGRect frame = self.bottomLineImgView.frame;
+    frame.size.height = 0.5;
+    self.bottomLineImgView.frame = frame;
+    frame = self.topLineImgView.frame;
+    frame.size.height = 0.5;
+    self.topLineImgView.frame = frame;
 }
 
 -(void) setFrame:(CGRect)aFrame {

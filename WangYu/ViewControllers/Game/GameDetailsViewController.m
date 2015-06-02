@@ -384,11 +384,25 @@
     }
     
     NSDictionary *dic = _likeImages[position];
-    GameDetailsViewController *gameVc = [[GameDetailsViewController alloc] init];
     WYGameInfo *gameInfo = [[WYGameInfo alloc] init];
     gameInfo.gameId = [dic stringObjectForKey:@"id"];
-    gameVc.gameInfo = gameInfo;
     
+    if ([gameInfo.gameId isEqualToString:_gameInfo.gameId]) {
+        //当前游戏
+        return;
+    }
+    
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[GameDetailsViewController class]]) {
+            GameDetailsViewController *gameVc = (GameDetailsViewController *)vc;
+            if ([gameVc.gameInfo.gameId isEqualToString:gameInfo.gameId]) {
+                [self.navigationController popToViewController:gameVc animated:YES];
+                return;
+            }
+        }
+    }
+    GameDetailsViewController *gameVc = [[GameDetailsViewController alloc] init];
+    gameVc.gameInfo = gameInfo;
     [self.navigationController pushViewController:gameVc animated:YES];
 }
 

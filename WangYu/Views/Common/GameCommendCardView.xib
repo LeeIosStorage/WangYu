@@ -90,6 +90,7 @@
                 <outlet property="likeIconImgView" destination="e2I-hU-6Em" id="re9-su-HjM"/>
                 <outlet property="likeLabel" destination="IbA-SL-3Ho" id="Yed-Ka-DsF"/>
                 <outlet property="likeView" destination="bHw-Qb-y9u" id="w41-e5-rpC"/>
+                <outlet property="topLineImgView" destination="CjU-1m-QLi" id="Gs5-IX-euW"/>
             </connections>
             <point key="canvasLocation" x="245" y="170"/>
         </view>
