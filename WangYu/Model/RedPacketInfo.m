@@ -32,6 +32,7 @@
     if (![dic isKindOfClass:[NSDictionary class]]) {
         return;
     }
+    _rid = [[dic objectForKey:@"id"] description];
     _redPacketInfoByJsonDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
     
     @try {

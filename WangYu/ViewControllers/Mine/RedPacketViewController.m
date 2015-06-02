@@ -10,7 +10,6 @@
 #import "WYSegmentedView.h"
 #import "WYEngine.h"
 #import "WYProgressHUD.h"
-#import "RedPacketInfo.h"
 #import "RedPacketViewCell.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "WYLinkerHandler.h"
@@ -18,7 +17,9 @@
 #define REDPACKET_TYPE_FREE            0
 #define REDPACKET_TYPE_HISTORY         1
 
-@interface RedPacketViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface RedPacketViewController ()<UITableViewDataSource,UITableViewDelegate>{
+    BOOL _isChoosed;
+}
 
 @property (strong, nonatomic) NSMutableArray *freeRedPacketList;
 @property (nonatomic, strong) IBOutlet UITableView *freeRedPacketTableView;
@@ -157,8 +158,11 @@
 }
 
 - (void)initNormalTitleNavBarSubviews{
-    
-    [self setRightButtonWithImageName:@"redpacket_help_icon" selector:@selector(aboutRedPacketAction:)];
+    if (_bChooseRed) {
+        [self setRightButtonWithTitle:@"使用" selector:@selector(useRedPacketAction:)];
+    }else {
+        [self setRightButtonWithImageName:@"redpacket_help_icon" selector:@selector(aboutRedPacketAction:)];
+    }
     
     WYSegmentedView *segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
     segmentedView.items = @[@"可用红包",@"历史红包"];
@@ -238,6 +242,15 @@
 
 - (NSDate *)pullToRefreshViewLastUpdated:(PullToRefreshView *)view {
     return [NSDate date];
+}
+
+- (void)useRedPacketAction:(id)sender{
+    RedPacketInfo *packetInfo = [[RedPacketInfo alloc] init];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    if (_sendRedPacketCallBack) {
+        _sendRedPacketCallBack(packetInfo);
+    }
 }
 
 -(void)aboutRedPacketAction:(id)sender{
@@ -437,6 +450,7 @@
     if (tableView == self.historyRedPacketTableView) {
         
     }else{
+        RedPacketInfo *redPacketInfo = _freeRedPacketList[indexPath.row];
         
     }
     

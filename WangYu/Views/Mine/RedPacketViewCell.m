@@ -35,7 +35,12 @@
     self.redPagValidTimeLabel.text = validTimeText;
     
     self.redPagStaleLabel.hidden = YES;
-    UIImage *bgImage = [UIImage imageNamed:@"redpacket_kuang_red"];
+    UIImage *bgImage;
+    if (_isChoose) {
+        bgImage = [UIImage imageNamed:@"redpacket_choose_icon"];
+    }else{
+        bgImage = [UIImage imageNamed:@"redpacket_kuang_red"];
+    }
 //    [[UIImage imageNamed:@"redpacket_kuang_red"] stretchableImageWithLeftCapWidth:148 topCapHeight:80];
     if (_isPast) {
         bgImage = [UIImage imageNamed:@"redpacket_kuang_gray"];

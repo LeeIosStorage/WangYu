@@ -10,6 +10,7 @@
 
 @interface RedPacketInfo : NSObject
 
+@property(nonatomic, strong) NSString* rid;
 @property(nonatomic, strong) NSString* explain;
 @property(nonatomic, assign) int day;
 @property(nonatomic, assign) int money;

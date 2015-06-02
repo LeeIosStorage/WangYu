@@ -7,7 +7,14 @@
 //
 
 #import "WYSuperViewController.h"
+#import "RedPacketInfo.h"
+
+typedef void(^SendRedPacketCallBack)(RedPacketInfo * info);
 
 @interface RedPacketViewController : WYSuperViewController
+
+@property (nonatomic, strong) SendRedPacketCallBack sendRedPacketCallBack;
+
+@property (nonatomic, assign) BOOL bChooseRed;
 
 @end

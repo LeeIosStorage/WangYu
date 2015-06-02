@@ -14,6 +14,7 @@
 #import "WYPayManager.h"
 #import "WYAlertView.h"
 #import "AppDelegate.h"
+#import "RedPacketViewController.h"
 
 @interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -241,8 +242,12 @@
 }
 
 - (IBAction)packetAction:(id)sender {
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"选择红包" message:@"跳转我的红包页" cancelButtonTitle:@"确定"];
-    [alertView show];
+    RedPacketViewController *rpVc = [[RedPacketViewController alloc] init];
+    rpVc.bChooseRed = YES;
+    rpVc.sendRedPacketCallBack = ^(RedPacketInfo *info){
+        NSLog(@"================");
+    };
+    [self.navigationController pushViewController:rpVc animated:YES];
 }
 
 @end
