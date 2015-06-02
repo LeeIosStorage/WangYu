@@ -23,6 +23,7 @@
 #import "MineMatchWarViewController.h"
 #import "WYBadgeView.h"
 #import "WYLinkerHandler.h"
+#import "WYSettingConfig.h"
 
 enum TABLEVIEW_SECTION_INDEX {
     kMessage = 0,
@@ -43,6 +44,17 @@ enum TABLEVIEW_SECTION_INDEX {
 @end
 
 @implementation MineTabViewController
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    int unreadNum = [[WYSettingConfig staticInstance] getMessageCount];
+    _badgeView.unreadNum = unreadNum;
+    if (unreadNum == 0) {
+        _badgeView.hidden = YES;
+    }else{
+        _badgeView.hidden = NO;
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -114,8 +126,6 @@ enum TABLEVIEW_SECTION_INDEX {
 
 #pragma mark - IBAction
 - (void)serviceAction:(id)sender{
-    _badgeView.unreadNum = 2;
-    _badgeView.hidden = NO;
     id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/cs/web/detail", [WYEngine shareInstance].baseUrl] From:self.navigationController];
     if (vc) {
         [self.navigationController pushViewController:vc animated:YES];

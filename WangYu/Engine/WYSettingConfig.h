@@ -26,4 +26,7 @@
 
 +(void)saveEnterUsr;
 
+-(int)getMessageCount;
+-(void)addMessageNum:(int)count;
+
 @end
