@@ -104,7 +104,7 @@ enum TABLEVIEW_SECTION_INDEX {
     self.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     self.userNameLabel.text = [WYEngine shareInstance].userInfo.nickName;
-    [self.avatarImageView sd_setImageWithURL:[WYEngine shareInstance].userInfo.smallAvatarUrl placeholderImage:[UIImage imageNamed:@"personal_avatar_default_icon"]];
+    [self.avatarImageView sd_setImageWithURL:[WYEngine shareInstance].userInfo.smallAvatarUrl placeholderImage:[UIImage imageNamed:@"personal_avatar_default_icon_small"]];
     
     self.tableView.tableHeaderView = self.headView;
     [self.tableView reloadData];

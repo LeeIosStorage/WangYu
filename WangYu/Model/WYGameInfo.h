@@ -19,6 +19,7 @@
 @property(nonatomic, assign) int iosFileSize;
 @property(nonatomic, assign) int downloadCount;
 @property(nonatomic, assign) int favorCount;
+@property(nonatomic, assign) int isFavor;//是否收藏
 
 @property(nonatomic, strong) NSString* gameCover;//手游封面图
 @property(nonatomic, readonly) NSURL* gameCoverUrl;

@@ -123,11 +123,11 @@
 }
 
 - (void)backAction:(id)sender{
-    if (self.navigationController) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }else{
+    if (_isPresent) {
         self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self dismissViewControllerAnimated:YES completion:NULL];
+        [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

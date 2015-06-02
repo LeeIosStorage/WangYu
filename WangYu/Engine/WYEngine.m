@@ -24,7 +24,7 @@
 #define CONNECT_TIMEOUT 20
 
 static NSString* IMG_URL = @"http://img.wangyuhudong.com";
-static NSString* API_URL = @"http://api.test.wangyuhudong.com";
+static NSString* API_URL = @"http://api.test.wangyuhudong.com";//
 
 static WYEngine* s_ShareInstance = nil;
 
@@ -1257,10 +1257,16 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
-- (BOOL)getGameDetailsWithGameId:(NSString *)gameId tag:(int)tag{
+- (BOOL)getGameDetailsWithGameId:(NSString *)gameId uid:(NSString*)uid tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (gameId) {
         [params setObject:gameId forKey:@"id"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
     }
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/game/detail",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];

@@ -18,6 +18,7 @@
 #import "WYNetBarManager.h"
 #import "NetbarMapViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "WYNavigationController.h"
 
 @interface NetbarSearchViewController ()<UITableViewDataSource,UITableViewDelegate,NetbarTabCellDelegate>
 {
@@ -347,13 +348,14 @@
         [self doSearchBarEndEditing];
         return;
     }
+    
     NetbarMapViewController *mapVc = [[NetbarMapViewController alloc] init];
-//    CLLocationCoordinate2D location;
-//    location.latitude = 30.19185;
-//    location.longitude = 120.14598;
+    WYNavigationController* navigationController = [[WYNavigationController alloc] initWithRootViewController:mapVc];
+    navigationController.navigationBarHidden = YES;
     mapVc.location = self.currentLocation;
+    mapVc.isPresent = YES;
     mapVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self.navigationController presentViewController:mapVc animated:YES completion:^{
+    [self.navigationController presentViewController:navigationController animated:YES completion:^{
         
     }];
 }
