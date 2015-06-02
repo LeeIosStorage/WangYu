@@ -166,7 +166,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //手游列表
 - (BOOL)getGameListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
 //手游详情
-- (BOOL)getGameDetailsWithGameId:(NSString *)gameId tag:(int)tag;
+- (BOOL)getGameDetailsWithGameId:(NSString *)gameId uid:(NSString*)uid tag:(int)tag;
 //收藏-取消收藏
 - (BOOL)collectGameWithUid:(NSString *)uid gameId:(NSString *)gameId tag:(int)tag;
 

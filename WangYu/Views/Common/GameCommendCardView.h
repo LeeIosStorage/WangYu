@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *gameNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *gameVersionLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *gameImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *bottomLineImgView;
 @property (strong, nonatomic) IBOutlet UILabel *gameDesLabel;
 
 @property (strong, nonatomic) IBOutlet UIView *likeView;

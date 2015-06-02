@@ -48,12 +48,18 @@
     if ([dic intValueForKey:@"favor_count"]) {
         _favorCount = [dic intValueForKey:@"favor_count"];
     }
+    _isFavor = [dic intValueForKey:@"has_favor"];
     
     id objectForKey = [dic arrayObjectForKey:@"imgs"];
     if (objectForKey) {
         _coverIds = [NSMutableArray array];
-        for (NSString *url in objectForKey) {
-            [_coverIds addObject:url];
+        for (id object in objectForKey) {
+            if ([object isKindOfClass:[NSString class]]) {
+                [_coverIds addObject:object];
+            }else if ([object isKindOfClass:[NSDictionary class]]){
+                NSDictionary *dic = object;
+                [_coverIds addObject:[dic stringObjectForKey:@"url"]];
+            }
         }
     }
 }

@@ -130,12 +130,48 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate>
     }tag:tag];
 }
 
+-(BOOL)isIphone4Device{
+    if (SCREEN_HEIGHT == 480) {
+        return YES;
+    }
+    return NO;
+}
+
 -(void)refreshUI{
+    
     [self.view insertSubview:self.handleView belowSubview:self.swipeableView];
     self.collectLabel.font = SKIN_FONT_FROMNAME(14);
     self.collectLabel.textColor = SKIN_TEXT_COLOR1;
     self.downloadLabel.font = SKIN_FONT_FROMNAME(14);
     self.downloadLabel.textColor = SKIN_TEXT_COLOR1;
+    
+    
+    CGRect frame = self.swipeableView.frame;
+    frame.size.width = SCREEN_WIDTH- 20*2;
+    frame.size.height = frame.size.width;
+    if ([self isIphone4Device]) {
+        frame.size.height = 250;
+    }
+    self.swipeableView.frame = frame;
+    
+    //handleView frame
+    CGSize buttonSize = CGSizeMake(60, 60);
+    if ([self isIphone4Device]) {
+        buttonSize = CGSizeMake(49, 49);
+    }
+    float spaceWidth = (SCREEN_WIDTH - buttonSize.width*2)/3;
+    self.collectButton.frame = CGRectMake(spaceWidth, 0, buttonSize.width, buttonSize.height);
+    self.downloadButton.frame = CGRectMake(spaceWidth*2 + buttonSize.width, 0, buttonSize.width, buttonSize.height);
+    self.collectLabel.center = CGPointMake(self.collectButton.center.x, buttonSize.height + 4 + self.collectLabel.frame.size.height/2);
+    self.downloadLabel.center = CGPointMake(self.downloadButton.center.x, buttonSize.height + 4 + self.downloadLabel.frame.size.height/2);
+    
+    float bottomSpace = SCREEN_HEIGHT-self.swipeableView.frame.origin.y-self.swipeableView.frame.size.height-50;
+    frame = self.handleView.frame;
+    frame.origin.y = self.swipeableView.frame.origin.y+self.swipeableView.frame.size.height+(bottomSpace - frame.size.height)/2;
+    if ([self isIphone4Device]) {
+        frame.origin.y += 10;
+    }
+    self.handleView.frame = frame;
     
 }
 
@@ -155,10 +191,12 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate>
         }
         BOOL isFavor = [[jsonRet dictionaryObjectForKey:@"object"] boolValueForKey:@"isFavor"];
         if (isFavor) {
-            [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromBottom ForView:self.collectButton];
+//            _selectedGameInfo.favorCount ++;
+//            [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromBottom ForView:self.collectButton];
             [WYProgressHUD AlertSuccess:@"游戏收藏成功" At:weakSelf.view];
         }else{
-            [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromTop ForView:self.collectButton];
+//            _selectedGameInfo.favorCount --;
+//            [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromTop ForView:self.collectButton];
             [WYProgressHUD AlertSuccess:@"游戏取消收藏成功" At:weakSelf.view];
         }
         
@@ -227,15 +265,32 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate>
 - (UIView *)nextViewForSwipeableView:(ZLSwipeableView *)swipeableView {
     if (self.gameIndex < self.gameCommendInfos.count) {
         
+        WYLog(@"-------------%f",CGRectGetHeight(swipeableView.bounds));
 //        GameCommendCardView *view = [[[NSBundle mainBundle] loadNibNamed:@"GameCommendCardView" owner:nil options:nil] objectAtIndex:0];
         GameCommendCardView *view = [[GameCommendCardView alloc] init];
         view.delegate = self;
         view.frame = swipeableView.bounds;
         view.tag = self.gameIndex;
         
+        if ([self isIphone4Device]) {
+            CGRect frame = view.gameImageView.frame;
+            frame.size.height = 159;
+            view.gameImageView.frame = frame;
+            
+            frame = view.bottomLineImgView.frame;
+            frame.origin.y = view.gameImageView.frame.origin.y + view.gameImageView.frame.size.height;
+            view.bottomLineImgView.frame = frame;
+            
+            frame = view.gameDesLabel.frame;
+            frame.origin.y = view.gameImageView.frame.origin.y + view.gameImageView.frame.size.height + 7;
+            frame.size.height = 35;
+            view.gameDesLabel.frame = frame;
+        }
+        
+        
         WYGameInfo *gameInfo = self.gameCommendInfos[self.gameIndex];
         view.gameNameLabel.text = gameInfo.gameName;
-        view.gameDesLabel.text = gameInfo.gameIntro;
+        view.gameDesLabel.text = gameInfo.gameDes;
         view.gameVersionLabel.text = [NSString stringWithFormat:@"版本%@",gameInfo.version];
         view.likeLabel.text = [NSString stringWithFormat:@"%d",gameInfo.favorCount];
         [view.gameImageView sd_setImageWithURL:gameInfo.gameCoverUrl placeholderImage:[UIImage imageNamed:@"activity_load_icon"]];

@@ -17,6 +17,7 @@
 #import "UIImageView+WebCache.h"
 #import "GameCollectViewCell.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "GameDetailsViewController.h"
 
 #define COLLECT_TYPE_NETBAR       0
 #define COLLECT_TYPE_GAME         1
@@ -415,7 +416,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.gameTableView) {
-        
+        GameDetailsViewController *gameVc = [[GameDetailsViewController alloc] init];
+        WYGameInfo *gameInfo = _gameCollectList[indexPath.row];
+        gameVc.gameInfo = gameInfo;
+        [self.navigationController pushViewController:gameVc animated:YES];
     }else{
         WYNetbarInfo *info = _netbarCollectList[indexPath.row];
         NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];

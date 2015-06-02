@@ -13,6 +13,7 @@
 #import "GMGridViewCell+Extended.h"
 #import "UIImageView+WebCache.h"
 #import "WYShareActionSheet.h"
+#import "WYCommonUtils.h"
 
 #define ONE_IMAGE_HEIGHT  40
 #define item_spacing  15
@@ -20,6 +21,7 @@
 @interface GameDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,GMGridViewDataSource, GMGridViewActionDelegate,UIScrollViewDelegate,WYShareActionSheetDelegate>
 {
     WYShareActionSheet *_shareAction;
+    BOOL _isMore;
 }
 @property (nonatomic, strong) NSMutableArray *likeImages;
 @property (nonatomic, strong) NSMutableArray *coverImages;
@@ -35,6 +37,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *gameDowloadCounLabel;
 @property (strong, nonatomic) IBOutlet UILabel *gameDowloadTipLabel;
 @property (strong, nonatomic) IBOutlet UIView *gameContentContainerView;
+@property (strong, nonatomic) IBOutlet UILabel *colorLabel1;
+@property (strong, nonatomic) IBOutlet UILabel *colorLabel2;
 @property (strong, nonatomic) IBOutlet UILabel *contentTipLabel;
 @property (strong, nonatomic) IBOutlet UILabel *gameContentLabel;
 @property (strong, nonatomic) IBOutlet UIView *likeContainerView;
@@ -48,6 +52,7 @@
 - (IBAction)collectAction:(id)sender;
 - (IBAction)shareAction:(id)sender;
 - (IBAction)downloadAction:(id)sender;
+- (IBAction)moreContentAction:(id)sender;
 
 @end
 
@@ -75,6 +80,13 @@
     self.likeTipLabel.textColor = SKIN_TEXT_COLOR1;
     self.likeTipLabel.font = SKIN_FONT_FROMNAME(15);
     self.gameContentLabel.textColor = SKIN_TEXT_COLOR2;
+    
+    self.colorLabel1.backgroundColor = UIColorToRGB(0xfac402);
+    self.colorLabel1.layer.cornerRadius = 1.0;
+    self.colorLabel1.layer.masksToBounds = YES;
+    self.colorLabel2.backgroundColor = UIColorToRGB(0xfac402);
+    self.colorLabel2.layer.cornerRadius = 1.0;
+    self.colorLabel2.layer.masksToBounds = YES;
     
     [self.downloadButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
     self.downloadButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
@@ -115,7 +127,6 @@
     [self getCacheGameInfo];
     [self refreshGameInfo];
     
-//    [self setCoverImageURLs];
     [self refreshGameHeadViewShow];
     
 }
@@ -143,7 +154,7 @@
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getGameDetailsWithGameId:_gameInfo.gameId tag:tag];
+    [[WYEngine shareInstance] getGameDetailsWithGameId:_gameInfo.gameId uid:[WYEngine shareInstance].uid tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -167,7 +178,7 @@
 -(void)refreshGameInfo{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getGameDetailsWithGameId:_gameInfo.gameId tag:tag];
+    [[WYEngine shareInstance] getGameDetailsWithGameId:_gameInfo.gameId uid:[WYEngine shareInstance].uid tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -199,13 +210,6 @@
 -(void)setCoverImageURLs{
     _coverImages = [[NSMutableArray alloc] init];
     self.coverImages = [[NSMutableArray alloc] initWithArray:_gameInfo.coverURLs];
-//    NSURL *url = [NSURL URLWithString:@"http://b.hiphotos.baidu.com/image/pic/item/a044ad345982b2b799b52dbf34adcbef76099ba6.jpg"];
-//    [_coverImages addObject:url];
-//    url = [NSURL URLWithString:@"http://b.hiphotos.baidu.com/image/pic/item/c8177f3e6709c93de9bf1b8c9a3df8dcd100547f.jpg"];
-//    [_coverImages addObject:url];
-//    url = [NSURL URLWithString:@"http://f.hiphotos.baidu.com/image/pic/item/d52a2834349b033bd6710d1a11ce36d3d439bd71.jpg"];
-//    [_coverImages addObject:url];
-    
 }
 
 -(void)collectGame{
@@ -223,14 +227,18 @@
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
             return;
         }
-        BOOL isFavor = [[jsonRet dictionaryObjectForKey:@"object"] boolValueForKey:@"isFavor"];
-        if (isFavor) {
+        int isFavor = [[jsonRet dictionaryObjectForKey:@"object"] intValueForKey:@"isFavor"];
+        weakSelf.gameInfo.isFavor = isFavor;
+        if (isFavor == 1) {
+//            weakSelf.gameInfo.favorCount ++;
             [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromBottom ForView:self.collectButton];
             [WYProgressHUD AlertSuccess:@"游戏收藏成功" At:weakSelf.view];
         }else{
+//            weakSelf.gameInfo.favorCount --;
             [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromTop ForView:self.collectButton];
             [WYProgressHUD AlertSuccess:@"游戏取消收藏成功" At:weakSelf.view];
         }
+        [weakSelf refreshGameHeadViewShow];
         
     }tag:tag];
     
@@ -241,9 +249,14 @@
     
     [self.gameIconImageView sd_setImageWithURL:_gameInfo.gameIconUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
     self.gameNameLabel.text = _gameInfo.gameName;
-    self.gameSizeLabel.text = [NSString stringWithFormat:@"大小：%d",_gameInfo.iosFileSize];
+    self.gameSizeLabel.text = [NSString stringWithFormat:@"大小：%dM",_gameInfo.iosFileSize];
     self.gameDowloadCounLabel.text = [NSString stringWithFormat:@"%d",_gameInfo.downloadCount];
     self.gameContentLabel.text = _gameInfo.gameIntro;
+    if (self.gameInfo.isFavor == 1) {
+        [self.collectButton setImage:[UIImage imageNamed:@"netbar_detail_collect_icon"] forState:UIControlStateNormal];
+    }else {
+        [self.collectButton setImage:[UIImage imageNamed:@"netbar_detail_uncollect_icon"] forState:UIControlStateNormal];
+    }
     
     [self.coverGridView reloadData];
     [self.likeImageGridView reloadData];
@@ -253,7 +266,33 @@
         self.pageControl.hidden = NO;
     }
     self.pageControl.numberOfPages = _coverImages.count;
+    CGRect frame = self.pageControl.frame;
+    frame.size.width = _coverImages.count*13;
+    frame.origin.x = SCREEN_WIDTH-frame.size.width-24;
+    self.pageControl.frame = frame;
     
+    CGSize textSize = [WYCommonUtils sizeWithText:_gameInfo.gameIntro font:self.gameContentLabel.font width:SCREEN_WIDTH-15*2];
+    if (!_isMore) {
+        if (textSize.height > 43) {
+            textSize.height = 43;
+        }
+    }
+    frame = self.gameContentLabel.frame;
+    frame.size.height = textSize.height;
+    self.gameContentLabel.frame = frame;
+    
+    
+    frame = self.gameContentContainerView.frame;
+    frame.size.height = self.gameContentLabel.frame.origin.y + self.gameContentLabel.frame.size.height + 12;
+    self.gameContentContainerView.frame = frame;
+    
+    frame = self.likeContainerView.frame;
+    frame.origin.y = self.gameContentContainerView.frame.origin.y + self.gameContentContainerView.frame.size.height + 10;
+    self.likeContainerView.frame = frame;
+    
+    frame = self.headContainerView.frame;
+    frame.size.height = self.likeContainerView.frame.origin.y + self.likeContainerView.frame.size.height;
+    self.headContainerView.frame = frame;
     
     self.headContainerView.backgroundColor = self.view.backgroundColor;
     self.tableView.tableHeaderView = self.headContainerView;
@@ -262,6 +301,9 @@
 #pragma mark - IBAction
 - (IBAction)collectAction:(id)sender {
     
+    if ([[WYEngine shareInstance] needUserLogin:nil]) {
+        return;
+    }
     self.collectButton.enabled = NO;
     [self collectGame];
 }
@@ -277,6 +319,10 @@
     
 }
 
+- (IBAction)moreContentAction:(id)sender{
+    _isMore = !_isMore;
+    [self refreshGameHeadViewShow];
+}
 #pragma mark - GMGridViewDataSource
 - (NSInteger)numberOfItemsInGMGridView:(GMGridView *)gridView
 {
