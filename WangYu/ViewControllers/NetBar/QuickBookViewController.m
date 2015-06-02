@@ -11,6 +11,7 @@
 #import "WYEngine.h"
 #import "WYProgressHUD.h"
 #import "OrdersViewController.h"
+#import "AppDelegate.h"
 
 #define Tag_date_check       100
 #define Tag_time_check       101
@@ -457,7 +458,18 @@
     [_bookTable reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
+- (void)signOutAndLogin{
+    AppDelegate * appDelgate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    WYLog(@"signOut for user logout from SettingViewController");
+    [appDelgate signOut];
+    [[WYEngine shareInstance] visitorLogin];
+}
+
 - (IBAction)bookAction:(id)sender {
+    if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
+        [self signOutAndLogin];
+        return;
+    }
     [self doforEndEdit];
     [self doReserve];
 }

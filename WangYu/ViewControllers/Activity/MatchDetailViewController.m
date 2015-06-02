@@ -225,7 +225,11 @@
             if (indexPath.row == 0){
                 cell.avatarImageView.image = [UIImage imageNamed:@"match_detail_time_icon"];
                 NSString *strTime = [NSString stringWithFormat:@"%@～%@",self.activityInfo.startTime,self.activityInfo.endTime];
-                cell.titleLabel.text = strTime;
+                if (strTime.length > 1) {
+                    cell.titleLabel.text = strTime;
+                }else {
+                    cell.titleLabel.text = @"暂无时间";
+                }
                 cell.indicatorImage.hidden = YES;
                 [cell setbottomLineWithType:0];
                 break;

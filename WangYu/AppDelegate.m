@@ -152,7 +152,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     if ([scheme hasPrefix:@"tencent"]) {
         return [QQApiInterface handleOpenURL:url delegate:[WYShareManager shareInstance]];
     }
-    if ([scheme hasPrefix:@"WY://safepay"]) {
+    if ([scheme hasPrefix:@"WY"] && [[url absoluteString] hasPrefix:@"WY://safepay"]) {
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
             NSLog(@"reslut = %@", resultDic);
             NSInteger status = [[resultDic objectForKey:@"resultStatus"] integerValue];

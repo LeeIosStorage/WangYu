@@ -369,8 +369,10 @@
 }
 
 - (IBAction)detailAction:(id)sender {
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"详细介绍" message:@"H5页跳转" cancelButtonTitle:@"确定"];
-    [alertView show];
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/netbar/web/detail?id=%@", [WYEngine shareInstance].baseUrl, self.netbarInfo.nid] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 -(void)dealloc{

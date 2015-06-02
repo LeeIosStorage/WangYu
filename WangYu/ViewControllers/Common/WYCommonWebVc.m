@@ -276,7 +276,7 @@ CGFloat const SGProgressBarHeight = 2.5;
 
 - (UIView *)setupSGProgressSubviewWithTintColor:(UIColor *)tintColor
 {
-    float y = self.titleNavBar.frame.size.height - SGProgressBarHeight;
+    float y = self.titleNavBar.frame.size.height - SGProgressBarHeight/2;
     
     UIView *progressView;
     for (UIView *subview in [self.titleNavBar subviews])

@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "WYMatchInfo.h"
+#import "WYNetbarInfo.h"
 
 @protocol MatchPlaceCellDelegate;
 @interface MatchPlaceCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIView *containerView;
+@property (strong, nonatomic) IBOutlet UIView *topView;
 @property (strong, nonatomic) IBOutlet UIButton *applyButton;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *placeLabel;
@@ -22,11 +24,14 @@
 
 @property (nonatomic, weak) id<MatchPlaceCellDelegate> delegate;
 
++ (float)heightForMatchInfo:(WYMatchInfo *)matchInfo;
+
 @end
 
 @protocol MatchPlaceCellDelegate <NSObject>
 
 @optional
 - (void)matchPlaceCellClickWithCell:(id)cell;
+- (void)matchPlaceCellClickNetbarWithCell:(id)cell netbarId:(NSString *)netbarId;
 
 @end

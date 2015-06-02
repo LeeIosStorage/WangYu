@@ -13,6 +13,7 @@
 #import "OrdersViewController.h"
 #import "WYPayManager.h"
 #import "WYAlertView.h"
+#import "AppDelegate.h"
 
 @interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -169,7 +170,18 @@
     }
 }
 
+- (void)signOutAndLogin{
+    AppDelegate * appDelgate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    WYLog(@"signOut for user logout from SettingViewController");
+    [appDelgate signOut];
+    [[WYEngine shareInstance] visitorLogin];
+}
+
 - (IBAction)payAction:(id)sender {
+    if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
+        [self signOutAndLogin];
+        return;
+    }
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     if (self.isBooked) {
@@ -221,6 +233,7 @@
                 [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"out_trade_no"] forKey:@"out_trade_no"];
                 [dic setValue:weakSelf.netbarInfo.netbarName forKey:@"netbarName"];
                 [dic setValue:weakSelf.amountField.text forKey:@"amount"];
+//                [dic setValue:@"0.01" forKey:@"amount"];
                 [[WYPayManager shareInstance] payForAlipayWith:dic];
             }
         }tag:tag];

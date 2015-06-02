@@ -12,6 +12,8 @@
 #import "WYProgressHUD.h"
 #import "WYMatchInfo.h"
 #import "WYAlertView.h"
+#import "WYLinkerHandler.h"
+#import "AppDelegate.h"
 
 @interface MatchPlaceViewController ()<UITableViewDelegate,UITableViewDataSource,MatchPlaceCellDelegate>
 
@@ -47,7 +49,7 @@
 - (void)getMatchInfos {
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getActivityAddressWithAid:self.activityId tag:tag];
+    [[WYEngine shareInstance] getActivityAddressWithUid:[WYEngine shareInstance].uid activityId:self.activityId tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [WYProgressHUD AlertLoadDone];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -85,7 +87,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 187;
+    WYMatchInfo *matchInfo = _matchInfos[indexPath.row];
+    return [MatchPlaceCell heightForMatchInfo:matchInfo];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -110,15 +113,40 @@
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
 
+- (void)signOutAndLogin{
+    AppDelegate * appDelgate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    WYLog(@"signOut for user logout from SettingViewController");
+    [appDelgate signOut];
+    [[WYEngine shareInstance] visitorLogin];
+}
+
 #pragma mark - MatchPlaceCellDelegate
 - (void)matchPlaceCellClickWithCell:(id)cell{
+    if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
+        [self signOutAndLogin];
+        return;
+    }
     NSIndexPath* indexPath = [self.placeTableView indexPathForCell:cell];
     if (indexPath == nil) {
         return;
     }
     WYMatchInfo* matchInfo = _matchInfos[indexPath.row];
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:matchInfo.areas message:@"H5页跳转" cancelButtonTitle:@"确定"];
-    [alertView show];
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/web/apply?id=%@&userId=%@&token=%@&round=%d", [WYEngine shareInstance].baseUrl, self.activityId , [WYEngine shareInstance].uid, [WYEngine shareInstance].token, matchInfo.round] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
+- (void)matchPlaceCellClickNetbarWithCell:(id)cell netbarId:(NSString *)netbarId{
+//    NSIndexPath* indexPath = [self.placeTableView indexPathForCell:cell];
+//    if (indexPath == nil) {
+//        return;
+//    }
+//    WYMatchInfo* matchInfo = _matchInfos[indexPath.row];
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/netbar/web/detail?id=%@", [WYEngine shareInstance].baseUrl, netbarId] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 @end
