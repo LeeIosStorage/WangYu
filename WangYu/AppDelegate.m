@@ -287,7 +287,7 @@ fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     [APService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", [self logDic:userInfo]);
-    [[WYSettingConfig staticInstance] addMessageNum:2];
+//    [[WYSettingConfig staticInstance] addMessageNum:2];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 

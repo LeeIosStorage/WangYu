@@ -28,5 +28,6 @@
 
 -(int)getMessageCount;
 -(void)addMessageNum:(int)count;
+-(void)removeMessageNum;
 
 @end

@@ -64,6 +64,10 @@
     
     self.currentLocation = [WYLocationServiceUtil getLastRecordLocation];
     
+    self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.netBarTable];
+    self.pullRefreshView.delegate = self;
+    [self.netBarTable addSubview:self.pullRefreshView];
+    
     [self initControlUI];
     [self refreshHistorySearchData:NO];
     
@@ -218,6 +222,7 @@
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)_netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        [weakSelf.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -443,6 +448,17 @@
 //    if (!searchText.length && !searchBar.isFirstResponder) {
 //        [searchBar performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:.1];
 //    }
+}
+
+#pragma mark PullToRefreshViewDelegate
+- (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {
+    if (view == self.pullRefreshView) {
+        [self refreshNetbarInfos];
+    }
+}
+
+- (NSDate *)pullToRefreshViewLastUpdated:(PullToRefreshView *)view {
+    return [NSDate date];
 }
 
 #pragma mark - UIScrollViewDelegate

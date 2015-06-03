@@ -12,6 +12,7 @@
 #import "WYEngine.h"
 #import "WYProgressHUD.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "WYSettingConfig.h"
 
 @interface MessageListViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -27,6 +28,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [[WYSettingConfig staticInstance] removeMessageNum];
+    
     _messageInfos = [[NSMutableArray alloc] init];
     
     self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.tableView];
