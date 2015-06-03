@@ -244,6 +244,25 @@
     
 }
 
+-(void)getGameDownloadUrl{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getGameDownloadUrlWithGameId:_gameInfo.gameId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"数据请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
+        NSString *iosDownloadUrl = [object stringObjectForKey:@"url_android"];
+        [[UIApplication sharedApplication] openURL: [NSURL URLWithString:iosDownloadUrl]];
+    }tag:tag];
+}
+
 #pragma mark - custom
 -(void)refreshGameHeadViewShow{
     
@@ -316,7 +335,7 @@
 }
 
 - (IBAction)downloadAction:(id)sender {
-    
+    [self getGameDownloadUrl];
 }
 
 - (IBAction)moreContentAction:(id)sender{

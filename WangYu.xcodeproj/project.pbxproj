@@ -183,6 +183,8 @@
 		077E608E1B0B2E1A0079BC9E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 077E608D1B0B2E1A0079BC9E /* QuartzCore.framework */; };
 		077E60901B0B2E3A0079BC9E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 077E608F1B0B2E3A0079BC9E /* ImageIO.framework */; };
 		077E60921B0B2E6A0079BC9E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 077E60911B0B2E6A0079BC9E /* Foundation.framework */; };
+		077F93C31B1DA66000BCF9AC /* libPushSDK-1.8.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 077F93C21B1DA66000BCF9AC /* libPushSDK-1.8.3.a */; };
+		077F93C51B1DA89600BCF9AC /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 077F93C41B1DA89600BCF9AC /* PushConfig.plist */; };
 		07868DE61AF8581100160070 /* SuperMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DD01AF8581100160070 /* SuperMainViewController.m */; };
 		07868DE71AF8581100160070 /* WYBaseSuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DD21AF8581100160070 /* WYBaseSuperViewController.m */; };
 		07868DE81AF8581100160070 /* WYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07868DD41AF8581100160070 /* WYNavigationController.m */; };
@@ -602,6 +604,9 @@
 		077E608D1B0B2E1A0079BC9E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		077E608F1B0B2E3A0079BC9E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		077E60911B0B2E6A0079BC9E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		077F93C11B1DA66000BCF9AC /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
+		077F93C21B1DA66000BCF9AC /* libPushSDK-1.8.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPushSDK-1.8.3.a"; sourceTree = "<group>"; };
+		077F93C41B1DA89600BCF9AC /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
 		07868DCF1AF8581100160070 /* SuperMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperMainViewController.h; sourceTree = "<group>"; };
 		07868DD01AF8581100160070 /* SuperMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperMainViewController.m; sourceTree = "<group>"; };
 		07868DD11AF8581100160070 /* WYBaseSuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYBaseSuperViewController.h; sourceTree = "<group>"; };
@@ -870,6 +875,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				077F93C31B1DA66000BCF9AC /* libPushSDK-1.8.3.a in Frameworks */,
 				079493871B0D9C3D008152A6 /* libssl.a in Frameworks */,
 				077E60921B0B2E6A0079BC9E /* Foundation.framework in Frameworks */,
 				077E60901B0B2E3A0079BC9E /* ImageIO.framework in Frameworks */,
@@ -1067,6 +1073,7 @@
 			isa = PBXGroup;
 			children = (
 				073DBCE01AE7492A009B49EB /* Info.plist */,
+				077F93C41B1DA89600BCF9AC /* PushConfig.plist */,
 				073DBDEB1AE7A0EC009B49EB /* WangYu-Prefx.pch */,
 				073DBCE11AE7492A009B49EB /* main.m */,
 			);
@@ -1210,6 +1217,7 @@
 		073DBD171AE770F1009B49EB /* External */ = {
 			isa = PBXGroup;
 			children = (
+				077F93C01B1DA66000BCF9AC /* JPush */,
 				077BF3A21B186BFC00450174 /* GMGridView */,
 				07A4279A1B183AEA009197D5 /* DVSwitch */,
 				076E0DED1B147FD600E4363A /* MyAVCameraView */,
@@ -1559,6 +1567,15 @@
 				077E608A1B0B2D5F0079BC9E /* WeiboUser.h */,
 			);
 			path = libWeiboSDK;
+			sourceTree = "<group>";
+		};
+		077F93C01B1DA66000BCF9AC /* JPush */ = {
+			isa = PBXGroup;
+			children = (
+				077F93C11B1DA66000BCF9AC /* APService.h */,
+				077F93C21B1DA66000BCF9AC /* libPushSDK-1.8.3.a */,
+			);
+			path = JPush;
 			sourceTree = "<group>";
 		};
 		07868DCE1AF8581100160070 /* Base */ = {
@@ -2055,6 +2072,11 @@
 				TargetAttributes = {
 					073DBCDB1AE7492A009B49EB = {
 						CreatedOnToolsVersion = 6.3;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					073DBCF41AE7492A009B49EB = {
 						CreatedOnToolsVersion = 6.3;
@@ -2102,6 +2124,7 @@
 				071691EF1B1C4E49006A832E /* GameDetailsViewController.xib in Resources */,
 				077E4ACF1B14461D009D1692 /* ActivityViewCell.xib in Resources */,
 				076219351B15BDC900D912A1 /* GameCollectViewCell.xib in Resources */,
+				077F93C51B1DA89600BCF9AC /* PushConfig.plist in Resources */,
 				071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */,
 				0715C3A71B09AD6F00C37F82 /* Pin_Ios7@2x.png in Resources */,
 				07868DEE1AF8581100160070 /* WYTabBarItemView.xib in Resources */,
@@ -2508,6 +2531,7 @@
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/libWeiboSDK",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/WeChatSDK_1.5",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/AliPay",
+					"$(PROJECT_DIR)/WangYu/External/JPush",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -2542,6 +2566,7 @@
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/libWeiboSDK",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/WeChatSDK_1.5",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/AliPay",
+					"$(PROJECT_DIR)/WangYu/External/JPush",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";

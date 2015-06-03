@@ -13,9 +13,9 @@
 
 - (void)doSetGameInfoByJsonDic:(NSDictionary*)dic {
     
-    if ([dic stringObjectForKey:@"game_name"]) {
-        _gameName = [dic stringObjectForKey:@"game_name"];
-    }
+//    if ([dic stringObjectForKey:@"game_name"]) {
+//        _gameName = [dic stringObjectForKey:@"game_name"];
+//    }
     if ([dic stringObjectForKey:@"name"]) {
         _gameName = [dic stringObjectForKey:@"name"];
     }

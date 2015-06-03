@@ -159,6 +159,46 @@ static WYSettingConfig *s_instance = nil;
     return s_isFirstEnterVersion;
 }
 
+
+//关联用户的
+- (NSString *)getAccoutStorePath{
+    NSString *filePath = [[WYEngine shareInstance] getCurrentAccoutDocDirectory];
+    return filePath;
+}
+//无关用户
+- (NSString *)getStorePath{
+    NSString *filePath = [PathHelper documentDirectoryPathWithName:@"message"];
+    return filePath;
+}
+-(NSString *)getMessagePath{
+    return [[self getAccoutStorePath] stringByAppendingPathComponent:@"message.xml"];
+}
+-(int)getMessageCount{
+    NSMutableDictionary *messageDic = [NSMutableDictionary dictionaryWithContentsOfFile:[self getMessagePath]];
+    return [messageDic intValueForKey:@"last_message"];
+}
+
+-(void)addMessageNum:(int)count{
+    
+    NSMutableDictionary *messageDic = [NSMutableDictionary dictionaryWithContentsOfFile:[self getMessagePath]];
+    if (!messageDic) {
+        messageDic = [NSMutableDictionary dictionary];
+    }
+    int lastNum = [[messageDic objectForKey:@"last_message"] intValue];
+    lastNum += count;
+    NSString *messageNum = [NSString stringWithFormat:@"%d",lastNum];
+    
+    [messageDic removeAllObjects];
+    [messageDic setObject:messageNum forKey:@"last_message"];
+    [messageDic writeToFile:[self getMessagePath] atomically:YES];
+}
+-(void)removeMessageNum{
+    NSString* path = [self getMessagePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    }
+}
+
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

@@ -169,5 +169,6 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)getGameDetailsWithGameId:(NSString *)gameId uid:(NSString*)uid tag:(int)tag;
 //收藏-取消收藏
 - (BOOL)collectGameWithUid:(NSString *)uid gameId:(NSString *)gameId tag:(int)tag;
+- (BOOL)getGameDownloadUrlWithGameId:(NSString*)gameId tag:(int)tag;
 
 @end

@@ -203,6 +203,24 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate>
     }tag:tag];
     
 }
+-(void)getGameDownloadUrl{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getGameDownloadUrlWithGameId:_selectedGameInfo.gameId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"数据请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
+        NSString *iosDownloadUrl = [object stringObjectForKey:@"url_android"];
+        [[UIApplication sharedApplication] openURL: [NSURL URLWithString:iosDownloadUrl]];
+    }tag:tag];
+}
 
 -(void)getSelectedGameInfo{
     _selectedGameInfo = nil;
@@ -215,6 +233,7 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate>
 - (IBAction)downloadAction:(id)sender {
     WYLog(@"self.currentIndex = %d",(int)self.currentIndex);
     [self getSelectedGameInfo];
+    [self getGameDownloadUrl];
 }
 
 - (IBAction)collectAction:(id)sender {

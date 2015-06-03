@@ -13,6 +13,7 @@
 #import "WYMatchWarInfo.h"
 #import "MatchWarViewCell.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "WYLinkerHandler.h"
 
 #define MATCHWAR_TYPE_PULISH        0
 #define MATCHWAR_TYPE_APPLY         1
@@ -420,7 +421,17 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{   
+{
+    WYMatchWarInfo *matchWarInfo;
+    if (tableView == self.applyTableView) {
+        matchWarInfo = _applyMatchList[indexPath.row];
+    }else{
+        matchWarInfo = _publishMatchList[indexPath.row];
+    }
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/detail?id=%@&userId=%@&token=%@", [WYEngine shareInstance].baseUrl, matchWarInfo.mId, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
