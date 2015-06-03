@@ -187,7 +187,7 @@
     if (self.cityScrollView.superview) {
         [self.cityScrollView removeFromSuperview];
     }
-    self.cityScrollView.frame = CGRectMake(0, 42, SCREEN_WIDTH, 121);
+    self.cityScrollView.frame = CGRectMake(0, 42, SCREEN_WIDTH, 177);
     [self.lightupCityView addSubview:self.cityScrollView];
     
     CGRect frame = self.hintLabel.frame;

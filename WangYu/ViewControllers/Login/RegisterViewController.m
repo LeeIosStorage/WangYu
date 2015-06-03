@@ -12,6 +12,7 @@
 #import "WYEngine.h"
 #import "NSString+Value.h"
 #import "SetPwdViewController.h"
+#import "WYLinkerHandler.h"
 
 @interface RegisterViewController ()
 {
@@ -164,7 +165,10 @@
     [self checkPhoneCode];
 }
 - (IBAction)protocolAction:(id)sender{
-    
+    id vc = [WYLinkerHandler handleDealWithHref:@"http://www.baidu.com" From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 - (IBAction)agreeAction:(id)sender{
     self.agreeIconButton.selected = !self.agreeIconButton.selected;
@@ -176,7 +180,10 @@
 }
 
 - (IBAction)helpAction:(id)sender{
-    
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/redbag/web/help", [WYEngine shareInstance].baseUrl] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 #pragma mark - custom

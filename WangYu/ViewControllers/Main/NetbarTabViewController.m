@@ -71,7 +71,9 @@
     // Do any additional setup after loading the view from its nib.
     [self setTilteLeftViewHide:NO];
     _isOpen = NO;
-    _chooseCityName = @"选择城市";
+    
+    [self setUserCity];
+    
     [self refreshLeftIconViewUI];
     [self refreshUI];
     [self getCacheNetbarInfos];
@@ -132,11 +134,13 @@
         WS(weakSelf);
         //获取用户位置
         [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString) {
+            
+            [weakSelf setUserCity];//定位失败时 默认用户已选择的城市
+            
             WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:errorString cancelButtonTitle:@"取消" cancelBlock:^{
             } okButtonTitle:@"确定" okBlock:^{
-//                LocationViewController *lVc = [[LocationViewController alloc] init];
-//                [self.navigationController pushViewController:lVc animated:YES];
                 [weakSelf chooseCityAction:nil];
+//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
             }];
             [alertView show];
             return;
@@ -156,6 +160,24 @@
         _chooseCityName = placemark.locality;
         [self refreshLeftIconViewUI];
     }];
+}
+
+-(void)setUserCity{
+    
+    if ([[WYEngine shareInstance] hasAccoutLoggedin]) {
+        NSString *cityName = [WYEngine shareInstance].userInfo.cityName;
+        NSString *cityCode = [WYEngine shareInstance].userInfo.cityCode;
+        if (cityName && cityName.length > 0 && cityCode.length > 0 && cityCode) {
+            _chooseCityName = cityName;
+            _chooseAreaCode = cityCode;
+        }else{
+            _chooseCityName = @"选择城市";
+        }
+    }else{
+        _chooseCityName = @"选择城市";
+    }
+    
+    [self refreshLeftIconViewUI];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -237,7 +259,7 @@
         _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
         [UIView animateWithDuration:0.4 animations:^{
             CGRect frame = _locationChooseVc.view.frame;
-            frame.size.height = 380;
+            frame.size.height = 378;
             _locationChooseVc.view.frame = frame;
             _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.5];
             _chooseCityIconImgView.transform = CGAffineTransformMakeRotation(180 *M_PI / 180.0);

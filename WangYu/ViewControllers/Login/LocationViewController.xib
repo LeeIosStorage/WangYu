@@ -69,7 +69,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="PrQ-4C-9zQ">
-                    <rect key="frame" x="0.0" y="152" width="320" height="170"/>
+                    <rect key="frame" x="0.0" y="152" width="320" height="226"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已开通城市" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="o2x-Zo-jqa">
@@ -79,20 +79,20 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="D0o-K0-4dm">
-                            <rect key="frame" x="0.0" y="42" width="320" height="121"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <rect key="frame" x="0.0" y="42" width="320" height="177"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="91c-fv-XkU"/>
                             </connections>
                         </scrollView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="dJ3-cN-UfP">
-                            <rect key="frame" x="0.0" y="169" width="320" height="1"/>
+                            <rect key="frame" x="0.0" y="225" width="320" height="1"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <view contentMode="scaleToFill" id="K6t-2o-APl">
+                <view hidden="YES" contentMode="scaleToFill" id="K6t-2o-APl">
                     <rect key="frame" x="0.0" y="322" width="320" height="88"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
