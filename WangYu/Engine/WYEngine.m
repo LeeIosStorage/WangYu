@@ -717,12 +717,17 @@ static WYEngine* s_ShareInstance = nil;
 }
 
 //预订订单支付
-- (BOOL)reservePayWithUid:(NSString *)uid body:(NSString *)body orderId:(NSString *)orderId type:(int)type tag:(int)tag {
+- (BOOL)reservePayWithUid:(NSString *)uid body:(NSString *)body orderId:(NSString *)orderId packetsId:(NSArray*)pids type:(int)type tag:(int)tag {
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     [params setObject:uid forKey:@"userId"];
     [params setObject:body forKey:@"body"];
     [params setObject:orderId forKey:@"orderId"];
     [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+    if (pids != nil) {
+        NSString * pidsString;
+        pidsString = [WYCommonUtils stringSplitWithCommaForIds:pids];
+        [params setObject:pidsString forKey:@"rids"];
+    }
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
@@ -731,12 +736,17 @@ static WYEngine* s_ShareInstance = nil;
 }
 
 //支付订单支付
-- (BOOL)orderPayWithUid:(NSString *)uid body:(NSString *)body amount:(double)amount netbarId:(NSString *)nid type:(int)type tag:(int)tag{
+- (BOOL)orderPayWithUid:(NSString *)uid body:(NSString *)body amount:(double)amount netbarId:(NSString *)nid packetsId:(NSArray*)pids type:(int)type tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     [params setObject:uid forKey:@"userId"];
     [params setObject:body forKey:@"body"];
     [params setObject:[NSNumber numberWithDouble:amount] forKey:@"amount"];
     [params setObject:nid forKey:@"netbar_id"];
+    if (pids != nil) {
+        NSString * pidsString;
+        pidsString = [WYCommonUtils stringSplitWithCommaForIds:pids];
+        [params setObject:pidsString forKey:@"rids"];
+    }
     [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
     if (_token) {
         [params setObject:_token forKey:@"token"];

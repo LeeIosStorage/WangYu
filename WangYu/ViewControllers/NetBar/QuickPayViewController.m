@@ -16,7 +16,10 @@
 #import "AppDelegate.h"
 #import "RedPacketViewController.h"
 
-@interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate>{
+    int redAmount;
+    NSMutableArray *packetIds;
+}
 
 @property (strong, nonatomic) IBOutlet UITableView *payTable;
 @property (strong, nonatomic) IBOutlet UIView *headerView;
@@ -26,12 +29,14 @@
 @property (strong, nonatomic) IBOutlet UILabel *payforLabel;
 @property (strong, nonatomic) IBOutlet UILabel *priceLabel;
 @property (strong, nonatomic) IBOutlet UILabel *packetLabel;
+@property (strong, nonatomic) IBOutlet UILabel *moneyLabel;
 @property (strong, nonatomic) IBOutlet UIButton *payButton;
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImage;
 @property (strong, nonatomic) IBOutlet UILabel *colorLabel;
 @property (assign, nonatomic) BOOL isAlipay;
 @property (assign, nonatomic) BOOL isWeixin;
 @property (strong, nonatomic) IBOutlet UITextField *amountField;
+@property (strong, nonatomic) NSMutableArray *packetInfos;
 
 - (IBAction)payAction:(id)sender;
 - (IBAction)packetAction:(id)sender;
@@ -186,7 +191,7 @@
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     if (self.isBooked) {
-        [[WYEngine shareInstance] reservePayWithUid:[WYEngine shareInstance].uid body:self.orderInfo.netbarName orderId:self.orderInfo.orderId type:self.isWeixin?0:1 tag:tag];
+        [[WYEngine shareInstance] reservePayWithUid:[WYEngine shareInstance].uid body:self.orderInfo.netbarName orderId:self.orderInfo.orderId packetsId:packetIds type:self.isWeixin?0:1 tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
             [WYProgressHUD AlertLoadDone];
             NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -214,7 +219,7 @@
             [WYProgressHUD lightAlert:@"请输入上网金额"];
             return;
         }
-        [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:self.netbarInfo.netbarName amount:[_amountField.text doubleValue] netbarId:self.netbarInfo.nid type:self.isWeixin?0:1 tag:tag];
+        [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:self.netbarInfo.netbarName amount:[_amountField.text doubleValue] netbarId:self.netbarInfo.nid packetsId:packetIds type:self.isWeixin?0:1 tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
             [WYProgressHUD AlertLoadDone];
             NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -242,10 +247,30 @@
 }
 
 - (IBAction)packetAction:(id)sender {
+//    if (_amountField.text.length == 0) {
+//        [WYProgressHUD lightAlert:@"请先输入上网金额"];
+//        return;
+//    }
+    WS(weakSelf);
     RedPacketViewController *rpVc = [[RedPacketViewController alloc] init];
     rpVc.bChooseRed = YES;
-    rpVc.sendRedPacketCallBack = ^(RedPacketInfo *info){
-        NSLog(@"================");
+    if (_packetInfos.count > 0) {
+        rpVc.packetInfos = _packetInfos;
+    }
+    rpVc.sendRedPacketCallBack = ^(NSArray *array){
+        if (array != nil) {
+            redAmount = 0;
+            packetIds = [[NSMutableArray alloc]init];
+            for (RedPacketInfo *info in array) {
+                redAmount += info.money;
+                [packetIds addObject:info.rid];
+            }
+            weakSelf.moneyLabel.hidden = NO;
+            weakSelf.moneyLabel.text = [NSString stringWithFormat:@"￥%d",redAmount];
+            weakSelf.packetInfos = [NSMutableArray arrayWithArray:array];
+        }else{
+            NSLog(@"================");
+        }
     };
     [self.navigationController pushViewController:rpVc animated:YES];
 }

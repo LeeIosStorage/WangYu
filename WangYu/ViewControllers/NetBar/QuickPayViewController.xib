@@ -7,6 +7,7 @@
     <customFonts key="customFonts">
         <mutableArray key="dqw3.otf">
             <string>HiraginoSansGB-W3</string>
+            <string>HiraginoSansGB-W3</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -17,6 +18,7 @@
                 <outlet property="colorLabel" destination="9yn-qX-kNi" id="WhY-Hb-L5z"/>
                 <outlet property="footerView" destination="9aO-u8-qE2" id="oRh-p0-89e"/>
                 <outlet property="headerView" destination="k13-55-7FQ" id="3cr-qn-43Z"/>
+                <outlet property="moneyLabel" destination="Ds0-pO-2xu" id="SOP-P8-bnA"/>
                 <outlet property="netbarImage" destination="Qod-Zm-YSt" id="kNO-JW-hCq"/>
                 <outlet property="netbarLabel" destination="W7J-uA-amF" id="VzE-vx-wTz"/>
                 <outlet property="packetLabel" destination="XcJ-UE-Ar1" id="TVg-1z-bJ3"/>
@@ -180,6 +182,13 @@
                                         <action selector="packetAction:" destination="-1" eventType="touchUpInside" id="zAe-fD-pjp"/>
                                     </connections>
                                 </button>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥2" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ds0-pO-2xu">
+                                    <rect key="frame" x="238" y="12" width="50" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="14"/>
+                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>

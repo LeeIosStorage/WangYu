@@ -13,12 +13,12 @@
 
 @property (strong, nonatomic) RedPacketInfo *redPacketInfo;
 @property (assign, nonatomic) BOOL isPast;//已过期
-@property (assign, nonatomic) BOOL isChoose;//选中
 
 @property (strong, nonatomic) IBOutlet UIImageView *redPacketBgImgView;
 @property (strong, nonatomic) IBOutlet UILabel *redPagMoney;
 @property (strong, nonatomic) IBOutlet UILabel *redPagIntroLabel;
 @property (strong, nonatomic) IBOutlet UILabel *redPagValidTimeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *redPagStaleLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *selectImage;
 
 @end

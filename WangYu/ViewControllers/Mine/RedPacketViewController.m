@@ -13,12 +13,15 @@
 #import "RedPacketViewCell.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "WYLinkerHandler.h"
+#import "WYAlertView.h"
 
 #define REDPACKET_TYPE_FREE            0
 #define REDPACKET_TYPE_HISTORY         1
 
 @interface RedPacketViewController ()<UITableViewDataSource,UITableViewDelegate>{
-    BOOL _isChoosed;
+    BOOL _isSelected;
+    RedPacketInfo *_selectedInfo;
+    NSMutableArray* _selectedItems;
 }
 
 @property (strong, nonatomic) NSMutableArray *freeRedPacketList;
@@ -159,6 +162,11 @@
 
 - (void)initNormalTitleNavBarSubviews{
     if (_bChooseRed) {
+        if (_packetInfos) {
+            _selectedItems = [NSMutableArray arrayWithArray:_packetInfos];
+        }else {
+            _selectedItems = [[NSMutableArray alloc] init];
+        }
         [self setRightButtonWithTitle:@"使用" selector:@selector(useRedPacketAction:)];
     }else {
         [self setRightButtonWithImageName:@"redpacket_help_icon" selector:@selector(aboutRedPacketAction:)];
@@ -187,7 +195,9 @@
         self.freeRedPacketTableView.hidden = NO;
         
         if (!_freeRedPacketList) {
-            [self getCacheFreeRedPacket];
+            if (!_bChooseRed) {
+                [self getCacheFreeRedPacket];
+            }
             [self refreshFreeRedPacketList];
             return;
         }
@@ -245,11 +255,14 @@
 }
 
 - (void)useRedPacketAction:(id)sender{
-    RedPacketInfo *packetInfo = [[RedPacketInfo alloc] init];
-    
+    if (_selectedItems.count == 0) {
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"请选择一个红包" cancelButtonTitle:@"确定"];
+        [alertView show];
+        return;
+    }
     [self.navigationController popViewControllerAnimated:YES];
     if (_sendRedPacketCallBack) {
-        _sendRedPacketCallBack(packetInfo);
+        _sendRedPacketCallBack(_selectedItems);
     }
 }
 
@@ -289,7 +302,9 @@
                 [redPacketInfo setRedPacketInfoByJsonDic:dic];
                 [weakSelf.freeRedPacketList addObject:redPacketInfo];
             }
+            
             [weakSelf.freeRedPacketTableView reloadData];
+            
         }
     }];
 }
@@ -441,6 +456,14 @@
     }
     cell.isPast = NO;
     RedPacketInfo *redPacketInfo = _freeRedPacketList[indexPath.row];
+    if (_bChooseRed && _selectedItems) {
+        for (RedPacketInfo *info in _selectedItems) {
+            if ([info.rid isEqualToString:redPacketInfo.rid]) {
+                redPacketInfo.selected = YES;
+                break;
+            }
+        }
+    }
     cell.redPacketInfo = redPacketInfo;
     return cell;
 }
@@ -451,7 +474,17 @@
         
     }else{
         RedPacketInfo *redPacketInfo = _freeRedPacketList[indexPath.row];
-        
+        redPacketInfo.selected = !redPacketInfo.selected;
+        for (RedPacketInfo *info in _selectedItems) {
+            if (!redPacketInfo.selected && [info.rid isEqualToString:redPacketInfo.rid]) {
+                [_selectedItems removeObject:info];
+                break;
+            }
+        }
+        if (redPacketInfo.selected) {
+            [_selectedItems addObject:redPacketInfo];
+        }
+        [_freeRedPacketTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];

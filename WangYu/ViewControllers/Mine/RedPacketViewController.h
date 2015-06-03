@@ -9,12 +9,14 @@
 #import "WYSuperViewController.h"
 #import "RedPacketInfo.h"
 
-typedef void(^SendRedPacketCallBack)(RedPacketInfo * info);
+typedef void(^SendRedPacketCallBack)(NSArray *array);
 
 @interface RedPacketViewController : WYSuperViewController
 
 @property (nonatomic, strong) SendRedPacketCallBack sendRedPacketCallBack;
 
 @property (nonatomic, assign) BOOL bChooseRed;
+
+@property (nonatomic, strong) NSMutableArray *packetInfos;
 
 @end

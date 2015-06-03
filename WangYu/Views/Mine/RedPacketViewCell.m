@@ -36,9 +36,11 @@
     
     self.redPagStaleLabel.hidden = YES;
     UIImage *bgImage;
-    if (_isChoose) {
+    if (redPacketInfo.selected) {
+        self.selectImage.hidden = NO;
         bgImage = [UIImage imageNamed:@"redpacket_choose_icon"];
     }else{
+        self.selectImage.hidden = YES;
         bgImage = [UIImage imageNamed:@"redpacket_kuang_red"];
     }
 //    [[UIImage imageNamed:@"redpacket_kuang_red"] stretchableImageWithLeftCapWidth:148 topCapHeight:80];
