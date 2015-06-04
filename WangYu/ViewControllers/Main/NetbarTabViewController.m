@@ -24,6 +24,8 @@
 #import <MapKit/MapKit.h>
 #import "LocationViewController.h"
 #import "WYLinkerHandler.h"
+#import "WYUserGuideConfig.h"
+#import "AppDelegate.h"
 
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate,NetbarTabCellDelegate,LocationViewControllerDelegate>
 {
@@ -46,6 +48,8 @@
 @property (strong, nonatomic) IBOutlet UIView *sectionView;
 @property (strong, nonatomic) IBOutlet UITableView *netBarTable;
 @property (strong, nonatomic) SKSplashView *splashView;
+@property (strong, nonatomic) IBOutlet UIView *guideView;
+@property (strong, nonatomic) IBOutlet UIImageView *guideImageView;
 
 @property (strong, nonatomic) IBOutlet UIView *footerView;
 @property (strong, nonatomic) IBOutlet UIButton *moreButton;
@@ -57,6 +61,7 @@
 - (IBAction)packetAction:(id)sender;
 - (IBAction)searchNetbarAction:(id)sender;
 - (IBAction)moreNetbarAction:(id)sender;
+- (IBAction)newGuideAction:(id)sender;
 
 @end
 
@@ -71,7 +76,7 @@
     // Do any additional setup after loading the view from its nib.
     [self setTilteLeftViewHide:NO];
     _isOpen = NO;
-    
+    [self refreshNewGuideView:NO];
     _chooseCityName = @"选择城市";
     self.currentLocation = [WYLocationServiceUtil getLastRecordLocation];
     
@@ -215,6 +220,33 @@
     [self setLeftButtonWithImageName:nil];
     [self setLeftButtonWithSelector:@selector(chooseCityAction:)];
     [self refreshLeftIconViewUI];
+}
+
+- (void)refreshNewGuideView:(BOOL)isNext {
+    self.guideView.frame = [UIScreen mainScreen].bounds;
+    BOOL isShow = [[WYUserGuideConfig shareInstance] newPeopleGuideShowForVcType:@"netbarTabView"];
+    if (isShow) {
+        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [appDelegate.window addSubview:self.guideView];
+        UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizer:)];
+        [self.guideImageView addGestureRecognizer:gestureRecongnizer];
+    }else {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.guideView.alpha = 0;
+        } completion:^(BOOL finished) {
+            if (self.guideView.superview) {
+                [self.guideView removeFromSuperview];
+                if (isNext) {
+                    //...
+                }
+            }
+        }];
+    }
+}
+
+- (void)gestureRecognizer:(UITapGestureRecognizer *)gestureRecognizer {
+    [[WYUserGuideConfig shareInstance] setNewGuideShowYES:@"netbarTabView"];
+    [self refreshNewGuideView:NO];
 }
 
 -(void)refreshLeftIconViewUI{
@@ -459,6 +491,11 @@
     NetbarSearchViewController *searchVc = [[NetbarSearchViewController alloc] init];
     searchVc.areaCode = _chooseAreaCode;
     [self.navigationController pushViewController:searchVc animated:YES];
+}
+
+- (IBAction)newGuideAction:(id)sender {
+    [[WYUserGuideConfig shareInstance] setNewGuideShowYES:@"netbarTabView"];
+    [self refreshNewGuideView:NO];
 }
 
 - (IBAction)packetAction:(id)sender {

@@ -22,6 +22,7 @@
 #import "DVSwitch.h"
 #import "WYScrollPage.h"
 #import "WYLinkerHandler.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 @interface ActivityTabViewController ()<UITableViewDataSource,UITableViewDelegate,WYScrollPageDelegate>{
     WYScrollPage *scrollPageView;
@@ -43,6 +44,13 @@
 @property (strong, nonatomic) DVSwitch *switcher;
 @property (assign, nonatomic) NSUInteger selectedIndex;
 
+@property (assign, nonatomic) SInt32 leagueCursor;
+@property (assign, nonatomic) BOOL leagueLoadMore;
+@property (assign, nonatomic) SInt32 newsCursor;
+@property (assign, nonatomic) BOOL newsLoadMore;
+@property (assign, nonatomic) SInt32 matchCursor;
+@property (assign, nonatomic) BOOL matchLoadMore;
+
 - (IBAction)publicAction:(id)sender;
 
 @end
@@ -53,8 +61,156 @@
     [super viewDidLoad];
     [self initSwitchView];
     [self initContainerScrollView];
+    
+    self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.leagueTableView];
+    self.pullRefreshView.delegate = self;
+    [self.leagueTableView addSubview:self.pullRefreshView];
+    self.pullRefreshView2 = [[PullToRefreshView alloc] initWithScrollView:self.newsTableView];
+    self.pullRefreshView2.delegate = self;
+    [self.newsTableView addSubview:self.pullRefreshView2];
+    self.pullRefreshView3 = [[PullToRefreshView alloc] initWithScrollView:self.matchTableView];
+    self.pullRefreshView3.delegate = self;
+    [self.matchTableView addSubview:self.pullRefreshView3];
+    
     _selectedIndex = 0;
     [self refreshDataSourceWithIndex:_selectedIndex];
+    
+    WS(weakSelf);
+    [self.leagueTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.leagueLoadMore) {
+            [weakSelf.leagueTableView.infiniteScrollingView stopAnimating];
+            weakSelf.leagueTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getActivityListWithPage:weakSelf.leagueCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.leagueTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYActivityInfo *activityInfo = [[WYActivityInfo alloc] init];
+                [activityInfo setActivityInfoByJsonDic:dic];
+                [weakSelf.activityInfos addObject:activityInfo];
+            }
+            
+            weakSelf.leagueLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.leagueLoadMore) {
+                weakSelf.leagueTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.leagueTableView.showsInfiniteScrolling = YES;
+                weakSelf.leagueCursor ++;
+            }
+            
+            [weakSelf.leagueTableView reloadData];
+            
+        } tag:tag];
+    }];
+    
+    [self.newsTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.newsLoadMore) {
+            [weakSelf.newsTableView.infiniteScrollingView stopAnimating];
+            weakSelf.newsTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getInfoListWithPage:weakSelf.newsCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.newsTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYNewsInfo *newsInfo = [[WYNewsInfo alloc] init];
+                [newsInfo setNewsInfoByJsonDic:dic];
+                [weakSelf.newsInfos addObject:newsInfo];
+            }
+            
+            weakSelf.newsLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.newsLoadMore) {
+                weakSelf.newsTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.newsTableView.showsInfiniteScrolling = YES;
+                weakSelf.newsCursor ++;
+            }
+            
+            [weakSelf.newsTableView reloadData];
+            
+        } tag:tag];
+    }];
+    [self.matchTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.matchLoadMore) {
+            [weakSelf.matchTableView.infiniteScrollingView stopAnimating];
+            weakSelf.matchTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getMatchListWithPage:weakSelf.matchCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.matchTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYMatchWarInfo *warInfo = [[WYMatchWarInfo alloc] init];
+                [warInfo setMatchWarInfoByJsonDic:dic];
+                [weakSelf.matchInfos addObject:warInfo];
+            }
+            
+            weakSelf.matchLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.matchLoadMore) {
+                weakSelf.matchTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.matchTableView.showsInfiniteScrolling = YES;
+                weakSelf.matchCursor ++;
+            }
+            
+            [weakSelf.newsTableView reloadData];
+            
+        } tag:tag];
+    }];
+    weakSelf.leagueTableView.showsInfiniteScrolling = NO;
+    weakSelf.newsTableView.showsInfiniteScrolling = NO;
 }
 
 - (void)initSwitchView{
@@ -135,16 +291,16 @@
 - (void)refreshDataSourceWithIndex:(NSUInteger)index{
     switch (index) {
         case 0:
-            [self getCacheLeagueInfo];
-            [self getLeagueInfo];
+            [self getCacheLeagueInfoList];
+            [self getLeagueInfoList];
             break;
         case 1:
-            [self getCacheNewsInfo];
-            [self getNewsInfo];
+            [self getCacheNewsInfoList];
+            [self getNewsInfoList];
             break;
         case 2:
-            [self getCacheMatchInfo];
-            [self getMatchInfo];
+            [self getCacheMatchInfoList];
+            [self getMatchInfoList];
             break;
         default:
             break;
@@ -167,11 +323,11 @@
     return self.tabController.navigationController;
 }
 
-- (void)getCacheLeagueInfo{
+- (void)getCacheLeagueInfoList{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getActivityListWithPage:1 pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getActivityListWithPage:1 pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -191,12 +347,12 @@
     }];
 }
 
-- (void)getLeagueInfo{
+- (void)getLeagueInfoList{
+    self.leagueCursor = 1;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getActivityListWithPage:1 pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getActivityListWithPage:weakSelf.leagueCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        //        [WYProgressHUD AlertLoadDone];
         [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
@@ -217,14 +373,23 @@
             [weakSelf.activityInfos addObject:activityInfo];
         }
         [weakSelf.leagueTableView reloadData];
+        
+        weakSelf.leagueLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.leagueLoadMore) {
+            weakSelf.leagueTableView.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.leagueTableView.showsInfiniteScrolling = YES;
+            //可以加载更多
+            weakSelf.leagueCursor ++;
+        }
     }tag:tag];
 }
 
-- (void)getCacheNewsInfo{
+- (void)getCacheNewsInfoList{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getInfoListWithPage:1 pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getInfoListWithPage:1 pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -259,13 +424,14 @@
     }];
 }
 
-- (void)getNewsInfo{
+- (void)getNewsInfoList{
+    self.newsCursor = 1;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getInfoListWithPage:1 pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getInfoListWithPage:weakSelf.newsCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         //        [WYProgressHUD AlertLoadDone];
-        [self.pullRefreshView finishedLoading];
+        [self.pullRefreshView2 finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -301,14 +467,22 @@
             [weakSelf.newsInfos addObject:newsInfo];
         }
         [weakSelf.newsTableView reloadData];
+        weakSelf.newsLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.newsLoadMore) {
+            weakSelf.newsTableView.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.newsTableView.showsInfiniteScrolling = YES;
+            //可以加载更多
+            weakSelf.newsCursor ++;
+        }
     }tag:tag];
 }
 
-- (void)getCacheMatchInfo{
+- (void)getCacheMatchInfoList{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getMatchListWithPage:1 pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getMatchListWithPage:1 pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -328,13 +502,14 @@
     }];
 }
 
-- (void)getMatchInfo{
+- (void)getMatchInfoList{
+    self.matchCursor = 1;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getMatchListWithPage:1 pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getMatchListWithPage:weakSelf.matchCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         //        [WYProgressHUD AlertLoadDone];
-//        [self.pullRefreshView finishedLoading];
+        [self.pullRefreshView3 finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -354,6 +529,14 @@
             [weakSelf.matchInfos addObject:matchInfo];
         }
         [weakSelf.matchTableView reloadData];
+        weakSelf.matchLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.matchLoadMore) {
+            weakSelf.matchTableView.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.matchTableView.showsInfiniteScrolling = YES;
+            //可以加载更多
+            weakSelf.matchCursor ++;
+        }
     }tag:tag];
 }
 
@@ -522,6 +705,21 @@
 //            //[self getCategoryInfoWithTag:_titles[_selectedIndex-1] andIndex:_selectedIndex-1];
 //        }
     }
+}
+
+#pragma mark PullToRefreshViewDelegate
+- (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {
+    if (view == self.pullRefreshView) {
+        [self getLeagueInfoList];
+    }else if (view == self.pullRefreshView2) {
+        [self getNewsInfoList];
+    }else if (view == self.pullRefreshView3) {
+        [self getMatchInfoList];
+    }
+}
+
+- (NSDate *)pullToRefreshViewLastUpdated:(PullToRefreshView *)view {
+    return [NSDate date];
 }
 
 #pragma mark -XETabBarControllerSubVcProtocol

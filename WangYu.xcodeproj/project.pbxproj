@@ -275,6 +275,7 @@
 		07E96B8E1B15BD35006ED6B7 /* MatchPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E96B8C1B15BD35006ED6B7 /* MatchPlaceCell.m */; };
 		07E96B8F1B15BD35006ED6B7 /* MatchPlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E96B8D1B15BD35006ED6B7 /* MatchPlaceCell.xib */; };
 		07EEF6C21B0C789000DBC511 /* WYPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EEF6C11B0C789000DBC511 /* WYPayManager.m */; };
+		3B357C6E1B20AA3B00AE30A0 /* WYUserGuideConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B357C6D1B20AA3B00AE30A0 /* WYUserGuideConfig.m */; };
 		3BBE46271B0CE79B009EAE02 /* WYPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46261B0CE79B009EAE02 /* WYPhotoItem.m */; };
 		3BBE462A1B0CE8BA009EAE02 /* WYPhotoGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46291B0CE8BA009EAE02 /* WYPhotoGroup.m */; };
 		3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE462C1B0CE9AB009EAE02 /* WYPhotoBrowser.m */; };
@@ -851,6 +852,8 @@
 		07E96B8D1B15BD35006ED6B7 /* MatchPlaceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchPlaceCell.xib; path = Activity/MatchPlaceCell.xib; sourceTree = "<group>"; };
 		07EEF6C01B0C789000DBC511 /* WYPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPayManager.h; sourceTree = "<group>"; };
 		07EEF6C11B0C789000DBC511 /* WYPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPayManager.m; sourceTree = "<group>"; };
+		3B357C6C1B20AA3B00AE30A0 /* WYUserGuideConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYUserGuideConfig.h; sourceTree = "<group>"; };
+		3B357C6D1B20AA3B00AE30A0 /* WYUserGuideConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYUserGuideConfig.m; sourceTree = "<group>"; };
 		3BBE46251B0CE79B009EAE02 /* WYPhotoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYPhotoItem.h; path = WYPhotoBrower/WYPhotoItem.h; sourceTree = "<group>"; };
 		3BBE46261B0CE79B009EAE02 /* WYPhotoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYPhotoItem.m; path = WYPhotoBrower/WYPhotoItem.m; sourceTree = "<group>"; };
 		3BBE46281B0CE8BA009EAE02 /* WYPhotoGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYPhotoGroup.h; path = WYPhotoBrower/WYPhotoGroup.h; sourceTree = "<group>"; };
@@ -1124,6 +1127,8 @@
 				07EEF6C11B0C789000DBC511 /* WYPayManager.m */,
 				078E5AF51B1BF00E0041C7D2 /* WYLinkerHandler.h */,
 				078E5AF61B1BF00E0041C7D2 /* WYLinkerHandler.m */,
+				3B357C6C1B20AA3B00AE30A0 /* WYUserGuideConfig.h */,
+				3B357C6D1B20AA3B00AE30A0 /* WYUserGuideConfig.m */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -2280,6 +2285,7 @@
 				07695CDF1B03231000F4806C /* WYNetbarInfo.m in Sources */,
 				077E4AD21B146562009D1692 /* WYActivityInfo.m in Sources */,
 				077D83811AF9AED800AAF31F /* ProgressHUD.m in Sources */,
+				3B357C6E1B20AA3B00AE30A0 /* WYUserGuideConfig.m in Sources */,
 				071691EE1B1C4E49006A832E /* GameDetailsViewController.m in Sources */,
 				076E0DEB1B1475FE00E4363A /* PersonalEditViewController.m in Sources */,
 				07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */,

@@ -28,6 +28,7 @@
  */
 @property (nonatomic, strong) PullToRefreshView *pullRefreshView;
 @property (nonatomic, strong) PullToRefreshView *pullRefreshView2;
+@property (nonatomic, strong) PullToRefreshView *pullRefreshView3;
 
 -(void) setBarBackgroundColor:(UIColor *)bgColor showLine:(BOOL)showLine;
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -18,6 +18,8 @@
                 <outlet property="colorLabel" destination="7lP-Df-eai" id="Rib-mP-9lK"/>
                 <outlet property="footerView" destination="4qE-aq-FGy" id="TXb-gn-jFJ"/>
                 <outlet property="guessLabel" destination="CSS-31-0NR" id="3co-Lt-Bgo"/>
+                <outlet property="guideImageView" destination="K8b-E7-h8v" id="oGB-wV-NNC"/>
+                <outlet property="guideView" destination="mh9-JD-vF9" id="0DA-rE-LzM"/>
                 <outlet property="headView" destination="PWl-Z4-sv2" id="gpw-3z-YUG"/>
                 <outlet property="hotLabel" destination="IsH-MO-2U8" id="ltL-LZ-kRe"/>
                 <outlet property="moreButton" destination="Aq9-gp-Knb" id="Roz-ni-UxD"/>
@@ -246,6 +248,29 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+        <view contentMode="scaleToFill" id="mh9-JD-vF9">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="K8b-E7-h8v">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="az5-tW-mKH">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="newGuideAction:" destination="-1" eventType="touchUpInside" id="gLW-A5-K0Z"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="399" y="1102"/>
         </view>
     </objects>
     <resources>
