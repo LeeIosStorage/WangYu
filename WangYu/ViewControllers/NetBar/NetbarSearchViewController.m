@@ -290,6 +290,11 @@
 -(void)doSearchAction{
     
     self.searchContent = [self.searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (self.searchContent.length == 0) {
+        [WYProgressHUD lightAlert:@"请输入网吧名称"];
+        [self.searchBar becomeFirstResponder];
+        return;
+    }
     [[WYNetBarManager shareInstance] addSaveHistorySearchRecord:self.searchContent];
     
     [WYProgressHUD AlertLoading:@"搜索中,请稍等."];
@@ -408,7 +413,8 @@
     frame.size.height = self.view.bounds.size.height - self.titleNavBar.frame.size.height;
     self.historyContainerView.frame = frame;
     [self.view addSubview:self.historyContainerView];
-    [self.historyTable reloadData];
+    self.historyContainerView.hidden = NO;
+    [self refreshHistorySearchData:NO];
 }
 
 #pragma mark - UISearchBarDelegate

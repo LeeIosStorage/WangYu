@@ -72,7 +72,7 @@
 -(void)setItems:(NSArray *)items{
     int itemsCount = (int)items.count;
     UIImageView *selectedImageView = (UIImageView *)[self viewWithTag:SelectedImageView_Tag];
-    selectedImageView.frame = CGRectMake(0, 0, self.bounds.size.width/itemsCount, self.bounds.size.height);
+    selectedImageView.frame = CGRectMake(0, 0.5, self.bounds.size.width/itemsCount, self.bounds.size.height-1);
     int index = 0;
     for (id title in items) {
         if ([title isKindOfClass:[NSString class]]) {

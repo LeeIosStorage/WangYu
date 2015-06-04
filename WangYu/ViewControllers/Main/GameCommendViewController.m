@@ -41,6 +41,20 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate>
 
 @implementation GameCommendViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+//    if (self.swipeableView) {
+//        self.gameIndex ++;
+//        if (self.gameIndex >= self.gameCommendInfos.count) {
+//            self.gameIndex = 0;
+//        }
+//        [self.swipeableView loadNextSwipeableViewsIfNeeded];
+//    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

@@ -138,8 +138,8 @@
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_indicator_icon" id="hEW-aa-dlu">
-                            <rect key="frame" x="299" y="24" width="9" height="15"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="match_detail_indicator_icon" id="hEW-aa-dlu">
+                            <rect key="frame" x="292" y="25" width="14" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="首次1元上网，每周红包补贴" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="peU-5j-a0L">
@@ -150,7 +150,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hot" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IsH-MO-2U8">
-                            <rect key="frame" x="126" y="13" width="26" height="14"/>
+                            <rect key="frame" x="126" y="14" width="26" height="12"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.94117647058823528" green="0.24705882352941178" blue="0.24705882352941178" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -249,8 +249,8 @@
         </view>
     </objects>
     <resources>
+        <image name="match_detail_indicator_icon" width="14" height="14"/>
         <image name="netbar_book_icon" width="44" height="50"/>
-        <image name="netbar_indicator_icon" width="9" height="15"/>
         <image name="netbar_order_icon" width="44" height="44"/>
         <image name="netbar_packet_icon" width="44" height="44"/>
         <image name="netbar_refresh_icon" width="15" height="15"/>
