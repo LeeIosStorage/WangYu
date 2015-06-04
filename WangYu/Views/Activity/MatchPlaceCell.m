@@ -82,13 +82,20 @@
             imageView.userInteractionEnabled = YES;
             [imageView sd_setImageWithURL:netbarInfo.smallImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
             [self.imageScrollView addSubview:imageView];
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12 + index*(80+7), 93, 80, 26)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12 + index*(80+7), 93, 80, 30)];
             label.text = netbarInfo.netbarName;
             label.font = SKIN_FONT_FROMNAME(12);
             label.textColor = SKIN_TEXT_COLOR1;
             label.lineBreakMode = 2;
             label.textAlignment = NSTextAlignmentCenter;
             [self.imageScrollView addSubview:label];
+            
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.backgroundColor = [UIColor clearColor];
+            button.frame = imageView.frame;
+            button.tag = [netbarInfo.nid integerValue];
+            [button addTarget:self action:@selector(handleClickAtAdsButton:) forControlEvents:UIControlEventTouchUpInside];
+            [self.imageScrollView addSubview:button];
             index ++;
         }
         if(matchInfo.netbars.count > 3){
