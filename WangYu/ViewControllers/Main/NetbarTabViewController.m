@@ -139,7 +139,7 @@
         [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString) {
             
             [weakSelf setUserCity];//定位失败时 默认用户已选择的城市
-            
+            [weakSelf getNetbarInfos];
             WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:errorString cancelButtonTitle:@"取消" cancelBlock:^{
             } okButtonTitle:@"确定" okBlock:^{
                 [weakSelf chooseCityAction:nil];

@@ -4,6 +4,11 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="dqw3.otf">
+            <string>HiraginoSansGB-W3</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameDetailsViewController">
             <connections>
@@ -26,6 +31,7 @@
                 <outlet property="likeImageGridView" destination="i9e-XR-Pnt" id="FCL-Rv-NZK"/>
                 <outlet property="likeTipLabel" destination="cFK-kT-V87" id="URY-LW-pKK"/>
                 <outlet property="moreButton" destination="tH1-Hh-qrw" id="jnC-1k-34T"/>
+                <outlet property="moreLabel" destination="5I4-Tc-gzj" id="GnW-Gy-DTa"/>
                 <outlet property="pageControl" destination="f1a-jJ-8Iv" id="lfb-rP-Ld2"/>
                 <outlet property="shareButton" destination="VTr-Bs-1hm" id="j9y-hg-7ue"/>
                 <outlet property="tableView" destination="Fq6-wG-M5k" id="aFf-5k-wcz"/>
@@ -192,11 +198,11 @@
                             <color key="textColor" red="0.55294117649999996" green="0.55294117649999996" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="tH1-Hh-qrw" customClass="HotUpButton">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" id="tH1-Hh-qrw" customClass="HotUpButton">
                             <rect key="frame" x="236" y="67" width="72" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <state key="normal" title="查看全部">
+                            <state key="normal">
                                 <color key="titleColor" red="0.94117647059999998" green="0.2470588235" blue="0.2470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -204,6 +210,13 @@
                                 <action selector="moreContentAction:" destination="-1" eventType="touchUpInside" id="hBO-g4-eoO"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="查看全部" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5I4-Tc-gzj">
+                            <rect key="frame" x="254" y="78" width="53" height="12"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="12"/>
+                            <color key="textColor" red="0.94117647059999998" green="0.2470588235" blue="0.2470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>

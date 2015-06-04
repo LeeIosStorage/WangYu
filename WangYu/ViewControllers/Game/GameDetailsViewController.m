@@ -42,6 +42,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *contentTipLabel;
 @property (strong, nonatomic) IBOutlet UILabel *gameContentLabel;
 @property (strong, nonatomic) IBOutlet UIButton *moreButton;
+@property (strong, nonatomic) IBOutlet UILabel *moreLabel;
 @property (strong, nonatomic) IBOutlet UIView *likeContainerView;
 @property (strong, nonatomic) IBOutlet UILabel *likeTipLabel;
 @property (strong, nonatomic) IBOutlet GMGridView *likeImageGridView;
@@ -302,9 +303,11 @@
         if (textSize.height > 43) {
             textSize.height = 43;
         }
-        [self.moreButton setTitle:@"查看全部" forState:UIControlStateNormal];
+//        [self.moreButton setTitle:@"查看全部" forState:UIControlStateNormal];
+        self.moreLabel.text = @"查看全部";
     }else{
-        [self.moreButton setTitle:@"收起" forState:UIControlStateNormal];
+//        [self.moreButton setTitle:@"收起" forState:UIControlStateNormal];
+        self.moreLabel.text = @"收起";
     }
     frame = self.gameContentLabel.frame;
     frame.size.height = textSize.height;
