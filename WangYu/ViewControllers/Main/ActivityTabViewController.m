@@ -33,6 +33,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *newsTableView;
 @property (strong, nonatomic) IBOutlet UITableView *matchTableView;
 @property (strong, nonatomic) IBOutlet UIScrollView *containerView;
+@property (strong, nonatomic) IBOutlet UIView *floatView;
 
 @property (strong, nonatomic) NSMutableArray *activityInfos;
 @property (strong, nonatomic) NSMutableArray *newsInfos;
@@ -41,6 +42,8 @@
 
 @property (strong, nonatomic) DVSwitch *switcher;
 @property (assign, nonatomic) NSUInteger selectedIndex;
+
+- (IBAction)publicAction:(id)sender;
 
 @end
 
@@ -55,7 +58,7 @@
 }
 
 - (void)initSwitchView{
-    self.switcher = [DVSwitch switchWithStringsArray:@[@"网竞联赛", @"赛事资讯", @"个人约战"]];
+    self.switcher = [DVSwitch switchWithStringsArray:@[@"赛事报名", @"赛事资讯", @"个人约战"]];
     self.switcher.frame = CGRectMake(12, 7, SCREEN_WIDTH - 12 * 2, 30);
     self.switcher.font = SKIN_FONT_FROMNAME(14);
     self.switcher.cornerRadius = 4;
@@ -96,6 +99,14 @@
     frame = self.matchTableView.frame;
     frame.origin.x = SCREEN_WIDTH*2;
     self.matchTableView.frame = frame;
+    
+    self.floatView.layer.masksToBounds = YES;
+    self.floatView.layer.cornerRadius = self.floatView.frame.size.width/2;
+    self.floatView.clipsToBounds = YES;
+    self.floatView.contentMode = UIViewContentModeScaleAspectFill;
+    frame = self.floatView.frame;
+    frame.origin.x = SCREEN_WIDTH*3 - 12 - self.floatView.frame.size.width;
+    self.floatView.frame = frame;
 }
 
 ///刷新广告位
@@ -423,8 +434,10 @@
             NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
             cell = [cells objectAtIndex:0];
         }
-        WYMatchWarInfo *matchInfo = _matchInfos[indexPath.row];
-        cell.matchWarInfo = matchInfo;
+        if(_matchInfos.count > 0){
+            WYMatchWarInfo *matchInfo = _matchInfos[indexPath.row];
+            cell.matchWarInfo = matchInfo;
+        }
         return cell;
     }
     
@@ -533,6 +546,13 @@
     _newsTableView.dataSource = nil;
     _matchTableView.delegate = nil;
     _matchTableView.dataSource = nil;
+}
+
+- (IBAction)publicAction:(id)sender {
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/release?userId=%@&token=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -62,7 +62,7 @@
 }
 
 - (void)initNormalTitleNavBarSubviews{
-    [self setTitle:@"游戏详情"];
+    [self setTitle:@"赛事详情"];
 }
 
 - (void)refreshUI{
@@ -190,7 +190,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 4;
+        return 2;
     }
     return 1;
 }
@@ -240,26 +240,27 @@
                 cell.topline.hidden = YES;
                 [cell setbottomLineWithType:0];
                 break;
-            }else if (indexPath.row == 2){
-                cell.avatarImageView.image = [UIImage imageNamed:@"match_detail_schedule_icon"];
-                cell.titleLabel.text = @"赛事赛程";
-                cell.indicatorImage.hidden = NO;
-                cell.topline.hidden = YES;
-                [cell setbottomLineWithType:0];
-                break;
-            }else if (indexPath.row == 3){
-                cell.avatarImageView.image = [UIImage imageNamed:@"match_detail_award_icon"];
-                cell.titleLabel.text = @"赛事奖品";
-                cell.indicatorImage.hidden = NO;
-                cell.topline.hidden = YES;
-                [cell setbottomLineWithType:1];
-                break;
             }
+//            else if (indexPath.row == 2){
+//                cell.avatarImageView.image = [UIImage imageNamed:@"match_detail_schedule_icon"];
+//                cell.titleLabel.text = @"赛事赛程";
+//                cell.indicatorImage.hidden = NO;
+//                cell.topline.hidden = YES;
+//                [cell setbottomLineWithType:0];
+//                break;
+//            }else if (indexPath.row == 3){
+//                cell.avatarImageView.image = [UIImage imageNamed:@"match_detail_award_icon"];
+//                cell.titleLabel.text = @"赛事奖品";
+//                cell.indicatorImage.hidden = NO;
+//                cell.topline.hidden = YES;
+//                [cell setbottomLineWithType:1];
+//                break;
+//            }
         }
         case 1:{
             if (indexPath.row == 0) {
                 cell.avatarImageView.image = [UIImage imageNamed:@"match_detail_advance_icon"];
-                cell.titleLabel.text = @"查看赛事进展";
+                cell.titleLabel.text = @"赛事详情";
                 cell.indicatorImage.hidden = NO;
                 [cell setbottomLineWithType:1];
                 break;
@@ -286,19 +287,20 @@
                 mpVc.activityId = self.activityInfo.aId;
                 [self.navigationController pushViewController:mpVc animated:YES];
                 break;
-            }else if (indexPath.row == 2){
-                id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/web/detail?id=%@", [WYEngine shareInstance].baseUrl ,self.activityInfo.aId] From:self.navigationController];
-                if (vc) {
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-                break;
-            }else if (indexPath.row == 3){
-                id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/web/detail?id=%@", [WYEngine shareInstance].baseUrl ,self.activityInfo.aId] From:self.navigationController];
-                if (vc) {
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-                break;
             }
+//            else if (indexPath.row == 2){
+//                id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/web/detail?id=%@", [WYEngine shareInstance].baseUrl ,self.activityInfo.aId] From:self.navigationController];
+//                if (vc) {
+//                    [self.navigationController pushViewController:vc animated:YES];
+//                }
+//                break;
+//            }else if (indexPath.row == 3){
+//                id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/web/detail?id=%@", [WYEngine shareInstance].baseUrl ,self.activityInfo.aId] From:self.navigationController];
+//                if (vc) {
+//                    [self.navigationController pushViewController:vc animated:YES];
+//                }
+//                break;
+//            }
         }
         case 1:{
             if (indexPath.row == 0) {

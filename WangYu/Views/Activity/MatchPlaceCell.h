@@ -32,6 +32,6 @@
 
 @optional
 - (void)matchPlaceCellClickWithCell:(id)cell;
-- (void)matchPlaceCellClickNetbarWithCell:(id)cell netbarId:(NSString *)netbarId;
+- (void)matchPlaceCellClickNetbarWithCell:(id)cell netbarInfo:(WYNetbarInfo *)netbar;
 
 @end

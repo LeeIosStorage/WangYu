@@ -48,11 +48,11 @@
     }
     self.placeLabel.text = _matchInfo.areas;
     _matchInfo.isApply = NO;
-    if(_matchInfo.isApply){
-        self.applyButton.hidden = NO;
-    }else{
-        self.applyButton.hidden = YES;
-    }
+//    if(_matchInfo.isApply){
+//        self.applyButton.hidden = NO;
+//    }else{
+//        self.applyButton.hidden = YES;
+//    }
     if (_matchInfo.hasApply == 1) {
         [self.applyButton setTitle:@"已报名" forState:UIControlStateNormal];
         [self.applyButton.layer setBorderColor:UIColorToRGB(0x9a9a9a).CGColor];//边框颜色
@@ -105,8 +105,13 @@
 
 - (void)handleClickAtAdsButton:(id)sender{
     UIButton *btn = (UIButton *)sender;
-    if ([self.delegate respondsToSelector:@selector(matchPlaceCellClickNetbarWithCell:netbarId:)]) {
-        [self.delegate matchPlaceCellClickNetbarWithCell:self netbarId:[NSString stringWithFormat:@"%ld",(long)btn.tag]];
+    for (WYNetbarInfo *info in _matchInfo.netbars) {
+        if ([info.nid isEqualToString:[NSString stringWithFormat:@"%ld",(long)btn.tag]]) {
+            if ([self.delegate respondsToSelector:@selector(matchPlaceCellClickNetbarWithCell:netbarInfo:)]) {
+                [self.delegate matchPlaceCellClickNetbarWithCell:self netbarInfo:info];
+            }
+            break;
+        }
     }
 }
 

@@ -105,15 +105,25 @@
     
     [self.bookButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
     self.bookButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
-    self.bookButton.backgroundColor = SKIN_COLOR;
     self.bookButton.layer.cornerRadius = 4.0;
     self.bookButton.layer.masksToBounds = YES;
     
     [self.payButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
     self.payButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
-    self.payButton.backgroundColor = SKIN_COLOR;
     self.payButton.layer.cornerRadius = 4.0;
     self.payButton.layer.masksToBounds = YES;
+    
+    if (self.netbarInfo.isOrder) {
+        self.bookButton.backgroundColor = SKIN_COLOR;
+        self.payButton.backgroundColor = SKIN_COLOR;
+        self.bookButton.enabled = YES;
+        self.payButton.enabled = YES;
+    }else {
+        self.bookButton.backgroundColor = UIColorToRGB(0xe4e4e4);
+        self.payButton.backgroundColor = UIColorToRGB(0xe4e4e4);
+        self.bookButton.enabled = NO;
+        self.payButton.enabled = NO;
+    }
     
     self.publicButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
     [self.publicButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];

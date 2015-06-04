@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="adsViewContainer" destination="bXG-1y-7FC" id="LYD-Oi-9KB"/>
                 <outlet property="containerView" destination="Cqn-8V-u94" id="tzx-vn-ERe"/>
+                <outlet property="floatView" destination="kE9-dw-C1K" id="AD7-6G-BgE"/>
                 <outlet property="leagueTableView" destination="aOu-sk-MKM" id="as8-jj-Fso"/>
                 <outlet property="matchTableView" destination="aQt-it-B9I" id="GO6-Io-C5Y"/>
                 <outlet property="newsTableView" destination="ChE-Mm-b1j" id="FJD-9P-8iF"/>
@@ -63,6 +64,28 @@
                                 <outlet property="delegate" destination="-1" id="R4j-ik-BbP"/>
                             </connections>
                         </tableView>
+                        <view contentMode="scaleToFill" id="kE9-dw-C1K">
+                            <rect key="frame" x="254" y="385" width="54" height="54"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            <subviews>
+                                <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wCO-0x-tAe">
+                                    <rect key="frame" x="0.0" y="0.0" width="54" height="54"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.99215686274509807" green="0.84313725490196079" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="publicAction:" destination="-1" eventType="touchUpInside" id="0Gr-0H-pzO"/>
+                                    </connections>
+                                </button>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="match_war_appoint_icon" id="T6m-v1-eCh">
+                                    <rect key="frame" x="15" y="14" width="25" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <connections>
@@ -83,6 +106,7 @@
         </view>
     </objects>
     <resources>
+        <image name="match_war_appoint_icon" width="25" height="25"/>
         <image name="s_n_set_line" width="300" height="1"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -14,6 +14,7 @@
 #import "WYAlertView.h"
 #import "WYLinkerHandler.h"
 #import "AppDelegate.h"
+#import "NetbarDetailViewController.h"
 
 @interface MatchPlaceViewController ()<UITableViewDelegate,UITableViewDataSource,MatchPlaceCellDelegate>
 
@@ -137,16 +138,20 @@
     }
 }
 
-- (void)matchPlaceCellClickNetbarWithCell:(id)cell netbarId:(NSString *)netbarId{
+- (void)matchPlaceCellClickNetbarWithCell:(id)cell netbarInfo:(WYNetbarInfo *)netbar {
 //    NSIndexPath* indexPath = [self.placeTableView indexPathForCell:cell];
 //    if (indexPath == nil) {
 //        return;
 //    }
 //    WYMatchInfo* matchInfo = _matchInfos[indexPath.row];
-    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/netbar/web/detail?id=%@", [WYEngine shareInstance].baseUrl, netbarId] From:self.navigationController];
-    if (vc) {
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+//    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/netbar/web/detail?id=%@", [WYEngine shareInstance].baseUrl, netbarId] From:self.navigationController];
+//    if (vc) {
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
+    
+    NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
+    ndVc.netbarInfo = netbar;
+    [self.navigationController pushViewController:ndVc animated:YES];
 }
 
 @end
