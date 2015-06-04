@@ -37,9 +37,13 @@
 @property (assign, nonatomic) BOOL isWeixin;
 @property (strong, nonatomic) IBOutlet UITextField *amountField;
 @property (strong, nonatomic) NSMutableArray *packetInfos;
+@property (strong, nonatomic) IBOutlet UIView *discountView;
+@property (strong, nonatomic) IBOutlet UILabel *discountTitle;
+@property (strong, nonatomic) IBOutlet UILabel *discountLabel;
 
 - (IBAction)payAction:(id)sender;
 - (IBAction)packetAction:(id)sender;
+- (IBAction)netbarAction:(id)sender;
 
 @end
 
@@ -50,8 +54,25 @@
     // Do any additional setup after loading the view from its nib.
     self.isAlipay = YES;
     self.isWeixin = NO;
-    self.payTable.tableHeaderView = self.headerView;
-    self.payTable.tableFooterView = self.footerView;
+    [self refreshUI];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)initNormalTitleNavBarSubviews{
+    if (self.isBooked) {
+        [self setTitle:@"定金支付"];
+        self.amountField.text = self.orderInfo.amount;
+        self.amountField.enabled = NO;
+    }else{
+        [self setTitle:@"一键支付"];
+    }
+}
+
+- (void)refreshUI{
     
     self.netbarImage.layer.cornerRadius = 4.0;
     self.netbarImage.layer.masksToBounds = YES;
@@ -76,21 +97,25 @@
     self.payButton.backgroundColor = SKIN_COLOR;
     self.payButton.layer.cornerRadius = 4.0;
     self.payButton.layer.masksToBounds = YES;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(void)initNormalTitleNavBarSubviews{
-    if (self.isBooked) {
-        [self setTitle:@"定金支付"];
-        self.amountField.text = self.orderInfo.amount;
-        self.amountField.enabled = NO;
-    }else{
-        [self setTitle:@"一键支付"];
+    
+    if(self.netbarInfo.isDiscount){
+        self.discountTitle.font = SKIN_FONT_FROMNAME(12);
+        self.discountTitle.textColor = SKIN_TEXT_COLOR1;
+        self.discountLabel.font = SKIN_FONT_FROMNAME(12);
+        self.discountLabel.textColor = SKIN_TEXT_COLOR1;
+        
+        CGRect frame = self.discountView.frame;
+        frame.origin.y = 225;
+        self.discountView.frame = frame;
+        [self.headerView addSubview:self.discountView];
+        
+        frame = self.headerView.frame;
+        frame.size.height += 44;
+        self.headerView.frame = frame;
     }
+    
+    self.payTable.tableHeaderView = self.headerView;
+    self.payTable.tableFooterView = self.footerView;
 }
 
 #pragma mark - Table view data source
@@ -183,6 +208,10 @@
     [[WYEngine shareInstance] visitorLogin];
 }
 
+- (IBAction)netbarAction:(id)sender {
+      [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (IBAction)payAction:(id)sender {
     if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
         [self signOutAndLogin];
@@ -247,10 +276,11 @@
 }
 
 - (IBAction)packetAction:(id)sender {
-//    if (_amountField.text.length == 0) {
-//        [WYProgressHUD lightAlert:@"请先输入上网金额"];
-//        return;
-//    }
+    [self doforEndEdit];
+    if (!_isBooked && _amountField.text.length == 0) {
+        [WYProgressHUD lightAlert:@"请先输入上网金额"];
+        return;
+    }
     WS(weakSelf);
     RedPacketViewController *rpVc = [[RedPacketViewController alloc] init];
     rpVc.bChooseRed = YES;
@@ -269,10 +299,11 @@
             weakSelf.moneyLabel.text = [NSString stringWithFormat:@"￥%d",redAmount];
             weakSelf.packetInfos = [NSMutableArray arrayWithArray:array];
         }else{
-            NSLog(@"================");
+            weakSelf.moneyLabel.hidden = YES;
         }
     };
     [self.navigationController pushViewController:rpVc animated:YES];
 }
+
 
 @end

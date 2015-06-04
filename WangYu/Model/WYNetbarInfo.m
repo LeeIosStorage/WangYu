@@ -25,6 +25,7 @@
     }
     if ([dic objectForKey:@"is_order"]) {
         _isOrder = [dic boolValueForKey:@"is_order"];
+        _isPay = _isOrder;
     }
     if ([dic objectForKey:@"faved"]) {
         _isFaved = [dic boolValueForKey:@"faved"];
@@ -50,7 +51,12 @@
     if ([dic stringObjectForKey:@"longitude"]) {
         _longitude = [dic stringObjectForKey:@"longitude"];
     }
-    
+    if ([dic objectForKey:@"has_rebate"]) {
+        _isDiscount = [dic boolValueForKey:@"has_rebate"];
+    }
+    if ([dic objectForKey:@"rebate"]) {
+        _rebate = [dic intValueForKey:@"rebate"];
+    }
     id objectForKey = [dic arrayObjectForKey:@"imgs"];
     if (objectForKey) {
         _picIds = [NSMutableArray array];

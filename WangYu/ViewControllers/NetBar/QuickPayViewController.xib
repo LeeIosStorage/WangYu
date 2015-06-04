@@ -8,6 +8,7 @@
         <mutableArray key="dqw3.otf">
             <string>HiraginoSansGB-W3</string>
             <string>HiraginoSansGB-W3</string>
+            <string>HiraginoSansGB-W3</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -16,6 +17,9 @@
                 <outlet property="addressLabel" destination="A7C-3b-1a1" id="PXF-CK-1Qa"/>
                 <outlet property="amountField" destination="eN8-Ey-sqD" id="HN4-no-4Ta"/>
                 <outlet property="colorLabel" destination="9yn-qX-kNi" id="WhY-Hb-L5z"/>
+                <outlet property="discountLabel" destination="RYL-EW-NXM" id="bFu-ag-Hj7"/>
+                <outlet property="discountTitle" destination="A52-4u-TI6" id="Eux-tR-cI4"/>
+                <outlet property="discountView" destination="iya-wI-z9u" id="ffZ-qF-SdR"/>
                 <outlet property="footerView" destination="9aO-u8-qE2" id="oRh-p0-89e"/>
                 <outlet property="headerView" destination="k13-55-7FQ" id="3cr-qn-43Z"/>
                 <outlet property="moneyLabel" destination="Ds0-pO-2xu" id="SOP-P8-bnA"/>
@@ -85,6 +89,16 @@
                             <rect key="frame" x="294" y="30" width="14" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BkK-lY-Bo9">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="netbarAction:" destination="-1" eventType="touchUpInside" id="yXO-zH-Bak"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -220,6 +234,34 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="215" y="41"/>
+        </view>
+        <view contentMode="scaleToFill" id="iya-wI-z9u">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="网吧折扣" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A52-4u-TI6">
+                    <rect key="frame" x="12" y="12" width="74" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="4Wz-yA-aQG">
+                    <rect key="frame" x="0.0" y="43" width="320" height="1"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8折" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RYL-EW-NXM">
+                    <rect key="frame" x="260" y="12" width="50" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-145" y="377"/>
         </view>
     </objects>
     <resources>

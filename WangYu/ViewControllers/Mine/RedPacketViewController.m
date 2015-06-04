@@ -473,18 +473,20 @@
     if (tableView == self.historyRedPacketTableView) {
         
     }else{
-        RedPacketInfo *redPacketInfo = _freeRedPacketList[indexPath.row];
-        redPacketInfo.selected = !redPacketInfo.selected;
-        for (RedPacketInfo *info in _selectedItems) {
-            if (!redPacketInfo.selected && [info.rid isEqualToString:redPacketInfo.rid]) {
-                [_selectedItems removeObject:info];
-                break;
+        if (_bChooseRed) {
+            RedPacketInfo *redPacketInfo = _freeRedPacketList[indexPath.row];
+            redPacketInfo.selected = !redPacketInfo.selected;
+            for (RedPacketInfo *info in _selectedItems) {
+                if (!redPacketInfo.selected && [info.rid isEqualToString:redPacketInfo.rid]) {
+                    [_selectedItems removeObject:info];
+                    break;
+                }
             }
+            if (redPacketInfo.selected) {
+                [_selectedItems addObject:redPacketInfo];
+            }
+            [_freeRedPacketTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
-        if (redPacketInfo.selected) {
-            [_selectedItems addObject:redPacketInfo];
-        }
-        [_freeRedPacketTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
