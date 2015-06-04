@@ -10,6 +10,7 @@
 #import <objc/message.h>
 #import "WYTabBarViewController.h"
 #import "WYTabBarItemView.h"
+#import "WYSettingConfig.h"
 
 @interface WYTabBarViewController ()<UINavigationControllerDelegate,WYTabBarDelegate>
 
@@ -76,6 +77,8 @@
     
     
     [self loadViewControllers];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFriendTimelineUreadEvent) name:WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION object:nil];
     
 }
 
@@ -154,13 +157,17 @@
     
     WYTabBarItemView* tabBarItemView = nil;
     if (self.tabBar.items.count > 0) {
-        tabBarItemView = [self.tabBar.items objectAtIndex:TAB_INDEX_MAINPAGE];
+        tabBarItemView = [self.tabBar.items objectAtIndex:TAB_INDEX_MINE];
     }
     if (tabBarItemView == nil) {
         return;
     }
     
-    tabBarItemView.badgeNum = 0;
+    if ([WYSettingConfig staticInstance].mineMessageUnreadEvent) {
+        tabBarItemView.badgeNum = -1;
+    } else {
+        tabBarItemView.badgeNum = 0;
+    }
     
     //redIconView.hidden = !([XESettingConfig staticInstance].friendTimelineUnreadEvent || [XEGroupsManager shareInstance].groupFeedTimelineUnreadEvent);
     

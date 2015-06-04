@@ -47,13 +47,12 @@ enum TABLEVIEW_SECTION_INDEX {
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    int unreadNum = [[WYSettingConfig staticInstance] getMessageCount];
-    _badgeView.unreadNum = unreadNum;
-    if (unreadNum == 0) {
-        _badgeView.hidden = YES;
-    }else{
-        _badgeView.hidden = NO;
-    }
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self refreshBadgeView];
+    [self getUnReadMessage];
 }
 
 - (void)viewDidLoad {
@@ -122,8 +121,38 @@ enum TABLEVIEW_SECTION_INDEX {
     [self.tableView reloadData];
 }
 
-#pragma mark - request
+-(void)refreshBadgeView{
+    int unreadNum = [[WYSettingConfig staticInstance] getMessageCount];
+    self.badgeView.unreadNum = unreadNum;
+    if (unreadNum == 0) {
+        self.badgeView.hidden = YES;
+    }else{
+        self.badgeView.hidden = NO;
+    }
+}
 
+#pragma mark - request
+- (void)getUnReadMessage{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getUnReadMessageCountWithUid:[WYEngine shareInstance].uid type:0 tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            return;
+        }
+        
+//        int unreadNum = [[WYSettingConfig staticInstance] getMessageCount];
+        
+        int unreadNum = [jsonRet intValueForKey:@"object"];
+        [[WYSettingConfig staticInstance] addMessageNum:unreadNum];
+        [weakSelf refreshBadgeView];
+        
+    }tag:tag];
+}
 #pragma mark - IBAction
 - (void)serviceAction:(id)sender{
     id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/cs/web/detail", [WYEngine shareInstance].baseUrl] From:self.navigationController];

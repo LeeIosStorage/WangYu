@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION @"WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION"
+
 @interface WYSettingConfig : NSObject<NSCoding>
 
 //系统相机闪光灯状态
@@ -26,6 +28,8 @@
 
 +(void)saveEnterUsr;
 
+//我的是否有新消息
+@property (nonatomic, assign) BOOL mineMessageUnreadEvent;
 -(int)getMessageCount;
 -(void)addMessageNum:(int)count;
 -(void)removeMessageNum;
