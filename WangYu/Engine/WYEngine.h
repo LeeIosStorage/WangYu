@@ -127,6 +127,10 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)editUserCityWithUid:(NSString *)uid cityCode:(NSString *)cityCode cityName:(NSString *)cityName tag:(int)tag;
 //头像列表
 - (BOOL)getHeadAvatarListWithTag:(int)tag;
+//未读消息个数
+- (BOOL)getUnReadMessageCountWithUid:(NSString *)uid type:(int)type tag:(int)tag;
+//设置消息已读
+- (BOOL)setMessageReadWithUid:(NSString *)uid type:(int)type tag:(int)tag;
 //消息
 - (BOOL)getMessageListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
 //收藏的网吧

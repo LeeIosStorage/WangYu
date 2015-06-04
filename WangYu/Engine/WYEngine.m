@@ -553,7 +553,7 @@ static WYEngine* s_ShareInstance = nil;
                 int code = [[WYEngine getErrorCodeWithReponseDic:jsonRet] intValue];
                 if (code == -1) {
                     [self gotoLogin];
-                    return;
+//                    return;
                 }
                 block(tag, jsonRet, errPtr);
             }
@@ -995,6 +995,32 @@ static WYEngine* s_ShareInstance = nil;
 
 - (BOOL)getHeadAvatarListWithTag:(int)tag{
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/my/heads",API_URL] type:1 parameters:nil];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)getUnReadMessageCountWithUid:(NSString *)uid type:(int)type tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+    
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/my/msgCount",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+- (BOOL)setMessageReadWithUid:(NSString *)uid type:(int)type tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/my/msgRead",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 

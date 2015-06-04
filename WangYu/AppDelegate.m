@@ -92,7 +92,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     // Required
     [APService setupWithOption:launchOptions];
     
-
     if ([[WYEngine shareInstance] hasAccoutLoggedin] || ![WYEngine shareInstance].firstLogin) {
         if ([WYSettingConfig isFirstEnterVersion]) {
             [self showNewIntro];
@@ -278,7 +277,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [APService handleRemoteNotification:userInfo];
-    NSLog(@"收到通知:%@", [self logDic:userInfo]);
+    NSLog(@"收到通知:%@", userInfo);
 }
 
 - (void)application:(UIApplication *)application
@@ -286,8 +285,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     [APService handleRemoteNotification:userInfo];
-    NSLog(@"收到通知:%@", [self logDic:userInfo]);
-//    [[WYSettingConfig staticInstance] addMessageNum:2];
+    NSLog(@"收到通知:%@", userInfo);
+    [[WYSettingConfig staticInstance] setMineMessageUnreadEvent:YES];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 

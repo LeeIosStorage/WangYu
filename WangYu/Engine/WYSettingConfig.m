@@ -81,6 +81,7 @@ static WYSettingConfig *s_instance = nil;
 {
     //...
     _systemCameraFlashStatus = [aDecoder decodeInt32ForKey:@"systemCameraFlashStatus"];
+    _mineMessageUnreadEvent = [aDecoder decodeBoolForKey:@"mineMessageUnreadEvent"];
     
     NSDictionary *dict = [WYEngine shareInstance].userInfo.userInfoByJsonDic;
     if (dict) {
@@ -104,7 +105,7 @@ static WYSettingConfig *s_instance = nil;
 {
     //...
     [aCoder encodeInt32:_systemCameraFlashStatus forKey:@"systemCameraFlashStatus"];
-    
+    [aCoder encodeBool:_mineMessageUnreadEvent forKey:@"mineMessageUnreadEvent"];
 }
 
 +(NSString *)getTagPath{
@@ -160,6 +161,15 @@ static WYSettingConfig *s_instance = nil;
 }
 
 
+- (void)setMineMessageUnreadEvent:(BOOL)mineMessageUnreadEvent{
+    if (_mineMessageUnreadEvent == mineMessageUnreadEvent) {
+        return;
+    }
+    _mineMessageUnreadEvent = mineMessageUnreadEvent;
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION object:nil]];
+    [self saveSettingCfg];
+}
+
 //关联用户的
 - (NSString *)getAccoutStorePath{
     NSString *filePath = [[WYEngine shareInstance] getCurrentAccoutDocDirectory];
@@ -184,9 +194,9 @@ static WYSettingConfig *s_instance = nil;
     if (!messageDic) {
         messageDic = [NSMutableDictionary dictionary];
     }
-    int lastNum = [[messageDic objectForKey:@"last_message"] intValue];
-    lastNum += count;
-    NSString *messageNum = [NSString stringWithFormat:@"%d",lastNum];
+//    int lastNum = [[messageDic objectForKey:@"last_message"] intValue];
+//    lastNum += count;
+    NSString *messageNum = [NSString stringWithFormat:@"%d",count];
     
     [messageDic removeAllObjects];
     [messageDic setObject:messageNum forKey:@"last_message"];

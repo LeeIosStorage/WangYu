@@ -29,8 +29,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [[WYSettingConfig staticInstance] removeMessageNum];
-    
+    [self setMessageRead];
     _messageInfos = [[NSMutableArray alloc] init];
     
     self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.tableView];
@@ -107,6 +106,24 @@
 */
 
 #pragma mark - request
+- (void)setMessageRead{
+    
+    [[WYSettingConfig staticInstance] removeMessageNum];
+    [[WYSettingConfig staticInstance] setMineMessageUnreadEvent:NO];
+    
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] setMessageReadWithUid:[WYEngine shareInstance].uid type:0 tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            return;
+        }
+    }tag:tag];
+}
+
 -(void)getCacheMessageList{
     __weak MessageListViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];

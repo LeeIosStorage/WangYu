@@ -362,16 +362,12 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
     if ([viewController isKindOfClass:[GameCommendViewController class]]) {
         if (self.swipeableView) {
             if (self.gameCommendInfos.count > 0) {
-                int random = arc4random()%4;
+                int random = arc4random()%2;
                 WYLog(@"random=%d",random);
                 if (random == 0) {
                     [self.swipeableView swipeTopViewToLeft];
                 }else if (random == 1){
                     [self.swipeableView swipeTopViewToRight];
-                }else if (random == 2){
-                    [self.swipeableView swipeTopViewToUp];
-                }else if (random == 3){
-                    [self.swipeableView swipeTopViewToDown];
                 }
             }
         }

@@ -165,7 +165,7 @@
     [self checkPhoneCode];
 }
 - (IBAction)protocolAction:(id)sender{
-    id vc = [WYLinkerHandler handleDealWithHref:@"http://www.baidu.com" From:self.navigationController];
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/agreement", [WYEngine shareInstance].baseUrl] From:self.navigationController];
     if (vc) {
         [self.navigationController pushViewController:vc animated:YES];
     }
