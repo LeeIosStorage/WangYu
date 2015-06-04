@@ -15,9 +15,10 @@
 #import "WYGameInfo.h"
 #import "GameDetailsViewController.h"
 #import "WYTabBarViewController.h"
+#import "AppDelegate.h"
 
 @interface GameCommendViewController () <ZLSwipeableViewDataSource,
-ZLSwipeableViewDelegate,GameCommendCardViewDelegate>
+ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
 {
     WYGameInfo *_selectedGameInfo;
 }
@@ -41,11 +42,37 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate>
 
 @implementation GameCommendViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+//    if (self.swipeableView) {
+//        if (self.gameCommendInfos.count > 0) {
+//            int random = arc4random()%4;
+//            WYLog(@"random=%d",random);
+//            if (random == 0) {
+//                [self.swipeableView swipeTopViewToLeft];
+//            }else if (random == 1){
+//                [self.swipeableView swipeTopViewToRight];
+//            }else if (random == 2){
+//                [self.swipeableView swipeTopViewToUp];
+//            }else if (random == 3){
+//                [self.swipeableView swipeTopViewToDown];
+//            }
+//        }
+//    }
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.gameIndex = 0;
     self.currentIndex = 0;
+    
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appDelegate.mainTabViewController.delegate = self;
     
     [self getCacheGameList];
     [self refreshGameInfos];
@@ -328,6 +355,27 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate>
     GameDetailsViewController *gameVc = [[GameDetailsViewController alloc] init];
     gameVc.gameInfo = _selectedGameInfo;
     [self.navigationController pushViewController:gameVc animated:YES];
+}
+
+#pragma mark - WYTabBarControllerDelegate
+-(void) tabBarController:(WYTabBarViewController *)tabBarController didSelectViewController:(UIViewController *)viewController{
+    if ([viewController isKindOfClass:[GameCommendViewController class]]) {
+        if (self.swipeableView) {
+            if (self.gameCommendInfos.count > 0) {
+                int random = arc4random()%4;
+                WYLog(@"random=%d",random);
+                if (random == 0) {
+                    [self.swipeableView swipeTopViewToLeft];
+                }else if (random == 1){
+                    [self.swipeableView swipeTopViewToRight];
+                }else if (random == 2){
+                    [self.swipeableView swipeTopViewToUp];
+                }else if (random == 3){
+                    [self.swipeableView swipeTopViewToDown];
+                }
+            }
+        }
+    }
 }
 
 @end

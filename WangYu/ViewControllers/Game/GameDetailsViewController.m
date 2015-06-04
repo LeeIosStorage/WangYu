@@ -41,6 +41,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *colorLabel2;
 @property (strong, nonatomic) IBOutlet UILabel *contentTipLabel;
 @property (strong, nonatomic) IBOutlet UILabel *gameContentLabel;
+@property (strong, nonatomic) IBOutlet UIButton *moreButton;
+@property (strong, nonatomic) IBOutlet UILabel *moreLabel;
 @property (strong, nonatomic) IBOutlet UIView *likeContainerView;
 @property (strong, nonatomic) IBOutlet UILabel *likeTipLabel;
 @property (strong, nonatomic) IBOutlet GMGridView *likeImageGridView;
@@ -77,6 +79,8 @@
     self.gameDowloadTipLabel.font = SKIN_FONT_FROMNAME(12);
     self.contentTipLabel.textColor = SKIN_TEXT_COLOR1;
     self.contentTipLabel.font = SKIN_FONT_FROMNAME(15);
+    self.moreButton.titleLabel.textColor = UIColorToRGB(0xf03f3f);
+    self.moreButton.titleLabel.font = SKIN_FONT_FROMNAME(12);
     self.likeTipLabel.textColor = SKIN_TEXT_COLOR1;
     self.likeTipLabel.font = SKIN_FONT_FROMNAME(15);
     self.gameContentLabel.textColor = SKIN_TEXT_COLOR2;
@@ -290,11 +294,20 @@
     frame.origin.x = SCREEN_WIDTH-frame.size.width-24;
     self.pageControl.frame = frame;
     
+    self.moreButton.hidden = YES;
     CGSize textSize = [WYCommonUtils sizeWithText:_gameInfo.gameIntro font:self.gameContentLabel.font width:SCREEN_WIDTH-15*2];
+    if (textSize.height > 43) {
+        self.moreButton.hidden = NO;
+    }
     if (!_isMore) {
         if (textSize.height > 43) {
             textSize.height = 43;
         }
+//        [self.moreButton setTitle:@"查看全部" forState:UIControlStateNormal];
+        self.moreLabel.text = @"查看全部";
+    }else{
+//        [self.moreButton setTitle:@"收起" forState:UIControlStateNormal];
+        self.moreLabel.text = @"收起";
     }
     frame = self.gameContentLabel.frame;
     frame.size.height = textSize.height;
@@ -303,6 +316,9 @@
     
     frame = self.gameContentContainerView.frame;
     frame.size.height = self.gameContentLabel.frame.origin.y + self.gameContentLabel.frame.size.height + 12;
+    if (!self.moreButton.hidden) {
+        frame.size.height += self.moreButton.frame.size.height;
+    }
     self.gameContentContainerView.frame = frame;
     
     frame = self.likeContainerView.frame;

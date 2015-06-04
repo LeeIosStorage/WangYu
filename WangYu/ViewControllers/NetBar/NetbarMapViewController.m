@@ -49,6 +49,7 @@
 
 @property (strong, nonatomic) IBOutlet UIView *mainContainerView;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet UIButton *backButton;
 
 @property (nonatomic, assign) CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic) UIButton* currentLocationBtn;
@@ -89,18 +90,19 @@
     self.mapView.delegate = self;
     
     _currentLocationBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    CGRect frame = CGRectMake(SCREEN_WIDTH - 70, self.mapView.bounds.size.height - 74, 36, 36);
+    CGRect frame = CGRectMake(SCREEN_WIDTH - 70, self.view.bounds.size.height - 74, 36, 36);
     _currentLocationBtn.frame = frame;
     
     [_currentLocationBtn setBackgroundImage:[UIImage imageNamed:@"s_location_back_no"] forState:UIControlStateNormal];
     [_currentLocationBtn addTarget:self action:@selector(backTOCurrentLocation) forControlEvents:UIControlEventTouchUpInside];
     _currentLocationBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [self.mapView addSubview:_currentLocationBtn];
+    [self.view addSubview:_currentLocationBtn];
     
     if(_showMode){
 //        [WYProgressHUD AlertLoading:@"正在获取位置信息..." At:self.view];
         [self setTitle:@"网吧地图"];
         [self updateAnnotationByLocation:_showLocation isNeedAnimation:NO];
+        self.backButton.hidden = YES;
     }else{
         [WYProgressHUD AlertLoading:@"定位中..."];
         if (_location.longitude == 0 && _location.latitude == 0) {
@@ -108,6 +110,22 @@
         } else {
             [self refreshData];
         }
+        
+        
+        [self setTilteLeftViewHide:YES];
+        [self setTitle:nil];
+        self.backButton.hidden = NO;
+        CGRect frame = self.titleNavBar.frame;
+        frame.size.height = 0;
+        self.titleNavBar.frame = frame;
+        
+        frame = self.mainContainerView.frame;
+        frame.origin.y = 0;
+        frame.size.height = SCREEN_HEIGHT;
+        self.mainContainerView.frame = frame;
+        
+//        frame = CGRectMake(SCREEN_WIDTH - 70, self.mapView.bounds.size.height - 74, 36, 36);
+//        _currentLocationBtn.frame = frame;
     }
 }
 

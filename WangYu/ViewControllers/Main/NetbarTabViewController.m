@@ -72,7 +72,10 @@
     [self setTilteLeftViewHide:NO];
     _isOpen = NO;
     
-    [self setUserCity];
+    _chooseCityName = @"选择城市";
+    self.currentLocation = [WYLocationServiceUtil getLastRecordLocation];
+    
+//    [self setUserCity];
     
     [self refreshLeftIconViewUI];
     [self refreshUI];
@@ -136,7 +139,7 @@
         [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString) {
             
             [weakSelf setUserCity];//定位失败时 默认用户已选择的城市
-            
+            [weakSelf getNetbarInfos];
             WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:errorString cancelButtonTitle:@"取消" cancelBlock:^{
             } okButtonTitle:@"确定" okBlock:^{
                 [weakSelf chooseCityAction:nil];
@@ -153,16 +156,26 @@
 }
 
 - (void)placemarkReverseLocation:(CLLocation *)location{
+    WS(weakSelf);
     [[WYLocationServiceUtil shareInstance] placemarkReverseGeoLocation:location placemark:^(CLPlacemark *placemark) {
 //        WYLog(@"Placemark des: %@", placemark.description);
         NSDictionary *addressDictionary = placemark.addressDictionary;
         WYLog(@"Placemark addressDictionary: %@", addressDictionary);
-        _chooseCityName = placemark.locality;
-        [self refreshLeftIconViewUI];
+        NSString *locality = placemark.locality;
+        BOOL isChange = [weakSelf setUserCity];
+        if (isChange) {
+            _chooseCityName = locality;
+            _chooseAreaCode = nil;
+        }else{
+            _chooseCityName = locality;
+            _chooseAreaCode = nil;
+        }
+        [weakSelf refreshLeftIconViewUI];
+        [weakSelf getNetbarInfos];
     }];
 }
 
--(void)setUserCity{
+-(BOOL)setUserCity{
     
     if ([[WYEngine shareInstance] hasAccoutLoggedin]) {
         NSString *cityName = [WYEngine shareInstance].userInfo.cityName;
@@ -170,14 +183,19 @@
         if (cityName && cityName.length > 0 && cityCode.length > 0 && cityCode) {
             _chooseCityName = cityName;
             _chooseAreaCode = cityCode;
+            [self refreshLeftIconViewUI];
+            return YES;
         }else{
             _chooseCityName = @"选择城市";
+            [self refreshLeftIconViewUI];
+            return NO;
         }
     }else{
         _chooseCityName = @"选择城市";
+        [self refreshLeftIconViewUI];
+        return NO;
     }
-    
-    [self refreshLeftIconViewUI];
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -460,6 +478,7 @@
 }
 
 - (void)handleUserInfoChanged:(NSNotification *)notification{
+    [self setUserCity];
     [self getNetbarInfos];
     [self.netBarTable reloadData];
 }
