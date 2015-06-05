@@ -378,12 +378,12 @@
                 return;
             }
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-            dic = [jsonRet objectForKey:@"object"];
-            if ([[dic stringObjectForKey:@"return_code"] isEqualToString:@"FAIL"]) {
-                [WYProgressHUD AlertError:@"支付失败" At:weakSelf.view];
-                return;
-            }
             if (weakSelf.isWeixin) {
+                dic = [jsonRet objectForKey:@"object"];
+                if ([[dic stringObjectForKey:@"return_code"] isEqualToString:@"FAIL"]) {
+                    [WYProgressHUD AlertError:@"支付失败" At:weakSelf.view];
+                    return;
+                }
                 if ([dic stringObjectForKey:@"nonce_str"].length == 0 || [dic stringObjectForKey:@"prepay_id"].length == 0) {
                     [WYProgressHUD AlertSuccess:@"支付成功" At:weakSelf.view];
                     [weakSelf goToOrderViewController];
@@ -392,15 +392,16 @@
                 [WYProgressHUD AlertLoadDone];
                 [[WYPayManager shareInstance] payForWinxinWith:dic];
             }else {
-                if ([dic stringObjectForKey:@"out_trade_no"].length == 0 || [dic stringObjectForKey:@"orderId"].length == 0) {
-                    [WYProgressHUD AlertSuccess:@"支付成功" At:weakSelf.view];
-                    [weakSelf goToOrderViewController];
-                    return;
-                }
+//                if ([dic stringObjectForKey:@"out_trade_no"].length == 0) {
+//                    [WYProgressHUD AlertSuccess:@"支付成功" At:weakSelf.view];
+//                    [weakSelf goToOrderViewController];
+//                    return;
+//                }
+                [WYProgressHUD AlertLoadDone];
                 [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"orderId"] forKey:@"orderId"];
                 [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"out_trade_no"] forKey:@"out_trade_no"];
                 [dic setValue:weakSelf.netbarInfo.netbarName forKey:@"netbarName"];
-                [dic setValue:weakSelf.amountField.text forKey:@"amount"];
+                [dic setValue:_needPayAmount forKey:@"amount"];
 //                [dic setValue:@"0.01" forKey:@"amount"];
                 [[WYPayManager shareInstance] payForAlipayWith:dic];
             }
