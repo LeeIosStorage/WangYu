@@ -770,6 +770,7 @@
 {
     WYNetbarInfo *netbarInfo = [_pois objectAtIndex:index];
     CustomMapCell  *cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomMapCell" owner:self options:nil] objectAtIndex:0];
+    [cell.netbarImage sd_setImageWithURL:netbarInfo.smallImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
     cell.title.text = netbarInfo.netbarName;
     NSString *price = [NSString stringWithFormat:@"%d",netbarInfo.price];
     cell.subtitle.text = price;

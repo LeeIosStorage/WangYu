@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIImageView+WebCache.h"
 
 @interface CustomMapCell : UIView
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImage;

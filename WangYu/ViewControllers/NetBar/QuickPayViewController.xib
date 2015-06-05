@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="dqw3.otf">
+            <string>HiraginoSansGB-W3</string>
             <string>HiraginoSansGB-W3</string>
             <string>HiraginoSansGB-W3</string>
             <string>HiraginoSansGB-W3</string>
@@ -23,13 +24,19 @@
                 <outlet property="footerView" destination="9aO-u8-qE2" id="oRh-p0-89e"/>
                 <outlet property="headerView" destination="k13-55-7FQ" id="3cr-qn-43Z"/>
                 <outlet property="moneyLabel" destination="Ds0-pO-2xu" id="SOP-P8-bnA"/>
+                <outlet property="needAmountContainerView" destination="plx-6N-HRl" id="JWk-my-lWG"/>
+                <outlet property="needPayAmountLabel" destination="Kwx-SZ-Nie" id="D4Q-FB-2le"/>
+                <outlet property="needPayTipLabel" destination="OnE-mD-YKQ" id="axd-KQ-3TM"/>
                 <outlet property="netbarImage" destination="Qod-Zm-YSt" id="kNO-JW-hCq"/>
                 <outlet property="netbarLabel" destination="W7J-uA-amF" id="VzE-vx-wTz"/>
+                <outlet property="oriAmountContainerView" destination="sZK-cg-I5A" id="D0z-2H-nbd"/>
                 <outlet property="packetLabel" destination="XcJ-UE-Ar1" id="TVg-1z-bJ3"/>
                 <outlet property="payButton" destination="bxw-vT-i3Z" id="AgX-fx-cGh"/>
                 <outlet property="payTable" destination="PfF-aT-DEk" id="NB8-xb-wQQ"/>
                 <outlet property="payforLabel" destination="48o-jy-PtI" id="IPa-Li-aGT"/>
                 <outlet property="priceLabel" destination="xzm-3P-z6i" id="W5d-FJ-8bV"/>
+                <outlet property="redPacketContainerView" destination="ve9-n6-6LY" id="Cqy-cW-qc6"/>
+                <outlet property="supOriAmountContainerView" destination="8s9-ol-9SO" id="lWj-Ns-aaC"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -159,10 +166,13 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="填写金额" textAlignment="right" minimumFontSize="17" id="eN8-Ey-sqD">
-                                    <rect key="frame" x="191" y="8" width="97" height="30"/>
+                                    <rect key="frame" x="188" y="8" width="100" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="d5B-GQ-1Qt"/>
+                                    </connections>
                                 </textField>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -183,7 +193,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="Ltc-Xw-2lX">
-                                    <rect key="frame" x="0.0" y="43" width="320" height="1"/>
+                                    <rect key="frame" x="12" y="43" width="296" height="1"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Q5y-FT-URV">
@@ -197,8 +207,8 @@
                                     </connections>
                                 </button>
                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥2" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ds0-pO-2xu">
-                                    <rect key="frame" x="238" y="12" width="50" height="21"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                    <rect key="frame" x="234" y="12" width="54" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="14"/>
                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -247,10 +257,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="4Wz-yA-aQG">
-                    <rect key="frame" x="0.0" y="43" width="320" height="1"/>
+                    <rect key="frame" x="12" y="43" width="296" height="1"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8折" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RYL-EW-NXM">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="折" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RYL-EW-NXM">
                     <rect key="frame" x="260" y="12" width="50" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="14"/>
@@ -262,6 +272,34 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-145" y="377"/>
+        </view>
+        <view contentMode="scaleToFill" id="plx-6N-HRl">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="H22-gp-9fX">
+                    <rect key="frame" x="0.0" y="43" width="320" height="1"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kwx-SZ-Nie">
+                    <rect key="frame" x="200" y="12" width="108" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="17"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="还需支付:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OnE-mD-YKQ">
+                    <rect key="frame" x="203" y="12" width="75" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-145" y="478"/>
         </view>
     </objects>
     <resources>

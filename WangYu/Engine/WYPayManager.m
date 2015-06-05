@@ -57,11 +57,11 @@ static WYPayManager* wy_payManager = nil;
     //第二次签名参数列表
     NSMutableDictionary *signParams = [NSMutableDictionary dictionary];
     [signParams setObject:APP_ID        forKey:@"appid"];
-    [signParams setObject:nonce_str    forKey:@"noncestr"];
+    [signParams setObject:nonce_str!=nil?nonce_str:@""  forKey:@"noncestr"];
     [signParams setObject:package      forKey:@"package"];
     [signParams setObject:partnerId        forKey:@"partnerid"];
     [signParams setObject:time_stamp   forKey:@"timestamp"];
-    [signParams setObject:prepayId     forKey:@"prepayid"];
+    [signParams setObject:prepayId!=nil?prepayId:@""     forKey:@"prepayid"];
     //生成签名
     NSString *sign  = [self createMd5Sign:signParams];
     //添加签名

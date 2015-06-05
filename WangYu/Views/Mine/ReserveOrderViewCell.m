@@ -96,37 +96,7 @@
     NSString *stateLabelText = @"";
     NSString *introLabelText = @"";
     
-    int isReceive = orderInfo.isReceive;
-    if (isReceive == 1) {
-        stateLabelText = @"已接单";
-        if (orderInfo.price == 0) {
-            introLabelText = @"网吧已接单，可放心前往上网";
-            state = 2;
-        }else{
-            introLabelText = @"网吧已接单，请先支付定金";
-            state = 4;
-            [self.payOrderButton setTitle:@"支付定金" forState:0];
-        }
-    }else if (isReceive == 0){
-        stateLabelText = @"待处理";
-        introLabelText = @"您已提交订单，请等待网吧处理";
-        state = 2;
-    }else if (isReceive == -1){
-        stateLabelText = @"已拒单";
-        introLabelText = @"网吧已拒单，原因：";
-    }
     
-    int status = orderInfo.status;
-    if (status == -1) {
-        stateLabelText = @"支付失败";
-        introLabelText = @"定金支付失败";
-        state = 4;
-        [self.payOrderButton setTitle:@"继续支付" forState:0];
-    }else if (status == 1){
-        stateLabelText = @"已支付";
-        introLabelText = @"您已支付成功，请到网吧退还押金";
-        state = 1;
-    }
     
     int isValid = orderInfo.isValid;
     if (isValid == 0) {
@@ -137,7 +107,40 @@
         stateLabelText = @"待处理";
         introLabelText = @"您已提交订单，请等待网吧处理";
         state = 2;
+        
+        int isReceive = orderInfo.isReceive;
+        if (isReceive == 1) {
+            stateLabelText = @"已接单";
+            if ([orderInfo.amount doubleValue] == 0) {
+                introLabelText = @"网吧已接单，可放心前往上网";
+                state = 2;
+            }else{
+                introLabelText = @"网吧已接单，请先支付加价金额";
+                state = 4;
+                [self.payOrderButton setTitle:@"支付加价" forState:0];
+            }
+        }else if (isReceive == 0){
+            stateLabelText = @"待处理";
+            introLabelText = @"您已提交订单，请等待网吧处理";
+            state = 2;
+        }else if (isReceive == -1){
+            stateLabelText = @"已拒单";
+            introLabelText = @"网吧已拒单，原因：";
+        }
+        
     }else if (isValid == 2){
+        stateLabelText = @"已支付";
+        introLabelText = @"您已支付成功，请到网吧退还押金";
+        state = 1;
+    }
+    
+    int status = orderInfo.status;
+    if (status == -1) {
+        stateLabelText = @"支付失败";
+        introLabelText = @"加价支付失败";
+        state = 4;
+        [self.payOrderButton setTitle:@"继续支付" forState:0];
+    }else if (status == 1){
         stateLabelText = @"已支付";
         introLabelText = @"您已支付成功，请到网吧退还押金";
         state = 1;

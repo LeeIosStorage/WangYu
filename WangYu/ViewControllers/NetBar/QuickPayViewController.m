@@ -19,6 +19,9 @@
 @interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate>{
     int redAmount;
     NSMutableArray *packetIds;
+    
+    int _discountRule;
+    NSString *_needPayAmount;
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *payTable;
@@ -27,15 +30,27 @@
 @property (strong, nonatomic) IBOutlet UILabel *netbarLabel;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *payforLabel;
-@property (strong, nonatomic) IBOutlet UILabel *priceLabel;
-@property (strong, nonatomic) IBOutlet UILabel *packetLabel;
 @property (strong, nonatomic) IBOutlet UILabel *moneyLabel;
 @property (strong, nonatomic) IBOutlet UIButton *payButton;
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImage;
 @property (strong, nonatomic) IBOutlet UILabel *colorLabel;
 @property (assign, nonatomic) BOOL isAlipay;
 @property (assign, nonatomic) BOOL isWeixin;
+
+@property (strong, nonatomic) IBOutlet UIView *supOriAmountContainerView;
+
+@property (strong, nonatomic) IBOutlet UIView *oriAmountContainerView;
 @property (strong, nonatomic) IBOutlet UITextField *amountField;
+
+//红包
+@property (strong, nonatomic) IBOutlet UIView *redPacketContainerView;
+@property (strong, nonatomic) IBOutlet UILabel *priceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *packetLabel;
+
+@property (strong, nonatomic) IBOutlet UIView *needAmountContainerView;
+@property (strong, nonatomic) IBOutlet UILabel *needPayTipLabel;
+@property (strong, nonatomic) IBOutlet UILabel *needPayAmountLabel;
+
 @property (strong, nonatomic) NSMutableArray *packetInfos;
 @property (strong, nonatomic) IBOutlet UIView *discountView;
 @property (strong, nonatomic) IBOutlet UILabel *discountTitle;
@@ -49,12 +64,22 @@
 
 @implementation QuickPayViewController
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.isAlipay = YES;
     self.isWeixin = NO;
+    _discountRule = 0;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkTextChaneg:) name:UITextFieldTextDidChangeNotification object:nil];
+    
     [self refreshUI];
+    [self calculateNeedPayAmount];
+    [self.payTable reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,7 +89,7 @@
 
 -(void)initNormalTitleNavBarSubviews{
     if (self.isBooked) {
-        [self setTitle:@"定金支付"];
+        [self setTitle:@"支付加价"];
         self.amountField.text = self.orderInfo.amount;
         self.amountField.enabled = NO;
     }else{
@@ -88,6 +113,11 @@
     self.packetLabel.font = SKIN_FONT_FROMNAME(12);
     self.packetLabel.textColor = SKIN_TEXT_COLOR1;
     
+    self.needPayTipLabel.textColor = SKIN_TEXT_COLOR1;
+    self.needPayTipLabel.font = SKIN_FONT_FROMNAME(12);
+    self.needPayAmountLabel.textColor = UIColorToRGB(0xff0000);
+    self.needPayAmountLabel.font = SKIN_FONT_FROMNAME(17);
+    
     self.colorLabel.backgroundColor = UIColorToRGB(0xfac402);
     self.colorLabel.layer.cornerRadius = 1.0;
     self.colorLabel.layer.masksToBounds = YES;
@@ -98,24 +128,101 @@
     self.payButton.layer.cornerRadius = 4.0;
     self.payButton.layer.masksToBounds = YES;
     
-    if(self.netbarInfo.isDiscount){
-        self.discountTitle.font = SKIN_FONT_FROMNAME(12);
-        self.discountTitle.textColor = SKIN_TEXT_COLOR1;
-        self.discountLabel.font = SKIN_FONT_FROMNAME(12);
-        self.discountLabel.textColor = SKIN_TEXT_COLOR1;
+    CGRect frame = self.headerView.frame;
+    float headViewHeight = 137 + 44;
+    if (self.isBooked) {
+        self.redPacketContainerView.hidden = YES;
+        self.priceLabel.text = @"加价金额：";
+        frame = self.supOriAmountContainerView.frame;
+        frame.size.height = self.redPacketContainerView.frame.origin.y;
+        self.supOriAmountContainerView.frame = frame;
         
-        CGRect frame = self.discountView.frame;
-        frame.origin.y = 225;
-        self.discountView.frame = frame;
-        [self.headerView addSubview:self.discountView];
+    }else{
+        self.priceLabel.text = @"输入上网金额：";
+        frame = self.supOriAmountContainerView.frame;
+        frame.size.height = self.redPacketContainerView.frame.origin.y + self.redPacketContainerView.frame.size.height;
+        self.supOriAmountContainerView.frame = frame;
+        //红包
+        self.redPacketContainerView.hidden = NO;
+        headViewHeight += self.redPacketContainerView.frame.size.height;
         
-        frame = self.headerView.frame;
-        frame.size.height += 44;
-        self.headerView.frame = frame;
+        //折扣
+        self.discountView.hidden = YES;
+        if(self.netbarInfo.isDiscount){
+            self.discountView.hidden = NO;
+            
+            _discountRule = self.netbarInfo.rebate/10;
+            self.discountLabel.text = [NSString stringWithFormat:@"%d折",_discountRule];
+            self.discountTitle.font = SKIN_FONT_FROMNAME(12);
+            self.discountTitle.textColor = SKIN_TEXT_COLOR1;
+            self.discountLabel.font = SKIN_FONT_FROMNAME(12);
+            self.discountLabel.textColor = UIColorToRGB(0xff0000);
+            
+            frame = self.discountView.frame;
+            frame.origin.y = headViewHeight;
+            self.discountView.frame = frame;
+            [self.headerView addSubview:self.discountView];
+            headViewHeight += self.discountView.frame.size.height;
+        }
+        
+        //还需支付
+        self.needAmountContainerView.hidden = NO;
+        frame = self.needAmountContainerView.frame;
+        frame.origin.y = headViewHeight;
+        self.needAmountContainerView.frame = frame;
+        [self.headerView addSubview:self.needAmountContainerView];
+        headViewHeight += self.needAmountContainerView.frame.size.height;
+        
+        NSString *needPayAmountText = [NSString stringWithFormat:@"%@元",_needPayAmount];
+        float width = [WYCommonUtils widthWithText:needPayAmountText font:self.needPayAmountLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+        if (width > 108) {
+            width = 108;
+        }
+        frame = self.needPayTipLabel.frame;
+        frame.origin.x = SCREEN_WIDTH - 12-width - frame.size.width - 2;
+        self.needPayTipLabel.frame = frame;
+        self.needPayTipLabel.text = @"需要支付:";
     }
+    
+    frame = self.headerView.frame;
+    frame.size.height = headViewHeight;
+    self.headerView.frame = frame;
     
     self.payTable.tableHeaderView = self.headerView;
     self.payTable.tableFooterView = self.footerView;
+}
+
+- (void)checkTextChaneg:(NSNotification *)notif
+{
+    [self calculateNeedPayAmount];
+}
+
+-(void)calculateNeedPayAmount{
+    double payAmount = [self.amountField.text doubleValue];
+    if (self.netbarInfo.isDiscount) {
+        payAmount = payAmount*_discountRule/10;
+    }
+    if (redAmount > 0) {
+        payAmount = payAmount - redAmount;
+    }
+    if (payAmount <= 0) {
+        payAmount = 0;
+    }
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc]init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    _needPayAmount = [formatter stringFromNumber:[NSNumber numberWithDouble:payAmount]];
+    
+    NSString *needPayAmountText = [NSString stringWithFormat:@"%@元",_needPayAmount];
+    _needPayAmountLabel.text = needPayAmountText;
+    
+    float width = [WYCommonUtils widthWithText:needPayAmountText font:self.needPayAmountLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+    if (width > 108) {
+        width = 108;
+    }
+    CGRect frame = self.needPayTipLabel.frame;
+    frame.origin.x = SCREEN_WIDTH - 12-width - frame.size.width - 8;
+    self.needPayTipLabel.frame = frame;
 }
 
 #pragma mark - Table view data source
@@ -256,9 +363,11 @@
             [WYProgressHUD lightAlert:@"请输入上网金额"];
             return;
         }
-        [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:self.netbarInfo.netbarName amount:[_amountField.text doubleValue] netbarId:self.netbarInfo.nid packetsId:packetIds type:self.isWeixin?0:1 tag:tag];
+        [WYProgressHUD AlertLoading:@"请求中..." At:weakSelf.view];
+//        [self calculateNeedPayAmount];
+        [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:self.netbarInfo.netbarName amount:[_needPayAmount doubleValue] netbarId:self.netbarInfo.nid packetsId:packetIds type:self.isWeixin?0:1 origAmount:[_amountField.text doubleValue] tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-            [WYProgressHUD AlertLoadDone];
+//            [WYProgressHUD AlertLoadDone];
             NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
             if (!jsonRet || errorMsg) {
                 if (!errorMsg.length) {
@@ -268,8 +377,14 @@
                 return;
             }
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            dic = [jsonRet objectForKey:@"object"];
+            if ([dic stringObjectForKey:@"out_trade_no"].length == 0 || [dic stringObjectForKey:@"orderId"].length == 0) {
+                [WYProgressHUD AlertSuccess:@"支付成功" At:weakSelf.view];
+                [weakSelf goToOrderViewController];
+                return;
+            }
             if (weakSelf.isWeixin) {
-                dic = [jsonRet objectForKey:@"object"];
+                
                 [[WYPayManager shareInstance] payForWinxinWith:dic];
             }else {
                 [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"orderId"] forKey:@"orderId"];
@@ -309,9 +424,14 @@
         }else{
             weakSelf.moneyLabel.hidden = YES;
         }
+        [self calculateNeedPayAmount];
     };
     [self.navigationController pushViewController:rpVc animated:YES];
 }
 
+-(void)goToOrderViewController{
+    OrdersViewController *orderVc = [[OrdersViewController alloc] init];
+    [self.navigationController pushViewController:orderVc animated:YES];
+}
 
 @end

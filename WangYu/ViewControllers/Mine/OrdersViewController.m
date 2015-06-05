@@ -449,10 +449,10 @@
         return;
     }
     WYOrderInfo* orderInfo = _reserveOrderList[indexPath.row];
-    if (orderInfo.price == 0) {
-        [WYProgressHUD AlertSuccess:@"该网吧不需要支付定金" At:self.view];
-        return;
-    }
+//    if (orderInfo.price == 0) {
+//        [WYProgressHUD AlertSuccess:@"该网吧不需要支付定金" At:self.view];
+//        return;
+//    }
     [self reserveToOrder:orderInfo];
 }
 
