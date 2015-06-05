@@ -217,6 +217,14 @@
         [self signOutAndLogin];
         return;
     }
+    
+    
+    if ([_amountField.text doubleValue] == 0) {
+        [WYProgressHUD lightAlert:@"请输入上网金额"];
+        return;
+    }
+    
+    
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     if (self.isBooked) {
