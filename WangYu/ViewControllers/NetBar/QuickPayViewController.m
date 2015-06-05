@@ -378,10 +378,12 @@
                 return;
             }
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-            
-            
+            dic = [jsonRet objectForKey:@"object"];
+            if ([[dic stringObjectForKey:@"return_code"] isEqualToString:@"FAIL"]) {
+                [WYProgressHUD AlertError:@"支付失败" At:weakSelf.view];
+                return;
+            }
             if (weakSelf.isWeixin) {
-                dic = [jsonRet objectForKey:@"object"];
                 if ([dic stringObjectForKey:@"nonce_str"].length == 0 || [dic stringObjectForKey:@"prepay_id"].length == 0) {
                     [WYProgressHUD AlertSuccess:@"支付成功" At:weakSelf.view];
                     [weakSelf goToOrderViewController];
