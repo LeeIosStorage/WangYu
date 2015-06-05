@@ -207,8 +207,9 @@
     }
     if (payAmount <= 0) {
         payAmount = 0;
+    }else if (payAmount >0 && payAmount <= 0.01){
+        payAmount = 0.01;
     }
-    
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc]init];
     formatter.numberStyle = NSNumberFormatterDecimalStyle;
     _needPayAmount = [formatter stringFromNumber:[NSNumber numberWithDouble:payAmount]];
