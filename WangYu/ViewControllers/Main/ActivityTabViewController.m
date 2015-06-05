@@ -23,9 +23,12 @@
 #import "WYScrollPage.h"
 #import "WYLinkerHandler.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "WYUserGuideConfig.h"
+#import "AppDelegate.h"
 
 @interface ActivityTabViewController ()<UITableViewDataSource,UITableViewDelegate,WYScrollPageDelegate>{
     WYScrollPage *scrollPageView;
+    BOOL bClicked;
 }
 
 @property (strong, nonatomic) IBOutlet UIView *sectionView;
@@ -35,6 +38,8 @@
 @property (strong, nonatomic) IBOutlet UITableView *matchTableView;
 @property (strong, nonatomic) IBOutlet UIScrollView *containerView;
 @property (strong, nonatomic) IBOutlet UIView *floatView;
+@property (strong, nonatomic) IBOutlet UIView *guideView;
+@property (strong, nonatomic) IBOutlet UIImageView *guideImageView;
 
 @property (strong, nonatomic) NSMutableArray *activityInfos;
 @property (strong, nonatomic) NSMutableArray *newsInfos;
@@ -52,6 +57,7 @@
 @property (assign, nonatomic) BOOL matchLoadMore;
 
 - (IBAction)publicAction:(id)sender;
+- (IBAction)newGuideAction:(id)sender;
 
 @end
 
@@ -261,7 +267,13 @@
     self.floatView.clipsToBounds = YES;
     self.floatView.contentMode = UIViewContentModeScaleAspectFill;
     frame = self.floatView.frame;
-    frame.origin.x = SCREEN_WIDTH*3 - 12 - self.floatView.frame.size.width;
+    CGFloat temp = .0;
+    if (SCREEN_WIDTH > 320 && SCREEN_WIDTH < 414) {
+        temp = 54;
+    }else if (SCREEN_WIDTH >= 414){
+        temp = 95;
+    }
+    frame.origin.x = SCREEN_WIDTH*3 - 12 - self.floatView.frame.size.width - temp;
     self.floatView.frame = frame;
 }
 
@@ -299,6 +311,9 @@
             [self getNewsInfoList];
             break;
         case 2:
+            if (!bClicked) {
+                [self refreshNewGuideView:NO];
+            }
             [self getCacheMatchInfoList];
             [self getMatchInfoList];
             break;
@@ -314,6 +329,39 @@
 
 -(void)initNormalTitleNavBarSubviews{
     [self setTitle:@"精彩活动"];
+}
+
+- (void)refreshNewGuideView:(BOOL)isNext {
+    bClicked = YES;
+    self.guideView.frame = [UIScreen mainScreen].bounds;
+    BOOL isShow = [[WYUserGuideConfig shareInstance] newPeopleGuideShowForVcType:@"activityTabView"];
+    if (isShow) {
+        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [appDelegate.window addSubview:self.guideView];
+        UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizer:)];
+        [self.guideImageView addGestureRecognizer:gestureRecongnizer];
+    }else {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.guideView.alpha = 0;
+        } completion:^(BOOL finished) {
+            if (self.guideView.superview) {
+                [self.guideView removeFromSuperview];
+                if (isNext) {
+                    //...
+                }
+            }
+        }];
+    }
+}
+
+- (void)gestureRecognizer:(UITapGestureRecognizer *)gestureRecognizer {
+    [[WYUserGuideConfig shareInstance] setNewGuideShowYES:@"activityTabView"];
+    [self refreshNewGuideView:NO];
+}
+
+- (IBAction)newGuideAction:(id)sender {
+    [[WYUserGuideConfig shareInstance] setNewGuideShowYES:@"activityTabView"];
+    [self refreshNewGuideView:NO];
 }
 
 - (UINavigationController *)navigationController{

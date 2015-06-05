@@ -11,6 +11,8 @@
                 <outlet property="collectLabel" destination="EaH-FX-0lX" id="4ke-Wj-Zwn"/>
                 <outlet property="downloadButton" destination="2vk-eI-7SJ" id="ENE-N1-UUX"/>
                 <outlet property="downloadLabel" destination="6ng-mg-Xav" id="zfG-yr-iP9"/>
+                <outlet property="guideImageView" destination="QnT-rm-xcO" id="JfZ-cx-p0N"/>
+                <outlet property="guideView" destination="Bik-RC-rkl" id="m5Q-lb-8iV"/>
                 <outlet property="handleView" destination="NTc-yQ-LLk" id="nlF-Lg-dlk"/>
                 <outlet property="swipeableView" destination="had-fo-4r3" id="Ewp-Tv-xkJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -71,10 +73,50 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="245" y="264"/>
         </view>
+        <view alpha="0.80000000000000004" contentMode="scaleToFill" id="Bik-RC-rkl">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="QnT-rm-xcO">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                </imageView>
+                <view contentMode="scaleToFill" id="i6s-lK-AaZ">
+                    <rect key="frame" x="0.0" y="140" width="320" height="286"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guide_game_slide_icon" id="zcS-hk-0tU">
+                            <rect key="frame" x="50" y="40" width="220" height="206"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guide_game_text_icon" id="N05-XU-U35">
+                            <rect key="frame" x="69" y="258" width="182" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bct-34-euy">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="newGuideAction:" destination="-1" eventType="touchUpInside" id="PzV-bm-2ZW"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="453" y="1071"/>
+        </view>
     </objects>
     <resources>
         <image name="game_collect_icon" width="60" height="60"/>
         <image name="game_download_icon" width="60" height="60"/>
+        <image name="guide_game_slide_icon" width="220" height="206"/>
+        <image name="guide_game_text_icon" width="182" height="20"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

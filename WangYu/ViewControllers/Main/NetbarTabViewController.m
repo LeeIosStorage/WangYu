@@ -49,7 +49,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *netBarTable;
 @property (strong, nonatomic) SKSplashView *splashView;
 @property (strong, nonatomic) IBOutlet UIView *guideView;
-@property (strong, nonatomic) IBOutlet UIImageView *guideImageView;
+@property (strong, nonatomic) IBOutlet UIView *guideImageView;
 
 @property (strong, nonatomic) IBOutlet UIView *footerView;
 @property (strong, nonatomic) IBOutlet UIButton *moreButton;
@@ -138,6 +138,7 @@
         CGRect frame = self.tabController.tabBar.frame;
         frame.origin.y -= 50.0;
         self.tabController.tabBar.frame = frame;
+        
     } completion:^(BOOL finished) {
         WS(weakSelf);
         //获取用户位置

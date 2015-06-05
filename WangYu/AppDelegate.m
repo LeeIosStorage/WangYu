@@ -110,8 +110,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 //新手引导
 -(void)showNewIntro{
-    NSArray *coverImageNames = @[@"img_index_01txt", @"img_index_02txt", @"img_index_03txt",@"img_index_01txt"];
-    NSArray *backgroundImageNames = @[@"welcome_index1_bg", @"welcome_index2_bg", @"welcome_index3_bg",@"welcome_index4_bg"];
+    NSArray *coverImageNames = @[@"img_index_01txt", @"img_index_02txt", @"img_index_03txt"];
+    NSArray *backgroundImageNames = @[SCREEN_HEIGHT==480?@"welcome_index1_4s_bg":@"welcome_index1_bg", SCREEN_HEIGHT==480?@"welcome_index2_4s_bg":@"welcome_index2_bg", SCREEN_HEIGHT==480?@"welcome_index3_4s_bg":@"welcome_index3_bg"];
     self.introView = [[NewIntroViewController alloc] initWithCoverImageNames:coverImageNames backgroundImageNames:backgroundImageNames];
     
 //    [self.window addSubview:self.introView.view];

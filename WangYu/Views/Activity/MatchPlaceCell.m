@@ -46,12 +46,17 @@
     }else {
         self.timeLabel.text = @"暂无时间";
     }
+    CGRect frame = self.roundLabel.frame;
+    frame.origin.x = self.roundImage.frame.origin.x + self.roundImage.frame.size.width + 7;
+    self.roundLabel.frame = frame;
     
     self.placeLabel.text = _matchInfo.areas;
-    CGRect frame = self.placeLabel.frame;
+    frame = self.placeLabel.frame;
     CGSize textSize = [WYCommonUtils sizeWithText:_matchInfo.areas font:self.placeLabel.font width:SCREEN_WIDTH-35];
     frame.size.height = textSize.height;
     self.placeLabel.frame = frame;
+    
+    
     
 //    if(_matchInfo.isApply){
 //        self.applyButton.hidden = NO;

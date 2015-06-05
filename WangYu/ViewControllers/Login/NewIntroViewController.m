@@ -66,9 +66,13 @@
     
     if (!self.enterButton) {
         self.enterButton = [UIButton new];
-        [self.enterButton setTitle:NSLocalizedString(@"Enter", nil) forState:UIControlStateNormal];
-        self.enterButton.layer.borderWidth = 0.5;
-        self.enterButton.layer.borderColor = [UIColor whiteColor].CGColor;
+        [self.enterButton setTitle:NSLocalizedString(@"进入网娱", nil) forState:UIControlStateNormal];
+        self.enterButton.layer.cornerRadius = 4;
+        self.enterButton.layer.masksToBounds = YES;
+        self.enterButton.layer.borderWidth = 1;
+        self.enterButton.layer.borderColor = UIColorToRGB(0x41210f).CGColor;
+        self.enterButton.titleLabel.font = SKIN_FONT_FROMNAME(15);
+        [self.enterButton setTitleColor:UIColorToRGB(0x41210f) forState:UIControlStateNormal];
     }
     
     [self.enterButton addTarget:self action:@selector(enter:) forControlEvents:UIControlEventTouchUpInside];
@@ -127,9 +131,9 @@
 {
     CGSize size = self.enterButton.bounds.size;
     if (CGSizeEqualToSize(size, CGSizeZero)) {
-        size = CGSizeMake(self.view.frame.size.width * 0.6, 40);
+        size = CGSizeMake(self.view.frame.size.width * 0.6, 39);
     }
-    return CGRectMake(self.view.frame.size.width / 2 - size.width / 2, self.pageControl.frame.origin.y - size.height, size.width, size.height);
+    return CGRectMake(self.view.frame.size.width / 2 - size.width / 2, self.pageControl.frame.origin.y - size.height - (SCREEN_HEIGHT==480?30:60), size.width, size.height);
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -212,8 +216,8 @@
 {
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
-    CGSize size = {[[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height};
-    imageView.frame = CGRectMake(imageView.frame.origin.x, imageView.frame.origin.y, size.width, size.height);
+//    CGSize size = {[[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height};
+    imageView.frame = CGRectMake(imageView.frame.origin.x, imageView.frame.origin.y + (SCREEN_HEIGHT==480?44:64), SCREEN_WIDTH, 59);
     return imageView;
 }
 

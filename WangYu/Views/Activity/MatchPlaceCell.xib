@@ -65,8 +65,8 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第一场" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iLR-QF-fV2">
-                                                <rect key="frame" x="145" y="8" width="184" height="15"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <rect key="frame" x="145" y="8" width="150" height="15"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="15"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -74,17 +74,24 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="CiD-vV-Wc6">
-                                        <rect key="frame" x="12" y="87" width="296" height="1"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="76f-zS-nWt">
+                            <view contentMode="scaleToFill" id="vY6-OS-M8o">
                                 <rect key="frame" x="0.0" y="88" width="320" height="130"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </scrollView>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="CiD-vV-Wc6">
+                                        <rect key="frame" x="12" y="0.0" width="296" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    </imageView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="76f-zS-nWt">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="lQ1-SK-pAG">
                                 <rect key="frame" x="12" y="218" width="296" height="1"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -112,6 +119,7 @@
                 <outlet property="containerView" destination="kL4-Ss-JPF" id="TXl-9A-eyA"/>
                 <outlet property="imageScrollView" destination="76f-zS-nWt" id="iNK-jh-Hu6"/>
                 <outlet property="placeLabel" destination="CB5-Xy-Hbs" id="t8G-eR-Mqv"/>
+                <outlet property="roundImage" destination="2fO-Zy-NdU" id="8uK-rO-WgX"/>
                 <outlet property="roundLabel" destination="iLR-QF-fV2" id="Yk1-oQ-WD8"/>
                 <outlet property="timeLabel" destination="mIv-37-91d" id="yFg-0z-2Oz"/>
                 <outlet property="topView" destination="bjF-7q-xMN" id="pJt-oY-0vk"/>

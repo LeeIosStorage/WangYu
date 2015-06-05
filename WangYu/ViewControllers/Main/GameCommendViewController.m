@@ -16,6 +16,7 @@
 #import "GameDetailsViewController.h"
 #import "WYTabBarViewController.h"
 #import "AppDelegate.h"
+#import "WYUserGuideConfig.h"
 
 @interface GameCommendViewController () <ZLSwipeableViewDataSource,
 ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
@@ -33,10 +34,12 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
 @property (nonatomic, assign) NSUInteger gameIndex;
 @property (nonatomic, assign) NSInteger currentIndex;
 
+@property (strong, nonatomic) IBOutlet UIView *guideView;
+@property (strong, nonatomic) IBOutlet UIImageView *guideImageView;
 
 - (IBAction)downloadAction:(id)sender;
 - (IBAction)collectAction:(id)sender;
-
+- (IBAction)newGuideAction:(id)sender;
 
 @end
 
@@ -70,7 +73,7 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
     // Do any additional setup after loading the view from its nib.
     self.gameIndex = 0;
     self.currentIndex = 0;
-    
+    [self refreshNewGuideView:NO];
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.mainTabViewController.delegate = self;
     
@@ -100,6 +103,38 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
         return [super navigationController];
     }
     return self.tabController.navigationController;
+}
+
+- (void)refreshNewGuideView:(BOOL)isNext {
+    self.guideView.frame = [UIScreen mainScreen].bounds;
+    BOOL isShow = [[WYUserGuideConfig shareInstance] newPeopleGuideShowForVcType:@"gameCommendView"];
+    if (isShow) {
+        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [appDelegate.window addSubview:self.guideView];
+        UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizer:)];
+        [self.guideImageView addGestureRecognizer:gestureRecongnizer];
+    }else {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.guideView.alpha = 0;
+        } completion:^(BOOL finished) {
+            if (self.guideView.superview) {
+                [self.guideView removeFromSuperview];
+                if (isNext) {
+                    //...
+                }
+            }
+        }];
+    }
+}
+
+- (void)gestureRecognizer:(UITapGestureRecognizer *)gestureRecognizer {
+    [[WYUserGuideConfig shareInstance] setNewGuideShowYES:@"gameCommendView"];
+    [self refreshNewGuideView:NO];
+}
+
+- (IBAction)newGuideAction:(id)sender {
+    [[WYUserGuideConfig shareInstance] setNewGuideShowYES:@"gameCommendView"];
+    [self refreshNewGuideView:NO];
 }
 
 /*
@@ -357,21 +392,21 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
     [self.navigationController pushViewController:gameVc animated:YES];
 }
 
-#pragma mark - WYTabBarControllerDelegate
--(void) tabBarController:(WYTabBarViewController *)tabBarController didSelectViewController:(UIViewController *)viewController{
-    if ([viewController isKindOfClass:[GameCommendViewController class]]) {
-        if (self.swipeableView) {
-            if (self.gameCommendInfos.count > 0) {
-                int random = arc4random()%2;
-                WYLog(@"random=%d",random);
-                if (random == 0) {
-                    [self.swipeableView swipeTopViewToLeft];
-                }else if (random == 1){
-                    [self.swipeableView swipeTopViewToRight];
-                }
-            }
-        }
-    }
-}
+//#pragma mark - WYTabBarControllerDelegate
+//-(void) tabBarController:(WYTabBarViewController *)tabBarController didSelectViewController:(UIViewController *)viewController{
+//    if ([viewController isKindOfClass:[GameCommendViewController class]]) {
+//        if (self.swipeableView) {
+//            if (self.gameCommendInfos.count > 0) {
+//                int random = arc4random()%2;
+//                WYLog(@"random=%d",random);
+//                if (random == 0) {
+//                    [self.swipeableView swipeTopViewToLeft];
+//                }else if (random == 1){
+//                    [self.swipeableView swipeTopViewToRight];
+//                }
+//            }
+//        }
+//    }
+//}
 
 @end

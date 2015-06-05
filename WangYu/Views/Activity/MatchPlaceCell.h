@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *placeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *roundLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *imageScrollView;
+@property (strong, nonatomic) IBOutlet UIImageView *roundImage;
 
 @property (strong, nonatomic) WYMatchInfo *matchInfo;
 

@@ -85,6 +85,7 @@ CGFloat const SGProgressBarHeight = 2.5;
     self.mainWebView.delegate = self;
     self.mainWebView.scalesPageToFit = YES;
     self.mainWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.mainWebView.backgroundColor = UIColorToRGB(0xf1f1f1);
     [self loadURL:self.URL];
     [self.view insertSubview:self.mainWebView atIndex:0];
 }
@@ -174,6 +175,7 @@ CGFloat const SGProgressBarHeight = 2.5;
     NSString *title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     [self setTitle:title];
     //    [self updateToolbarItems:YES];
+//    [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.background='#F1F1F1'"];
     [self finishPressed:nil];
     //    NSString *backNum = [webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('backid').innerHTML"];
     

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActivityTabViewController">
@@ -10,6 +10,8 @@
                 <outlet property="adsViewContainer" destination="bXG-1y-7FC" id="LYD-Oi-9KB"/>
                 <outlet property="containerView" destination="Cqn-8V-u94" id="tzx-vn-ERe"/>
                 <outlet property="floatView" destination="kE9-dw-C1K" id="AD7-6G-BgE"/>
+                <outlet property="guideImageView" destination="7jj-eb-kwE" id="v1k-1d-Uow"/>
+                <outlet property="guideView" destination="nW5-ZP-I7u" id="BBs-wn-jnI"/>
                 <outlet property="leagueTableView" destination="aOu-sk-MKM" id="as8-jj-Fso"/>
                 <outlet property="matchTableView" destination="aQt-it-B9I" id="GO6-Io-C5Y"/>
                 <outlet property="newsTableView" destination="ChE-Mm-b1j" id="FJD-9P-8iF"/>
@@ -104,8 +106,48 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="334" y="-545.5"/>
         </view>
+        <view alpha="0.80000001192092896" contentMode="scaleToFill" id="nW5-ZP-I7u">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="7jj-eb-kwE">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                </imageView>
+                <view contentMode="scaleToFill" id="LZo-US-QcF">
+                    <rect key="frame" x="0.0" y="282" width="320" height="286"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guide_match_text_icon" id="3yg-Zj-wQb">
+                            <rect key="frame" x="20" y="72" width="253" height="77"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guide_match_click_icon" id="oBU-Kb-Jrr">
+                            <rect key="frame" x="250" y="157" width="64" height="64"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fgF-uv-rMK">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="newGuideAction:" destination="-1" eventType="touchUpInside" id="O79-Hg-QLa"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="453" y="1071"/>
+        </view>
     </objects>
     <resources>
+        <image name="guide_match_click_icon" width="64" height="64"/>
+        <image name="guide_match_text_icon" width="253" height="77"/>
         <image name="match_war_appoint_icon" width="25" height="25"/>
         <image name="s_n_set_line" width="300" height="1"/>
     </resources>
