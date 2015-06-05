@@ -9,6 +9,10 @@
 #import "AboutViewController.h"
 
 @interface AboutViewController ()
+@property (strong, nonatomic) IBOutlet UIImageView *aboutIconImageView;
+@property (strong, nonatomic) IBOutlet UILabel *aboutVersionLabel;
+@property (strong, nonatomic) IBOutlet UILabel *aboutTipLabel;
+@property (strong, nonatomic) IBOutlet UILabel *aboutCompanyLabel;
 
 @end
 
@@ -17,6 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self refreshUI];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -25,7 +30,7 @@
 }
 
 -(void)initNormalTitleNavBarSubviews{
-    [self setTitle:@"关于"];
+    [self setTitle:@"关于我们"];
 }
 
 /*
@@ -37,5 +42,20 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)refreshUI{
+    self.aboutVersionLabel.font = SKIN_FONT_FROMNAME(15);
+    self.aboutVersionLabel.textColor = SKIN_TEXT_COLOR1;
+    self.aboutTipLabel.font = SKIN_FONT_FROMNAME(12);
+    self.aboutTipLabel.textColor = SKIN_TEXT_COLOR2;
+    self.aboutCompanyLabel.font = SKIN_FONT_FROMNAME(12);
+    self.aboutCompanyLabel.textColor = SKIN_TEXT_COLOR2;
+    
+    NSString *localVserion = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+    self.aboutVersionLabel.text = [NSString stringWithFormat:@"网娱大师%@",localVserion];
+    
+    self.aboutTipLabel.text = @"Copyright © 2015";
+    self.aboutCompanyLabel.text = @"河南网娱互动网络科技有限公司";
+}
 
 @end

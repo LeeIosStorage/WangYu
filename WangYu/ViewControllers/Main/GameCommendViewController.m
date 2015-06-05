@@ -37,6 +37,8 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIView *guideView;
 @property (strong, nonatomic) IBOutlet UIImageView *guideImageView;
 
+@property(assign, nonatomic) BOOL disappearForTabSwitch;//用于判断是否是因为tab切换导致的页面Disappear
+
 - (IBAction)downloadAction:(id)sender;
 - (IBAction)collectAction:(id)sender;
 - (IBAction)newGuideAction:(id)sender;
@@ -66,6 +68,27 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
+//    if (self.swipeableView && self.disappearForTabSwitch) {
+//        if (self.gameCommendInfos.count > 0) {
+//            int random = arc4random()%2;
+//            WYLog(@"random=%d",random);
+//            if (random == 0) {
+//                [self.swipeableView swipeTopViewToLeft];
+//            }else if (random == 1){
+//                [self.swipeableView swipeTopViewToRight];
+//            }
+//        }
+//    }
+//    
+//    self.disappearForTabSwitch = NO;
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appDelegate.mainTabViewController.selectedViewController != self) {
+        self.disappearForTabSwitch = YES;
+    }
 }
 
 - (void)viewDidLoad {
@@ -74,6 +97,9 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
     self.gameIndex = 0;
     self.currentIndex = 0;
     [self refreshNewGuideView:NO];
+
+    self.disappearForTabSwitch = YES;
+    
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.mainTabViewController.delegate = self;
     
@@ -279,7 +305,7 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
             return;
         }
         NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
-        NSString *iosDownloadUrl = [object stringObjectForKey:@"url_android"];
+        NSString *iosDownloadUrl = [object stringObjectForKey:@"url_ios"];
         [[UIApplication sharedApplication] openURL: [NSURL URLWithString:iosDownloadUrl]];
     }tag:tag];
 }
@@ -395,6 +421,7 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
 //#pragma mark - WYTabBarControllerDelegate
 //-(void) tabBarController:(WYTabBarViewController *)tabBarController didSelectViewController:(UIViewController *)viewController{
 //    if ([viewController isKindOfClass:[GameCommendViewController class]]) {
+
 //        if (self.swipeableView) {
 //            if (self.gameCommendInfos.count > 0) {
 //                int random = arc4random()%2;
@@ -406,6 +433,7 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
 //                }
 //            }
 //        }
+//
 //    }
 //}
 

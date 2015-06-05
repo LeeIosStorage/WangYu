@@ -262,7 +262,7 @@
             return;
         }
         NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
-        NSString *iosDownloadUrl = [object stringObjectForKey:@"url_android"];
+        NSString *iosDownloadUrl = [object stringObjectForKey:@"url_ios"];
         [[UIApplication sharedApplication] openURL: [NSURL URLWithString:iosDownloadUrl]];
     }tag:tag];
 }
