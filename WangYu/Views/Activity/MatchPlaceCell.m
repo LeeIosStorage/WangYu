@@ -91,7 +91,8 @@
             label.text = netbarInfo.netbarName;
             label.font = SKIN_FONT_FROMNAME(12);
             label.textColor = SKIN_TEXT_COLOR1;
-            label.lineBreakMode = 2;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.numberOfLines = 2;
             label.textAlignment = NSTextAlignmentCenter;
             [self.imageScrollView addSubview:label];
             
