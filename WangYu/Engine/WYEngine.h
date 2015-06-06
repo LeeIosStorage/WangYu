@@ -168,7 +168,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 
 #pragma mark - 手游
 //手游列表
-- (BOOL)getGameListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
+- (BOOL)getGameListWithUid:(NSString*)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
 //手游详情
 - (BOOL)getGameDetailsWithGameId:(NSString *)gameId uid:(NSString*)uid tag:(int)tag;
 //收藏-取消收藏

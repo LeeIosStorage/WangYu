@@ -26,6 +26,7 @@
 @property(nonatomic, assign) BOOL isFaved;                          //是否收藏
 @property(nonatomic, assign) BOOL isDiscount;                       //是否打折
 @property(nonatomic, assign) int rebate;                            //打折力度
+@property(nonatomic, assign) int algorithm;                         //1 先打折在减红包金额 2先减去红包金额再打折
 @property(nonatomic, assign) int price;                             //上网价格
 @property(nonatomic, readonly) NSArray* picURLs;                    //图片信息地址
 @property(nonatomic, readonly) NSURL* smallImageUrl;                //图片网络地址

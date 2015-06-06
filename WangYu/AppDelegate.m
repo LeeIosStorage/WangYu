@@ -127,6 +127,15 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)signIn{
     NSLog(@"signIn");
+    
+    //JPush
+    if ([[WYEngine shareInstance] hasAccoutLoggedin]) {
+        
+        NSString *alias = [NSString stringWithFormat:@"test_member_%@",[WYEngine shareInstance].uid];
+        NSSet* set=[NSSet setWithObject:@"members"];
+        [APService setTags:set alias:alias callbackSelector:@selector(tagsWithAliasCallback:tags:alias:) object:self];
+    }
+    
     WYTabBarViewController* tabViewController = [[WYTabBarViewController alloc] init];
     tabViewController.delegate = self;
     tabViewController.viewControllers = [NSArray arrayWithObjects:
@@ -312,6 +321,24 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                                                format:NULL
                                      errorDescription:NULL];
     return str;
+}
+
+-(void)tagsWithAliasCallback:(int)resultCode tags:(NSSet *)tags alias:(NSString *)alias{
+    
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:
+                        [NSNumber numberWithInt:resultCode],@"resultCode",
+                        tags==nil?[NSNull null]:[tags allObjects],@"tags",
+                        alias==nil?[NSNull null]:alias,@"alias",nil];
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    [data setObject:[NSNumber numberWithInt:resultCode] forKey:@"resultCode"];
+    [data setObject:tags==nil?[NSNull null]:[tags allObjects] forKey:@"tags"];
+    [data setObject:alias==nil?[NSNull null]:alias forKey:@"alias"];
+    NSError  *error;
+    
+    NSData   *jsonData   = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    WYLog(@"tagsWithAliasCallback jsonString = %@",jsonString);
+    
 }
 
 @end

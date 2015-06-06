@@ -177,7 +177,7 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getGameListWithPage:1 pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getGameListWithUid:[WYEngine shareInstance].uid page:1 pageSize:20 tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -196,7 +196,7 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
 -(void)refreshGameInfos{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getGameListWithPage:1 pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getGameListWithUid:[WYEngine shareInstance].uid page:1 pageSize:20 tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -263,6 +263,28 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
     
 }
 
+-(void)refreshGameCardViewUI{
+    for (UIView *subViews in self.swipeableView.subviews) {
+        for (UIView *subView in subViews.subviews) {
+            if ([subView isKindOfClass:[GameCommendCardView class]]) {
+                GameCommendCardView *gameCardView = (GameCommendCardView*)subView;
+                NSInteger index = gameCardView.tag;
+                if (index<0 || index >=self.gameCommendInfos.count) {
+                    continue;
+                }
+                WYGameInfo *gameInfo = [self.gameCommendInfos objectAtIndex:index];
+                gameCardView.likeLabel.text = [NSString stringWithFormat:@"%d",gameInfo.favorCount];
+                if (gameInfo.isFavor == 1) {
+                    gameCardView.likeIconImgView.image = [UIImage imageNamed:@"game_like_icon_selected"];
+                }else{
+                    gameCardView.likeIconImgView.image = [UIImage imageNamed:@"game_like_icon_selected_not"];
+                }
+            }
+        }
+    }
+
+}
+
 -(void)collectGame{
     
     WS(weakSelf);
@@ -279,15 +301,26 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
         }
         BOOL isFavor = [[jsonRet dictionaryObjectForKey:@"object"] boolValueForKey:@"isFavor"];
         if (isFavor) {
-//            _selectedGameInfo.favorCount ++;
-//            [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromBottom ForView:self.collectButton];
+            for (WYGameInfo *gameInfo in self.gameCommendInfos) {
+                if ([gameInfo.gameId isEqualToString:_selectedGameInfo.gameId]) {
+                    gameInfo.favorCount ++;
+                    gameInfo.isFavor = 1;
+                    break;
+                }
+            }
             [WYProgressHUD AlertSuccess:@"游戏收藏成功" At:weakSelf.view];
         }else{
-//            _selectedGameInfo.favorCount --;
-//            [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromTop ForView:self.collectButton];
+            for (WYGameInfo *gameInfo in self.gameCommendInfos) {
+                if ([gameInfo.gameId isEqualToString:_selectedGameInfo.gameId]) {
+                    gameInfo.favorCount --;
+                    gameInfo.isFavor = 0;
+                    break;
+                }
+            }
             [WYProgressHUD AlertSuccess:@"游戏取消收藏成功" At:weakSelf.view];
         }
-        
+        //蛋疼的刷新
+        [weakSelf refreshGameCardViewUI];
     }tag:tag];
     
 }
@@ -401,6 +434,11 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
         view.gameVersionLabel.text = [NSString stringWithFormat:@"版本%@",gameInfo.version];
         view.likeLabel.text = [NSString stringWithFormat:@"%d",gameInfo.favorCount];
         [view.gameImageView sd_setImageWithURL:gameInfo.gameCoverUrl placeholderImage:[UIImage imageNamed:@"activity_load_icon"]];
+        if (gameInfo.isFavor == 1) {
+            view.likeIconImgView.image = [UIImage imageNamed:@"game_like_icon_selected"];
+        }else{
+            view.likeIconImgView.image = [UIImage imageNamed:@"game_like_icon_selected_not"];
+        }
         
         
         self.gameIndex++;

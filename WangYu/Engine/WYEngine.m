@@ -1287,8 +1287,14 @@ static WYEngine* s_ShareInstance = nil;
 }
 
 #pragma mark - 手游
-- (BOOL)getGameListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag{
+- (BOOL)getGameListWithUid:(NSString*)uid page:(int)page pageSize:(int)pageSize tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
     if (page > 0) {
         [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
     }

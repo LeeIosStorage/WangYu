@@ -58,10 +58,10 @@
 - (UIImageView *)redIconView {
     if (_redIconView == nil) {
         CGRect frame = self.itemIconImageView.frame;
-        frame.origin.x = frame.origin.x+17;
-        frame.origin.y = 5;
-        frame.size.height = 10;
-        frame.size.width = 10;
+        frame.origin.x = frame.origin.x+15;
+        frame.origin.y = 3;
+        frame.size.height = 12;
+        frame.size.width = 12;
         _redIconView = [[UIImageView alloc] initWithFrame:frame];
         _redIconView.image = [UIImage imageNamed:@"s_n_round_red.png"];
         [_itemIconImageView.superview addSubview:_redIconView];

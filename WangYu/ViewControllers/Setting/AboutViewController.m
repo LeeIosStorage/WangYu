@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *aboutVersionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *aboutTipLabel;
 @property (strong, nonatomic) IBOutlet UILabel *aboutCompanyLabel;
+@property (strong, nonatomic) IBOutlet UILabel *aboutInformationLabel;
 
 @end
 
@@ -50,6 +51,8 @@
     self.aboutTipLabel.textColor = SKIN_TEXT_COLOR2;
     self.aboutCompanyLabel.font = SKIN_FONT_FROMNAME(12);
     self.aboutCompanyLabel.textColor = SKIN_TEXT_COLOR2;
+    self.aboutInformationLabel.font = SKIN_FONT_FROMNAME(14);
+    self.aboutInformationLabel.textColor = SKIN_TEXT_COLOR1;
     
     NSString *localVserion = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
     self.aboutVersionLabel.text = [NSString stringWithFormat:@"网娱大师%@",localVserion];

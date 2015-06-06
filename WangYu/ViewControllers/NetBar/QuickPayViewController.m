@@ -17,7 +17,9 @@
 #import "RedPacketViewController.h"
 #import "UIImageView+WebCache.h"
 
-@interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate>{
+#define myNumbers          @"0123456789\n"
+
+@interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>{
     int _redAmount;
     NSMutableArray *_packetIds;
     
@@ -213,10 +215,25 @@
 -(void)calculateNeedPayAmount{
     double payAmount = [self.amountField.text doubleValue];
     if (self.netbarInfo.isDiscount) {
-        payAmount = payAmount*_discountRule/10;
-    }
-    if (_redAmount > 0) {
-        payAmount = payAmount - _redAmount;
+        
+        if (self.netbarInfo.algorithm == 1) {
+            //先打折再减红包
+            payAmount = payAmount*_discountRule/10;
+            if (_redAmount > 0) {
+                payAmount = payAmount - _redAmount;
+            }
+        }else if (self.netbarInfo.algorithm == 2){
+            //先减红包再打折
+            if (_redAmount > 0) {
+                payAmount = payAmount - _redAmount;
+            }
+            payAmount = payAmount*_discountRule/10;
+        }
+    }else{
+        //无折扣只计算红包
+        if (_redAmount > 0) {
+            payAmount = payAmount - _redAmount;
+        }
     }
     if (payAmount <= 0) {
         payAmount = 0;
@@ -237,6 +254,54 @@
     CGRect frame = self.needPayTipLabel.frame;
     frame.origin.x = SCREEN_WIDTH - 12-width - frame.size.width - 8;
     self.needPayTipLabel.frame = frame;
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    NSCharacterSet *cs;
+    
+//    NSUInteger nDotLoc = [textField.text rangeOfString:@"."].location;
+//    if (NSNotFound == nDotLoc && 0 != range.location) {
+//        cs = [[NSCharacterSet characterSetWithCharactersInString:myNumbers] invertedSet];
+//        if ([string isEqualToString:@"."]) {
+//            return YES;
+//        }
+//        if (textField.text.length>=6) {  //小数点前面6位
+//            return NO;
+//        }
+//    }
+//    else {
+//        cs = [[NSCharacterSet characterSetWithCharactersInString:myNumbers] invertedSet];
+//    }
+//    NSString *filtered1 = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+//    BOOL basicTest1 = [string isEqualToString:filtered1];
+//    if (!basicTest1) {
+//        WYLog(@"只能输入数字和小数点");
+//        return NO;
+//    }
+//    if (NSNotFound != nDotLoc && range.location > nDotLoc+2) {
+//        WYLog(@"小数点后最多2位");
+//        return NO;
+//    }
+    
+    cs = [[NSCharacterSet characterSetWithCharactersInString:myNumbers] invertedSet];
+    NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    BOOL basicTest = [string isEqualToString:filtered];
+    if (!basicTest) {
+        WYLog(@"只能输入数字");
+        return NO;
+    }
+    if (!string.length && range.length > 0) {
+        return YES;
+    }
+    NSString *oldString = [textField.text copy];
+    NSString *newString = [oldString stringByReplacingCharactersInRange:range withString:string];
+    if (textField == _amountField && textField.markedTextRange == nil) {
+        if (newString.length > 4 && textField.text.length >= 4) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 #pragma mark - Table view data source

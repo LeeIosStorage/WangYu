@@ -34,6 +34,8 @@
     NSString *validTimeText = [NSString stringWithFormat:@"有效期：%@-%@",[WYUIUtils dateYearToDayDiscriptionFromDate:redPacketInfo.beginDate],[WYUIUtils dateYearToDayDiscriptionFromDate:redPacketInfo.endDate]];
     self.redPagValidTimeLabel.text = validTimeText;
     
+    self.redPagIntroLabel.text = redPacketInfo.explain;
+    
     self.redPagStaleLabel.hidden = YES;
     UIImage *bgImage;
     if (redPacketInfo.selected) {
