@@ -25,7 +25,13 @@
 //    }else {
 //        return 98;
 //    }
-    return 292;
+    UIFont *font = SKIN_FONT_FROMNAME(12);
+    CGSize textSize = [WYCommonUtils sizeWithText:matchInfo.areas font:font width:SCREEN_WIDTH-35];
+    if (textSize.height > 15) {
+        return 292 + textSize.height - 15;
+    }else{
+        return 292;
+    }
 }
 
 - (void)awakeFromNib {
@@ -55,19 +61,30 @@
     CGSize textSize = [WYCommonUtils sizeWithText:_matchInfo.areas font:self.placeLabel.font width:SCREEN_WIDTH-35];
     frame.size.height = textSize.height;
     self.placeLabel.frame = frame;
-    
-    
-    
-//    if(_matchInfo.isApply){
-//        self.applyButton.hidden = NO;
-//    }else{
-//        self.applyButton.hidden = YES;
-//    }
+    if(textSize.height > 15) {
+        frame = self.netbarContainerView.frame;
+        frame.origin.y = 88 + (textSize.height - 15);
+        self.netbarContainerView.frame = frame;
+        
+        frame = self.bottomView.frame;
+        frame.origin.y += (textSize.height - 15);
+        self.bottomView.frame = frame;
+        
+        frame = self.frame;
+        frame.size.height += (textSize.height - 15);
+        self.frame = frame;
+    }
     
     [self.applyButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
     self.applyButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
     self.applyButton.layer.cornerRadius = 4.0;
     self.applyButton.layer.masksToBounds = YES;
+    
+    if(_matchInfo.isApply){
+        self.applyButton.hidden = NO;
+    }else{
+        self.applyButton.hidden = YES;
+    }
     
     if (_matchInfo.hasApply == 1) {
         self.applyButton.backgroundColor = UIColorToRGB(0xe4e4e4);
@@ -79,6 +96,7 @@
 
     int index = 0;
     if(matchInfo.netbars.count > 0){
+        self.netbarLabel.hidden = YES;
         for (WYNetbarInfo *netbarInfo in matchInfo.netbars) {
             WYLog(@"picUrl = %@",netbarInfo.netbarImageUrl);
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12 + index*(80+7), 12, 80, 69)];
@@ -108,6 +126,8 @@
             [self.imageScrollView setContentSize:CGSizeMake(12 + matchInfo.netbars.count*(80+7), self.imageScrollView.frame.size.height)];
         }
         self.imageScrollView.showsHorizontalScrollIndicator = NO;
+    }else{
+        self.netbarLabel.hidden = NO;
     }
     
 //    int index = 0;
@@ -141,9 +161,9 @@
 //        index++;
 //    }
     
-    frame = self.frame;
-    frame.size.height = 98 + 44 * index;
-    self.frame = frame;
+//    frame = self.frame;
+//    frame.size.height = 98 + 44 * index;
+//    self.frame = frame;
     
 //    [self.containerView.layer setMasksToBounds:YES];
 //    [self.containerView.layer setCornerRadius:4.0];
