@@ -15,6 +15,16 @@
     if ([dic stringObjectForKey:@"amount"]) {
         _amount = [dic stringObjectForKey:@"amount"];
     }
+    if ([dic stringObjectForKey:@"out_trade_no"]) {
+        _outTradeNo = [dic stringObjectForKey:@"out_trade_no"];
+    }
+    if ([dic stringObjectForKey:@"nonce_str"]) {
+        _nonceStr = [dic stringObjectForKey:@"nonce_str"];
+    }
+    if ([dic stringObjectForKey:@"prepay_id"]) {
+        _prepayId = [dic stringObjectForKey:@"prepay_id"];
+    }
+    
     _price = [dic intValueForKey:@"price"];
     _isReceive = [dic intValueForKey:@"is_receive"];
     _isValid = [dic intValueForKey:@"is_valid"];
@@ -27,7 +37,7 @@
     _totalAmount = [dic intValueForKey:@"total_amount"];
     _type = [dic intValueForKey:@"type"];
     _scoreAmount = [dic intValueForKey:@"score_amount"];
-    _redbagAmount = [dic intValueForKey:@"redbag_amount"];
+    _redbagAmount = [dic doubleValueForKey:@"redbag_amount"];
     
     NSDateFormatter *dateFormatter = [WYUIUtils dateFormatterOFUS];
     if ([dic stringObjectForKey:@"create_date"]) {

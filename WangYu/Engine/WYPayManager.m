@@ -148,7 +148,7 @@ static WYPayManager* wy_payManager = nil;
                      break;
                  default:
                  {
-                     [WYProgressHUD AlertSuccess:@"支付宝支付失败"];
+                     [WYProgressHUD AlertError:@"支付宝支付失败"];
                      NSLog(@"===============支付失败%@", [resultDic objectForKey:@"memo"]);
                      NSArray* listeners = [_listeners copy];
                      for (id<WYPayManagerListener> listener in listeners) {

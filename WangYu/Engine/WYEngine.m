@@ -21,6 +21,7 @@
 #import "WelcomeViewController.h"
 #import "WYNavigationController.h"
 #import "WYUserGuideConfig.h"
+#import "WYPayManager.h"
 
 #define CONNECT_TIMEOUT 20
 
@@ -148,6 +149,7 @@ static WYEngine* s_ShareInstance = nil;
 - (void)logout{
     _firstLogin = YES;
     [WYUserGuideConfig logout];
+    [[WYPayManager shareInstance] logout];
     [self logout:NO];
 }
 
