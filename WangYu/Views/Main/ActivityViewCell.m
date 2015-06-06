@@ -33,7 +33,13 @@
     _activityImage.layer.masksToBounds = YES;
     
     _nameLabel.text = _activityInfo.title;
-    _timeLabel.text = _activityInfo.startTime;
+    NSString *timeStr = activityInfo.startTime;
+    if (timeStr.length > 10) {
+        timeStr = [timeStr substringToIndex:10];
+    }else {
+        timeStr = @"暂无时间";
+    }
+    _timeLabel.text = [NSString stringWithFormat:@"开赛时间：%@",timeStr];
     if (_activityInfo.status == 1) {
         _stateLabel.text = @"报名进行中";
         [_stateImage setImage:[UIImage imageNamed:@"activity_league_start_icon"]];

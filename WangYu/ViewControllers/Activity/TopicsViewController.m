@@ -12,6 +12,7 @@
 #import "WYProgressHUD.h"
 #import "WYNewsInfo.h"
 #import "UIImageView+WebCache.h"
+#import "WYLinkerHandler.h"
 
 @interface TopicsViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -118,6 +119,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    WYNewsInfo *newsInfo = _topicsInfos[indexPath.row];
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/info/web/detail?id=%@", [WYEngine shareInstance].baseUrl, newsInfo.nid] From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }

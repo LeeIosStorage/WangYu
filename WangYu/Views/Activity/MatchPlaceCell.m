@@ -87,7 +87,7 @@
             imageView.userInteractionEnabled = YES;
             [imageView sd_setImageWithURL:netbarInfo.smallImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
             [self.imageScrollView addSubview:imageView];
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12 + index*(80+7), 93, 80, 30)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12 + index*(80+7), 93, 80, 24)];
             label.text = netbarInfo.netbarName;
             label.font = SKIN_FONT_FROMNAME(12);
             label.textColor = SKIN_TEXT_COLOR1;
