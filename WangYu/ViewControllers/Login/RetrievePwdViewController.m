@@ -238,6 +238,7 @@
         WYUserInfo *userInfo = [[WYUserInfo alloc] init];
         userInfo.telephone = weakSelf.phoneTextField.text;
         spVc.userInfo = userInfo;
+        spVc.phoneCode = verifyAndemailTextFieldText;
         [weakSelf.navigationController pushViewController:spVc animated:YES];
         
     }tag:tag];

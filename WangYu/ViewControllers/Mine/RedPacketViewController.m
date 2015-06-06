@@ -167,7 +167,11 @@
         }else {
             _selectedItems = [[NSMutableArray alloc] init];
         }
-        [self setRightButtonWithTitle:@"使用" selector:@selector(useRedPacketAction:)];
+        if (_selectedItems.count > 0) {
+            [self setRightButtonWithTitle:@"使用" selector:@selector(useRedPacketAction:)];
+        }else{
+            [self setRightButtonWithTitle:@"确认" selector:@selector(useRedPacketAction:)];
+        }
     }else {
         [self setRightButtonWithImageName:@"redpacket_help_icon" selector:@selector(aboutRedPacketAction:)];
     }
@@ -255,11 +259,11 @@
 }
 
 - (void)useRedPacketAction:(id)sender{
-    if (_selectedItems.count == 0) {
-        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"请选择一个红包" cancelButtonTitle:@"确定"];
-        [alertView show];
-        return;
-    }
+//    if (_selectedItems.count == 0) {
+//        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"请选择一个红包" cancelButtonTitle:@"确定"];
+//        [alertView show];
+//        return;
+//    }
     [self.navigationController popViewControllerAnimated:YES];
     if (_sendRedPacketCallBack) {
         _sendRedPacketCallBack(_selectedItems);
@@ -484,6 +488,11 @@
             }
             if (redPacketInfo.selected) {
                 [_selectedItems addObject:redPacketInfo];
+            }
+            if (_selectedItems.count > 0) {
+                [self setRightButtonWithTitle:@"使用" selector:@selector(useRedPacketAction:)];
+            }else{
+                [self setRightButtonWithTitle:@"确认" selector:@selector(useRedPacketAction:)];
             }
             [_freeRedPacketTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
