@@ -58,7 +58,11 @@
     self.pullRefreshView2.delegate = self;
     [self.payOrderTableView addSubview:self.pullRefreshView2];
     
-    [self feedsTypeSwitch:ORDER_TYPE_RESERVE needRefreshFeeds:YES];
+    if (_isShowPayPage) {
+        [self feedsTypeSwitch:ORDER_TYPE_PAY needRefreshFeeds:YES];
+    }else{
+        [self feedsTypeSwitch:ORDER_TYPE_RESERVE needRefreshFeeds:YES];
+    }
     
     WS(weakSelf);
     [self.reserveOrderTableView addInfiniteScrollingWithActionHandler:^{
@@ -163,6 +167,7 @@
 //    [self setSegmentedControlWithSelector:@selector(segmentedControlAction:) items:@[@"预订订单",@"支付订单"]];
     WYSegmentedView *segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
     segmentedView.items = @[@"预订订单",@"支付订单"];
+    segmentedView.selectIndex = 1;
     __weak OrdersViewController *weakSelf = self;
     segmentedView.segmentedButtonClickBlock = ^(NSInteger index){
         if (index == weakSelf.selectedSegmentIndex) {

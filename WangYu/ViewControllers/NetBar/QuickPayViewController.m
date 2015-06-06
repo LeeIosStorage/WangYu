@@ -600,6 +600,7 @@
 
 -(void)goToOrderViewController{
     OrdersViewController *orderVc = [[OrdersViewController alloc] init];
+    orderVc.isShowPayPage = YES;
     
     UINavigationController *navVc = [self navigationController];
     //去掉衍生出来的部分viewController

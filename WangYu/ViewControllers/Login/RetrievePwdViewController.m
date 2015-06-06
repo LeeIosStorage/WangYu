@@ -64,8 +64,15 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.phoneTextField.text = [[WYEngine shareInstance] getMemoryLoginedAccout];
     [self refreshUIControl];
+    
+    UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizer:)];
+    [self.view addGestureRecognizer:gestureRecongnizer];
 }
 
+- (void)gestureRecognizer:(UITapGestureRecognizer *)gestureRecognizer {
+    [self.phoneTextField resignFirstResponder];
+    [self.codeTextField resignFirstResponder];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
