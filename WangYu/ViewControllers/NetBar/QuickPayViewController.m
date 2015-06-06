@@ -600,7 +600,6 @@
 
 -(void)goToOrderViewController{
     OrdersViewController *orderVc = [[OrdersViewController alloc] init];
-    [self.navigationController pushViewController:orderVc animated:YES];
     
     UINavigationController *navVc = [self navigationController];
     //去掉衍生出来的部分viewController
