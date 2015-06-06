@@ -15,5 +15,6 @@
 @property (nonatomic, strong) NSString *registerName;
 @property (nonatomic, strong) NSString *invitationCode;
 @property (nonatomic, strong) WYUserInfo *userInfo;
+@property (nonatomic, strong) NSString *phoneCode;
 
 @end

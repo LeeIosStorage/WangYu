@@ -611,7 +611,7 @@ static WYEngine* s_ShareInstance = nil;
     if (type) {
         [params setObject:type forKey:@"type"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/checkCode",API_URL] type:0 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/sendSMSCode",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
@@ -627,20 +627,23 @@ static WYEngine* s_ShareInstance = nil;
     if (type) {
         [params setObject:type forKey:@"type"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/checkCodeValidate",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/checkSMSCode",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
     
 }
 
-- (BOOL)resetPassword:(NSString*)password withPhone:(NSString*)phone tag:(int)tag{
+- (BOOL)resetPassword:(NSString*)password withPhone:(NSString*)phone phoneCode:(NSString*)phoneCode tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (password) {
-        [params setObject:password forKey:@"newPassword"];
+        [params setObject:password forKey:@"password"];
     }
     if (phone) {
         [params setObject:phone forKey:@"mobile"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/findPassword",API_URL] type:1 parameters:params];
+    if (phoneCode) {
+        [params setObject:phoneCode forKey:@"code"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/resetPassword",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
@@ -725,7 +728,7 @@ static WYEngine* s_ShareInstance = nil;
     [params setObject:body forKey:@"body"];
     [params setObject:orderId forKey:@"orderId"];
     [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
-    if (pids != nil) {
+    if (pids != nil && pids.count > 0) {
         NSString * pidsString;
         pidsString = [WYCommonUtils stringSplitWithCommaForIds:pids];
         [params setObject:pidsString forKey:@"rids"];
@@ -745,7 +748,7 @@ static WYEngine* s_ShareInstance = nil;
     [params setObject:[NSNumber numberWithDouble:amount] forKey:@"amount"];
     [params setObject:[NSNumber numberWithDouble:origAmount] forKey:@"origAmount"];
     [params setObject:nid forKey:@"netbar_id"];
-    if (pids != nil) {
+    if (pids != nil && pids.count > 0) {
         NSString * pidsString;
         pidsString = [WYCommonUtils stringSplitWithCommaForIds:pids];
         [params setObject:pidsString forKey:@"rids"];

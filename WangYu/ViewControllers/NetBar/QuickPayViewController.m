@@ -15,10 +15,11 @@
 #import "WYAlertView.h"
 #import "AppDelegate.h"
 #import "RedPacketViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate>{
-    int redAmount;
-    NSMutableArray *packetIds;
+    int _redAmount;
+    NSMutableArray *_packetIds;
     
     int _discountRule;
     NSString *_needPayAmount;
@@ -74,6 +75,8 @@
     self.isAlipay = YES;
     self.isWeixin = NO;
     _discountRule = 0;
+    _packetInfos = [NSMutableArray array];
+    _packetIds = [NSMutableArray array];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkTextChaneg:) name:UITextFieldTextDidChangeNotification object:nil];
     
@@ -128,6 +131,16 @@
     self.payButton.layer.cornerRadius = 4.0;
     self.payButton.layer.masksToBounds = YES;
     
+    if (![self.netbarInfo.smallImageUrl isEqual:[NSNull null]]) {
+        [self.netbarImage sd_setImageWithURL:self.netbarInfo.smallImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
+    }else{
+        [self.netbarImage sd_setImageWithURL:nil];
+        [self.netbarImage setImage:[UIImage imageNamed:@"netbar_load_icon"]];
+    }
+    self.addressLabel.text = self.netbarInfo.address;
+    self.netbarLabel.text = self.netbarInfo.netbarName;
+    
+    
     CGRect frame = self.headerView.frame;
     float headViewHeight = 137 + 44;
     if (self.isBooked) {
@@ -181,7 +194,7 @@
         frame = self.needPayTipLabel.frame;
         frame.origin.x = SCREEN_WIDTH - 12-width - frame.size.width - 2;
         self.needPayTipLabel.frame = frame;
-        self.needPayTipLabel.text = @"需要支付:";
+        self.needPayTipLabel.text = @"需要支付现金:";
     }
     
     frame = self.headerView.frame;
@@ -202,8 +215,8 @@
     if (self.netbarInfo.isDiscount) {
         payAmount = payAmount*_discountRule/10;
     }
-    if (redAmount > 0) {
-        payAmount = payAmount - redAmount;
+    if (_redAmount > 0) {
+        payAmount = payAmount - _redAmount;
     }
     if (payAmount <= 0) {
         payAmount = 0;
@@ -336,7 +349,7 @@
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     if (self.isBooked) {
-        [[WYEngine shareInstance] reservePayWithUid:[WYEngine shareInstance].uid body:self.orderInfo.netbarName orderId:self.orderInfo.orderId packetsId:packetIds type:self.isWeixin?0:1 tag:tag];
+        [[WYEngine shareInstance] reservePayWithUid:[WYEngine shareInstance].uid body:self.orderInfo.netbarName orderId:self.orderInfo.orderId packetsId:_packetIds type:self.isWeixin?0:1 tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
             [WYProgressHUD AlertLoadDone];
             NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -366,7 +379,7 @@
         }
         [WYProgressHUD AlertLoading:@"请求中..." At:weakSelf.view];
 //        [self calculateNeedPayAmount];
-        [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:self.netbarInfo.netbarName amount:[_needPayAmount doubleValue] netbarId:self.netbarInfo.nid packetsId:packetIds type:self.isWeixin?0:1 origAmount:[_amountField.text doubleValue] tag:tag];
+        [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:self.netbarInfo.netbarName amount:[_needPayAmount doubleValue] netbarId:self.netbarInfo.nid packetsId:_packetIds type:self.isWeixin?0:1 origAmount:[_amountField.text doubleValue] tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
 //            [WYProgressHUD AlertLoadDone];
             NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -423,17 +436,22 @@
     }
     rpVc.sendRedPacketCallBack = ^(NSArray *array){
         if (array != nil) {
-            redAmount = 0;
-            packetIds = [[NSMutableArray alloc]init];
+            _redAmount = 0;
+            _packetIds = [[NSMutableArray alloc]init];
             for (RedPacketInfo *info in array) {
-                redAmount += info.money;
-                [packetIds addObject:info.rid];
+                _redAmount += info.money;
+                [_packetIds addObject:info.rid];
             }
             weakSelf.moneyLabel.hidden = NO;
-            weakSelf.moneyLabel.text = [NSString stringWithFormat:@"￥%d",redAmount];
+            weakSelf.moneyLabel.text = [NSString stringWithFormat:@"￥%d",_redAmount];
+            if (_redAmount == 0) {
+                weakSelf.moneyLabel.hidden = YES;
+            }
             weakSelf.packetInfos = [NSMutableArray arrayWithArray:array];
         }else{
             weakSelf.moneyLabel.hidden = YES;
+            [weakSelf.packetInfos removeAllObjects];
+            [_packetIds removeAllObjects];
         }
         [self calculateNeedPayAmount];
     };

@@ -155,7 +155,7 @@
             }tag:tag];
         }else{
             [WYProgressHUD AlertLoading:@"正在重置密码" At:weakSelf.view];
-            [[WYEngine shareInstance] resetPassword:self.setPwdTextField.text withPhone:_userInfo.telephone tag:tag];
+            [[WYEngine shareInstance] resetPassword:self.setPwdTextField.text withPhone:_userInfo.telephone phoneCode:_phoneCode tag:tag];
             [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
                 //                [WYProgressHUD AlertLoadDone];
                 NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
