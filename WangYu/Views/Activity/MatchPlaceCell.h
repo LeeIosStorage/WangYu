@@ -21,6 +21,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *roundLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *imageScrollView;
 @property (strong, nonatomic) IBOutlet UIImageView *roundImage;
+@property (strong, nonatomic) IBOutlet UILabel *netbarLabel;
+@property (strong, nonatomic) IBOutlet UIView *netbarContainerView;
+@property (strong, nonatomic) IBOutlet UIView *bottomView;
 
 @property (strong, nonatomic) WYMatchInfo *matchInfo;
 
