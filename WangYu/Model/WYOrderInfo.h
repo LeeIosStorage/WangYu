@@ -28,8 +28,12 @@
 //支付订单
 @property(nonatomic, assign) int totalAmount;                       //总金额
 @property(nonatomic, assign) int type;                              //支付类型:1-支付宝;2-财付通
+@property(nonatomic, strong) NSString *outTradeNo;                  //支付宝支付需要
+@property(nonatomic, strong) NSString *nonceStr;                    //微信支付需要
+@property(nonatomic, strong) NSString *prepayId;                    //微信支付需要
+
 @property(nonatomic, assign) int scoreAmount;                       //积分抵消金额
-@property(nonatomic, assign) int redbagAmount;                      //红包抵消金额
+@property(nonatomic, assign) double redbagAmount;                      //红包抵消金额
 
 
 @property(nonatomic, strong) NSString* netbarId;                    //网吧id

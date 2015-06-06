@@ -107,11 +107,11 @@
     self.redPacketLabel.hidden = YES;
     if (orderInfo.redbagAmount > 0) {
         self.redPacketLabel.hidden = NO;
-        NSString *redPacketText = [NSString stringWithFormat:@"使用%d元红包",orderInfo.redbagAmount];
+        NSString *redPacketText = [NSString stringWithFormat:@"使用%@元红包",[NSNumber numberWithDouble:orderInfo.redbagAmount]];
         self.redPacketLabel.text = redPacketText;
         width = [WYCommonUtils widthWithText:redPacketText font:self.redPacketLabel.font lineBreakMode:NSLineBreakByWordWrapping];
         frame = self.redPacketLabel.frame;
-        frame.origin.x = self.privilegeYuanLabel.frame.origin.x + self.privilegeYuanLabel.frame.size.width + 7;
+        frame.origin.x = self.priceLabel.frame.origin.x + self.priceLabel.frame.size.width + 7;
         frame.size.width = width+10;
         self.redPacketLabel.frame = frame;
     }
@@ -131,10 +131,14 @@
     }
     if (status == 0) {
         self.cancelOrderButton.hidden = NO;
-        self.payOrderButton.hidden = YES;
+        self.payOrderButton.hidden = NO;
         
-        CGRect buttonFrame = self.cancelOrderButton.frame;
+        self.stateLabel.text = @"未支付";
+        CGRect buttonFrame = self.payOrderButton.frame;
         buttonFrame.origin.x = SCREEN_WIDTH - buttonFrame.size.width - 12;
+        self.payOrderButton.frame = buttonFrame;
+        buttonFrame = self.cancelOrderButton.frame;
+        buttonFrame.origin.x = self.payOrderButton.frame.origin.x - buttonFrame.size.width - 12;
         self.cancelOrderButton.frame = buttonFrame;
 
     }else if (status == 1){

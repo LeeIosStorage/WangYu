@@ -16,11 +16,12 @@
 #import "NetbarDetailViewController.h"
 #import "QuickPayViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "WYPayManager.h"
 
 #define ORDER_TYPE_RESERVE     0
 #define ORDER_TYPE_PAY         1
 
-@interface OrdersViewController ()<UITableViewDataSource,UITableViewDelegate,ReserveOrderViewCellDelegate,PayOrderViewCellDelegate>
+@interface OrdersViewController ()<UITableViewDataSource,UITableViewDelegate,ReserveOrderViewCellDelegate,PayOrderViewCellDelegate,WYPayManagerListener>
 
 @property (strong, nonatomic) NSMutableArray *reserveOrderList;
 @property (nonatomic, strong) IBOutlet UITableView *reserveOrderTableView;
@@ -37,11 +38,17 @@
 
 @implementation OrdersViewController
 
+- (void)dealloc{
+    [[WYPayManager shareInstance] removeListener:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = UIColorRGB(241, 241, 241);
     _selectedSegmentIndex = 0;
+    
+    [[WYPayManager shareInstance] addListener:self];
     
     self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.reserveOrderTableView];
     self.pullRefreshView.delegate = self;
@@ -485,6 +492,11 @@
     }tag:tag];
 }
 
+#pragma mark -WYPayManagerListener
+- (void)payManagerResultStatus:(int)status payType:(int)payType{
+    [self refreshPayOrdersList];
+}
+
 #pragma mark - PayOrderViewCellDelegate
 - (void)payOrderViewCellNetbarClickWithCell:(id)cell{
     NSIndexPath* indexPath = [self.payOrderTableView indexPathForCell:cell];
@@ -512,9 +524,39 @@
     if (indexPath == nil) {
         return;
     }
-//    WYOrderInfo* orderInfo = _payOrderList[indexPath.row];
-    QuickPayViewController *payVc = [[QuickPayViewController alloc] init];
-    [self.navigationController pushViewController:payVc animated:YES];
+    WYOrderInfo* orderInfo = _payOrderList[indexPath.row];
+    [self continuePayOrder:orderInfo];
+//    QuickPayViewController *payVc = [[QuickPayViewController alloc] init];
+//    [self.navigationController pushViewController:payVc animated:YES];
+}
+
+-(void)continuePayOrder:(WYOrderInfo *)orderInfo{
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:2];
+    if (orderInfo.type == 2) {
+        if (orderInfo.nonceStr) {
+            [dic setValue:orderInfo.nonceStr forKey:@"nonce_str"];
+        }
+        if (orderInfo.prepayId) {
+            [dic setValue:orderInfo.prepayId forKey:@"prepay_id"];
+        }
+        [[WYPayManager shareInstance] payForWinxinWith:dic];
+    }else if (orderInfo.type == 1) {
+        
+        if (orderInfo.orderId) {
+            [dic setValue:orderInfo.orderId forKey:@"orderId"];
+        }
+        if (orderInfo.outTradeNo) {
+            [dic setValue:orderInfo.outTradeNo forKey:@"out_trade_no"];
+        }
+        if (orderInfo.netbarName) {
+            [dic setValue:orderInfo.netbarName forKey:@"netbarName"];
+        }
+        if (orderInfo.amount) {
+            [dic setValue:orderInfo.amount forKey:@"amount"];
+        }
+        [[WYPayManager shareInstance] payForAlipayWith:dic];
+    }
 }
 
 -(void)cancelReserveOrder:(WYOrderInfo *)orderInfo{
