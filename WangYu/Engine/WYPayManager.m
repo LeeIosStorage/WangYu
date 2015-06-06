@@ -154,13 +154,6 @@ static WYPayManager* wy_payManager = nil;
                 strMsg = @"支付结果：成功！";
                 [WYProgressHUD AlertSuccess:@"微信支付成功"];
                 NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
-                //                PayResp *payResp = (PayResp *)resp;
-                //                NSDictionary *respDic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:payResp.errCode],@"code",payResp.returnKey,@"message", nil];
-                //                CDVPluginResult* pluginResult = [CDVPluginResult
-                //                                                 resultWithStatus:CDVCommandStatus_OK
-                //                                                 messageAsDictionary:respDic];
-                //                [self writeJavascript:[pluginResult
-                //                                       toSuccessCallbackString:self.callbackID]];
             }
                 break;
                 
@@ -168,12 +161,6 @@ static WYPayManager* wy_payManager = nil;
                 [WYProgressHUD AlertError:@"微信支付失败"];
                 strMsg = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
                 NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
-                //                NSDictionary *respDic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:resp.errCode],@"code",resp.errStr,@"message", nil];
-                //                CDVPluginResult* pluginResult = [CDVPluginResult
-                //                                                 resultWithStatus:CDVCommandStatus_ERROR
-                //                                                 messageAsDictionary:respDic];
-                //                [self writeJavascript:[pluginResult
-                //                                       toErrorCallbackString:self.callbackID]];
                 
                 break;
         }

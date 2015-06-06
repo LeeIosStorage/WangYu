@@ -18,6 +18,8 @@
 #define REDPACKET_TYPE_FREE            0
 #define REDPACKET_TYPE_HISTORY         1
 
+#define freeRedPacketPageSize   100
+
 @interface RedPacketViewController ()<UITableViewDataSource,UITableViewDelegate>{
     BOOL _isSelected;
     RedPacketInfo *_selectedInfo;
@@ -67,7 +69,7 @@
         }
         
         int tag = [[WYEngine shareInstance] getConnectTag];
-        [[WYEngine shareInstance] getFreeRedPacketListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.freeNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] getFreeRedPacketListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.freeNextCursor pageSize:freeRedPacketPageSize tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
             if (!weakSelf) {
                 return;
@@ -291,7 +293,7 @@
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getFreeRedPacketListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+    [[WYEngine shareInstance] getFreeRedPacketListWithUid:[WYEngine shareInstance].uid page:1 pageSize:freeRedPacketPageSize tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -316,7 +318,7 @@
     _freeNextCursor = 1;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getFreeRedPacketListWithUid:[WYEngine shareInstance].uid page:(int)_freeNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+    [[WYEngine shareInstance] getFreeRedPacketListWithUid:[WYEngine shareInstance].uid page:(int)_freeNextCursor pageSize:freeRedPacketPageSize tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];

@@ -45,6 +45,10 @@ enum TABLEVIEW_SECTION_INDEX {
 
 @implementation MineTabViewController
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
 }
@@ -60,6 +64,7 @@ enum TABLEVIEW_SECTION_INDEX {
     // Do any additional setup after loading the view from its nib.
     [self setTilteLeftViewHide:NO];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFriendTimelineUreadEvent) name:WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION object:nil];
     
     [self refreshUI];
     
@@ -67,6 +72,9 @@ enum TABLEVIEW_SECTION_INDEX {
 
 - (void)handleUserInfoChanged:(NSNotification *)notification{
     [self refreshUI];
+}
+- (void)handleFriendTimelineUreadEvent {
+    [self getUnReadMessage];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -84,6 +84,8 @@
     _seatnumArray = @[@(1),@(2),@(3),@(4),@(5),@(6),@(7),@(8),@(9),@(10)];
     _addcostArray = @[@(0),@(1),@(2),@(3),@(4),@(5),@(6)];
     
+//    [self initReserveSettings];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -98,6 +100,38 @@
     _floatView.frame = frame;
     
     [self refreshPickerNormals];
+}
+
+- (void)initReserveSettings{
+    
+    if (dateString.length == 0) {
+        dateString = [_dateArray objectAtIndex:0];
+        NSCalendar * calender = [NSCalendar currentCalendar];
+        unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit |
+        NSHourCalendarUnit | NSMinuteCalendarUnit |NSSecondCalendarUnit;
+        NSDateComponents *compsNow = [calender components:unitFlags fromDate:[NSDate date]];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        dateTempString = [dateFormatter stringFromDate:[calender dateFromComponents:compsNow]];
+    }
+    
+    NSCalendar * calender = [NSCalendar currentCalendar];
+    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit |
+    NSHourCalendarUnit | NSMinuteCalendarUnit |NSSecondCalendarUnit;
+    NSDateComponents *compsNow = [calender components:unitFlags fromDate:[NSDate date]];
+    compsNow.hour += 1;
+    [self setValueByDate:[calender dateFromComponents:compsNow]];
+    
+    if (hourString.length == 0 && _durationArray.count > 2) {
+        hours = [_durationArray[2] intValue];
+        hourString = [NSString stringWithFormat:@"%@小时",[_durationArray objectAtIndex:2]];
+    }
+    if (seatString.length == 0) {
+        seatNum = [_seatnumArray[0] intValue];
+        seatString = [NSString stringWithFormat:@"%@个",[_seatnumArray objectAtIndex:0]];
+    }
+    
+    [self.bookTable reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -338,6 +372,7 @@
             [UIView animateWithDuration:0.3 animations:^{
                 CGRect rect = _floatView.frame;
                 rect.origin.y = self.view.frame.size.height - _floatView.frame.size.height;
+                rect.size.width = Pickermask.frame.size.width;
                 _floatView.frame = rect;
                 [Pickermask addSubview:_floatView];
             } completion:^(BOOL finished) {

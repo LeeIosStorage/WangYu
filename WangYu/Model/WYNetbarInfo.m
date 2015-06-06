@@ -57,6 +57,9 @@
     if ([dic objectForKey:@"rebate"]) {
         _rebate = [dic intValueForKey:@"rebate"];
     }
+    if ([dic objectForKey:@"algorithm"]) {
+        _algorithm = [dic intValueForKey:@"algorithm"];
+    }
     id objectForKey = [dic arrayObjectForKey:@"imgs"];
     if (objectForKey) {
         _picIds = [NSMutableArray array];
