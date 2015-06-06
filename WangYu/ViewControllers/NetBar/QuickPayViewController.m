@@ -17,10 +17,11 @@
 #import "RedPacketViewController.h"
 #import "UIImageView+WebCache.h"
 #import "WYUserGuideConfig.h"
+#import "NetbarDetailViewController.h"
 
 #define myNumbers          @"0123456789\n"
 
-@interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>{
+@interface QuickPayViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,WYPayManagerListener>{
     int _redAmount;
     NSMutableArray *_packetIds;
     
@@ -73,6 +74,7 @@
 @implementation QuickPayViewController
 
 - (void)dealloc{
+    [[WYPayManager shareInstance] removeListener:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -84,6 +86,7 @@
     _discountRule = 0;
     _packetInfos = [NSMutableArray array];
     _packetIds = [NSMutableArray array];
+    [[WYPayManager shareInstance] addListener:self];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkTextChaneg:) name:UITextFieldTextDidChangeNotification object:nil];
     
@@ -91,6 +94,8 @@
     [self calculateNeedPayAmount];
     [self.payTable reloadData];
     [self refreshNewGuideView:NO];
+    
+    [self refreshNetbarInfo];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -139,7 +144,28 @@
 - (IBAction)newGuideAction:(id)sender{
     [[WYUserGuideConfig shareInstance] setNewGuideShowYES:@"quickPayView"];
     [self refreshNewGuideView:NO];
+}
 
+-(void)refreshNetbarInfo{
+    if (self.netbarInfo.nid.length == 0) {
+        return;
+    }
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getNetbarDetailWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        NSDictionary *dic = [jsonRet objectForKey:@"object"];
+        [weakSelf.netbarInfo setNetbarInfoByJsonDic:dic];
+        [weakSelf refreshUI];
+    }tag:tag];
 }
 
 - (void)refreshUI{
@@ -454,6 +480,7 @@
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     if (self.isBooked) {
+        [WYProgressHUD AlertLoading:@"请求中..." At:weakSelf.view];
         [[WYEngine shareInstance] reservePayWithUid:[WYEngine shareInstance].uid body:self.orderInfo.netbarName orderId:self.orderInfo.orderId packetsId:_packetIds type:self.isWeixin?0:1 tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
             [WYProgressHUD AlertLoadDone];
@@ -483,7 +510,6 @@
             return;
         }
         [WYProgressHUD AlertLoading:@"请求中..." At:weakSelf.view];
-//        [self calculateNeedPayAmount];
         [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:self.netbarInfo.netbarName amount:[_needPayAmount doubleValue] netbarId:self.netbarInfo.nid packetsId:_packetIds type:self.isWeixin?0:1 origAmount:[_amountField.text doubleValue] tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
 //            [WYProgressHUD AlertLoadDone];
@@ -495,6 +521,9 @@
                 [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
                 return;
             }
+//            _redAmount = 0;
+//            _packetIds = [[NSMutableArray alloc]init];
+//            weakSelf.moneyLabel.hidden = YES;
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             if (weakSelf.isWeixin) {
                 dic = [jsonRet objectForKey:@"object"];
@@ -502,25 +531,25 @@
                     [WYProgressHUD AlertError:@"支付失败" At:weakSelf.view];
                     return;
                 }
-                if ([dic stringObjectForKey:@"nonce_str"].length == 0 || [dic stringObjectForKey:@"prepay_id"].length == 0) {
+                if ([dic intValueForKey:@"self_pay"] == 1) {
                     [WYProgressHUD AlertSuccess:@"支付成功" At:weakSelf.view];
-                    [weakSelf goToOrderViewController];
+                    [weakSelf performSelector:@selector(goToOrderViewController) withObject:nil afterDelay:1.0];
                     return;
                 }
                 [WYProgressHUD AlertLoadDone];
                 [[WYPayManager shareInstance] payForWinxinWith:dic];
             }else {
-//                if ([dic stringObjectForKey:@"out_trade_no"].length == 0) {
-//                    [WYProgressHUD AlertSuccess:@"支付成功" At:weakSelf.view];
-//                    [weakSelf goToOrderViewController];
-//                    return;
-//                }
+                if ([dic intValueForKey:@"self_pay"] == 1) {
+                    [WYProgressHUD AlertSuccess:@"支付成功" At:weakSelf.view];
+                    [weakSelf performSelector:@selector(goToOrderViewController) withObject:nil afterDelay:1.0];
+                    return;
+                }
+                
                 [WYProgressHUD AlertLoadDone];
                 [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"orderId"] forKey:@"orderId"];
                 [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"out_trade_no"] forKey:@"out_trade_no"];
                 [dic setValue:weakSelf.netbarInfo.netbarName forKey:@"netbarName"];
                 [dic setValue:_needPayAmount forKey:@"amount"];
-//                [dic setValue:@"0.01" forKey:@"amount"];
                 [[WYPayManager shareInstance] payForAlipayWith:dic];
             }
         }tag:tag];
@@ -563,9 +592,33 @@
     [self.navigationController pushViewController:rpVc animated:YES];
 }
 
+-(UINavigationController *) navigationController
+{
+    AppDelegate *appDele = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    return appDele.mainTabViewController.navigationController;
+}
+
 -(void)goToOrderViewController{
     OrdersViewController *orderVc = [[OrdersViewController alloc] init];
     [self.navigationController pushViewController:orderVc animated:YES];
+    
+    UINavigationController *navVc = [self navigationController];
+    //去掉衍生出来的部分viewController
+    NSMutableArray *viewControllers = [NSMutableArray array];
+    for (id vc in navVc.viewControllers) {
+        if ([vc isMemberOfClass:[QuickPayViewController class]] || [vc isMemberOfClass:[NetbarDetailViewController class]] || [vc isMemberOfClass:[OrdersViewController class]]) {
+            continue;
+        }
+        [viewControllers addObject:vc];
+    }
+    [viewControllers addObject:orderVc];
+    [[self navigationController] setViewControllers:viewControllers animated:YES];
 }
 
+#pragma mark -WYPayManagerListener
+- (void)payManagerResultStatus:(int)status payType:(int)payType{
+    if (status == 1) {
+        [self performSelector:@selector(goToOrderViewController) withObject:nil afterDelay:1.0];
+    }
+}
 @end

@@ -22,7 +22,9 @@
 static WYPayManager* wy_payManager = nil;
 
 @interface WYPayManager ()
-
+{
+    NSMutableArray* _listeners;
+}
 @end
 
 @implementation WYPayManager
@@ -42,6 +44,19 @@ static WYPayManager* wy_payManager = nil;
         [WXApi registerApp:WX_ID withDescription:@"WY"];
     }
     return self;
+}
+
+- (void)addListener:(id<WYPayManagerListener>)listener{
+    [_listeners addObject:listener];
+}
+- (void)removeListener:(id<WYPayManagerListener>)listener{
+    [_listeners removeObject:listener];
+}
+- (void)login {
+    _listeners = [[NSMutableArray alloc] init];
+}
+- (void)logout {
+    [_listeners removeAllObjects];
 }
 
 - (void)payForWinxinWith:(NSDictionary *)dictionary {
@@ -122,12 +137,25 @@ static WYPayManager* wy_payManager = nil;
                  {
 //                     NSLog(@"===============支付成功");
                      [WYProgressHUD AlertSuccess:@"支付宝支付成功"];
+                     //通知lisnteners
+                     NSArray* listeners = [_listeners copy];
+                     for (id<WYPayManagerListener> listener in listeners) {
+                         if ([listener respondsToSelector:@selector(payManagerResultStatus:payType:)]) {
+                             [listener payManagerResultStatus:1 payType:0];
+                         }
+                     }
                  }
                      break;
                  default:
                  {
                      [WYProgressHUD AlertSuccess:@"支付宝支付失败"];
                      NSLog(@"===============支付失败%@", [resultDic objectForKey:@"memo"]);
+                     NSArray* listeners = [_listeners copy];
+                     for (id<WYPayManagerListener> listener in listeners) {
+                         if ([listener respondsToSelector:@selector(payManagerResultStatus:payType:)]) {
+                             [listener payManagerResultStatus:0 payType:0];
+                         }
+                     }
                  }
                      break;
              }
@@ -154,6 +182,13 @@ static WYPayManager* wy_payManager = nil;
                 strMsg = @"支付结果：成功！";
                 [WYProgressHUD AlertSuccess:@"微信支付成功"];
                 NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
+                //通知lisnteners
+                NSArray* listeners = [_listeners copy];
+                for (id<WYPayManagerListener> listener in listeners) {
+                    if ([listener respondsToSelector:@selector(payManagerResultStatus:payType:)]) {
+                        [listener payManagerResultStatus:1 payType:1];
+                    }
+                }
             }
                 break;
                 
@@ -161,7 +196,12 @@ static WYPayManager* wy_payManager = nil;
                 [WYProgressHUD AlertError:@"微信支付失败"];
                 strMsg = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
                 NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
-                
+                NSArray* listeners = [_listeners copy];
+                for (id<WYPayManagerListener> listener in listeners) {
+                    if ([listener respondsToSelector:@selector(payManagerResultStatus:payType:)]) {
+                        [listener payManagerResultStatus:0 payType:1];
+                    }
+                }
                 break;
         }
     }

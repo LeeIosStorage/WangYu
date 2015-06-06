@@ -219,6 +219,7 @@
         }
         NSDictionary *dic = [jsonRet objectForKey:@"object"];
         [weakSelf.netbarInfo setNetbarInfoByJsonDic:dic];
+        [weakSelf refreshUI];
         [weakSelf refreshHeaderView];
     }tag:tag];
 }

@@ -477,6 +477,10 @@
         QuickPayViewController *payVc = [[QuickPayViewController alloc] init];
         payVc.isBooked = YES;
         payVc.orderInfo = orderInfo;
+        WYNetbarInfo *netBarInfo = [[WYNetbarInfo alloc] init];
+        netBarInfo.nid = orderInfo.netbarId;
+        netBarInfo.netbarName = orderInfo.netbarName;
+        payVc.netbarInfo = netBarInfo;
         [self.navigationController pushViewController:payVc animated:YES];
     }tag:tag];
 }

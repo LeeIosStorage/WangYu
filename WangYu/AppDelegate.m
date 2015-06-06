@@ -130,11 +130,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     //JPush
     if ([[WYEngine shareInstance] hasAccoutLoggedin]) {
-        
         NSString *alias = [NSString stringWithFormat:@"test_member_%@",[WYEngine shareInstance].uid];
         NSSet* set=[NSSet setWithObject:@"members"];
         [APService setTags:set alias:alias callbackSelector:@selector(tagsWithAliasCallback:tags:alias:) object:self];
     }
+    [[WYPayManager shareInstance] login];
     
     WYTabBarViewController* tabViewController = [[WYTabBarViewController alloc] init];
     tabViewController.delegate = self;
