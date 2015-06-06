@@ -12,6 +12,7 @@
 #import "WYProgressHUD.h"
 #import "OrdersViewController.h"
 #import "AppDelegate.h"
+#import "WYAlertView.h"
 
 #define Tag_date_check       100
 #define Tag_time_check       101
@@ -37,6 +38,7 @@
     NSArray *_seatnumArray;
     NSArray *_addcostArray;
     NSInteger checkType;
+    BOOL bClick;
 }
 
 @property (strong, nonatomic) IBOutlet UIView *footerView;
@@ -95,6 +97,7 @@
     frame.origin.y = self.view.bounds.size.height;
     _floatView.frame = frame;
     
+    [self refreshPickerNormals];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -157,25 +160,39 @@
 }
 
 - (void)doReserve {
-    if (dateString.length == 0) {
-        [WYProgressHUD lightAlert:@"请预订上网日期"];
-        return;
-    }
-    if (timeString.length == 0) {
-        [WYProgressHUD lightAlert:@"请预订上网时间"];
-        return;
-    }
-    if (hourString.length == 0) {
-        [WYProgressHUD lightAlert:@"请预订上网时长"];
-        return;
-    }
-    if (seatString.length ==0) {
-        [WYProgressHUD lightAlert:@"请预订座位数量"];
-        return;
-    }
+//    if (dateString.length == 0) {
+//        [WYProgressHUD lightAlert:@"请预订上网日期"];
+//        return;
+//    }
+//    if (timeString.length == 0) {
+//        [WYProgressHUD lightAlert:@"请预订上网时间"];
+//        return;
+//    }
+//    if (hourString.length == 0) {
+//        [WYProgressHUD lightAlert:@"请预订上网时长"];
+//        return;
+//    }
+//    if (seatString.length ==0) {
+//        [WYProgressHUD lightAlert:@"请预订座位数量"];
+//        return;
+//    }
     
     NSString *tempString = [NSString stringWithFormat:@"%@ %@",dateTempString, startTimeString];
     //NSLog(@"========%@",tempString);
+    WS(weakSelf);
+    if (seatNum*addCost != 0) {
+        WYAlertView *alert = [[WYAlertView alloc] initWithTitle:@"预订提示" message:@"您的附加小费不抵扣网费，确定预订么？" cancelButtonTitle:@"取消" cancelBlock:^{
+            
+        } okButtonTitle:@"确定" okBlock:^{
+            [weakSelf checkAndReserveWith:tempString];
+        }];
+        [alert show];
+        return;
+    }
+    [self checkAndReserveWith:tempString];
+}
+
+- (void)checkAndReserveWith:(NSString *)tempString{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] quickBookingWithUid:[WYEngine shareInstance].uid reserveDate:tempString amount:(double)seatNum*addCost netbarId:_netbarInfo.nid hours:hours num:seatNum remark:_descTextView.text tag:tag];
@@ -251,7 +268,7 @@
         }
     } else if (indexPath.section == 1){
         if (indexPath.row == 0) {
-            cell.titleName.text = @"追加费用";
+            cell.titleName.text = @"附加小费";
             cell.leftImage.image = [UIImage imageNamed:@"netbar_orders_add_icon"];
             cell.rightLabel.text = costString;
         }
@@ -265,6 +282,15 @@
     [self doforEndEdit];
     checkType = indexPath.row + 100 + indexPath.section * 100;
     if (checkType != Tag_time_check) {
+        if (checkType == Tag_date_check) {
+            dateString = @"";
+        }else if(checkType == Tag_duration_check) {
+            hourString = @"";
+        }else if (checkType == Tag_seatnum_check) {
+            seatString = @"";
+        }else if (checkType == Tag_addcost_check) {
+            costString = @"";
+        }
         UIView *Pickermask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
         Pickermask.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
         [[UIApplication sharedApplication].keyWindow addSubview:Pickermask];
@@ -419,6 +445,30 @@
     }
 }
 
+- (void)refreshPickerNormals{
+    seatString = @"1个";
+    hours = 3;
+    hourString = @"3小时";
+    
+    dateString = [_dateArray objectAtIndex:0];
+    NSCalendar * calender = [NSCalendar currentCalendar];
+    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit |
+    NSHourCalendarUnit | NSMinuteCalendarUnit |NSSecondCalendarUnit;
+    NSDateComponents *compsNow = [calender components:unitFlags fromDate:[NSDate date]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    dateTempString = [dateFormatter stringFromDate:[calender dateFromComponents:compsNow]];
+    
+    compsNow.hour += 1;
+    [dateFormatter setDateFormat:@"HH时mm分"];
+    timeString = [dateFormatter stringFromDate:[calender dateFromComponents:compsNow]];
+    
+    [dateFormatter setDateFormat:@"HH:mm:ss"];
+    startTimeString = [dateFormatter stringFromDate:[calender dateFromComponents:compsNow]];
+    
+    _datePicker.minimumDate = [calender dateFromComponents:compsNow];
+}
+
 -(void) pickerView: (UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent: (NSInteger)component
 {
     NSIndexPath *indexPath;
@@ -438,6 +488,13 @@
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
         dateTempString = [dateFormatter stringFromDate:[calender dateFromComponents:compsNow]];
+        
+        if ([dateString isEqualToString:@"今天"]) {
+            compsNow.minute += 60;
+            _datePicker.minimumDate = [calender dateFromComponents:compsNow];
+        }else {
+            _datePicker.minimumDate = nil;
+        }
     }else if(checkType == Tag_duration_check){
         hours = [_durationArray[row] intValue];
         hourString = [NSString stringWithFormat:@"%@小时",[_durationArray objectAtIndex:row]];
