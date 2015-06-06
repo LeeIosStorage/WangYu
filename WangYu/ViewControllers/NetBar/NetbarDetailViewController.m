@@ -372,7 +372,7 @@
 }
 
 - (IBAction)publicAction:(id)sender {
-    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/release?userId=%@&token=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
+    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/release?userId=%@&token=%@&netbarId=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token, self.netbarInfo.nid] From:self.navigationController];
     if (vc) {
         [self.navigationController pushViewController:vc animated:YES];
     }

@@ -23,6 +23,10 @@
     self.newsTitleLabel.font = SKIN_FONT_FROMNAME(15);
     self.newsBriefLabel.textColor = SKIN_TEXT_COLOR2;
     self.newsBriefLabel.font = SKIN_FONT_FROMNAME(12);
+    
+    self.featureLabel.layer.masksToBounds = YES;
+    self.featureLabel.layer.cornerRadius = 2.;
+    self.featureLabel.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -35,7 +39,7 @@
     _newsInfo = newsInfo;
     [self.newsImageView sd_setImageWithURL:newsInfo.smallImageURL placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
     self.newsTitleLabel.text = newsInfo.title;
-    self.newsBriefLabel.text = newsInfo.brief;
+    //self.newsBriefLabel.text = newsInfo.brief;
     
     CGRect frame = self.newsTitleLabel.frame;
     CGSize textSize = [WYCommonUtils sizeWithText:newsInfo.title font:self.newsTitleLabel.font width:SCREEN_WIDTH-117];

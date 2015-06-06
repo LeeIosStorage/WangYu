@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "RedPacketViewController.h"
 #import "UIImageView+WebCache.h"
+#import "WYUserGuideConfig.h"
 
 #define myNumbers          @"0123456789\n"
 
@@ -59,9 +60,13 @@
 @property (strong, nonatomic) IBOutlet UILabel *discountTitle;
 @property (strong, nonatomic) IBOutlet UILabel *discountLabel;
 
+@property (strong, nonatomic) IBOutlet UIView *guideView;
+@property (strong, nonatomic) IBOutlet UIView *guideImageView;
+
 - (IBAction)payAction:(id)sender;
 - (IBAction)packetAction:(id)sender;
 - (IBAction)netbarAction:(id)sender;
+- (IBAction)newGuideAction:(id)sender;
 
 @end
 
@@ -85,6 +90,7 @@
     [self refreshUI];
     [self calculateNeedPayAmount];
     [self.payTable reloadData];
+    [self refreshNewGuideView:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -100,6 +106,40 @@
     }else{
         [self setTitle:@"一键支付"];
     }
+}
+
+- (void)refreshNewGuideView:(BOOL)isNext {
+    self.guideView.frame = [UIScreen mainScreen].bounds;
+    BOOL isShow = [[WYUserGuideConfig shareInstance] newPeopleGuideShowForVcType:@"quickPayView"];
+    if (isShow) {
+        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [appDelegate.window addSubview:self.guideView];
+        UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizer:)];
+        [self.guideImageView addGestureRecognizer:gestureRecongnizer];
+    }else {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.guideView.alpha = 0;
+        } completion:^(BOOL finished) {
+            if (self.guideView.superview) {
+                [self.guideView removeFromSuperview];
+                if (isNext) {
+                    //...
+                }
+            }
+        }];
+    }
+}
+
+- (void)gestureRecognizer:(UITapGestureRecognizer *)gestureRecognizer {
+    [[WYUserGuideConfig shareInstance] setNewGuideShowYES:@"quickPayView"];
+    [self refreshNewGuideView:NO];
+}
+
+
+- (IBAction)newGuideAction:(id)sender{
+    [[WYUserGuideConfig shareInstance] setNewGuideShowYES:@"quickPayView"];
+    [self refreshNewGuideView:NO];
+
 }
 
 - (void)refreshUI{

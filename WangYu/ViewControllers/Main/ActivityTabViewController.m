@@ -39,7 +39,7 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *containerView;
 @property (strong, nonatomic) IBOutlet UIView *floatView;
 @property (strong, nonatomic) IBOutlet UIView *guideView;
-@property (strong, nonatomic) IBOutlet UIImageView *guideImageView;
+@property (strong, nonatomic) IBOutlet UIView *guideImageView;
 
 @property (strong, nonatomic) NSMutableArray *activityInfos;
 @property (strong, nonatomic) NSMutableArray *newsInfos;

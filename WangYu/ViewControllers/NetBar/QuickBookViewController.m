@@ -215,7 +215,7 @@
     //NSLog(@"========%@",tempString);
     WS(weakSelf);
     if (seatNum*addCost != 0) {
-        WYAlertView *alert = [[WYAlertView alloc] initWithTitle:@"预订提示" message:@"您的附加小费不抵扣网费，确定预订么？" cancelButtonTitle:@"取消" cancelBlock:^{
+        WYAlertView *alert = [[WYAlertView alloc] initWithTitle:@"温馨提示" message:@"小费需先行支付，不再退还" cancelButtonTitle:@"取消" cancelBlock:^{
             
         } okButtonTitle:@"确定" okBlock:^{
             [weakSelf checkAndReserveWith:tempString];

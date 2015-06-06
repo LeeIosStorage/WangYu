@@ -10,7 +10,7 @@
                 <outlet property="adsViewContainer" destination="bXG-1y-7FC" id="LYD-Oi-9KB"/>
                 <outlet property="containerView" destination="Cqn-8V-u94" id="tzx-vn-ERe"/>
                 <outlet property="floatView" destination="kE9-dw-C1K" id="AD7-6G-BgE"/>
-                <outlet property="guideImageView" destination="7jj-eb-kwE" id="v1k-1d-Uow"/>
+                <outlet property="guideImageView" destination="wus-sR-hns" id="HfG-zJ-T9X"/>
                 <outlet property="guideView" destination="nW5-ZP-I7u" id="BBs-wn-jnI"/>
                 <outlet property="leagueTableView" destination="aOu-sk-MKM" id="as8-jj-Fso"/>
                 <outlet property="matchTableView" destination="aQt-it-B9I" id="GO6-Io-C5Y"/>
@@ -106,14 +106,15 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="334" y="-545.5"/>
         </view>
-        <view alpha="0.80000001192092896" contentMode="scaleToFill" id="nW5-ZP-I7u">
+        <view contentMode="scaleToFill" id="nW5-ZP-I7u">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="7jj-eb-kwE">
+                <view alpha="0.80000000000000004" contentMode="scaleToFill" id="wus-sR-hns">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                </imageView>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
                 <view contentMode="scaleToFill" id="LZo-US-QcF">
                     <rect key="frame" x="0.0" y="282" width="320" height="286"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -140,7 +141,7 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
             <point key="canvasLocation" x="453" y="1071"/>
         </view>

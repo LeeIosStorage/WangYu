@@ -35,7 +35,7 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
 @property (nonatomic, assign) NSInteger currentIndex;
 
 @property (strong, nonatomic) IBOutlet UIView *guideView;
-@property (strong, nonatomic) IBOutlet UIImageView *guideImageView;
+@property (strong, nonatomic) IBOutlet UIView *guideImageView;
 
 @property(assign, nonatomic) BOOL disappearForTabSwitch;//用于判断是否是因为tab切换导致的页面Disappear
 

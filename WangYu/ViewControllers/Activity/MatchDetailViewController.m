@@ -224,7 +224,15 @@
         case 0:{
             if (indexPath.row == 0){
                 cell.avatarImageView.image = [UIImage imageNamed:@"match_detail_time_icon"];
-                NSString *strTime = [NSString stringWithFormat:@"%@～%@",self.activityInfo.startTime,self.activityInfo.endTime];
+                NSString *startString = self.activityInfo.startTime;
+                if (startString.length > 10) {
+                    startString = [startString substringToIndex:10];
+                }
+                NSString *endString = self.activityInfo.endTime;
+                if (endString.length > 10) {
+                    endString = [endString substringToIndex:10];
+                }
+                NSString *strTime = [NSString stringWithFormat:@"%@～%@",startString,endString];
                 if (strTime.length > 1) {
                     cell.titleLabel.text = strTime;
                 }else {
