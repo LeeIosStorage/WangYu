@@ -132,6 +132,7 @@
         _recommendImage.hidden = YES;
     }
     
+    _netbarAddress.lineHeightMultiple = 0.8;
     _netbarAddress.text = netbarInfo.address;
 }
 

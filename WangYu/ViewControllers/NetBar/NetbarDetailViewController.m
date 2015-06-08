@@ -23,6 +23,7 @@
 #import "NetbarMapViewController.h"
 #import "WYLinkerHandler.h"
 #import "AppDelegate.h"
+#import "TTTAttributedLabel.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate,WYPhotoGroupDelegate>
 {
@@ -46,7 +47,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *sectionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *priceLabel1;
 @property (strong, nonatomic) IBOutlet UILabel *priceLabel2;
-@property (strong, nonatomic) IBOutlet UILabel *addressLabel;
+@property (strong, nonatomic) IBOutlet TTTAttributedLabel *addressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (strong, nonatomic) IBOutlet UILabel *descLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
@@ -161,6 +162,7 @@
         [self.collectButton setBackgroundImage:[UIImage imageNamed:@"netbar_detail_uncollect_icon"] forState:UIControlStateNormal];
     }
     self.phoneLabel.text = self.netbarInfo.telephone;
+    self.addressLabel.lineHeightMultiple = 0.8;
     self.addressLabel.text = self.netbarInfo.address;
     self.netbarLabel.text = self.netbarInfo.netbarName;
     
@@ -379,6 +381,17 @@
 }
 
 - (IBAction)locationAction:(id)sender {
+    
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[NetbarMapViewController class]]) {
+            NetbarMapViewController *nmVc = (NetbarMapViewController *)vc;
+            if ([nmVc.netbarInfo.nid isEqualToString:_netbarInfo.nid]) {
+                [self.navigationController popToViewController:nmVc animated:YES];
+                return;
+            }
+        }
+    }
+    
     NetbarMapViewController *nmVc = [[NetbarMapViewController alloc] init];
     nmVc.netbarInfo = _netbarInfo;
     CLLocationCoordinate2D coordinate;

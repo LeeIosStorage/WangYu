@@ -759,6 +759,17 @@
     WYLog(@"annotation.tag = %d",annotation.tag);
     if (annotation.tag >= 0 && annotation.tag < _pois.count) {
         WYNetbarInfo *netbarInfo = [_pois objectAtIndex:annotation.tag];
+        
+        for (UIViewController *vc in self.navigationController.viewControllers) {
+            if ([vc isKindOfClass:[NetbarDetailViewController class]]) {
+                NetbarDetailViewController *ndVc = (NetbarDetailViewController *)vc;
+                if ([ndVc.netbarInfo.nid isEqualToString:netbarInfo.nid]) {
+                    [self.navigationController popToViewController:ndVc animated:YES];
+                    return;
+                }
+            }
+        }
+        
         NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
         ndVc.netbarInfo = netbarInfo;
         [self.navigationController pushViewController:ndVc animated:YES];

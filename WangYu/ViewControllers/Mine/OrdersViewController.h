@@ -10,4 +10,6 @@
 
 @interface OrdersViewController : WYSuperViewController
 
+@property (nonatomic, assign) BOOL isShowPayPage;
+
 @end

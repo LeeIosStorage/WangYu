@@ -89,20 +89,21 @@
     self.priceLabel.frame = frame;
     
     self.privilegeYuanLabel.hidden = YES;
-    if (orderInfo.scoreAmount > 0) {
-        self.privilegeYuanLabel.hidden = NO;
-        NSString *privilegeYuanText = [NSString stringWithFormat:@"%d元",orderInfo.scoreAmount];
-        self.privilegeYuanLabel.text = privilegeYuanText;
-        width = [WYCommonUtils widthWithText:privilegeYuanText font:self.privilegeYuanLabel.font lineBreakMode:NSLineBreakByWordWrapping];
-        frame = self.privilegeYuanLabel.frame;
-        frame.origin.x = self.priceLabel.frame.origin.x + self.priceLabel.frame.size.width + 7;
-        frame.size.width = width;
-        self.privilegeYuanLabel.frame = frame;
-        
-        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:privilegeYuanText];
-        [attrString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:NSMakeRange(0, privilegeYuanText.length)];
-        self.privilegeYuanLabel.attributedText = attrString;
-    }
+    //积分抵扣金额
+//    if (orderInfo.scoreAmount > 0) {
+//        self.privilegeYuanLabel.hidden = NO;
+//        NSString *privilegeYuanText = [NSString stringWithFormat:@"%d元",orderInfo.scoreAmount];
+//        self.privilegeYuanLabel.text = privilegeYuanText;
+//        width = [WYCommonUtils widthWithText:privilegeYuanText font:self.privilegeYuanLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+//        frame = self.privilegeYuanLabel.frame;
+//        frame.origin.x = self.priceLabel.frame.origin.x + self.priceLabel.frame.size.width + 7;
+//        frame.size.width = width;
+//        self.privilegeYuanLabel.frame = frame;
+//        
+//        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:privilegeYuanText];
+//        [attrString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:NSMakeRange(0, privilegeYuanText.length)];
+//        self.privilegeYuanLabel.attributedText = attrString;
+//    }
     
     self.redPacketLabel.hidden = YES;
     if (orderInfo.redbagAmount > 0) {

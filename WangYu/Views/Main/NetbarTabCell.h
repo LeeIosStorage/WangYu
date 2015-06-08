@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "WYNetbarInfo.h"
+#import "TTTAttributedLabel.h"
 
 @protocol NetbarTabCellDelegate;
 @interface NetbarTabCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImage;
 @property (strong, nonatomic) IBOutlet UILabel *netbarTitle;
-@property (strong, nonatomic) IBOutlet UILabel *netbarAddress;
+@property (strong, nonatomic) IBOutlet TTTAttributedLabel *netbarAddress;
 @property (strong, nonatomic) IBOutlet UILabel *netbarPrice;
 @property (strong, nonatomic) IBOutlet UILabel *netbarTime;
 @property (strong, nonatomic) IBOutlet UIImageView *recommendImage;

@@ -41,6 +41,18 @@
 
 @implementation RedPacketViewController
 
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (_bChooseRed) {
+        if (_sendRedPacketCallBack) {
+            _sendRedPacketCallBack(_selectedItems);
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

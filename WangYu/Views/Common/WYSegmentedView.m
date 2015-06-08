@@ -69,6 +69,14 @@
     selectedImageView.backgroundColor = _selectedColor;
 }
 
+-(void)setSelectIndex:(NSUInteger)selectIndex{
+    _selectIndex = selectIndex;
+    UIImageView *selectedImageView = (UIImageView *)[self viewWithTag:SelectedImageView_Tag];
+    CGRect frame = selectedImageView.frame;
+    frame.origin.x = selectIndex*frame.size.width;
+    selectedImageView.frame = frame;
+}
+
 -(void)setItems:(NSArray *)items{
     int itemsCount = (int)items.count;
     UIImageView *selectedImageView = (UIImageView *)[self viewWithTag:SelectedImageView_Tag];
