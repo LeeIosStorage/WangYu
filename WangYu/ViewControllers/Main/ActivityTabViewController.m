@@ -514,8 +514,8 @@
             [newsInfo setNewsInfoByJsonDic:dic];
             [weakSelf.newsInfos addObject:newsInfo];
         }
-        [weakSelf.newsTableView reloadData];
-        weakSelf.newsLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        
+        weakSelf.newsLoadMore = [[jsonRet objectForKey:@"object"] boolValueForKey:@"isLast"];
         if (weakSelf.newsLoadMore) {
             weakSelf.newsTableView.showsInfiniteScrolling = NO;
         }else{
@@ -523,6 +523,7 @@
             //可以加载更多
             weakSelf.newsCursor ++;
         }
+        [weakSelf.newsTableView reloadData];
     }tag:tag];
 }
 
