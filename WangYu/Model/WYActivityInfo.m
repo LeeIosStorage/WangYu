@@ -25,9 +25,15 @@
     }
     if ([dic objectForKey:@"end_time"]) {
         _endTime = [dic stringObjectForKey:@"end_time"];
+        if (_endTime.length > 16) {
+            _endTime = [_endTime substringToIndex:16];
+        }
     }
     if ([dic stringObjectForKey:@"start_time"]) {
         _startTime = [dic stringObjectForKey:@"start_time"];
+        if (_startTime.length > 16) {
+            _startTime = [_startTime substringToIndex:16];
+        }
     }
     if ([dic stringObjectForKey:@"item_name"]) {
         _itemName = [dic stringObjectForKey:@"item_name"];

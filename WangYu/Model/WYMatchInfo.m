@@ -15,9 +15,15 @@
     
     if ([dic stringObjectForKey:@"begin_time"]) {
         _startTime = [dic stringObjectForKey:@"begin_time"];
+        if (_startTime.length > 16) {
+            _startTime = [_startTime substringToIndex:16];
+        }
     }
     if ([dic stringObjectForKey:@"over_time"]) {
         _endTime = [dic stringObjectForKey:@"over_time"];
+        if (_endTime.length > 16) {
+            _endTime = [_endTime substringToIndex:16];
+        }
     }
     if ([dic objectForKey:@"round"]) {
         _round = [dic intValueForKey:@"round"];
