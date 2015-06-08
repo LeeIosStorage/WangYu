@@ -9,7 +9,7 @@
             <connections>
                 <outlet property="aboutCompanyLabel" destination="Y05-Fx-ucF" id="fbx-5H-lc3"/>
                 <outlet property="aboutIconImageView" destination="bgt-Pm-V25" id="ijS-ox-PVw"/>
-                <outlet property="aboutInformationLabel" destination="Tf8-rq-g7q" id="M8P-bb-y1b"/>
+                <outlet property="aboutInformationLabel" destination="Tf8-rq-g7q" id="M6G-fk-QDn"/>
                 <outlet property="aboutTipLabel" destination="Cvn-Me-5pz" id="L8y-1e-GJQ"/>
                 <outlet property="aboutVersionLabel" destination="bA0-BD-mQF" id="W0i-3T-mXa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -45,8 +45,8 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="“网娱大师”是河南网娱互动网络科技有限公司开发的一款手机在线订座APP，能方便用户精确查找附近网吧，轻松预定上网座位，时间，并且提供在线支付功能。还提供热门赛事报名，竞技约战功能，全方位为玩家提供上网游戏服务。" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tf8-rq-g7q">
-                    <rect key="frame" x="12" y="256" width="296" height="88"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="“网娱大师”是河南网娱互动网络科技有限公司开发的一款手机在线订座APP，能方便用户精确查找附近网吧，轻松预定上网座位，时间，并且提供在线支付功能。还提供热门赛事报名，竞技约战功能，全方位为玩家提供上网游戏服务。" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tf8-rq-g7q" customClass="TTTAttributedLabel">
+                    <rect key="frame" x="12" y="256" width="296" height="92"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <nil key="highlightedColor"/>

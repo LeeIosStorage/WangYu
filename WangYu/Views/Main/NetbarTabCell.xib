@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="dqw3.otf">
@@ -87,7 +87,7 @@
                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hkm-s6-Bfa">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hkm-s6-Bfa" customClass="TTTAttributedLabel">
                         <rect key="frame" x="106" y="32" width="202" height="29"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="12"/>
@@ -110,7 +110,7 @@
                 <outlet property="bookImage" destination="cHh-3d-IP4" id="m74-JB-Cmk"/>
                 <outlet property="mapButton" destination="7CL-fO-BV7" id="Kjl-eQ-EyC"/>
                 <outlet property="mapImage" destination="SIR-Gv-ZTC" id="Y8w-C4-3Yr"/>
-                <outlet property="netbarAddress" destination="Hkm-s6-Bfa" id="x9K-cr-qRl"/>
+                <outlet property="netbarAddress" destination="Hkm-s6-Bfa" id="Rk0-mD-XZF"/>
                 <outlet property="netbarDistance" destination="lbP-Rz-ckG" id="ACq-S9-ac7"/>
                 <outlet property="netbarImage" destination="78b-33-6rY" id="iah-h8-Arq"/>
                 <outlet property="netbarPrice" destination="JXm-Sj-c2Y" id="eTu-ab-Ref"/>

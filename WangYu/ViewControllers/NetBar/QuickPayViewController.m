@@ -259,8 +259,9 @@
         [self.headerView addSubview:self.needAmountContainerView];
         headViewHeight += self.needAmountContainerView.frame.size.height;
         
+        self.needPayAmountLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
         NSString *needPayAmountText = [NSString stringWithFormat:@"%@元",_needPayAmount];
-        float width = [WYCommonUtils widthWithText:needPayAmountText font:self.needPayAmountLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+        float width = [WYCommonUtils widthWithText:needPayAmountText font:self.needPayAmountLabel.font lineBreakMode:NSLineBreakByTruncatingMiddle];
         if (width > 108) {
             width = 108;
         }
@@ -280,6 +281,15 @@
 
 - (void)checkTextChaneg:(NSNotification *)notif
 {
+//    UITextField *textField = notif.object;
+//    //修正ios7键盘输入中文超过长度崩溃
+//    if (self.amountField.markedTextRange != nil) {
+//        return;
+//    }
+//    if (textField.text.length > 4 && self.amountField.markedTextRange == nil) {
+//        self.amountField.text = [LSCommonUtils getHanziTextWithText:_inputText maxLength:_maxTextLength];
+//    }
+    
     [self calculateNeedPayAmount];
 }
 
@@ -318,7 +328,7 @@
     NSString *needPayAmountText = [NSString stringWithFormat:@"%@元",_needPayAmount];
     _needPayAmountLabel.text = needPayAmountText;
     
-    float width = [WYCommonUtils widthWithText:needPayAmountText font:self.needPayAmountLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+    float width = [WYCommonUtils widthWithText:needPayAmountText font:self.needPayAmountLabel.font lineBreakMode:NSLineBreakByTruncatingMiddle];
     if (width > 108) {
         width = 108;
     }
@@ -368,7 +378,8 @@
     NSString *oldString = [textField.text copy];
     NSString *newString = [oldString stringByReplacingCharactersInRange:range withString:string];
     if (textField == _amountField && textField.markedTextRange == nil) {
-        if (newString.length > 4 && textField.text.length >= 4) {
+        WYLog(@"textField.text = %@",textField.text);
+        if (newString.length > 4) {
             return NO;
         }
     }
@@ -498,15 +509,25 @@
                 return;
             }
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            dic = (NSMutableDictionary *)[jsonRet dictionaryObjectForKey:@"object"];
             if (weakSelf.isWeixin) {
-                dic = [jsonRet objectForKey:@"object"];
                 [[WYPayManager shareInstance] payForWinxinWith:dic];
             }else {
-                [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"orderId"] forKey:@"orderId"];
-                [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"out_trade_no"] forKey:@"out_trade_no"];
-                [dic setValue:weakSelf.netbarInfo.netbarName forKey:@"netbarName"];
-                [dic setValue:weakSelf.amountField.text forKey:@"amount"];
-                [[WYPayManager shareInstance] payForAlipayWith:dic];
+                
+                NSMutableDictionary *alipayDic = [NSMutableDictionary dictionary];
+                if ([dic stringObjectForKey:@"orderId"]) {
+                    [alipayDic setValue:[dic stringObjectForKey:@"orderId"] forKey:@"orderId"];
+                }
+                if ([dic stringObjectForKey:@"out_trade_no"]) {
+                    [alipayDic setValue:[dic stringObjectForKey:@"out_trade_no"] forKey:@"out_trade_no"];
+                }
+                if (weakSelf.netbarInfo.netbarName.length > 0) {
+                    [alipayDic setValue:weakSelf.netbarInfo.netbarName forKey:@"netbarName"];
+                }
+                if (weakSelf.amountField.text.length > 0) {
+                    [alipayDic setValue:weakSelf.amountField.text forKey:@"amount"];
+                }
+                [[WYPayManager shareInstance] payForAlipayWith:alipayDic];
             }
         }tag:tag];
     }else {

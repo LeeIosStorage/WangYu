@@ -34,13 +34,14 @@
 -(void)setActivityInfo:(WYActivityInfo *)activityInfo{
     _activityInfo = activityInfo;
     [self.activityImageView sd_setImageWithURL:activityInfo.smallImageURL placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
+    self.activityTitleLabel.lineHeightMultiple = 0.8;
     self.activityTitleLabel.text = activityInfo.title;
     self.activityIntroLabel.text = [NSString stringWithFormat:@"开赛时间：%@",activityInfo.startTime];
     
     CGRect frame = self.activityTitleLabel.frame;
     CGSize textSize = [WYCommonUtils sizeWithText:activityInfo.title font:self.activityTitleLabel.font width:SCREEN_WIDTH-117];
-//    frame.size.width = textSize.width;
-    frame.size.height = textSize.height;
+    frame.origin.y = 12;
+    frame.size.height = textSize.height + 10;
     self.activityTitleLabel.frame = frame;
     
 }

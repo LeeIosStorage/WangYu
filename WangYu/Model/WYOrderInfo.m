@@ -16,7 +16,7 @@
 //        _amount = [dic stringObjectForKey:@"amount"];
         //防止出现类似8.800000000000001的情况
         NSNumberFormatter *formatter = [[NSNumberFormatter alloc]init];
-        formatter.numberStyle = NSNumberFormatterDecimalStyle;
+        formatter.numberStyle = kCFNumberFormatterDecimalStyle;
         _amount = [formatter stringFromNumber:[NSNumber numberWithDouble:[dic doubleValueForKey:@"amount"]]];
     }
     if ([dic stringObjectForKey:@"out_trade_no"]) {

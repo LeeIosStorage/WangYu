@@ -18,6 +18,7 @@
 		0715C3AF1B09EF7300C37F82 /* WYShareActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0715C3AE1B09EF7300C37F82 /* WYShareActionSheet.m */; };
 		071691EE1B1C4E49006A832E /* GameDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071691EC1B1C4E49006A832E /* GameDetailsViewController.m */; };
 		071691EF1B1C4E49006A832E /* GameDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071691ED1B1C4E49006A832E /* GameDetailsViewController.xib */; };
+		0718716E1B2571B400FE9A35 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0718716D1B2571B400FE9A35 /* TTTAttributedLabel.m */; };
 		071923CF1AF74D8400432531 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923C81AF74D8400432531 /* LoginViewController.m */; };
 		071923D01AF74D8400432531 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071923C91AF74D8400432531 /* LoginViewController.xib */; };
 		071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 071923CB1AF74D8400432531 /* NewIntroViewController.m */; };
@@ -315,6 +316,8 @@
 		071691EB1B1C4E49006A832E /* GameDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameDetailsViewController.h; sourceTree = "<group>"; };
 		071691EC1B1C4E49006A832E /* GameDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameDetailsViewController.m; sourceTree = "<group>"; };
 		071691ED1B1C4E49006A832E /* GameDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameDetailsViewController.xib; sourceTree = "<group>"; };
+		0718716C1B2571B400FE9A35 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		0718716D1B2571B400FE9A35 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		071923C71AF74D8400432531 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		071923C81AF74D8400432531 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		071923C91AF74D8400432531 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -953,6 +956,15 @@
 			path = Game;
 			sourceTree = "<group>";
 		};
+		0718716B1B2571B400FE9A35 /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				0718716C1B2571B400FE9A35 /* TTTAttributedLabel.h */,
+				0718716D1B2571B400FE9A35 /* TTTAttributedLabel.m */,
+			);
+			path = TTTAttributedLabel;
+			sourceTree = "<group>";
+		};
 		071923C61AF74D8400432531 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -1222,6 +1234,7 @@
 		073DBD171AE770F1009B49EB /* External */ = {
 			isa = PBXGroup;
 			children = (
+				0718716B1B2571B400FE9A35 /* TTTAttributedLabel */,
 				077F93C01B1DA66000BCF9AC /* JPush */,
 				077BF3A21B186BFC00450174 /* GMGridView */,
 				07A4279A1B183AEA009197D5 /* DVSwitch */,
@@ -2204,6 +2217,7 @@
 				077BF3A01B1865E400450174 /* AvatarListViewController.m in Sources */,
 				073DBD741AE778CF009B49EB /* WYUserInfo.m in Sources */,
 				078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */,
+				0718716E1B2571B400FE9A35 /* TTTAttributedLabel.m in Sources */,
 				0791AB5A1AE8DE260009A5A7 /* AFURLConnectionOperation.m in Sources */,
 				073DBD611AE7717D009B49EB /* NSDictionary+ObjectForKey.m in Sources */,
 				078E5AFA1B1BF0B90041C7D2 /* WYCommonWebVc.m in Sources */,

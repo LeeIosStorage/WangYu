@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "WYActivityInfo.h"
+#import "TTTAttributedLabel.h"
 
 @interface ApplyActivityViewCell : UITableViewCell
 
 @property (strong, nonatomic) WYActivityInfo *activityInfo;
 
 @property (strong, nonatomic) IBOutlet UIImageView *activityImageView;
-@property (strong, nonatomic) IBOutlet UILabel *activityTitleLabel;
+@property (strong, nonatomic) IBOutlet TTTAttributedLabel *activityTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *activityIntroLabel;
 
 @end

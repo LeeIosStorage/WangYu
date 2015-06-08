@@ -38,14 +38,16 @@
 -(void)setNewsInfo:(WYNewsInfo *)newsInfo{
     _newsInfo = newsInfo;
     [self.newsImageView sd_setImageWithURL:newsInfo.smallImageURL placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
+    self.newsTitleLabel.lineHeightMultiple = 0.8;
     self.newsTitleLabel.text = newsInfo.title;
     //self.newsBriefLabel.text = newsInfo.brief;
     
     CGRect frame = self.newsTitleLabel.frame;
     CGSize textSize = [WYCommonUtils sizeWithText:newsInfo.title font:self.newsTitleLabel.font width:SCREEN_WIDTH-117];
-    //    frame.size.width = textSize.width;
-    frame.size.height = textSize.height;
+    frame.origin.y = 12;
+    frame.size.height = textSize.height + 10;
     self.newsTitleLabel.frame = frame;
+    
     if (newsInfo.isSubject) {
         self.featureLabel.hidden = NO;
     }else{
