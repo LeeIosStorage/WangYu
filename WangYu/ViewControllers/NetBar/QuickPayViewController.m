@@ -78,6 +78,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [[WYPayManager shareInstance] removeListener:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -521,36 +526,37 @@
                 [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
                 return;
             }
-//            _redAmount = 0;
-//            _packetIds = [[NSMutableArray alloc]init];
-//            weakSelf.moneyLabel.hidden = YES;
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            dic = (NSMutableDictionary *)[jsonRet dictionaryObjectForKey:@"object"];
+            if ([[dic stringObjectForKey:@"return_code"] isEqualToString:@"FAIL"]) {
+                [WYProgressHUD AlertError:@"支付失败" At:weakSelf.view];
+                return;
+            }
+            if ([dic intValueForKey:@"self_pay"] == 1) {
+                [WYProgressHUD AlertSuccess:@"支付成功" At:weakSelf.view];
+                [weakSelf performSelector:@selector(goToOrderViewController) withObject:nil afterDelay:1.0];
+                return;
+            }
             if (weakSelf.isWeixin) {
-                dic = [jsonRet objectForKey:@"object"];
-                if ([[dic stringObjectForKey:@"return_code"] isEqualToString:@"FAIL"]) {
-                    [WYProgressHUD AlertError:@"支付失败" At:weakSelf.view];
-                    return;
-                }
-                if ([dic intValueForKey:@"self_pay"] == 1) {
-                    [WYProgressHUD AlertSuccess:@"支付成功" At:weakSelf.view];
-                    [weakSelf performSelector:@selector(goToOrderViewController) withObject:nil afterDelay:1.0];
-                    return;
-                }
                 [WYProgressHUD AlertLoadDone];
                 [[WYPayManager shareInstance] payForWinxinWith:dic];
             }else {
-                if ([dic intValueForKey:@"self_pay"] == 1) {
-                    [WYProgressHUD AlertSuccess:@"支付成功" At:weakSelf.view];
-                    [weakSelf performSelector:@selector(goToOrderViewController) withObject:nil afterDelay:1.0];
-                    return;
-                }
-                
                 [WYProgressHUD AlertLoadDone];
-                [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"orderId"] forKey:@"orderId"];
-                [dic setValue:[[jsonRet objectForKey:@"object"] objectForKey:@"out_trade_no"] forKey:@"out_trade_no"];
-                [dic setValue:weakSelf.netbarInfo.netbarName forKey:@"netbarName"];
-                [dic setValue:_needPayAmount forKey:@"amount"];
-                [[WYPayManager shareInstance] payForAlipayWith:dic];
+                
+                NSMutableDictionary *alipayDic = [NSMutableDictionary dictionary];
+                if ([dic stringObjectForKey:@"orderId"]) {
+                    [alipayDic setValue:[dic stringObjectForKey:@"orderId"] forKey:@"orderId"];
+                }
+                if ([dic stringObjectForKey:@"out_trade_no"]) {
+                    [alipayDic setValue:[dic stringObjectForKey:@"out_trade_no"] forKey:@"out_trade_no"];
+                }
+                if (weakSelf.netbarInfo.netbarName.length > 0) {
+                    [alipayDic setValue:weakSelf.netbarInfo.netbarName forKey:@"netbarName"];
+                }
+                if (_needPayAmount.length > 0) {
+                    [alipayDic setValue:_needPayAmount forKey:@"amount"];
+                }
+                [[WYPayManager shareInstance] payForAlipayWith:alipayDic];
             }
         }tag:tag];
     }
@@ -617,7 +623,13 @@
 
 #pragma mark -WYPayManagerListener
 - (void)payManagerResultStatus:(int)status payType:(int)payType{
-    if (status == 1) {
+    if (self.isBooked) {
+        if (status == 1) {
+            //预订订单加价支付成功 返回订单页。
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }else{
+        //一键支付 成功或失败都会生成支付订单 所以都跳支付订单页。
         [self performSelector:@selector(goToOrderViewController) withObject:nil afterDelay:1.0];
     }
 }
