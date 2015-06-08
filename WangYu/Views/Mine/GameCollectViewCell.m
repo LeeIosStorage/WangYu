@@ -35,6 +35,8 @@
     _gameInfo = gameInfo;
     [self.gameImageView sd_setImageWithURL:gameInfo.gameIconUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
     self.gameTitleLabel.text = gameInfo.gameName;
+    
+    self.gameIntroLabel.lineHeightMultiple = 0.8;
     self.gameIntroLabel.text = gameInfo.gameIntro;
 }
 

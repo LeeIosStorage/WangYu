@@ -67,8 +67,11 @@
 @implementation NetbarMapViewController
 
 -(void)dealloc{
-    _mapView.delegate = nil;
-    _mapView = nil;
+    
+    WYLog(@"NetbarMapViewController dealloc !!");
+    self.mapView.delegate = nil;
+    [self setMapView:nil];
+    [self setMRgeo:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -127,6 +130,13 @@
 //        frame = CGRectMake(SCREEN_WIDTH - 70, self.mapView.bounds.size.height - 74, 36, 36);
 //        _currentLocationBtn.frame = frame;
     }
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    //定位
+    self.mapView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -679,6 +689,7 @@
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
+    WYLog(@"didSelectAnnotationView \n");
     if ([view.annotation isKindOfClass:[BasicMapAnnotation class]]) {
         
         BasicMapAnnotation *annotation = (BasicMapAnnotation *)view.annotation;
@@ -704,6 +715,7 @@
 
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
 {
+    WYLog(@"didDeselectAnnotationView \n");
 //    if (_calloutAnnotation)
 //    {
 //        if (_calloutAnnotation.coordinate.latitude == view.annotation.coordinate.latitude&&
@@ -717,6 +729,7 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
+    WYLog(@"viewForAnnotation \n");
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
     }
@@ -764,6 +777,7 @@
             if ([vc isKindOfClass:[NetbarDetailViewController class]]) {
                 NetbarDetailViewController *ndVc = (NetbarDetailViewController *)vc;
                 if ([ndVc.netbarInfo.nid isEqualToString:netbarInfo.nid]) {
+                    self.mapView.showsUserLocation = NO;//popToViewController的时候showsUserLocation设置NO 防止 CRASH
                     [self.navigationController popToViewController:ndVc animated:YES];
                     return;
                 }

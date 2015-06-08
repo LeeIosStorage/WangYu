@@ -120,7 +120,9 @@
 }
 
 - (BOOL)loginButtonEnabled{
-    if ([[_accountTextField text] isPhone] && ([_passwordTextField text].length >= 6 &&[_passwordTextField text].length <= 15)) {
+    
+    NSString *passwordText = [_passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([[_accountTextField text] isPhone] && (passwordText.length >= 6 &&passwordText.length <= 15)) {
         _loginButton.enabled = YES;
         self.loginButton.backgroundColor = SKIN_COLOR;
         return YES;

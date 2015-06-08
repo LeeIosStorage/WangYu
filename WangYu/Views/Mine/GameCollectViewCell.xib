@@ -35,9 +35,9 @@
                         <rect key="frame" x="0.0" y="92" width="320" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jPU-Ai-8dI">
-                        <rect key="frame" x="106" y="51" width="202" height="29"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jPU-Ai-8dI" customClass="TTTAttributedLabel">
+                        <rect key="frame" x="106" y="49" width="202" height="37"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="13"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -46,7 +46,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="gameImageView" destination="bIR-Oh-V9F" id="L6z-3R-MDv"/>
-                <outlet property="gameIntroLabel" destination="jPU-Ai-8dI" id="2Ib-YT-9nj"/>
+                <outlet property="gameIntroLabel" destination="jPU-Ai-8dI" id="UgF-Jo-1Ak"/>
                 <outlet property="gameTitleLabel" destination="iTI-f1-h9r" id="mNm-N9-tYg"/>
             </connections>
             <point key="canvasLocation" x="247" y="276"/>
