@@ -8,6 +8,7 @@
 
 #import "WYShareManager.h"
 #import "WYProgressHUD.h"
+#import "WYAlertView.h"
 
 static WYShareManager* wy_shareManager = nil;
 
@@ -50,7 +51,7 @@ static WYShareManager* wy_shareManager = nil;
         NSLog(@"not support or not install weixin");
         [WYUIUtils showAlertWithMsg:@"微信未安装！"];
         return NO;
-    }
+    } 
     
     WXMediaMessage *msg = [WXMediaMessage message];
     msg.title = title;
@@ -101,6 +102,19 @@ static WYShareManager* wy_shareManager = nil;
 }
 
 - (void)shareToWb:(WYWeiboShareResultBlock)result title:(NSString *)title description:(NSString *)description webpageUrl:(NSString *)webpageUrl image:(UIImage*)image VC:(id)VC{
+    if (!([WeiboSDK isWeiboAppInstalled])) {
+//        WYAlertView *alert = [[WYAlertView alloc] initWithTitle:@"提示" message:@"微博未安装，是否前往安装" cancelButtonTitle:@"取消" cancelBlock:^{
+//            
+//        } okButtonTitle:@"确定" okBlock:^{
+//            [[UIApplication sharedApplication] openURL: [NSURL URLWithString:[WeiboSDK getWeiboAppInstallUrl]]];
+//        }];
+//        [alert show];
+//        return;
+        NSLog(@"not support or not install weixin");
+        [WYUIUtils showAlertWithMsg:@"微博未安装！"];
+        return;
+    }
+
     self.shareBlock = result;
     
     /*****多媒体

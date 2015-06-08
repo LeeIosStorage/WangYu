@@ -22,6 +22,7 @@
 #import "WYMatchWarInfo.h"
 #import "NetbarMapViewController.h"
 #import "WYLinkerHandler.h"
+#import "AppDelegate.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate,WYPhotoGroupDelegate>
 {
@@ -31,6 +32,7 @@
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic) IBOutlet UIView *maskView;
 @property (strong, nonatomic) IBOutlet UIScrollView *imageScrollView;
+@property (strong, nonatomic) IBOutlet UIView *footerView;
 
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImage;
 @property (strong, nonatomic) IBOutlet UITableView *teamTable;
@@ -51,6 +53,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *collectButton;
 @property (strong, nonatomic) IBOutlet UIButton *shareButton;
 @property (strong, nonatomic) IBOutlet UIButton *publicButton;
+@property (strong, nonatomic) IBOutlet UIButton *publicButton2;
 @property (strong, nonatomic) IBOutlet UILabel *picLabel;
 
 - (IBAction)bookAction:(id)sender;
@@ -73,6 +76,10 @@
     [self refreshHeaderView];
     [self getCacheNetbarInfo];
     [self getNetbarInfo];
+    
+    self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.teamTable];
+    self.pullRefreshView.delegate = self;
+    [self.teamTable addSubview:self.pullRefreshView];
 }
 
 - (void)refreshUI {
@@ -131,6 +138,14 @@
     [self.publicButton.layer setCornerRadius:4.0];
     [self.publicButton.layer setBorderWidth:0.5];
     [self.publicButton.layer setBorderColor:UIColorToRGB(0xadadad).CGColor];
+    
+    self.publicButton2.titleLabel.font = SKIN_FONT_FROMNAME(14);
+    [self.publicButton2 setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
+    [self.publicButton2.layer setMasksToBounds:YES];
+    [self.publicButton2.layer setCornerRadius:4.0];
+    [self.publicButton2.layer setBorderWidth:0.5];
+    [self.publicButton2.layer setBorderColor:UIColorToRGB(0xadadad).CGColor];
+    
 }
 
 - (void)refreshHeaderView {
@@ -186,6 +201,15 @@
     }
 }
 
+- (void)refreshFooterView {
+    if(self.netbarInfo.matches.count > 0){
+        self.teamTable.tableFooterView = self.footerView;
+    }else{
+        self.teamTable.tableFooterView = nil;
+    }
+    [self.teamTable reloadData];
+}
+
 -(void)getCacheNetbarInfo{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
@@ -199,6 +223,7 @@
             NSDictionary *dic = [jsonRet objectForKey:@"object"];
             [weakSelf.netbarInfo setNetbarInfoByJsonDic:dic];
             [weakSelf refreshHeaderView];
+            [weakSelf refreshFooterView];
         }
     }];
 }
@@ -208,7 +233,8 @@
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] getNetbarDetailWithUid:[WYEngine shareInstance].uid netbarId:self.netbarInfo.nid tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        [WYProgressHUD AlertLoadDone];
+//        [WYProgressHUD AlertLoadDone];
+        [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -219,8 +245,8 @@
         }
         NSDictionary *dic = [jsonRet objectForKey:@"object"];
         [weakSelf.netbarInfo setNetbarInfoByJsonDic:dic];
-        [weakSelf refreshUI];
         [weakSelf refreshHeaderView];
+        [weakSelf refreshFooterView];
     }tag:tag];
 }
 
@@ -373,6 +399,9 @@
 }
 
 - (IBAction)publicAction:(id)sender {
+    if ([[WYEngine shareInstance] needUserLogin:@"注册或登录后才能发起约战"]) {
+        return;
+    }
     id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/release?userId=%@&token=%@&netbarId=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token, self.netbarInfo.nid] From:self.navigationController];
     if (vc) {
         [self.navigationController pushViewController:vc animated:YES];
@@ -401,5 +430,17 @@
 - (BOOL)prefersStatusBarHidden{
     return _bHidden;
 }
+
+#pragma mark PullToRefreshViewDelegate
+- (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {
+    if (view == self.pullRefreshView) {
+        [self getNetbarInfo];
+    }
+}
+
+- (NSDate *)pullToRefreshViewLastUpdated:(PullToRefreshView *)view {
+    return [NSDate date];
+}
+
 
 @end

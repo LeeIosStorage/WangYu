@@ -795,6 +795,9 @@
 }
 
 - (IBAction)publicAction:(id)sender {
+    if ([[WYEngine shareInstance] needUserLogin:@"注册或登录后才能发起约战"]) {
+        return;
+    }
     id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/release?userId=%@&token=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
     if (vc) {
         [self.navigationController pushViewController:vc animated:YES];

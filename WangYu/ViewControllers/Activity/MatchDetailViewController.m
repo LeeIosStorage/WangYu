@@ -327,11 +327,6 @@
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
 
-- (void)showAlertView {
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"各种H5" message:@"H5页跳转" cancelButtonTitle:@"确定"];
-    [alertView show];
-}
-
 - (IBAction)showMatchAction:(id)sender {
     if ([self.activityInfo.newsId isEqualToString:@"0"]) {
         WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"" message:@"暂无赛事资讯" cancelButtonTitle:@"确定"];

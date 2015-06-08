@@ -550,16 +550,8 @@
     [_bookTable reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-- (void)signOutAndLogin{
-    AppDelegate * appDelgate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    WYLog(@"signOut for user logout from SettingViewController");
-    [appDelgate signOut];
-    [[WYEngine shareInstance] visitorLogin];
-}
-
 - (IBAction)bookAction:(id)sender {
-    if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
-        [self signOutAndLogin];
+    if ([[WYEngine shareInstance] needUserLogin:@"注册或登录后才能预订网吧"]) {
         return;
     }
     [self doforEndEdit];

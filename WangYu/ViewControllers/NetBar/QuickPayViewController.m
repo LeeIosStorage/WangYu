@@ -453,20 +453,12 @@
     }
 }
 
-- (void)signOutAndLogin{
-    AppDelegate * appDelgate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    WYLog(@"signOut for user logout from SettingViewController");
-    [appDelgate signOut];
-    [[WYEngine shareInstance] visitorLogin];
-}
-
 - (IBAction)netbarAction:(id)sender {
       [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)payAction:(id)sender {
-    if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
-        [self signOutAndLogin];
+    if ([[WYEngine shareInstance] needUserLogin:@"注册或登录后才能支付费用"]) {
         return;
     }
     

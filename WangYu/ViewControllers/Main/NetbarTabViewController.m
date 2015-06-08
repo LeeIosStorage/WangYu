@@ -282,8 +282,6 @@
 
 - (void)serviceAction {
     [self searchNetbarAction:nil];
-//    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"客服" message:@"H5页跳转" cancelButtonTitle:@"确定"];
-//    [alertView show];
 }
 
 - (void)chooseCityAction:(id)sender{
@@ -500,6 +498,9 @@
 }
 
 - (IBAction)packetAction:(id)sender {
+    if ([[WYEngine shareInstance] needUserLogin:@"注册或登录后才能领取红包"]) {
+        return;
+    }
     id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/redbag/web/getRedbag?userId=%@&token=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
     if (vc) {
         [self.navigationController pushViewController:vc animated:YES];

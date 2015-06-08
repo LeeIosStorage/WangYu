@@ -331,7 +331,7 @@ static WYEngine* s_ShareInstance = nil;
         if (message == nil) {
             message = @"请登录";
         }
-        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:message cancelButtonTitle:@"取消" cancelBlock:^{
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"温馨提示" message:message cancelButtonTitle:@"取消" cancelBlock:^{
         } okButtonTitle:@"登录" okBlock:^{
             [self gotoLogin];
         }];
