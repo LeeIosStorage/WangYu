@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WYGameInfo.h"
+#import "TTTAttributedLabel.h"
 
 @interface GameCollectViewCell : UITableViewCell
 
@@ -15,6 +16,6 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *gameImageView;
 @property (strong, nonatomic) IBOutlet UILabel *gameTitleLabel;
-@property (strong, nonatomic) IBOutlet UILabel *gameIntroLabel;
+@property (strong, nonatomic) IBOutlet TTTAttributedLabel *gameIntroLabel;
 
 @end
