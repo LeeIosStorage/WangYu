@@ -43,7 +43,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    [self checkVersion];
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 //    
     application.statusBarHidden = NO;
@@ -139,13 +139,20 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     WYTabBarViewController* tabViewController = [[WYTabBarViewController alloc] init];
     tabViewController.delegate = self;
-    tabViewController.viewControllers = [NSArray arrayWithObjects:
-                                         [[NetbarTabViewController alloc] init],
-                                         [[ActivityTabViewController alloc] init],
-                                         [[GameCommendViewController alloc] init],
-                                         [[MineTabViewController alloc] init],
-                                         nil];
-    
+    if (_bHidden) {
+        tabViewController.viewControllers = [NSArray arrayWithObjects:
+                                             [[NetbarTabViewController alloc] init],
+                                             [[ActivityTabViewController alloc] init],
+                                             [[MineTabViewController alloc] init],
+                                             nil];
+    }else{
+        tabViewController.viewControllers = [NSArray arrayWithObjects:
+                                             [[NetbarTabViewController alloc] init],
+                                             [[ActivityTabViewController alloc] init],
+                                             [[GameCommendViewController alloc] init],
+                                             [[MineTabViewController alloc] init],
+                                             nil];
+    }
     _mainTabViewController = tabViewController;
     
     WYNavigationController* tabNavVc = [[WYNavigationController alloc] initWithRootViewController:tabViewController];
@@ -344,6 +351,32 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     WYLog(@"tagsWithAliasCallback jsonString = %@",jsonString);
     
+}
+
+- (void)checkVersion{
+
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    //去服务器取版本信息
+    [[WYEngine shareInstance] getAppNewVersionWithTag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        if (!jsonRet || err){
+            return ;
+        }
+        _bHidden = [[jsonRet objectForKey:@"object"] boolValueForKey:@"hiddenElement"];
+        NSLog(@"bHidden===========%d",_bHidden);
+//        NSString *localVserion = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+//        NSString* version = nil;
+//            
+//        version = [jsonRet stringObjectForKey:@"object"];
+        
+        //            NSString* checkedVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"checkedVersion"];
+        //            if ([checkedVersion isEqualToString:version]) {
+        //                return;
+        //            }
+        //            [[NSUserDefaults standardUserDefaults] setObject:version forKey:@"checkedVersion"];
+ 
+    } tag:tag];
+
 }
 
 @end

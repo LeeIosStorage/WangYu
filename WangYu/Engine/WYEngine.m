@@ -142,7 +142,7 @@ static WYEngine* s_ShareInstance = nil;
     if (self.serverPlatform == TestPlatform) {
         API_URL = @"http://192.168.16.29";
     } else {
-        API_URL = @"http://api.test.wangyuhudong.com";
+        API_URL = @"http://192.168.16.29";
     }
 }
 
@@ -655,6 +655,12 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:invitationCode forKey:@"invitationCode"];
     }
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/checkInvitationCode",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)getAppNewVersionWithTag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/settings/version/client/ios",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
