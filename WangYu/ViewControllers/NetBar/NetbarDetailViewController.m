@@ -226,6 +226,7 @@
             [weakSelf.netbarInfo setNetbarInfoByJsonDic:dic];
             [weakSelf refreshHeaderView];
             [weakSelf refreshFooterView];
+            [weakSelf refreshUI];
         }
     }];
 }

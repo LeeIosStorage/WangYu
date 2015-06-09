@@ -43,6 +43,9 @@
         }else if ([[realUrl host] isEqualToString:@"match"]){
             //约战消息
             
+        }else if ([[realUrl host] isEqualToString:@"redbag_weekly"]){
+            //每周红包推送消息
+            
         }
         return nil;
         
