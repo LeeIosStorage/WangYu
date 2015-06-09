@@ -26,6 +26,9 @@
 #import "APService.h"
 #import "WYLinkerHandler.h"
 
+#define kAppCheckNumKey @"kAppCheckNumKey"
+#define kAppCheckBoolKey @"kAppCheckBoolKey"
+
 @interface AppDelegate () <WYTabBarControllerDelegate,WXApiDelegate>
 
 @property (nonatomic, strong) NewIntroViewController *introView;
@@ -43,7 +46,13 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [self checkVersion];
+    //检测一下你懂的
+    NSInteger checkNum = [[NSUserDefaults standardUserDefaults] integerForKey:kAppCheckNumKey];
+    _bHidden = [[NSUserDefaults standardUserDefaults] boolForKey:kAppCheckBoolKey];
+    if (checkNum == 0) {
+        [[NSUserDefaults standardUserDefaults] setInteger:checkNum + 1 forKey:kAppCheckNumKey];
+        [self checkVersion];
+    }
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 //    
     application.statusBarHidden = NO;
@@ -354,7 +363,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 }
 
 - (void)checkVersion{
-
     int tag = [[WYEngine shareInstance] getConnectTag];
     //去服务器取版本信息
     [[WYEngine shareInstance] getAppNewVersionWithTag:tag];
@@ -363,20 +371,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             return ;
         }
         _bHidden = [[jsonRet objectForKey:@"object"] boolValueForKey:@"hiddenElement"];
-        NSLog(@"bHidden===========%d",_bHidden);
-//        NSString *localVserion = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
-//        NSString* version = nil;
-//            
-//        version = [jsonRet stringObjectForKey:@"object"];
-        
-        //            NSString* checkedVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"checkedVersion"];
-        //            if ([checkedVersion isEqualToString:version]) {
-        //                return;
-        //            }
-        //            [[NSUserDefaults standardUserDefaults] setObject:version forKey:@"checkedVersion"];
- 
+        [[NSUserDefaults standardUserDefaults] setBool:_bHidden forKey:kAppCheckBoolKey];
     } tag:tag];
-
 }
 
 @end
