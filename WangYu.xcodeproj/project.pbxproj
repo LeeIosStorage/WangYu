@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		070DCBDF1B00762F00B27C19 /* OrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 070DCBDD1B00762F00B27C19 /* OrdersViewController.m */; };
 		070DCBE01B00762F00B27C19 /* OrdersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 070DCBDE1B00762F00B27C19 /* OrdersViewController.xib */; };
+		07115AA81B26C6A100582008 /* UIView+Genie.m in Sources */ = {isa = PBXBuildFile; fileRef = 07115AA71B26C6A100582008 /* UIView+Genie.m */; };
 		0715C3A41B09AD6F00C37F82 /* MapChooseAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0715C39F1B09AD6F00C37F82 /* MapChooseAnnotationView.m */; };
 		0715C3A51B09AD6F00C37F82 /* MapChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0715C3A11B09AD6F00C37F82 /* MapChooseViewController.m */; };
 		0715C3A61B09AD6F00C37F82 /* MapChooseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0715C3A21B09AD6F00C37F82 /* MapChooseViewController.xib */; };
@@ -302,6 +303,8 @@
 		070DCBDC1B00762F00B27C19 /* OrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdersViewController.h; sourceTree = "<group>"; };
 		070DCBDD1B00762F00B27C19 /* OrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrdersViewController.m; sourceTree = "<group>"; };
 		070DCBDE1B00762F00B27C19 /* OrdersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrdersViewController.xib; sourceTree = "<group>"; };
+		07115AA61B26C6A100582008 /* UIView+Genie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Genie.h"; sourceTree = "<group>"; };
+		07115AA71B26C6A100582008 /* UIView+Genie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Genie.m"; sourceTree = "<group>"; };
 		0715C39E1B09AD6F00C37F82 /* MapChooseAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapChooseAnnotationView.h; sourceTree = "<group>"; };
 		0715C39F1B09AD6F00C37F82 /* MapChooseAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapChooseAnnotationView.m; sourceTree = "<group>"; };
 		0715C3A01B09AD6F00C37F82 /* MapChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapChooseViewController.h; sourceTree = "<group>"; };
@@ -946,6 +949,15 @@
 			path = Mine;
 			sourceTree = "<group>";
 		};
+		07115AA51B26C6A100582008 /* GenieEffect */ = {
+			isa = PBXGroup;
+			children = (
+				07115AA61B26C6A100582008 /* UIView+Genie.h */,
+				07115AA71B26C6A100582008 /* UIView+Genie.m */,
+			);
+			path = GenieEffect;
+			sourceTree = "<group>";
+		};
 		071691EA1B1C4E24006A832E /* Game */ = {
 			isa = PBXGroup;
 			children = (
@@ -1234,6 +1246,7 @@
 		073DBD171AE770F1009B49EB /* External */ = {
 			isa = PBXGroup;
 			children = (
+				07115AA51B26C6A100582008 /* GenieEffect */,
 				0718716B1B2571B400FE9A35 /* TTTAttributedLabel */,
 				077F93C01B1DA66000BCF9AC /* JPush */,
 				077BF3A21B186BFC00450174 /* GMGridView */,
@@ -2327,6 +2340,7 @@
 				073DBD511AE7712F009B49EB /* UIImageView+WebCache.m in Sources */,
 				077BF3B21B186BFD00450174 /* UIGestureRecognizer+GMGridViewAdditions.m in Sources */,
 				078FD0401B05FC8D00CBD699 /* LocationViewController.m in Sources */,
+				07115AA81B26C6A100582008 /* UIView+Genie.m in Sources */,
 				0777DFD51B01C7E100E1E314 /* QuickBookCell.m in Sources */,
 				079049461AEA15EB00E46795 /* WYQuery.m in Sources */,
 				073DBD471AE7712F009B49EB /* SDWebImageDecoder.m in Sources */,

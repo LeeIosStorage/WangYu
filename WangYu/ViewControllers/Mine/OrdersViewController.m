@@ -512,9 +512,9 @@
 - (void)affirmGoNetBar:(WYOrderInfo *)orderInfo{
     
     WS(weakSelf);
-    [WYProgressHUD AlertLoading:@"发送中..." At:weakSelf.view];
+    [WYProgressHUD AlertLoading:@"确认中..." At:weakSelf.view];
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] reservePayWithUid:[WYEngine shareInstance].uid body:orderInfo.netbarName orderId:orderInfo.orderId packetsId:nil type:0 tag:tag];
+    [[WYEngine shareInstance] confirmReserveWithUid:[WYEngine shareInstance].uid reserveId:orderInfo.reserveId tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
@@ -524,7 +524,7 @@
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
             return;
         }
-        [WYProgressHUD AlertSuccess:@"发送成功" At:weakSelf.view];
+        [WYProgressHUD AlertSuccess:@"确认成功" At:weakSelf.view];
 //        NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
         orderInfo.isValid = 2;
         orderInfo.status = 1;

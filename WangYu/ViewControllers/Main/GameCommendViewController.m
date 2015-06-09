@@ -17,6 +17,7 @@
 #import "WYTabBarViewController.h"
 #import "AppDelegate.h"
 #import "WYUserGuideConfig.h"
+#import "UIView+Genie.h"
 
 @interface GameCommendViewController () <ZLSwipeableViewDataSource,
 ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
@@ -29,6 +30,7 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
 @property (nonatomic, strong) IBOutlet UILabel *collectLabel;
 @property (nonatomic, strong) IBOutlet UIButton *downloadButton;
 @property (nonatomic, strong) IBOutlet UILabel *downloadLabel;
+@property (nonatomic, strong) IBOutlet UIView *likeAnimationView;
 
 @property (nonatomic, strong) NSMutableArray *gameCommendInfos;
 @property (nonatomic, assign) NSUInteger gameIndex;
@@ -260,7 +262,6 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
         frame.origin.y += 10;
     }
     self.handleView.frame = frame;
-    
 }
 
 -(void)refreshGameCardViewUI{
@@ -283,6 +284,29 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
         }
     }
 
+}
+
+-(void)likeViewAnimation:(BOOL)animation{
+    if (animation) {
+        CGSize likeSize = CGSizeMake(14, 14);
+        CGRect startRect = CGRectMake(self.collectButton.frame.origin.x + self.collectButton.frame.size.width/2-likeSize.width/2, self.handleView.frame.origin.y, likeSize.width, likeSize.height);
+        UIView *likeView = [[UIView alloc] initWithFrame:startRect];
+        likeView.backgroundColor = [UIColor clearColor];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, likeSize.width, likeSize.height)];
+        imageView.image = [UIImage imageNamed:@"game_like_icon_selected"];
+        [likeView addSubview:imageView];
+        
+        likeView.hidden = NO;
+        [self.view addSubview:likeView];
+        
+        CGRect endRect = CGRectMake(SCREEN_WIDTH - 60 - 14, self.titleNavBar.frame.origin.y + self.titleNavBar.frame.size.height + 12 + 54, 14,14);
+        [likeView genieInTransitionWithDuration:1.0 destinationRect:endRect destinationEdge:BCRectEdgeBottom completion:^{
+//            likeView.transform = CGAffineTransformMakeRotation(360 *M_PI / 180.0);
+            [likeView removeFromSuperview];
+        }];
+    }else{
+        
+    }
 }
 
 -(void)collectGame{
@@ -309,6 +333,7 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
                 }
             }
             [WYProgressHUD AlertSuccess:@"游戏收藏成功" At:weakSelf.view];
+            [weakSelf likeViewAnimation:YES];
         }else{
             for (WYGameInfo *gameInfo in self.gameCommendInfos) {
                 if ([gameInfo.gameId isEqualToString:_selectedGameInfo.gameId]) {
