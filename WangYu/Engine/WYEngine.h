@@ -164,7 +164,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //专题详情
 - (BOOL)getTopicsInfoWithTag:(int)tag;
 //专题资讯列表
-- (BOOL)getTopicsListWithTid:(NSString *)tid Tag:(int)tag;
+- (BOOL)getTopicsListWithTid:(NSString *)tid page:(int)page pageSize:(int)pageSize tag:(int)tag;
 
 #pragma mark - 手游
 //手游列表

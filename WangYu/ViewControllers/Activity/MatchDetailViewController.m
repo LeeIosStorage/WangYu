@@ -52,6 +52,7 @@
     // Do any additional setup after loading the view from its nib.
     self.matchTableView.tableHeaderView = self.headerView;
     self.matchTableView.tableFooterView = self.footerView;
+    [self getCacheActivityInfo];
     [self getActivityInfo];
     [self refreshFloatView];
 }
@@ -158,6 +159,25 @@
     NSLog(@"===========");
 }
 
+-(void)getCacheActivityInfo{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] addGetCacheTag:tag];
+     [[WYEngine shareInstance] getActivityDetailWithUid:[WYEngine shareInstance].uid activityId:self.activityInfo.aId tag:tag];
+    
+    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+        if (jsonRet == nil) {
+            //...
+        }else{
+            NSDictionary *dic = [jsonRet objectForKey:@"object"];
+            [weakSelf.activityInfo setActivityInfoByJsonDic:dic];
+            [weakSelf refreshHeaderView];
+            [weakSelf refreshFooterView];
+            [weakSelf.matchTableView reloadData];
+        }
+    }];
+}
+
 - (void)getActivityInfo {
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
@@ -246,7 +266,7 @@
                 cell.titleLabel.text = @"比赛地点";
                 cell.indicatorImage.hidden = NO;
                 cell.topline.hidden = YES;
-                [cell setbottomLineWithType:0];
+                [cell setbottomLineWithType:1];
                 break;
             }
 //            else if (indexPath.row == 2){

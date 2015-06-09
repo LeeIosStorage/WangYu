@@ -29,8 +29,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self getCacheMatchInfos];
     [self getMatchInfos];
-    
     UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 19)];
     footer.userInteractionEnabled = NO;
     footer.backgroundColor = [UIColor clearColor];
@@ -45,6 +45,31 @@
 
 -(void)initNormalTitleNavBarSubviews{
     [self setTitle:@"比赛地点"];
+}
+
+-(void)getCacheMatchInfos{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] addGetCacheTag:tag];
+    [[WYEngine shareInstance] getActivityAddressWithUid:[WYEngine shareInstance].uid activityId:self.activityId tag:tag];
+    
+    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+        if (jsonRet == nil) {
+            //...
+        }else{
+            weakSelf.matchInfos = [NSMutableArray array];
+            NSArray *matchDicArray = [jsonRet arrayObjectForKey:@"object"];
+            for (NSDictionary *dic in matchDicArray) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                WYMatchInfo *matchInfo = [[WYMatchInfo alloc] init];
+                [matchInfo setMatchInfoByJsonDic:dic];
+                [weakSelf.matchInfos addObject:matchInfo];
+            }
+            [weakSelf.placeTableView reloadData];
+        }
+    }];
 }
 
 - (void)getMatchInfos {
@@ -114,17 +139,9 @@
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
 
-- (void)signOutAndLogin{
-    AppDelegate * appDelgate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    WYLog(@"signOut for user logout from SettingViewController");
-    [appDelgate signOut];
-    [[WYEngine shareInstance] visitorLogin];
-}
-
 #pragma mark - MatchPlaceCellDelegate
 - (void)matchPlaceCellClickWithCell:(id)cell{
-    if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
-        [self signOutAndLogin];
+    if ([[WYEngine shareInstance] needUserLogin:@"注册或登录后才能报名参赛"]) {
         return;
     }
     NSIndexPath* indexPath = [self.placeTableView indexPathForCell:cell];

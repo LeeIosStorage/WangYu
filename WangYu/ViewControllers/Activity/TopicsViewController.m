@@ -13,6 +13,7 @@
 #import "WYNewsInfo.h"
 #import "UIImageView+WebCache.h"
 #import "WYLinkerHandler.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 @interface TopicsViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -21,6 +22,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *headerImageView;
 @property (strong, nonatomic) IBOutlet UILabel *headerLabel;
 @property (strong, nonatomic) NSMutableArray *topicsInfos;
+@property (assign, nonatomic) SInt32  nextCursor;
+@property (assign, nonatomic) BOOL canloadMore;
 
 @end
 
@@ -31,7 +34,61 @@
     // Do any additional setup after loading the view from its nib.
     self.topicsTableView.tableHeaderView = self.headerView;
     [self refreshHeaderView];
-    [self refreshTopicsInfo];
+    [self getCacheTopicsInfo];
+    [self getTopicsInfo];
+    
+    self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.topicsTableView];
+    self.pullRefreshView.delegate = self;
+    [self.topicsTableView addSubview:self.pullRefreshView];
+    
+    WS(weakSelf);
+    [self.topicsTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.canloadMore) {
+            [weakSelf.topicsTableView.infiniteScrollingView stopAnimating];
+            weakSelf.topicsTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getTopicsListWithTid:weakSelf.newsInfo.nid page:weakSelf.nextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.topicsTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *activityDicArray = [[[jsonRet objectForKey:@"object"] objectForKey:@"subjects"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in activityDicArray) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                WYNewsInfo *topicsInfo = [[WYNewsInfo alloc] init];
+                [topicsInfo setNewsInfoByJsonDic:dic];
+                [weakSelf.topicsInfos addObject:topicsInfo];
+            }
+            weakSelf.canloadMore = [[[[jsonRet objectForKey:@"object"] objectForKey:@"subjects"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.canloadMore) {
+                weakSelf.topicsTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.topicsTableView.showsInfiniteScrolling = YES;
+                weakSelf.nextCursor ++;
+            }
+            
+            [weakSelf.topicsTableView reloadData];
+            
+        } tag:tag];
+    }];
+    weakSelf.topicsTableView.showsInfiniteScrolling = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,10 +110,41 @@
     self.headerLabel.text = self.newsInfo.title;
 }
 
-- (void)refreshTopicsInfo {
+-(void)getCacheTopicsInfo{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getTopicsListWithTid:@"1" Tag:tag];
+    [[WYEngine shareInstance] addGetCacheTag:tag];
+    [[WYEngine shareInstance] getTopicsListWithTid:@"1" page:1 pageSize:10 tag:tag];
+    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+        if (jsonRet == nil) {
+            //...
+        }else{
+            weakSelf.newsInfo = [[WYNewsInfo alloc] init];
+            NSMutableDictionary *newsDic = [[jsonRet objectForKey:@"object"] objectForKey:@"detail"];
+            [weakSelf.newsInfo setNewsInfoByJsonDic:newsDic];
+            
+            weakSelf.topicsInfos = [NSMutableArray array];
+            NSArray *activityDicArray = [[[jsonRet objectForKey:@"object"] objectForKey:@"subjects"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in activityDicArray) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                WYNewsInfo *topicsInfo = [[WYNewsInfo alloc] init];
+                [topicsInfo setNewsInfoByJsonDic:dic];
+                [weakSelf.topicsInfos addObject:topicsInfo];
+            }
+            [weakSelf refreshHeaderView];
+            [weakSelf.topicsTableView reloadData];
+        }
+    }];
+}
+
+
+- (void)getTopicsInfo {
+    _nextCursor = 1;
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getTopicsListWithTid:self.newsInfo.nid page:self.nextCursor pageSize:10 tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         //        [WYProgressHUD AlertLoadDone];
         [self.pullRefreshView finishedLoading];
@@ -84,6 +172,14 @@
         }
         [weakSelf refreshHeaderView];
         [weakSelf.topicsTableView reloadData];
+        weakSelf.canloadMore = [[[[jsonRet objectForKey:@"object"] objectForKey:@"subjects" ] objectForKey:@"isLast"] boolValue];
+        if (weakSelf.canloadMore) {
+            weakSelf.topicsTableView.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.topicsTableView.showsInfiniteScrolling = YES;
+            //可以加载更多
+            weakSelf.nextCursor ++;
+        }
     }tag:tag];
 }
 
@@ -126,6 +222,23 @@
     }
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+}
+
+#pragma mark PullToRefreshViewDelegate
+- (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {
+    if (view == self.pullRefreshView) {
+        [self getTopicsInfo];
+    }
+}
+
+- (NSDate *)pullToRefreshViewLastUpdated:(PullToRefreshView *)view {
+    return [NSDate date];
+}
+
+- (void)dealloc {
+    WYLog(@"TopicsViewController dealloc!!!");
+    _topicsTableView.delegate = nil;
+    _topicsTableView.dataSource = nil;
 }
 
 @end

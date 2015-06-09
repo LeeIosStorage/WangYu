@@ -67,7 +67,10 @@ enum TABLEVIEW_SECTION_INDEX {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFriendTimelineUreadEvent) name:WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION object:nil];
     
     [self refreshUI];
-    
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 19)];
+    footer.userInteractionEnabled = NO;
+    footer.backgroundColor = [UIColor clearColor];
+    _tableView.tableFooterView = footer;
 }
 
 - (void)handleUserInfoChanged:(NSNotification *)notification{
