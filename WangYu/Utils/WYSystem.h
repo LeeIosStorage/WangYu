@@ -21,6 +21,7 @@
 #define SINA_ID                     @"3734649134"
 #define SINA_Secret                 @"57bba34da9bae335b351f2057283bbf1"
 #define Sina_RedirectURL            @"http://www.wangyuhudong.com"
+#define UMS_APPKEY                  @"556beab167e58e5552001ece"
 
 //支付宝
 #define AliPay_PID                      @"2088811682564735"

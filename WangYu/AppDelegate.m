@@ -25,6 +25,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "APService.h"
 #import "WYLinkerHandler.h"
+#import "MobClick.h"
 
 #define kAppCheckNumKey @"kAppCheckNumKey"
 #define kAppCheckBoolKey @"kAppCheckBoolKey"
@@ -61,7 +62,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
     [WXApi registerApp:WX_ID withDescription:@"WY"];
-    
+    //友盟统计
+    [MobClick startWithAppkey:UMS_APPKEY reportPolicy:BATCH channelId:@"AppStore"];
     //JPush注册
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
