@@ -17,6 +17,7 @@
 #import "QuickPayViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "WYPayManager.h"
+#import "WYAlertView.h"
 
 #define ORDER_TYPE_RESERVE     0
 #define ORDER_TYPE_PAY         1
@@ -457,7 +458,13 @@
         return;
     }
     WYOrderInfo* orderInfo = _reserveOrderList[indexPath.row];
-    [self cancelReserveOrder:orderInfo];
+    WS(weakSelf);
+    WYAlertView *alert = [[WYAlertView alloc] initWithTitle:nil message:@"确认取消订单吗?" cancelButtonTitle:@"取消" cancelBlock:^{
+        
+    } okButtonTitle:@"确认" okBlock:^{
+        [weakSelf cancelReserveOrder:orderInfo];
+    }];
+    [alert show];
 }
 - (void)reserveOrderViewCellPayClickWithCell:(id)cell{
     NSIndexPath* indexPath = [self.reserveOrderTableView indexPathForCell:cell];
@@ -465,10 +472,11 @@
         return;
     }
     WYOrderInfo* orderInfo = _reserveOrderList[indexPath.row];
-//    if (orderInfo.price == 0) {
-//        [WYProgressHUD AlertSuccess:@"该网吧不需要支付定金" At:self.view];
-//        return;
-//    }
+    if ([orderInfo.amount doubleValue] == 0) {
+        //没加价时 确认前往 处理
+        [self affirmGoNetBar:orderInfo];
+        return;
+    }
     [self reserveToOrder:orderInfo];
 }
 
@@ -501,6 +509,31 @@
     }tag:tag];
 }
 
+- (void)affirmGoNetBar:(WYOrderInfo *)orderInfo{
+    
+    WS(weakSelf);
+    [WYProgressHUD AlertLoading:@"发送中..." At:weakSelf.view];
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] reservePayWithUid:[WYEngine shareInstance].uid body:orderInfo.netbarName orderId:orderInfo.orderId packetsId:nil type:0 tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"发送成功" At:weakSelf.view];
+//        NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
+        orderInfo.isValid = 2;
+        orderInfo.status = 1;
+        [weakSelf.reserveOrderTableView reloadData];
+        
+    }tag:tag];
+    
+}
+
 #pragma mark -WYPayManagerListener
 - (void)payManagerResultStatus:(int)status payType:(int)payType{
     [self refreshPayOrdersList];
@@ -526,7 +559,13 @@
         return;
     }
     WYOrderInfo* orderInfo = _payOrderList[indexPath.row];
-    [self deletePayOrder:orderInfo];
+    WS(weakSelf);
+    WYAlertView *alert = [[WYAlertView alloc] initWithTitle:nil message:@"确认删除订单吗?" cancelButtonTitle:@"取消" cancelBlock:^{
+        
+    } okButtonTitle:@"确认" okBlock:^{
+        [weakSelf deletePayOrder:orderInfo];
+    }];
+    [alert show];
 }
 - (void)payOrderViewCellPayClickWithCell:(id)cell{
     NSIndexPath* indexPath = [self.payOrderTableView indexPathForCell:cell];
@@ -543,6 +582,11 @@
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:2];
     if (orderInfo.type == 2) {
+        if (![WXApi isWXAppInstalled]) {
+            [WYUIUtils showAlertWithMsg:@"微信未安装！"];
+            return;
+        }
+
         if (orderInfo.nonceStr) {
             [dic setValue:orderInfo.nonceStr forKey:@"nonce_str"];
         }
@@ -569,7 +613,9 @@
 }
 
 -(void)cancelReserveOrder:(WYOrderInfo *)orderInfo{
+    
     __weak OrdersViewController *weakSelf = self;
+    [WYProgressHUD AlertLoading:@"取消中..." At:weakSelf.view];
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] cancelReserveOrderWithUid:[WYEngine shareInstance].uid reserveId:orderInfo.reserveId tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
@@ -590,6 +636,7 @@
 
 -(void)deletePayOrder:(WYOrderInfo *)orderInfo{
     __weak OrdersViewController *weakSelf = self;
+    [WYProgressHUD AlertLoading:@"删除中..." At:weakSelf.view];
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] deletePayOrderWithUid:[WYEngine shareInstance].uid orderId:orderInfo.orderId tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {

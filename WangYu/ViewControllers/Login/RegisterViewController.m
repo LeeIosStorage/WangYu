@@ -223,7 +223,7 @@
         self.registerContainerView.hidden = YES;
         self.invitationCodeView.hidden = NO;
         [self setTitle:@"输入邀请码"];
-        self.redPacketTipLabel.text = @"输入邀请码，注册成功可获得6元上网红包2015-05-30过期";
+        self.redPacketTipLabel.text = @"注册成功即可获得10元上网红包";
         CGRect frame = self.invitationCodeView.frame;
         frame.origin.x = self.registerContainerView.frame.origin.x;
         frame.origin.y = 64;

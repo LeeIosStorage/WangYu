@@ -228,10 +228,10 @@
 
 - (void)checkAndReserveWith:(NSString *)tempString{
     WS(weakSelf);
+    [WYProgressHUD AlertLoading:@"预订中..." At:weakSelf.view];
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] quickBookingWithUid:[WYEngine shareInstance].uid reserveDate:tempString amount:(double)seatNum*addCost netbarId:_netbarInfo.nid hours:hours num:seatNum remark:_descTextView.text tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        [WYProgressHUD AlertLoadDone];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -242,6 +242,7 @@
         }
         NSDictionary *dic = [jsonRet objectForKey:@"object"];
         NSLog(@"=========%@",dic);
+        [WYProgressHUD AlertSuccess:@"预订成功" At:weakSelf.view];
         
         OrdersViewController *oVc = [[OrdersViewController alloc] init];
         [self.navigationController pushViewController:oVc animated:YES];

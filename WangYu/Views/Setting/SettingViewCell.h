@@ -14,9 +14,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *rightLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *indicatorImage;
-@property (nonatomic, strong) IBOutlet UIImageView *sepline;
-@property (nonatomic, strong) IBOutlet UIImageView *topline;
+@property (strong, nonatomic) IBOutlet UIImageView *topLineImage;
+@property (strong, nonatomic) IBOutlet UIImageView *bottomLineImage;
 
-- (void) setbottomLineWithType:(int)type;
-
+- (void) setLineImageViewWithType:(int)type;
 @end

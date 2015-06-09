@@ -48,11 +48,11 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarImageView" destination="emo-yq-R7B" id="TxB-sj-o76"/>
+                <outlet property="bottomLineImage" destination="VPX-j9-ZDJ" id="fgU-8P-Div"/>
                 <outlet property="indicatorImage" destination="tdK-v9-r4c" id="aB9-kS-2W8"/>
                 <outlet property="rightLabel" destination="VJO-kh-Ice" id="lNy-hg-dkG"/>
-                <outlet property="sepline" destination="VPX-j9-ZDJ" id="STR-sb-b4r"/>
                 <outlet property="titleLabel" destination="vNd-5N-fl5" id="b4d-pX-1W2"/>
-                <outlet property="topline" destination="IaK-pE-Ynx" id="JSs-Vi-xwr"/>
+                <outlet property="topLineImage" destination="IaK-pE-Ynx" id="4mg-Fa-K6t"/>
             </connections>
             <point key="canvasLocation" x="304" y="269"/>
         </tableViewCell>
