@@ -48,16 +48,18 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarImageView" destination="emo-yq-R7B" id="TxB-sj-o76"/>
+                <outlet property="bottomLineImage" destination="VPX-j9-ZDJ" id="fgU-8P-Div"/>
                 <outlet property="indicatorImage" destination="tdK-v9-r4c" id="aB9-kS-2W8"/>
                 <outlet property="rightLabel" destination="VJO-kh-Ice" id="lNy-hg-dkG"/>
                 <outlet property="titleLabel" destination="vNd-5N-fl5" id="b4d-pX-1W2"/>
+                <outlet property="topLineImage" destination="IaK-pE-Ynx" id="4mg-Fa-K6t"/>
             </connections>
             <point key="canvasLocation" x="304" y="269"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="netbar_detail_indicator_icon" width="14" height="14"/>
-        <image name="s_n_set_line" width="300" height="1"/>
+        <image name="s_n_set_line" width="320" height="1"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

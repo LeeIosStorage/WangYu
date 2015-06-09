@@ -24,6 +24,7 @@
 #import "WYPayManager.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "APService.h"
+#import "WYLinkerHandler.h"
 
 @interface AppDelegate () <WYTabBarControllerDelegate,WXApiDelegate>
 
@@ -295,6 +296,10 @@ fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     [APService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", userInfo);
+    if ([userInfo stringObjectForKey:@"wycategory"]) {
+        NSString *wyHref = [NSString stringWithFormat:@"wycategory://%@",[userInfo stringObjectForKey:@"wycategory"]];
+        [WYLinkerHandler handleDealWithHref:wyHref From:self.mainTabViewController.navigationController];
+    }
     [[WYSettingConfig staticInstance] setMineMessageUnreadEvent:YES];
     completionHandler(UIBackgroundFetchResultNewData);
 }

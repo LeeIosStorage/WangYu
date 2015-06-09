@@ -112,8 +112,10 @@
         if (isReceive == 1) {
             stateLabelText = @"已接单";
             if ([orderInfo.amount doubleValue] == 0) {
-                introLabelText = @"网吧已接单，可放心前往上网";
-                state = 2;
+                //用户不加价
+                introLabelText = @"网吧已接单，到店确认后请点击“我已到店”";
+                [self.payOrderButton setTitle:@"我已到店" forState:0];
+                state = 4;
             }else{
                 introLabelText = @"网吧已接单，请先支付加价金额";
                 state = 4;
@@ -126,11 +128,17 @@
         }else if (isReceive == -1){
             stateLabelText = @"已拒单";
             introLabelText = @"网吧已拒单，原因：";
+            state = 1;
         }
         
     }else if (isValid == 2){
         stateLabelText = @"已支付";
         introLabelText = @"您已支付成功，请到网吧退还押金";
+        if ([orderInfo.amount doubleValue] == 0) {
+            //用户不加价
+            stateLabelText = @"已接单";
+            introLabelText = @"订单完成，请愉快上网吧";
+        }
         state = 1;
     }
     
@@ -143,6 +151,11 @@
     }else if (status == 1){
         stateLabelText = @"已支付";
         introLabelText = @"您已支付成功，请到网吧退还押金";
+        if ([orderInfo.amount doubleValue] == 0) {
+            //用户不加价
+            stateLabelText = @"已接单";
+            introLabelText = @"订单完成，请愉快上网吧";
+        }
         state = 1;
     }
     

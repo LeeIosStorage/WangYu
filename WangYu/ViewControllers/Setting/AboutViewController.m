@@ -48,9 +48,9 @@
 -(void)refreshUI{
     self.aboutVersionLabel.font = SKIN_FONT_FROMNAME(15);
     self.aboutVersionLabel.textColor = SKIN_TEXT_COLOR1;
-    self.aboutTipLabel.font = SKIN_FONT_FROMNAME(12);
+//    self.aboutTipLabel.font = SKIN_FONT_FROMNAME(12);
     self.aboutTipLabel.textColor = SKIN_TEXT_COLOR2;
-    self.aboutCompanyLabel.font = SKIN_FONT_FROMNAME(12);
+//    self.aboutCompanyLabel.font = SKIN_FONT_FROMNAME(12);
     self.aboutCompanyLabel.textColor = SKIN_TEXT_COLOR2;
     self.aboutInformationLabel.font = SKIN_FONT_FROMNAME(14);
     self.aboutInformationLabel.textColor = SKIN_TEXT_COLOR2;

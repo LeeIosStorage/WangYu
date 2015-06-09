@@ -492,7 +492,7 @@
     int tag = [[WYEngine shareInstance] getConnectTag];
     if (self.isBooked) {
         [WYProgressHUD AlertLoading:@"请求中..." At:weakSelf.view];
-        [[WYEngine shareInstance] reservePayWithUid:[WYEngine shareInstance].uid body:self.orderInfo.netbarName orderId:self.orderInfo.orderId packetsId:_packetIds type:self.isWeixin?0:1 tag:tag];
+        [[WYEngine shareInstance] reservePayWithUid:[WYEngine shareInstance].uid body:self.orderInfo.netbarName orderId:self.orderInfo.orderId packetsId:nil type:self.isWeixin?0:1 tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
             [WYProgressHUD AlertLoadDone];
             NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];

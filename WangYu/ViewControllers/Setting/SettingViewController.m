@@ -147,12 +147,14 @@
                 cell.titleLabel.text = @"切换城市";
                 cell.rightLabel.text = _cityName;
                 cell.rightLabel.hidden = NO;
+                [cell setLineImageViewWithType:-1];
                 break;
             }
         }
         case 1:{
             if (indexPath.row == 0) {
                 cell.titleLabel.text = @"清理缓存";
+                [cell setLineImageViewWithType:0];
                 if (self.cacheSize != UINT64_MAX) {
                     NSString* cacheSizeStr = @"";
                     if (self.cacheSize > 1024*1024*1024) {
@@ -165,16 +167,14 @@
                 }
                 break;
             }
-            //            }else if (indexPath.row == 1){
-            //                cell.titleLabel.text = @"检查更新";
-            //                break;
-            //            }
             else if (indexPath.row == 1){
                 cell.titleLabel.text = @"给我评分";
+                [cell setLineImageViewWithType:1];
                 break;
             }
             else if (indexPath.row == 2){
                 cell.titleLabel.text = @"关于我们";
+                [cell setLineImageViewWithType:2];
                 break;
             }
             
@@ -187,6 +187,7 @@
                     cell.titleLabel.text = @"线上环境";
                 }
                 cell.indicatorImage.hidden = YES;
+                [cell setLineImageViewWithType:-1];
             }
         }
             break;

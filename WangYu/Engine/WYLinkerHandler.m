@@ -9,6 +9,7 @@
 #import "WYLinkerHandler.h"
 #import "WYCommonWebVc.h"
 #import "WYEngine.h"
+#import "WYAlertView.h"
 
 @implementation WYLinkerHandler
 
@@ -18,13 +19,32 @@
         realUrl = [NSURL URLWithString:[href stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     }
     NSString* scheme = [realUrl.scheme lowercaseString];
-    if ([scheme isEqualToString:@"XXX"]) {
-        //        NSString *lastCompment = [[realUrl path] lastPathComponent];
-        //        NSDictionary *paramDic = [XECommonUtils getParamDictFrom:realUrl.query];
-        //        if ([[realUrl host] isEqualToString:@"AAA"]) {
-        //            return nil;
-        //        }
-        //        //else if...
+    if ([scheme isEqualToString:@"wycategory"]) {
+        NSString *lastCompment = [[realUrl path] lastPathComponent];
+        WYLog(@"lastCompment = %@",lastCompment);
+        NSDictionary *paramDic = [WYCommonUtils getParamDictFrom:realUrl.query];
+        WYLog(@"paramDic = %@",paramDic);
+        if ([[realUrl host] isEqualToString:@"sys"]) {
+            //系统消息
+            
+        }else if ([[realUrl host] isEqualToString:@"redbag"]){
+            // 红包消息
+//            WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"推送" message:@"收到红包消息" cancelButtonTitle:@"好的"];
+//            [alertView show];
+        }else if ([[realUrl host] isEqualToString:@"reservation"]){
+            // 预定订单消息
+            
+        }else if ([[realUrl host] isEqualToString:@"pay"]){
+            // 支付消息
+            
+        }else if ([[realUrl host] isEqualToString:@"activity"]){
+            // 活动赛事消息
+            
+        }else if ([[realUrl host] isEqualToString:@"match"]){
+            //约战消息
+            
+        }
+        return nil;
         
     }else if([scheme hasPrefix:@"http"]){
         //        NSString *lastCompment = [[realUrl path] lastPathComponent];
