@@ -53,8 +53,8 @@
         self.timeLabel.text = @"暂无时间";
     }
     CGRect frame = self.roundLabel.frame;
-    frame.origin.x = self.roundImage.frame.origin.x + self.roundImage.frame.size.width + 7;
-    self.roundLabel.frame = frame;
+//    frame.origin.x = self.roundImage.frame.origin.x + self.roundImage.frame.size.width + 7;
+//    self.roundLabel.frame = frame;
     
     self.placeLabel.text = _matchInfo.areas;
     frame = self.placeLabel.frame;

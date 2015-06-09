@@ -246,12 +246,17 @@ enum TABLEVIEW_SECTION_INDEX {
             if (indexPath.row == 0){
                 cell.titleLabel.text = @"我的约战";
                 cell.avatarImageView.image = [UIImage imageNamed:@"personal_war_icon"];
+                [cell setbottomLineWithType:0];
             }else if (indexPath.row == 1){
                 cell.titleLabel.text = @"我的赛事";
                 cell.avatarImageView.image = [UIImage imageNamed:@"personal_message_icon"];
+                cell.topline.hidden = YES;
+                [cell setbottomLineWithType:0];
             }else if (indexPath.row == 2){
                 cell.titleLabel.text = @"我的红包";
                 cell.avatarImageView.image = [UIImage imageNamed:@"personal_redpacket_icon"];
+                cell.topline.hidden = YES;
+                [cell setbottomLineWithType:1];
             }
         }
             break;

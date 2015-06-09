@@ -81,7 +81,7 @@
         
 		lastUpdatedLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 30.0f, self.frame.size.width, 20.0f)];
 		lastUpdatedLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		lastUpdatedLabel.font = [UIFont systemFontOfSize:12.0f];
+        lastUpdatedLabel.font = SKIN_FONT_FROMNAME(12);
 		lastUpdatedLabel.textColor = TEXT_COLOR;
 //		lastUpdatedLabel.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
 		lastUpdatedLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -91,7 +91,7 @@
         
 		statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 48.0f, self.frame.size.width, 20.0f)];
 		statusLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		statusLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+		statusLabel.font = SKIN_FONT_FROMNAME(13);
 		statusLabel.textColor = TEXT_COLOR;
 //		statusLabel.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
 		statusLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);

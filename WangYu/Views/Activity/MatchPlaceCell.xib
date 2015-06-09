@@ -36,7 +36,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第一场" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iLR-QF-fV2">
-                                        <rect key="frame" x="145" y="8" width="150" height="15"/>
+                                        <rect key="frame" x="145" y="8" width="75" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="15"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -149,7 +149,7 @@
         <image name="match_detail_schedule_icon" width="14" height="14"/>
         <image name="match_detail_time_icon" width="14" height="14"/>
         <image name="netbar_detail_location_icon" width="14" height="14"/>
-        <image name="s_n_set_line" width="300" height="1"/>
+        <image name="s_n_set_line" width="320" height="1"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

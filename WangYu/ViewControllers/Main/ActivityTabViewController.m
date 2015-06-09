@@ -113,7 +113,7 @@
                 [activityInfo setActivityInfoByJsonDic:dic];
                 [weakSelf.activityInfos addObject:activityInfo];
             }
-            
+            [weakSelf.leagueTableView reloadData];
             weakSelf.leagueLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
             if (weakSelf.leagueLoadMore) {
                 weakSelf.leagueTableView.showsInfiniteScrolling = NO;
@@ -121,9 +121,6 @@
                 weakSelf.leagueTableView.showsInfiniteScrolling = YES;
                 weakSelf.leagueCursor ++;
             }
-            
-            [weakSelf.leagueTableView reloadData];
-            
         } tag:tag];
     }];
     
@@ -158,7 +155,7 @@
                 [newsInfo setNewsInfoByJsonDic:dic];
                 [weakSelf.newsInfos addObject:newsInfo];
             }
-            
+            [weakSelf.newsTableView reloadData];
             weakSelf.newsLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
             if (weakSelf.newsLoadMore) {
                 weakSelf.newsTableView.showsInfiniteScrolling = NO;
@@ -166,9 +163,6 @@
                 weakSelf.newsTableView.showsInfiniteScrolling = YES;
                 weakSelf.newsCursor ++;
             }
-            
-            [weakSelf.newsTableView reloadData];
-            
         } tag:tag];
     }];
     [self.matchTableView addInfiniteScrollingWithActionHandler:^{
@@ -202,7 +196,7 @@
                 [warInfo setMatchWarInfoByJsonDic:dic];
                 [weakSelf.matchInfos addObject:warInfo];
             }
-            
+            [weakSelf.matchTableView reloadData];
             weakSelf.matchLoadMore = [[jsonRet dictionaryObjectForKey:@"object"] boolValueForKey:@"isLast"];
             if (weakSelf.matchLoadMore) {
                 weakSelf.matchTableView.showsInfiniteScrolling = NO;
@@ -210,13 +204,11 @@
                 weakSelf.matchTableView.showsInfiniteScrolling = YES;
                 weakSelf.matchCursor ++;
             }
-            
-            [weakSelf.newsTableView reloadData];
-            
         } tag:tag];
     }];
     weakSelf.leagueTableView.showsInfiniteScrolling = NO;
     weakSelf.newsTableView.showsInfiniteScrolling = NO;
+    weakSelf.matchTableView.showsInfiniteScrolling = NO;
 }
 
 - (void)initSwitchView{
@@ -601,6 +593,8 @@
         return self.activityInfos.count;
     }else if(tableView == self.newsTableView) {
         return self.newsInfos.count;
+    }else if (tableView == self.matchTableView) {
+        return self.matchInfos.count;
     }
     return 10;
 }
