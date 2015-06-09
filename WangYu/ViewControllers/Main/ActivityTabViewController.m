@@ -203,7 +203,7 @@
                 [weakSelf.matchInfos addObject:warInfo];
             }
             
-            weakSelf.matchLoadMore = [[[jsonRet dictionaryObjectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            weakSelf.matchLoadMore = [[jsonRet dictionaryObjectForKey:@"object"] boolValueForKey:@"isLast"];
             if (weakSelf.matchLoadMore) {
                 weakSelf.matchTableView.showsInfiniteScrolling = NO;
             }else{
@@ -515,7 +515,7 @@
             [weakSelf.newsInfos addObject:newsInfo];
         }
         
-        weakSelf.newsLoadMore = [[jsonRet objectForKey:@"object"] boolValueForKey:@"isLast"];
+        weakSelf.newsLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"infos"] boolValueForKey:@"isLast"];
         if (weakSelf.newsLoadMore) {
             weakSelf.newsTableView.showsInfiniteScrolling = NO;
         }else{
@@ -578,7 +578,7 @@
             [weakSelf.matchInfos addObject:matchInfo];
         }
         [weakSelf.matchTableView reloadData];
-        weakSelf.matchLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+        weakSelf.matchLoadMore = [[jsonRet objectForKey:@"object"]  boolValueForKey:@"isLast"];
         if (weakSelf.matchLoadMore) {
             weakSelf.matchTableView.showsInfiniteScrolling = NO;
         }else{

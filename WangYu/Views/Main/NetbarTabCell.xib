@@ -47,7 +47,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_set_line" id="T19-Kl-VOd">
-                        <rect key="frame" x="0.0" y="93" width="320" height="1"/>
+                        <rect key="frame" x="0.0" y="94" width="320" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_distance_icon" id="SIR-Gv-ZTC">
