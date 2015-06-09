@@ -13,8 +13,10 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
-@property (strong, nonatomic) IBOutlet UILabel *joinNumLabel;
+@property (strong, nonatomic) IBOutlet UILabel *applyCountLabel;
+@property (strong, nonatomic) IBOutlet UILabel *totalCountLabel;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *matchWarHotIocnImgView;
 
 @property (strong, nonatomic) WYMatchWarInfo *matchWarInfo;
 

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SuperMainViewController.h"
+//#import "SuperMainViewController.h"
 #import "SKSplashView.h"
 
-@interface ViewController : SuperMainViewController<SKSplashDelegate>
+@interface ViewController : UIViewController<SKSplashDelegate>
 
 
 @end

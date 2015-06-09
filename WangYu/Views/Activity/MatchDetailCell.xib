@@ -56,7 +56,7 @@
     </objects>
     <resources>
         <image name="match_detail_indicator_icon" width="14" height="14"/>
-        <image name="s_n_set_line" width="300" height="1"/>
+        <image name="s_n_set_line" width="320" height="1"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

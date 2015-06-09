@@ -478,12 +478,15 @@
         return;
     }
     
-    
     if ([_amountField.text doubleValue] == 0) {
         [WYProgressHUD lightAlert:@"请输入上网金额"];
         return;
     }
     
+    if (self.isWeixin && ![WXApi isWXAppInstalled]) {
+        [WYUIUtils showAlertWithMsg:@"微信未安装！"];
+        return;
+    }
     
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];

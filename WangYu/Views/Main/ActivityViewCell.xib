@@ -77,6 +77,7 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="activityImage" destination="Aiz-SZ-QId" id="En9-jo-4Ts"/>
                 <outlet property="nameLabel" destination="2c7-2R-tiG" id="r3Z-IJ-94b"/>
@@ -89,7 +90,7 @@
     </objects>
     <resources>
         <image name="activity_league_start_icon" width="71" height="18"/>
-        <image name="s_n_set_line" width="300" height="1"/>
+        <image name="s_n_set_line" width="320" height="1"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -7,6 +7,7 @@
 //
 
 #import "NetbarDetailCell.h"
+#import "WYCommonUtils.h"
 
 @interface NetbarDetailCell()
 
@@ -23,14 +24,17 @@
         dispatch_async(dispatch_get_main_queue(),^{
             self.titleLabel.font = self.font;
             self.dateLabel.font = self.font;
-            self.joinNumLabel.font = self.font;
+            self.totalCountLabel.font = self.font;
             self.nameLabel.font = self.font;
         });
     });
     self.titleLabel.textColor = SKIN_TEXT_COLOR1;
     self.dateLabel.textColor = SKIN_TEXT_COLOR2;
-    self.joinNumLabel.textColor = SKIN_TEXT_COLOR2;
     self.nameLabel.textColor = SKIN_TEXT_COLOR1;
+    self.totalCountLabel.textColor = SKIN_TEXT_COLOR2;
+    self.totalCountLabel.font = SKIN_FONT_FROMNAME(12);
+    self.applyCountLabel.textColor = UIColorToRGB(0xf03f3f);
+    self.applyCountLabel.font = SKIN_FONT_FROMNAME(12);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -45,6 +49,27 @@
     self.dateLabel.text = [WYUIUtils dateDiscriptionFromDate:matchWarInfo.startTime];;
     
     self.nameLabel.text = matchWarInfo.itemName;
+    
+    NSString *applyCount = [NSString stringWithFormat:@"%d",matchWarInfo.applyCount];
+    NSString *totalCount = [NSString stringWithFormat:@"/%d",matchWarInfo.peopleNum];
+    self.applyCountLabel.text = applyCount;
+    self.totalCountLabel.text = totalCount;
+    
+    float width = [WYCommonUtils widthWithText:totalCount font:self.totalCountLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+    CGRect frame = self.totalCountLabel.frame;
+    frame.origin.x = SCREEN_WIDTH - width - 12;
+    frame.size.width = width;
+    self.totalCountLabel.frame = frame;
+    
+    width = [WYCommonUtils widthWithText:applyCount font:self.applyCountLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+    frame = self.applyCountLabel.frame;
+    frame.origin.x = self.totalCountLabel.frame.origin.x - width;
+    frame.size.width = width;
+    self.applyCountLabel.frame = frame;
+    
+    frame = self.matchWarHotIocnImgView.frame;
+    frame.origin.x = self.applyCountLabel.frame.origin.x -self.matchWarHotIocnImgView.frame.size.width - 7;
+    self.matchWarHotIocnImgView.frame = frame;
 }
 
 @end
