@@ -48,7 +48,7 @@
     _matchInfo = matchInfo;
     self.roundLabel.text = [NSString stringWithFormat:@"第%d场",_matchInfo.round];
     if (_matchInfo.startTime.length > 0 && _matchInfo.endTime.length > 0) {
-        self.timeLabel.text = [NSString stringWithFormat:@"%@～%@",_matchInfo.startTime,_matchInfo.endTime];
+        self.timeLabel.text = [NSString stringWithFormat:@"%@ ～ %@",_matchInfo.startTime,_matchInfo.endTime];
     }else {
         self.timeLabel.text = @"暂无时间";
     }

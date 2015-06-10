@@ -248,7 +248,7 @@
     frame = self.newsTableView.frame;
     frame.origin.x = SCREEN_WIDTH;
     self.newsTableView.frame = frame;
-    self.newsTableView.tableHeaderView = self.adsViewContainer;
+//    self.newsTableView.tableHeaderView = self.adsViewContainer;
     
     frame = self.matchTableView.frame;
     frame.origin.x = SCREEN_WIDTH*2;
@@ -435,19 +435,19 @@
             //...
         }else{
             //解析数据
-            weakSelf.adsNewsArray = [NSMutableArray array];
-            NSArray*themeDicArray = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"hots"];
-            for (NSDictionary *dic  in themeDicArray) {
-                if (![dic isKindOfClass:[NSDictionary class]]) {
-                    continue;
-                }
-                WYNewsInfo *hotsInfo = [[WYNewsInfo alloc] init];
-                [hotsInfo setNewsInfoByJsonDic:dic];
-                [weakSelf.adsNewsArray addObject:hotsInfo];
-            }
-            if (weakSelf.adsNewsArray.count) {
-                [weakSelf refreshAdsScrollView];
-            }
+//            weakSelf.adsNewsArray = [NSMutableArray array];
+//            NSArray*themeDicArray = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"hots"];
+//            for (NSDictionary *dic  in themeDicArray) {
+//                if (![dic isKindOfClass:[NSDictionary class]]) {
+//                    continue;
+//                }
+//                WYNewsInfo *hotsInfo = [[WYNewsInfo alloc] init];
+//                [hotsInfo setNewsInfoByJsonDic:dic];
+//                [weakSelf.adsNewsArray addObject:hotsInfo];
+//            }
+//            if (weakSelf.adsNewsArray.count) {
+//                [weakSelf refreshAdsScrollView];
+//            }
             
             weakSelf.newsInfos = [NSMutableArray array];
             NSArray *newsDicArray = [[[jsonRet objectForKey:@"object"] objectForKey:@"infos"] arrayObjectForKey:@"list"];
@@ -480,21 +480,21 @@
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
             return;
         }
-        [weakSelf.adsNewsArray removeAllObjects];
-        //解析数据
-        weakSelf.adsNewsArray = [NSMutableArray array];
-        NSArray*themeDicArray = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"hots"];
-        for (NSDictionary *dic  in themeDicArray) {
-            if (![dic isKindOfClass:[NSDictionary class]]) {
-                continue;
-            }
-            WYNewsInfo *hotsInfo = [[WYNewsInfo alloc] init];
-            [hotsInfo setNewsInfoByJsonDic:dic];
-            [weakSelf.adsNewsArray addObject:hotsInfo];
-        }
-        if (weakSelf.adsNewsArray.count) {
-            [weakSelf refreshAdsScrollView];
-        }
+//        [weakSelf.adsNewsArray removeAllObjects];
+//        //解析数据
+//        weakSelf.adsNewsArray = [NSMutableArray array];
+//        NSArray*themeDicArray = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"hots"];
+//        for (NSDictionary *dic  in themeDicArray) {
+//            if (![dic isKindOfClass:[NSDictionary class]]) {
+//                continue;
+//            }
+//            WYNewsInfo *hotsInfo = [[WYNewsInfo alloc] init];
+//            [hotsInfo setNewsInfoByJsonDic:dic];
+//            [weakSelf.adsNewsArray addObject:hotsInfo];
+//        }
+//        if (weakSelf.adsNewsArray.count) {
+//            [weakSelf refreshAdsScrollView];
+//        }
 
         weakSelf.newsInfos = [NSMutableArray array];
         NSArray *newsDicArray = [[[jsonRet objectForKey:@"object"] objectForKey:@"infos"] arrayObjectForKey:@"list"];

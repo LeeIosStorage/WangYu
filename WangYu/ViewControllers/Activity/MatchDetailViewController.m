@@ -51,7 +51,7 @@
     [self refreshUI];
     // Do any additional setup after loading the view from its nib.
     self.matchTableView.tableHeaderView = self.headerView;
-    self.matchTableView.tableFooterView = self.footerView;
+    
     [self getCacheActivityInfo];
     [self getActivityInfo];
     [self refreshFloatView];
@@ -127,7 +127,7 @@
     for (WYUserInfo *memberInfo in self.activityInfo.members) {
         int count = 8;
         CGFloat width = (SCREEN_WIDTH - 24 - 8 * (count-1)) / count;
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(12 + (index%count)*(width + 8), 7+(index/count)*(width+7), width, width)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(12 + (index%count)*(width + 8), 9+(index/count)*(width+7), width, width)];
         button.tag = index;
         CGRect bFrame = button.frame;
         [button addTarget:self action:@selector(clickMermerAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -151,8 +151,15 @@
             frame.size.height = 100 + (index/count - 1)*(width+7);
             self.membersView.frame = frame;
         }
+        if (index == 23) {
+            break;
+        }
         index ++;
     }
+    frame = self.footerView.frame;
+    frame.size.height = 49 + self.membersView.frame.size.height + 40;
+    self.footerView.frame = frame;
+    self.matchTableView.tableFooterView = self.footerView;
 }
 
 - (void)clickMermerAction:(id)sender {
@@ -252,7 +259,7 @@
                 if (endString.length > 10) {
                     endString = [endString substringToIndex:10];
                 }
-                NSString *strTime = [NSString stringWithFormat:@"%@～%@",startString,endString];
+                NSString *strTime = [NSString stringWithFormat:@"%@ ～ %@",startString,endString];
                 if (strTime.length > 1) {
                     cell.titleLabel.text = strTime;
                 }else {
@@ -353,8 +360,6 @@
         [alertView show];
         return;
     }
-    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"赛事资讯" message:@"H5页跳转" cancelButtonTitle:@"确定"];
-    [alertView show];
     id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/info/web/detail?id=%@", [WYEngine shareInstance].baseUrl, self.activityInfo.newsId] From:self.navigationController];
     if (vc) {
         [self.navigationController pushViewController:vc animated:YES];
