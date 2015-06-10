@@ -484,7 +484,7 @@
     }
     
     if (self.isWeixin && ![WXApi isWXAppInstalled]) {
-        [WYUIUtils showAlertWithMsg:@"微信未安装！"];
+        [WYUIUtils showAlertWithMsg:@"微信支付失败！"];
         return;
     }
     

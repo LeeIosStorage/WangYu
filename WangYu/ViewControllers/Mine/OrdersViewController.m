@@ -583,7 +583,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:2];
     if (orderInfo.type == 2) {
         if (![WXApi isWXAppInstalled]) {
-            [WYUIUtils showAlertWithMsg:@"微信未安装！"];
+            [WYUIUtils showAlertWithMsg:@"微信支付失败！"];
             return;
         }
 

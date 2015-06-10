@@ -159,7 +159,7 @@
 #pragma mark GMGridViewActionDelegate
 - (void)GMGridView:(GMGridView *)gridView didTapOnItemAtIndex:(NSInteger)position
 {
-    WYLog(@"Did tap at index %ld", position);
+//    WYLog(@"Did tap at index %ld", position);
     NSString *picId = _images[position];
     if ([self.delagte respondsToSelector:@selector(avatarListViewControllerWith:selectAvatarId:avatarImage:avatarData:)]) {
         [self.delagte avatarListViewControllerWith:self selectAvatarId:picId avatarImage:nil avatarData:nil];
