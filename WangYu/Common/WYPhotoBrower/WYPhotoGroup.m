@@ -12,6 +12,7 @@
 #import "WYPhotoBrowser.h"
 
 #define WYPhotoGroupImageMargin 15
+#define WY_PHOTO_GROUP_TAG 10000
 
 @interface WYPhotoGroup () <WYPhotoBrowserDelegate>
 
@@ -36,7 +37,7 @@
         UIButton *btn = [[UIButton alloc] init];
 //        [btn sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail_pic] forState:UIControlStateNormal];
         [btn sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail_pic] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
-        btn.tag = idx;
+        btn.tag = idx + WY_PHOTO_GROUP_TAG;
         
         [btn addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btn];
@@ -63,7 +64,7 @@
         btn.frame = CGRectMake(12 + idx*(80+7), 12, 80, 69);
     }];
     
-    self.frame = CGRectMake(0, 0, imageCount*self.photoItemArray.count, 93);
+    self.frame = CGRectMake(0, 0, imageCount * 87 + 12, 93);
 }
 
 - (void)buttonClick:(UIButton *)button
@@ -71,7 +72,7 @@
     WYPhotoBrowser *browser = [[WYPhotoBrowser alloc] init];
     browser.sourceImagesContainerView = self;       // 原图的父控件
     browser.imageCount = self.photoItemArray.count; // 图片总数
-    browser.currentImageIndex = (int)button.tag;
+    browser.currentImageIndex = (int)button.tag - WY_PHOTO_GROUP_TAG;
     browser.delegate = self;
     [browser show];
     
