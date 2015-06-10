@@ -302,6 +302,7 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
         CGRect endRect = CGRectMake(SCREEN_WIDTH - 60 - 14, self.titleNavBar.frame.origin.y + self.titleNavBar.frame.size.height + 12 + 54, 14,14);
         [likeView genieInTransitionWithDuration:1.0 destinationRect:endRect destinationEdge:BCRectEdgeBottom completion:^{
 //            likeView.transform = CGAffineTransformMakeRotation(360 *M_PI / 180.0);
+            [self refreshGameCardViewUI];
             [likeView removeFromSuperview];
         }];
     }else{
@@ -343,9 +344,10 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
                 }
             }
             [WYProgressHUD AlertSuccess:@"游戏取消收藏成功" At:weakSelf.view];
+            [weakSelf refreshGameCardViewUI];
         }
         //蛋疼的刷新
-        [weakSelf refreshGameCardViewUI];
+//        [weakSelf refreshGameCardViewUI];
     }tag:tag];
     
 }

@@ -113,7 +113,7 @@
         self.mainContainerView.frame = frame;
         
     }else{
-        [WYProgressHUD AlertLoading:@"定位中..."];
+//        [WYProgressHUD AlertLoading:@"定位中..."];
         if (_location.longitude == 0 && _location.latitude == 0) {
             [self refreshLocation];
         } else {
@@ -213,7 +213,7 @@
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
             return;
         }
-        [WYProgressHUD AlertSuccess:@"完成" At:weakSelf.view];
+//        [WYProgressHUD AlertSuccess:@"完成" At:weakSelf.view];
         
         NSArray* pois = [jsonRet arrayObjectForKey:@"object"];
         weakSelf.pois = [[NSMutableArray alloc] init];
