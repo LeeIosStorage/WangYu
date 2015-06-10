@@ -803,7 +803,7 @@
     CustomMapCell  *cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomMapCell" owner:self options:nil] objectAtIndex:0];
     [cell.netbarImage sd_setImageWithURL:netbarInfo.smallImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
     cell.title.text = netbarInfo.netbarName;
-    NSString *price = [NSString stringWithFormat:@"%d",netbarInfo.price];
+    NSString *price = [NSString stringWithFormat:@"%@",netbarInfo.price];
     cell.subtitle.text = price;
     float width = [WYCommonUtils widthWithText:price font:cell.subtitle.font lineBreakMode:NSLineBreakByWordWrapping];
     CGRect frame = cell.subtitle.frame;

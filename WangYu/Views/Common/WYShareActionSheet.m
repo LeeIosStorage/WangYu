@@ -45,7 +45,7 @@
 - (void)shareContent{
     if (self.netbarInfo) {
         self.shareTitle = [NSString stringWithFormat:@"网娱大师-%@|快来定座吧",_netbarInfo.netbarName];
-        self.shareDescription = [NSString stringWithFormat:@"上网价格￥%d/小时\n%@",_netbarInfo.price,_netbarInfo.address];
+        self.shareDescription = [NSString stringWithFormat:@"上网价格￥%@/小时\n%@",_netbarInfo.price,_netbarInfo.address];
         self.shareWebpageUrl = [NSString stringWithFormat:@"%@/share/netbar/%@",[WYEngine shareInstance].baseUrl,_netbarInfo.nid];
         
         if (![self.netbarInfo.smallImageUrl isEqual:[NSNull null]]) {

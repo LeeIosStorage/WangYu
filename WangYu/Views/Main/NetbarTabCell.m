@@ -55,7 +55,7 @@
     }
     
     _netbarTitle.text = netbarInfo.netbarName;
-    _netbarPrice.text = [NSString stringWithFormat:@"%d",netbarInfo.price];
+    _netbarPrice.text = [NSString stringWithFormat:@"%@",netbarInfo.price];
     
     CGFloat priceLabelWidth = [WYCommonUtils widthWithText:_netbarPrice.text font:_netbarPrice.font lineBreakMode:NSLineBreakByWordWrapping];
     CGRect frame = _netbarPrice.frame;
