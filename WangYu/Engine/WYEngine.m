@@ -26,7 +26,7 @@
 #define CONNECT_TIMEOUT 20
 
 static NSString* IMG_URL = @"http://img.wangyuhudong.com";
-static NSString* API_URL = @"http://api.test.wangyuhudong.com";//
+static NSString* API_URL = @"http://api.wangyuhudong.com";//
 
 static WYEngine* s_ShareInstance = nil;
 

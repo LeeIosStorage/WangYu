@@ -49,7 +49,7 @@ static WYShareManager* wy_shareManager = nil;
     
     if (!([WXApi isWXAppInstalled])) {
         NSLog(@"not support or not install weixin");
-        [WYUIUtils showAlertWithMsg:@"微信未安装！"];
+        [WYUIUtils showAlertWithMsg:@"微信分享失败！"];
         return NO;
     } 
     
@@ -111,7 +111,7 @@ static WYShareManager* wy_shareManager = nil;
 //        [alert show];
 //        return;
         NSLog(@"not support or not install weixin");
-        [WYUIUtils showAlertWithMsg:@"微博未安装！"];
+        [WYUIUtils showAlertWithMsg:@"微博分享失败！"];
         return;
     }
 

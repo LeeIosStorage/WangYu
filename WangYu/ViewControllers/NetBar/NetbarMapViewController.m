@@ -106,6 +106,12 @@
         [self setTitle:@"网吧地图"];
         [self updateAnnotationByLocation:_showLocation isNeedAnimation:NO];
         self.backButton.hidden = YES;
+        
+        frame = self.mainContainerView.frame;
+        frame.origin.y = self.titleNavBar.frame.size.height;
+        frame.size.height = SCREEN_HEIGHT-frame.origin.y;
+        self.mainContainerView.frame = frame;
+        
     }else{
         [WYProgressHUD AlertLoading:@"定位中..."];
         if (_location.longitude == 0 && _location.latitude == 0) {
