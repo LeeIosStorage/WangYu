@@ -26,6 +26,7 @@
 #import "WYLinkerHandler.h"
 #import "WYUserGuideConfig.h"
 #import "AppDelegate.h"
+#import "WYSettingConfig.h"
 
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate,NetbarTabCellDelegate,LocationViewControllerDelegate>
 {
@@ -39,6 +40,7 @@
 }
 @property (strong, nonatomic) IBOutlet UILabel *orderLabel;
 @property (strong, nonatomic) IBOutlet UILabel *packetLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *weekRedBagIconImgView;
 @property (strong, nonatomic) IBOutlet UILabel *bookLabel;
 @property (strong, nonatomic) IBOutlet UILabel *bookDecLabel;
 @property (strong, nonatomic) IBOutlet UILabel *hotLabel;
@@ -80,6 +82,8 @@
     _chooseCityName = @"选择城市";
     self.currentLocation = [WYLocationServiceUtil getLastRecordLocation];
     
+    self.weekRedBagIconImgView.hidden = ![WYSettingConfig staticInstance].weekRedBagMessageUnreadEvent;
+    
 //    [self setUserCity];
     
     [self refreshLeftIconViewUI];
@@ -92,6 +96,7 @@
     [self.netBarTable addSubview:self.pullRefreshView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWeekRedBagMessageUreadEvent) name:WY_WEEKREDBAG_UNREAD_EVENT_NOTIFICATION object:nil];
 }
 
 -(void)refreshUI
@@ -308,7 +313,7 @@
         _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
         [UIView animateWithDuration:0.4 animations:^{
             CGRect frame = _locationChooseVc.view.frame;
-            frame.size.height = 378;
+            frame.size.height = 353;
             _locationChooseVc.view.frame = frame;
             _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.5];
             _chooseCityIconImgView.transform = CGAffineTransformMakeRotation(180 *M_PI / 180.0);
@@ -501,6 +506,7 @@
     if ([[WYEngine shareInstance] needUserLogin:@"注册或登录后才能领取红包"]) {
         return;
     }
+    [[WYSettingConfig staticInstance] setWeekRedBagMessageUnreadEvent:NO];
     id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/redbag/web/getRedbag?userId=%@&token=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
     if (vc) {
         [self.navigationController pushViewController:vc animated:YES];
@@ -520,6 +526,9 @@
     [self setUserCity];
     [self getNetbarInfos];
     [self.netBarTable reloadData];
+}
+- (void)handleWeekRedBagMessageUreadEvent{
+    self.weekRedBagIconImgView.hidden = ![WYSettingConfig staticInstance].weekRedBagMessageUnreadEvent;
 }
 
 #pragma mark - LocationViewControllerDelegate

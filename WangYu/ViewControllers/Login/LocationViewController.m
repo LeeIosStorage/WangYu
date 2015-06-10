@@ -149,17 +149,20 @@
 - (void)refreshLocationViewUI:(int)type{
     if (type == 0) {
         //定位中
-        [self.currentCityButton setTitle:@"定位中..." forState:0];
+        [self.currentCityButton setTitle:@"定位中..." forState:UIControlStateNormal];
+        [self.currentCityButton setTitle:@"定位中..." forState:UIControlStateDisabled];
         self.currentCityButton.enabled = NO;
         self.hintLabel.text = @"定位中...";
     }else if (type == 1){
         //定位失败
-        [self.currentCityButton setTitle:@"定位失败" forState:0];
+        [self.currentCityButton setTitle:@"定位失败" forState:UIControlStateNormal];
+        [self.currentCityButton setTitle:@"定位失败" forState:UIControlStateDisabled];
         self.currentCityButton.enabled = NO;
         self.hintLabel.text = @"获取地址位置失败，请选择城市";
     }else if (type == 2){
         //定位成功
-        [self.currentCityButton setTitle:self.placemark.locality forState:0];
+        [self.currentCityButton setTitle:self.placemark.locality forState:UIControlStateNormal];
+        [self.currentCityButton setTitle:self.placemark.locality forState:UIControlStateDisabled];
         self.currentCityButton.enabled = NO;
         self.hintLabel.text = @"";
     }
@@ -187,7 +190,7 @@
     if (self.cityScrollView.superview) {
         [self.cityScrollView removeFromSuperview];
     }
-    self.cityScrollView.frame = CGRectMake(0, 42, SCREEN_WIDTH, 177);
+    self.cityScrollView.frame = CGRectMake(0, 42, SCREEN_WIDTH, 152);
     [self.lightupCityView addSubview:self.cityScrollView];
     
     CGRect frame = self.hintLabel.frame;
@@ -221,6 +224,8 @@
     frame = self.noticeView.frame;
     frame.origin.y = self.lightupCityView.frame.origin.y + self.lightupCityView.frame.size.height;
     self.noticeView.frame = frame;
+    
+    self.noticeView.hidden = !_isShowNoticeView;
 }
 
 - (IBAction)locationAction:(id)sender {

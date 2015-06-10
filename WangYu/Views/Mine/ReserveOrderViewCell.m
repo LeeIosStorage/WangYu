@@ -127,7 +127,7 @@
             state = 2;
         }else if (isReceive == -1){
             stateLabelText = @"已拒单";
-            introLabelText = @"网吧已拒单，原因：";
+            introLabelText = @"网吧已拒单，请选择其他网吧预定";
             state = 1;
         }
         

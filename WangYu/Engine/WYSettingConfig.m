@@ -82,6 +82,7 @@ static WYSettingConfig *s_instance = nil;
     //...
     _systemCameraFlashStatus = [aDecoder decodeInt32ForKey:@"systemCameraFlashStatus"];
     _mineMessageUnreadEvent = [aDecoder decodeBoolForKey:@"mineMessageUnreadEvent"];
+    _weekRedBagMessageUnreadEvent = [aDecoder decodeBoolForKey:@"weekRedBagMessageUnreadEvent"];
     
     NSDictionary *dict = [WYEngine shareInstance].userInfo.userInfoByJsonDic;
     if (dict) {
@@ -106,6 +107,7 @@ static WYSettingConfig *s_instance = nil;
     //...
     [aCoder encodeInt32:_systemCameraFlashStatus forKey:@"systemCameraFlashStatus"];
     [aCoder encodeBool:_mineMessageUnreadEvent forKey:@"mineMessageUnreadEvent"];
+    [aCoder encodeBool:_weekRedBagMessageUnreadEvent forKey:@"weekRedBagMessageUnreadEvent"];
 }
 
 +(NSString *)getTagPath{
@@ -167,6 +169,15 @@ static WYSettingConfig *s_instance = nil;
     }
     _mineMessageUnreadEvent = mineMessageUnreadEvent;
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION object:nil]];
+    [self saveSettingCfg];
+}
+
+- (void)setWeekRedBagMessageUnreadEvent:(BOOL)weekRedBagMessageUnreadEvent{
+    if (_weekRedBagMessageUnreadEvent == weekRedBagMessageUnreadEvent) {
+        return;
+    }
+    _weekRedBagMessageUnreadEvent = weekRedBagMessageUnreadEvent;
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:WY_WEEKREDBAG_UNREAD_EVENT_NOTIFICATION object:nil]];
     [self saveSettingCfg];
 }
 
