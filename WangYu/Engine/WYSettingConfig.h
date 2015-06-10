@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION @"WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION"
+#define WY_WEEKREDBAG_UNREAD_EVENT_NOTIFICATION @"WY_WEEKREDBAG_UNREAD_EVENT_NOTIFICATION"
 
 @interface WYSettingConfig : NSObject<NSCoding>
 
@@ -30,6 +31,9 @@
 
 //我的是否有新消息
 @property (nonatomic, assign) BOOL mineMessageUnreadEvent;
+//每周领红包消息
+@property (nonatomic, assign) BOOL weekRedBagMessageUnreadEvent;
+
 -(int)getMessageCount;
 -(void)addMessageNum:(int)count;
 -(void)removeMessageNum;

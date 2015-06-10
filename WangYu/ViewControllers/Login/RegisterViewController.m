@@ -92,6 +92,14 @@
     _invitationCodeText = nil;
     self.agreeIconButton.selected = YES;
     [self refreshUIControl];
+    
+    UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizer:)];
+    [self.view addGestureRecognizer:gestureRecongnizer];
+    
+}
+
+- (void)gestureRecognizer:(UITapGestureRecognizer *)gestureRecognizer {
+    [self textFieldResignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {

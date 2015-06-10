@@ -10,6 +10,7 @@
 #import "WYCommonWebVc.h"
 #import "WYEngine.h"
 #import "WYAlertView.h"
+#import "WYSettingConfig.h"
 
 @implementation WYLinkerHandler
 
@@ -45,7 +46,7 @@
             
         }else if ([[realUrl host] isEqualToString:@"redbag_weekly"]){
             //每周红包推送消息
-            
+            [[WYSettingConfig staticInstance] setWeekRedBagMessageUnreadEvent:YES];
         }
         return nil;
         

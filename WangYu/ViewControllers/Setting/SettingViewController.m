@@ -206,6 +206,7 @@
     switch (indexPath.section) {
         case 0:{
             LocationViewController *locationChooseVc = [[LocationViewController alloc] init];
+            locationChooseVc.isShowNoticeView = YES;
             locationChooseVc.delagte = self;
             [self.navigationController pushViewController:locationChooseVc animated:YES];
             break;

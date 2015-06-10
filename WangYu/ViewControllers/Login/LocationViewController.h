@@ -12,6 +12,8 @@
 
 @interface LocationViewController : WYSuperViewController
 
+@property (nonatomic, assign) BOOL isShowNoticeView;
+
 @property (nonatomic, assign) id<LocationViewControllerDelegate> delagte;
 
 @end
