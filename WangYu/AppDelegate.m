@@ -301,16 +301,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
 }
 
-- (void)application:(UIApplication *)application
-didReceiveRemoteNotification:(NSDictionary *)userInfo {
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [APService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", userInfo);
 }
 
-- (void)application:(UIApplication *)application
-didReceiveRemoteNotification:(NSDictionary *)userInfo
-fetchCompletionHandler:
-(void (^)(UIBackgroundFetchResult))completionHandler {
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [APService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", userInfo);
     if ([userInfo stringObjectForKey:@"wycategory"]) {
@@ -321,8 +317,7 @@ fetchCompletionHandler:
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
-- (void)application:(UIApplication *)application
-didReceiveLocalNotification:(UILocalNotification *)notification {
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     [APService showLocalNotificationAtFront:notification identifierKey:nil];
 }
 

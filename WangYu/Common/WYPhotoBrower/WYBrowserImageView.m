@@ -36,6 +36,9 @@
         UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoomImage:)];
         pinch.delegate = self;
         [self addGestureRecognizer:pinch];
+        
+        
+        
     }
     return self;
 }
@@ -56,6 +59,7 @@
             scroll.backgroundColor = [UIColor whiteColor];
             UIImageView *imageView = [[UIImageView alloc] init];
             imageView.image = self.image;
+            
             _scrollImageView = imageView;
             [scroll addSubview:imageView];
             scroll.backgroundColor = WYPhotoBrowserBackgrounColor;
@@ -63,7 +67,6 @@
             [self addSubview:scroll];
         }
         _scroll.frame = self.bounds;
-        
         CGFloat imageHeight = SCREEN_WIDTH / self.image.size.width * self.image.size.height;
         _scrollImageView.bounds = CGRectMake(0, (SCREEN_HEIGHT - imageHeight)/2, SCREEN_WIDTH, imageHeight);
         _scrollImageView.center = CGPointMake(_scroll.frame.size.width * 0.5, SCREEN_HEIGHT * 0.5);
@@ -72,7 +75,11 @@
     } else {
         if (_scroll) [_scroll removeFromSuperview]; // 防止旋转时适配的scrollView的影响
     }
+    
+    
 }
+
+
 
 - (void)setProgress:(CGFloat)progress
 {
@@ -151,8 +158,7 @@
         _zoomingScroolView.backgroundColor = WYPhotoBrowserBackgrounColor;
         UIImageView *zoomingImageView = [[UIImageView alloc] initWithImage:self.image];
         zoomingImageView.bounds = self.bounds;
-        zoomingImageView.contentMode = UIViewContentModeScaleAspectFit;
-        zoomingImageView.center = _scrollImageView.center;
+        zoomingImageView.contentMode = UIViewContentModeScaleAspectFill;
         _zoomingImageView = zoomingImageView;
         [_zoomingScroolView addSubview:zoomingImageView];
         [self addSubview:_zoomingScroolView];
@@ -177,10 +183,12 @@
     [_zoomingScroolView removeFromSuperview];
     _zoomingScroolView = nil;
     _zoomingImageView = nil;
+    
 }
 
 - (void)removeWaitingView
 {
     [_waitingView removeFromSuperview];
 }
+
 @end
