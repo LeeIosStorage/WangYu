@@ -8,12 +8,13 @@
 
 #import "NewIntroViewController.h"
 #import "WYSettingConfig.h"
+#import "WYPageControl.h"
 
 @interface NewIntroViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSArray *backgroundViews;
 @property (nonatomic, strong) NSArray *scrollViewPages;
-@property (nonatomic, strong) UIPageControl *pageControl;
+@property (nonatomic, strong) WYPageControl *pageControl;
 @property (nonatomic, assign) NSInteger centerPageIndex;
 
 @end
@@ -60,7 +61,7 @@
     
     [self.view addSubview:self.pagingScrollView];
     
-    self.pageControl = [[UIPageControl alloc] initWithFrame:[self frameOfPageControl]];
+    self.pageControl = [[WYPageControl alloc] initWithFrame:[self frameOfPageControl]];
     self.pageControl.pageIndicatorTintColor = [UIColor grayColor];
     [self.view addSubview:self.pageControl];
     
@@ -124,7 +125,7 @@
 
 - (CGRect) frameOfPageControl
 {
-    return CGRectMake(0, self.view.bounds.size.height - 30, self.view.bounds.size.width, 30);
+    return CGRectMake(0, self.view.bounds.size.height - 40, self.view.bounds.size.width, 40);
 }
 
 - (CGRect) frameOfEnterButton
