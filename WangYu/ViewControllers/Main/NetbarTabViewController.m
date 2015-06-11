@@ -132,7 +132,7 @@
 - (void)viewSplash
 {
     SKSplashIcon *sloganSplashIcon = [[SKSplashIcon alloc] initWithImage:[UIImage imageNamed:@"app_slogan_icon"] animationType:SKIconAnimationTypeBounce];
-    UIColor *bgColor = SKIN_COLOR;
+    UIColor *bgColor = UIColorToRGB(0xead356);
     _splashView = [[SKSplashView alloc] initWithSplashIcon:sloganSplashIcon backgroundColor:bgColor animationType:SKSplashAnimationTypeFade];
     _splashView.delegate = self;
     _splashView.animationDuration = 2;
