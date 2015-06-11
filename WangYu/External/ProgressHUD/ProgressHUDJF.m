@@ -93,8 +93,8 @@
 {
     if (hud == nil)
     {
-        hud = [[UIToolbar alloc] initWithFrame:CGRectZero];
-        hud.translucent = YES;
+        hud = [[UIView alloc] initWithFrame:CGRectZero];
+//        hud.translucent = YES;
         hud.backgroundColor = HUD_BACKGROUND_COLOR;
         hud.layer.cornerRadius = 10;
         hud.layer.masksToBounds = YES;
@@ -117,7 +117,7 @@
     if (spinner == nil)
     {
         spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        spinner.color = SKIN_COLOR;
+        spinner.color = HUD_STATUS_COLOR;
         spinner.hidesWhenStopped = YES;
     }
     if (spinner.superview == nil) [hud addSubview:spinner];
@@ -221,8 +221,8 @@
 {
 	if (hud == nil)
 	{
-		hud = [[UIToolbar alloc] initWithFrame:CGRectZero];
-		hud.translucent = YES;
+		hud = [[UIView alloc] initWithFrame:CGRectZero];
+//		hud.translucent = YES;
 		hud.backgroundColor = HUD_BACKGROUND_COLOR;
 		hud.layer.cornerRadius = 10;
 		hud.layer.masksToBounds = YES;
@@ -245,7 +245,7 @@
 	if (spinner == nil)
 	{
 		spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-		spinner.color = SKIN_COLOR;
+		spinner.color = HUD_STATUS_COLOR;
 		spinner.hidesWhenStopped = YES;
 	}
 	if (spinner.superview == nil) [hud addSubview:spinner];
@@ -373,7 +373,7 @@
 	if (orientation == UIInterfaceOrientationLandscapeRight)		center = CGPointMake(screen.size.height-posY, posX);
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-		hud.center = CGPointMake(center.x, center.y - 80);
+		hud.center = CGPointMake(center.x, center.y);
 	} completion:nil];
 }
 

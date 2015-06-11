@@ -71,7 +71,7 @@ static WYEngine* s_ShareInstance = nil;
 
 + (NSString*)getErrorMsgWithReponseDic:(NSDictionary*)dic{
     if (dic == nil) {
-        return @"请检查网络连接是否正常";
+        return @"网络不给力";
     }
     if ([[dic objectForKey:@"code"] intValue] == 0){
         return nil;

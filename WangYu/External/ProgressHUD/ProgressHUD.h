@@ -12,16 +12,16 @@
 #import <UIKit/UIKit.h>
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-#define HUD_STATUS_FONT			[UIFont boldSystemFontOfSize:16]
-#define HUD_STATUS_COLOR		[UIColor blackColor]
+#define HUD_STATUS_FONT			SKIN_FONT_FROMNAME(15)
+#define HUD_STATUS_COLOR		[UIColor whiteColor]
 
 //[UIColor colorWithRed:185.0/255.0 green:220.0/255.0 blue:47.0/255.0 alpha:1.0]
-#define HUD_BACKGROUND_COLOR	[UIColor colorWithWhite:0 alpha:0.1]
+#define HUD_BACKGROUND_COLOR	[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.65]
 #define HUD_WINDOW_COLOR		[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2]
 #define HUD_SPINNER_COLOR       [UIColor colorWithRed:247 green:104 blue:104 alpha:1]
 
-#define HUD_IMAGE_SUCCESS		[UIImage imageNamed:@"ProgressHUD.bundle/progresshud-success.png"]
-#define HUD_IMAGE_ERROR			[UIImage imageNamed:@"ProgressHUD.bundle/progresshud-error.png"]
+#define HUD_IMAGE_SUCCESS		[UIImage imageNamed:@"progresshud_success_icon"]
+#define HUD_IMAGE_ERROR			[UIImage imageNamed:@"progresshud_error_icon"]
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 @interface ProgressHUD : UIView
@@ -44,7 +44,7 @@
 
 @property (nonatomic, retain) UIWindow *window;
 @property (nonatomic, retain) UIView *background;
-@property (nonatomic, retain) UIToolbar *hud;
+@property (nonatomic, retain) UIView *hud;
 @property (nonatomic, retain) UIActivityIndicatorView *spinner;
 @property (nonatomic, retain) UIImageView *image;
 @property (nonatomic, retain) UILabel *label;

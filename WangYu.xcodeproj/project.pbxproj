@@ -171,7 +171,6 @@
 		077BF3B21B186BFD00450174 /* UIGestureRecognizer+GMGridViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF3AC1B186BFC00450174 /* UIGestureRecognizer+GMGridViewAdditions.m */; };
 		077BF3B31B186BFD00450174 /* UIView+GMGridViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 077BF3AE1B186BFC00450174 /* UIView+GMGridViewAdditions.m */; };
 		077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D83781AF9AED800AAF31F /* MBProgressHUD.m */; };
-		077D83801AF9AED800AAF31F /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 077D837A1AF9AED800AAF31F /* ProgressHUD.bundle */; };
 		077D83811AF9AED800AAF31F /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D837C1AF9AED800AAF31F /* ProgressHUD.m */; };
 		077D83821AF9AED800AAF31F /* ProgressHUDJF.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D837E1AF9AED800AAF31F /* ProgressHUDJF.m */; };
 		077D83861AF9AF3E00AAF31F /* WYProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 077D83851AF9AF3E00AAF31F /* WYProgressHUD.m */; };
@@ -582,7 +581,6 @@
 		077BF3AE1B186BFC00450174 /* UIView+GMGridViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GMGridViewAdditions.m"; sourceTree = "<group>"; };
 		077D83771AF9AED800AAF31F /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		077D83781AF9AED800AAF31F /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		077D837A1AF9AED800AAF31F /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
 		077D837B1AF9AED800AAF31F /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
 		077D837C1AF9AED800AAF31F /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
 		077D837D1AF9AED800AAF31F /* ProgressHUDJF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUDJF.h; sourceTree = "<group>"; };
@@ -1559,7 +1557,6 @@
 		077D83791AF9AED800AAF31F /* ProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
-				077D837A1AF9AED800AAF31F /* ProgressHUD.bundle */,
 				077D837B1AF9AED800AAF31F /* ProgressHUD.h */,
 				077D837C1AF9AED800AAF31F /* ProgressHUD.m */,
 				077D837D1AF9AED800AAF31F /* ProgressHUDJF.h */,
@@ -2164,7 +2161,6 @@
 				071923D31AF74D8400432531 /* WelcomeViewController.xib in Resources */,
 				079D52531B01E48600DF4D6B /* GameCommendCardView.xib in Resources */,
 				0762193A1B15C19600D912A1 /* RedPacketViewController.xib in Resources */,
-				077D83801AF9AED800AAF31F /* ProgressHUD.bundle in Resources */,
 				0799C8B01AF1D88E00E407BB /* GameCommendViewController.xib in Resources */,
 				077E608C1B0B2D5F0079BC9E /* WeiboSDK.bundle in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
