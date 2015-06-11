@@ -163,7 +163,7 @@ static WYEngine* s_ShareInstance = nil;
     _token = nil;
     [self saveAccount];
     _userInfo = [[WYUserInfo alloc] init];
-    [WYSettingConfig logout];
+    [[WYSettingConfig staticInstance] logout];
     _cacheInstance = nil;
 }
 

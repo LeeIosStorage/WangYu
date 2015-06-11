@@ -43,10 +43,17 @@
 
 //找回密码验证码倒计时
 -(void)addRetrieveTimer;
+-(void)removeRetrieveTimer;
+//注册时验证码倒计时
+-(void)addRegisterTimer;
+-(void)removeRegisterTimer;
 
 @end
 
 @protocol WYSettingConfigListener <NSObject>
 @optional
+//找回密码
 - (void)waitRetrieveTimer:(NSTimer *)aTimer waitSecond:(int)waitSecond;
+//注册时
+- (void)waitRegisterTimer:(NSTimer *)aTimer waitSecond:(int)waitSecond;
 @end

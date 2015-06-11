@@ -19,6 +19,8 @@ static int s_isFirstEnterVersion = -1;
     NSTimer *_waitRetrieveTimer;
     int _waitRetrieveSecond;
     
+    NSTimer *_waitRegisterTimer;
+    int _waitRegisterSecond;
     
 }
 @end
@@ -60,6 +62,14 @@ static WYSettingConfig *s_instance = nil;
 - (void)logout {
     s_instance = nil;
     [_listeners removeAllObjects];
+    if (_waitRetrieveTimer) {
+        [_waitRetrieveTimer invalidate];
+        _waitRetrieveTimer = nil;
+    }
+    if (_waitRegisterTimer) {
+        [_waitRegisterTimer invalidate];
+        _waitRegisterTimer = nil;
+    }
 }
 
 -(void)login{
@@ -255,9 +265,14 @@ static WYSettingConfig *s_instance = nil;
     _waitRetrieveSecond = 60;
     [self waitRetrieveTimerInterval:_waitRetrieveTimer];
 }
-
+-(void)removeRetrieveTimer{
+    if(_waitRetrieveTimer){
+        [_waitRetrieveTimer invalidate];
+        _waitRetrieveTimer = nil;
+    }
+}
 - (void)waitRetrieveTimerInterval:(NSTimer *)aTimer{
-    WYLog(@"a Timer waitSmsSecond = %d",_waitRetrieveSecond);
+    WYLog(@"a Timer with WYSettingConfig waitRetrieveTimerInterval = %d",_waitRetrieveSecond);
     if (_waitRetrieveSecond <= 0) {
         [aTimer invalidate];
         _waitRetrieveTimer = nil;
@@ -269,6 +284,39 @@ static WYSettingConfig *s_instance = nil;
     for (id<WYSettingConfigListener> listener in listeners) {
         if ([listener respondsToSelector:@selector(waitRetrieveTimer:waitSecond:)]) {
             [listener waitRetrieveTimer:aTimer waitSecond:_waitRetrieveSecond];
+        }
+    }
+}
+
+-(void)addRegisterTimer{
+    if(_waitRegisterTimer){
+        [_waitRegisterTimer invalidate];
+        _waitRegisterTimer = nil;
+    }
+    
+    _waitRegisterTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(waitRegisterTimerInterval:) userInfo:nil repeats:YES];
+    _waitRegisterSecond = 60;
+    [self waitRegisterTimerInterval:_waitRegisterTimer];
+}
+-(void)removeRegisterTimer{
+    if(_waitRegisterTimer){
+        [_waitRegisterTimer invalidate];
+        _waitRegisterTimer = nil;
+    }
+}
+- (void)waitRegisterTimerInterval:(NSTimer *)aTimer{
+    WYLog(@"a Timer with WYSettingConfig waitRegisterTimerInterval = %d",_waitRegisterSecond);
+    if (_waitRegisterSecond <= 0) {
+        [aTimer invalidate];
+        _waitRegisterTimer = nil;
+    }
+    _waitRegisterSecond--;
+    
+    //通知lisnteners
+    NSArray* listeners = [_listeners copy];
+    for (id<WYSettingConfigListener> listener in listeners) {
+        if ([listener respondsToSelector:@selector(waitRegisterTimer:waitSecond:)]) {
+            [listener waitRegisterTimer:aTimer waitSecond:_waitRegisterSecond];
         }
     }
 }

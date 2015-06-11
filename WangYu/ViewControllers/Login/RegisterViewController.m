@@ -13,13 +13,14 @@
 #import "NSString+Value.h"
 #import "SetPwdViewController.h"
 #import "WYLinkerHandler.h"
+#import "WYSettingConfig.h"
 
-@interface RegisterViewController ()
+@interface RegisterViewController ()<WYSettingConfigListener>
 {
     NSString *_invitationCodeText;
     
     int _waitSmsSecond;
-    NSTimer *_waitTimer;
+//    NSTimer *_waitTimer;
 }
 @property (nonatomic, strong) IBOutlet UIView *registerContainerView;
 @property (nonatomic, strong) IBOutlet UILabel *phoneTipLabel;
@@ -55,24 +56,27 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (_waitTimer) {
-        [_waitTimer invalidate];
-        _waitTimer = nil;
-    }
+//    if (_waitTimer) {
+//        [_waitTimer invalidate];
+//        _waitTimer = nil;
+//    }
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkTextChaneg:) name:UITextFieldTextDidChangeNotification object:nil];
+    [[WYSettingConfig staticInstance] addListener:self];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    [[WYSettingConfig staticInstance] removeListener:self];
+    
     //    [self TextFieldResignFirstResponder];
-    if (_waitTimer) {
-        [_waitTimer invalidate];
-        _waitTimer = nil;
-    }
+//    if (_waitTimer) {
+//        [_waitTimer invalidate];
+//        _waitTimer = nil;
+//    }
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -119,24 +123,24 @@
     [self refreshUIControl];
 }
 
-- (void)waitTimerInterval:(NSTimer *)aTimer{
-    WYLog(@"a Timer waitSmsSecond = %d",_waitSmsSecond);
-    if (_waitSmsSecond <= 0) {
-        [aTimer invalidate];
-        _waitTimer = nil;
-        if ([[_phoneTextField text] isPhone]) {
-            _getCodeButton.enabled = YES;
-            [_getCodeButton setBackgroundColor:SKIN_COLOR];
-        }
-        [_getCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
-        return;
-    }
-    
-    [_getCodeButton setTitle:[NSString stringWithFormat:@"%d秒",_waitSmsSecond] forState:UIControlStateNormal];
-    
-    _waitSmsSecond--;
-    
-}
+//- (void)waitTimerInterval:(NSTimer *)aTimer{
+//    WYLog(@"a Timer waitSmsSecond = %d",_waitSmsSecond);
+//    if (_waitSmsSecond <= 0) {
+//        [aTimer invalidate];
+//        _waitTimer = nil;
+//        if ([[_phoneTextField text] isPhone]) {
+//            _getCodeButton.enabled = YES;
+//            [_getCodeButton setBackgroundColor:SKIN_COLOR];
+//        }
+//        [_getCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+//        return;
+//    }
+//    
+//    [_getCodeButton setTitle:[NSString stringWithFormat:@"%d秒",_waitSmsSecond] forState:UIControlStateNormal];
+//    
+//    _waitSmsSecond--;
+//    
+//}
 
 /*
 #pragma mark - Navigation
@@ -316,14 +320,14 @@
 
 - (BOOL)loginButtonEnabled{
     if ([[_phoneTextField text] isPhone]) {
-        if (!_waitTimer.valid) {
+        if (_waitSmsSecond <= 0) {
             _getCodeButton.enabled = YES;
             [_getCodeButton setBackgroundColor:SKIN_COLOR];
         }else{
             _getCodeButton.enabled = NO;
             [_getCodeButton setBackgroundColor:UIColorToRGB(0xe4e4e4)];
         }
-        if (_codeTextField.text.length > 6) {
+        if (_codeTextField.text.length >= 6) {
             _registerButton.enabled = YES;
             [_registerButton setBackgroundColor:SKIN_COLOR];
             return YES;
@@ -401,16 +405,18 @@
         return;
     }
     
-    if(_waitTimer){
-        [_waitTimer invalidate];
-        _waitTimer = nil;
-    }
+//    if(_waitTimer){
+//        [_waitTimer invalidate];
+//        _waitTimer = nil;
+//    }
+//    
+//    _waitTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(waitTimerInterval:) userInfo:nil repeats:YES];
+//    _waitSmsSecond = 60;
+//    [self waitTimerInterval:_waitTimer];
     
-    _waitTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(waitTimerInterval:) userInfo:nil repeats:YES];
-    _waitSmsSecond = 60;
+    [[WYSettingConfig staticInstance] addRegisterTimer];
     _getCodeButton.enabled = NO;
     [_getCodeButton setBackgroundColor:UIColorToRGB(0xe4e4e4)];
-    [self waitTimerInterval:_waitTimer];
     
     [self textFieldResignFirstResponder];
     [WYProgressHUD AlertLoading:@"正在验证手机号" At:self.view];
@@ -423,9 +429,10 @@
             if (!errorMsg.length) {
                 errorMsg = @"请求失败!";
             }
+            [[WYSettingConfig staticInstance] removeRegisterTimer];
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
             _waitSmsSecond = 0;
-            [weakSelf waitTimerInterval:_waitTimer];
+            [weakSelf waitRegisterTimer:nil waitSecond:_waitSmsSecond];
             return;
         }
         
@@ -433,6 +440,22 @@
         
     }tag:tag];
     
+}
+
+#pragma mark - WYSettingConfigListener
+- (void)waitRegisterTimer:(NSTimer *)aTimer waitSecond:(int)waitSecond{
+    _waitSmsSecond = waitSecond;
+    WYLog(@"waitRegisterTimer waitSecond = %d",_waitSmsSecond);
+    if (_waitSmsSecond <= 0) {
+        if ([[_phoneTextField text] isPhone]) {
+            _getCodeButton.enabled = YES;
+            [_getCodeButton setBackgroundColor:SKIN_COLOR];
+        }
+        [_getCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+        return;
+    }
+    
+    [_getCodeButton setTitle:[NSString stringWithFormat:@"%d秒",_waitSmsSecond] forState:UIControlStateNormal];
 }
 
 -(void)checkPhoneCode{
