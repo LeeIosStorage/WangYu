@@ -68,7 +68,7 @@
         _logoImage.alpha = 1;
         _floatView.alpha = 1;
         CGRect frame = _floatView.frame;
-        frame.origin.y = self.view.frame.size.height - frame.size.height;
+        frame.origin.y = (SCREEN_HEIGHT == 480?self.view.frame.size.height:SCREEN_HEIGHT) - frame.size.height;
         _floatView.frame = frame;
     } completion:^(BOOL finished) {
         
