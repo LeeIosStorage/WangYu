@@ -21,6 +21,9 @@
 @property (assign, nonatomic) SInt64  messageNextCursor;
 @property (assign, nonatomic) BOOL messageCanLoadMore;
 
+@property (strong, nonatomic) IBOutlet UIView *messageBlankTipView;
+@property (strong, nonatomic) IBOutlet UILabel *messageBlankTipLabel;
+
 @end
 
 @implementation MessageListViewController
@@ -105,6 +108,23 @@
 }
 */
 
+- (void)refreshShowUI{
+    self.messageBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
+    self.messageBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
+    if (self.messageInfos && self.messageInfos.count == 0) {
+        CGRect frame = self.messageBlankTipView.frame;
+        frame.origin.y = 0;
+        frame.size.width = SCREEN_WIDTH;
+        self.messageBlankTipView.frame = frame;
+        [self.tableView addSubview:self.messageBlankTipView];
+        
+    }else{
+        if (self.messageBlankTipView.superview) {
+            [self.messageBlankTipView removeFromSuperview];
+        }
+    }
+}
+
 #pragma mark - request
 - (void)setMessageRead{
     
@@ -175,7 +195,7 @@
             weakSelf.tableView.showsInfiniteScrolling = YES;
             weakSelf.messageNextCursor ++;
         }
-        
+        [weakSelf refreshShowUI];
         [weakSelf.tableView reloadData];
         
     }tag:tag];

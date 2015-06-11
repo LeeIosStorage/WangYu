@@ -35,6 +35,11 @@
 @property (assign, nonatomic) SInt64  gameNextCursor;
 @property (assign, nonatomic) BOOL gameCanLoadMore;
 
+@property (assign, nonatomic) BOOL isHavNetbarServerSucceed;
+@property (assign, nonatomic) BOOL isHavGameServerSucceed;
+@property (strong, nonatomic) IBOutlet UIView *collectBlankTipView;
+@property (strong, nonatomic) IBOutlet UILabel *collectBlankTipLabel;
+
 @end
 
 @implementation CollectListViewController
@@ -180,6 +185,9 @@
         self.gameTableView.hidden = YES;
         self.netbarTableView.hidden = NO;
         
+        if (_isHavNetbarServerSucceed) {
+            [self refreshShowUI];
+        }
         if (!_netbarCollectList) {
             [self getCacheNetbarCollect];
             [self refreshNetbarCollectList];
@@ -194,6 +202,10 @@
         self.netbarTableView.decelerationRate = 0.0f;
         self.netbarTableView.hidden = YES;
         self.gameTableView.hidden = NO;
+        
+        if (_isHavGameServerSucceed) {
+            [self refreshShowUI];
+        }
         if (!_gameCollectList) {
             [self getCacheGameCollect];
             [self refreshGameCollectList];
@@ -222,6 +234,40 @@
             break;
         default:
             break;
+    }
+}
+
+- (void)refreshShowUI{
+    self.collectBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
+    self.collectBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
+    if (self.selectedSegmentIndex == 0) {
+        if (self.netbarCollectList && self.netbarCollectList.count == 0) {
+            CGRect frame = self.collectBlankTipView.frame;
+            frame.origin.y = 0;
+            frame.size.width = SCREEN_WIDTH;
+            self.collectBlankTipView.frame = frame;
+            self.collectBlankTipLabel.text = @"暂时没有收藏记录";
+            [self.netbarTableView addSubview:self.collectBlankTipView];
+            
+        }else{
+            if (self.collectBlankTipView.superview) {
+                [self.collectBlankTipView removeFromSuperview];
+            }
+        }
+    }else if (self.selectedSegmentIndex == 1){
+        if (self.gameCollectList && self.gameCollectList.count == 0) {
+            CGRect frame = self.collectBlankTipView.frame;
+            frame.origin.y = 0;
+            frame.size.width = SCREEN_WIDTH;
+            self.collectBlankTipView.frame = frame;
+            self.collectBlankTipLabel.text = @"暂时没有收藏记录";
+            [self.gameTableView addSubview:self.collectBlankTipView];
+            
+        }else{
+            if (self.collectBlankTipView.superview) {
+                [self.collectBlankTipView removeFromSuperview];
+            }
+        }
     }
 }
 
@@ -306,7 +352,8 @@
             weakSelf.netbarTableView.showsInfiniteScrolling = YES;
             weakSelf.netbarNextCursor ++;
         }
-        
+        weakSelf.isHavNetbarServerSucceed = YES;
+        [weakSelf refreshShowUI];
         [weakSelf.netbarTableView reloadData];
         
     }tag:tag];
@@ -364,7 +411,8 @@
             weakSelf.gameTableView.showsInfiniteScrolling = YES;
             weakSelf.gameNextCursor ++;
         }
-        
+        weakSelf.isHavGameServerSucceed = YES;
+        [weakSelf refreshShowUI];
         [weakSelf.gameTableView reloadData];
         
     }tag:tag];

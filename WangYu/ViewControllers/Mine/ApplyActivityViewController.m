@@ -22,6 +22,9 @@
 @property (assign, nonatomic) SInt64  applyNextCursor;
 @property (assign, nonatomic) BOOL applyCanLoadMore;
 
+@property (strong, nonatomic) IBOutlet UIView *activityBlankTipView;
+@property (strong, nonatomic) IBOutlet UILabel *activityBlankTipLabel;
+
 @end
 
 @implementation ApplyActivityViewController
@@ -106,6 +109,24 @@
 }
 */
 
+#pragma mark - custom
+- (void)refreshShowUI{
+    self.activityBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
+    self.activityBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
+    if (self.applyActivityInfos && self.applyActivityInfos.count == 0) {
+        CGRect frame = self.activityBlankTipView.frame;
+        frame.origin.y = 0;
+        frame.size.width = SCREEN_WIDTH;
+        self.activityBlankTipView.frame = frame;
+        [self.tableView addSubview:self.activityBlankTipView];
+        
+    }else{
+        if (self.activityBlankTipView.superview) {
+            [self.activityBlankTipView removeFromSuperview];
+        }
+    }
+}
+
 #pragma mark - request
 -(void)getCacheApplyActivityList{
     WS(weakSelf);
@@ -158,12 +179,11 @@
             weakSelf.tableView.showsInfiniteScrolling = YES;
             weakSelf.applyNextCursor ++;
         }
-        
+        [weakSelf refreshShowUI];
         [weakSelf.tableView reloadData];
         
     }tag:tag];
 }
-#pragma mark - custom
 
 #pragma mark PullToRefreshViewDelegate
 - (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {

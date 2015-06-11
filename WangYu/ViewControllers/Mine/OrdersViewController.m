@@ -35,6 +35,11 @@
 @property (assign, nonatomic) SInt64  payNextCursor;
 @property (assign, nonatomic) BOOL payCanLoadMore;
 
+@property (assign, nonatomic) BOOL isHavReserveServerSucceed;
+@property (assign, nonatomic) BOOL isHavPayServerSucceed;
+@property (strong, nonatomic) IBOutlet UIView *orderBlankTipView;
+@property (strong, nonatomic) IBOutlet UILabel *orderBlankTipLabel;
+
 @end
 
 @implementation OrdersViewController
@@ -194,6 +199,9 @@
         self.payOrderTableView.hidden = YES;
         self.reserveOrderTableView.hidden = NO;
         
+        if (_isHavReserveServerSucceed) {
+            [self refreshShowUI];
+        }
         if (!_reserveOrderList) {
             [self getCacheReserveOrders];
             [self refreshReserveOrdersList];
@@ -208,6 +216,11 @@
         self.reserveOrderTableView.decelerationRate = 0.0f;
         self.reserveOrderTableView.hidden = YES;
         self.payOrderTableView.hidden = NO;
+        
+        if (_isHavPayServerSucceed) {
+            [self refreshShowUI];
+        }
+        
         if (!_payOrderList) {
             [self getCachePayOrders];
             [self refreshPayOrdersList];
@@ -236,6 +249,40 @@
             break;
         default:
             break;
+    }
+}
+
+- (void)refreshShowUI{
+    self.orderBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
+    self.orderBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
+    if (self.selectedSegmentIndex == 0) {
+        if (self.reserveOrderList && self.reserveOrderList.count == 0) {
+            CGRect frame = self.orderBlankTipView.frame;
+            frame.origin.y = 0;
+            frame.size.width = SCREEN_WIDTH;
+            self.orderBlankTipView.frame = frame;
+            self.orderBlankTipLabel.text = @"这么小气的，订单空空的";
+            [self.reserveOrderTableView addSubview:self.orderBlankTipView];
+            
+        }else{
+            if (self.orderBlankTipView.superview) {
+                [self.orderBlankTipView removeFromSuperview];
+            }
+        }
+    }else if (self.selectedSegmentIndex == 1){
+        if (self.payOrderList && self.payOrderList.count == 0) {
+            CGRect frame = self.orderBlankTipView.frame;
+            frame.origin.y = 0;
+            frame.size.width = SCREEN_WIDTH;
+            self.orderBlankTipView.frame = frame;
+            self.orderBlankTipLabel.text = @"这么小气的，订单空空的";
+            [self.payOrderTableView addSubview:self.orderBlankTipView];
+            
+        }else{
+            if (self.orderBlankTipView.superview) {
+                [self.orderBlankTipView removeFromSuperview];
+            }
+        }
     }
 }
 
@@ -303,7 +350,8 @@
             //可以加载更多
             weakSelf.reserveNextCursor ++;
         }
-        
+        weakSelf.isHavReserveServerSucceed = YES;
+        [weakSelf refreshShowUI];
         [weakSelf.reserveOrderTableView reloadData];
         
     }tag:tag];
@@ -363,7 +411,8 @@
             weakSelf.payOrderTableView.showsInfiniteScrolling = YES;
             weakSelf.payNextCursor ++;
         }
-        
+        weakSelf.isHavPayServerSucceed = YES;
+        [weakSelf refreshShowUI];
         [weakSelf.payOrderTableView reloadData];
         
     }tag:tag];

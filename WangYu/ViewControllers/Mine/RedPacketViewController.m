@@ -37,6 +37,11 @@
 @property (assign, nonatomic) SInt64  historyNextCursor;
 @property (assign, nonatomic) BOOL historyCanLoadMore;
 
+@property (assign, nonatomic) BOOL isHavServerSucceed;
+@property (assign, nonatomic) BOOL isHavHistoryServerSucceed;
+@property (strong, nonatomic) IBOutlet UIView *freeRedPacketBlankTipView;
+@property (strong, nonatomic) IBOutlet UILabel *freeRedPacketBlankTipLabel;
+
 @end
 
 @implementation RedPacketViewController
@@ -212,6 +217,10 @@
         self.historyRedPacketTableView.hidden = YES;
         self.freeRedPacketTableView.hidden = NO;
         
+        if (_isHavServerSucceed) {
+            [self refreshShowUI];
+        }
+        
         if (!_freeRedPacketList) {
             if (!_bChooseRed) {
                 [self getCacheFreeRedPacket];
@@ -228,6 +237,10 @@
         self.freeRedPacketTableView.decelerationRate = 0.0f;
         self.freeRedPacketTableView.hidden = YES;
         self.historyRedPacketTableView.hidden = NO;
+        
+        if (_isHavHistoryServerSucceed) {
+            [self refreshShowUI];
+        }
         if (!_historyRedPacketList) {
             [self getCacheHistoryRedPacket];
             [self refreshHistoryRedPacketList];
@@ -256,6 +269,40 @@
             break;
         default:
             break;
+    }
+}
+
+- (void)refreshShowUI{
+    self.freeRedPacketBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
+    self.freeRedPacketBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
+    if (self.selectedSegmentIndex == 0) {
+        if (self.freeRedPacketList && self.freeRedPacketList.count == 0) {
+            CGRect frame = self.freeRedPacketBlankTipView.frame;
+            frame.origin.y = 0;
+            frame.size.width = SCREEN_WIDTH;
+            self.freeRedPacketBlankTipView.frame = frame;
+            self.freeRedPacketBlankTipLabel.text = @"还没领红包哦，快去吧";
+            [self.freeRedPacketTableView addSubview:self.freeRedPacketBlankTipView];
+            
+        }else{
+            if (self.freeRedPacketBlankTipView.superview) {
+                [self.freeRedPacketBlankTipView removeFromSuperview];
+            }
+        }
+    }else if (self.selectedSegmentIndex == 1){
+        if (self.historyRedPacketList && self.historyRedPacketList.count == 0) {
+            CGRect frame = self.freeRedPacketBlankTipView.frame;
+            frame.origin.y = 0;
+            frame.size.width = SCREEN_WIDTH;
+            self.freeRedPacketBlankTipView.frame = frame;
+            self.freeRedPacketBlankTipLabel.text = @"暂无历史红包记录";
+            [self.historyRedPacketTableView addSubview:self.freeRedPacketBlankTipView];
+            
+        }else{
+            if (self.freeRedPacketBlankTipView.superview) {
+                [self.freeRedPacketBlankTipView removeFromSuperview];
+            }
+        }
     }
 }
 
@@ -359,7 +406,8 @@
             weakSelf.freeRedPacketTableView.showsInfiniteScrolling = YES;
             weakSelf.freeNextCursor ++;
         }
-        
+        weakSelf.isHavServerSucceed = YES;
+        [weakSelf refreshShowUI];
         [weakSelf.freeRedPacketTableView reloadData];
         
     }tag:tag];
@@ -423,7 +471,8 @@
             weakSelf.historyRedPacketTableView.showsInfiniteScrolling = YES;
             weakSelf.historyNextCursor ++;
         }
-        
+        weakSelf.isHavHistoryServerSucceed = YES;
+        [weakSelf refreshShowUI];
         [weakSelf.historyRedPacketTableView reloadData];
         
     }tag:tag];

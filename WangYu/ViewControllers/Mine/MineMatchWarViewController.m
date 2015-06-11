@@ -31,6 +31,11 @@
 @property (assign, nonatomic) SInt64  applyNextCursor;
 @property (assign, nonatomic) BOOL applyCanLoadMore;
 
+@property (assign, nonatomic) BOOL isHavPublishServerSucceed;
+@property (assign, nonatomic) BOOL isHavApplyServerSucceed;
+@property (strong, nonatomic) IBOutlet UIView *matchWarBlankTipView;
+@property (strong, nonatomic) IBOutlet UILabel *matchWarBlankTipLabel;
+
 @end
 
 @implementation MineMatchWarViewController
@@ -179,6 +184,10 @@
         self.applyTableView.hidden = YES;
         self.publishTableView.hidden = NO;
         
+        if (_isHavPublishServerSucceed) {
+            [self refreshShowUI];
+        }
+        
         if (!_publishMatchList) {
             [self getCachePublishMatchWar];
             [self refreshPublishMatchWarList];
@@ -193,6 +202,11 @@
         self.publishTableView.decelerationRate = 0.0f;
         self.publishTableView.hidden = YES;
         self.applyTableView.hidden = NO;
+        
+        if (_isHavApplyServerSucceed) {
+            [self refreshShowUI];
+        }
+        
         if (!_applyMatchList) {
             [self getCacheApplyMatchWar];
             [self refreshApplyMatchWarList];
@@ -221,6 +235,40 @@
             break;
         default:
             break;
+    }
+}
+
+- (void)refreshShowUI{
+    self.matchWarBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
+    self.matchWarBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
+    if (self.selectedSegmentIndex == 0) {
+        if (self.publishMatchList && self.publishMatchList.count == 0) {
+            CGRect frame = self.matchWarBlankTipView.frame;
+            frame.origin.y = 0;
+            frame.size.width = SCREEN_WIDTH;
+            self.matchWarBlankTipView.frame = frame;
+            self.matchWarBlankTipLabel.text = @"发起约战，来证明你的实力吧";
+            [self.publishTableView addSubview:self.matchWarBlankTipView];
+            
+        }else{
+            if (self.matchWarBlankTipView.superview) {
+                [self.matchWarBlankTipView removeFromSuperview];
+            }
+        }
+    }else if (self.selectedSegmentIndex == 1){
+        if (self.applyMatchList && self.applyMatchList.count == 0) {
+            CGRect frame = self.matchWarBlankTipView.frame;
+            frame.origin.y = 0;
+            frame.size.width = SCREEN_WIDTH;
+            self.matchWarBlankTipView.frame = frame;
+            self.matchWarBlankTipLabel.text = @"暂时无报名的约战记录";
+            [self.applyTableView addSubview:self.matchWarBlankTipView];
+            
+        }else{
+            if (self.matchWarBlankTipView.superview) {
+                [self.matchWarBlankTipView removeFromSuperview];
+            }
+        }
     }
 }
 
@@ -304,7 +352,8 @@
             weakSelf.publishTableView.showsInfiniteScrolling = YES;
             weakSelf.publishNextCursor ++;
         }
-        
+        weakSelf.isHavPublishServerSucceed = YES;
+        [weakSelf refreshShowUI];
         [weakSelf.publishTableView reloadData];
         
     }tag:tag];
@@ -367,7 +416,8 @@
             weakSelf.applyTableView.showsInfiniteScrolling = YES;
             weakSelf.applyNextCursor ++;
         }
-        
+        weakSelf.isHavApplyServerSucceed = YES;
+        [weakSelf refreshShowUI];
         [weakSelf.applyTableView reloadData];
         
     }tag:tag];
