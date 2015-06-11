@@ -11,6 +11,8 @@
 #import "WYSystem.h"
 #import "UIImage+Resize.h"
 
+#define DAY_SECOND 60*60*24
+
 @implementation WYUIUtils
 
 + (UIColor *)colorWithHex:(long)hexColor alpha:(float)opacity
@@ -185,6 +187,19 @@ static bool dateFormatterOFUSInvalid ;
     NSDateComponents *comps = [calender components:unitFlags fromDate:date];
     NSDateComponents *compsNow = [calender components:unitFlags fromDate:nowDate];
     
+    
+    
+//    compsNow.day = 2;
+//    compsNow.month += 1;
+//    nowDate = [calender dateFromComponents:compsNow];
+//    comps.day = 30;
+//    date = [calender dateFromComponents:comps];
+//    distance = [nowDate timeIntervalSinceDate:date];
+    
+    
+    
+    
+    
     if (distance < 0) {
         distance = 0;
     }
@@ -192,17 +207,31 @@ static bool dateFormatterOFUSInvalid ;
         _timestamp = [NSString stringWithFormat:@"%@", @"刚刚"];
     } else if (distance < 60*60) {
         _timestamp = [NSString stringWithFormat:@"%d%@", distance/60, @"分钟前"];
-    }else if (distance < 60*60*24) {
+    }else if (distance < DAY_SECOND) {
         if (comps.day == compsNow.day)
         {
             _timestamp = [NSString stringWithFormat:@"今天 %02d:%02d", (int)comps.hour,(int)comps.minute];
         }
         else
             _timestamp = [NSString stringWithFormat:@"昨天 %02d:%02d", (int)comps.hour,(int)comps.minute];
-    }else if (distance < 60*60*24*2) {
-        _timestamp = [NSString stringWithFormat:@"昨天 %02d:%02d", (int)comps.hour,(int)comps.minute];
-    }else if (distance < 60*60*24*3) {
-        _timestamp = [NSString stringWithFormat:@"前天 %02d:%02d", (int)comps.hour,(int)comps.minute];
+    }else if (distance < DAY_SECOND*2) {
+//        compsNow.hour = compsNow.minute = compsNow.second = 0;
+//        NSDate *startOfToday = [calender dateFromComponents:compsNow];
+//        distance = [startOfToday timeIntervalSinceDate:date];
+        if ((comps.day == compsNow.day-1) || (comps.day != compsNow.day-1 && comps.day > compsNow.day-1)) {
+            _timestamp = [NSString stringWithFormat:@"昨天 %02d:%02d", (int)comps.hour,(int)comps.minute];
+        }else{
+            _timestamp = [NSString stringWithFormat:@"前天 %02d:%02d", (int)comps.hour,(int)comps.minute];
+        }
+    }else if (distance < DAY_SECOND*3) {
+//        compsNow.hour = compsNow.minute = compsNow.second = 0;
+//        NSDate *startOfToday = [calender dateFromComponents:compsNow];
+//        distance = [startOfToday timeIntervalSinceDate:date];
+        if ((comps.day == compsNow.day-2) || (comps.day != compsNow.day-2 && comps.day > compsNow.day-2)){
+            _timestamp = [NSString stringWithFormat:@"前天 %02d:%02d", (int)comps.hour,(int)comps.minute];
+        }else{
+            _timestamp = [NSString stringWithFormat:@"%d月%d日 %02d:%02d", (int)comps.month, (int)comps.day, (int)comps.hour, (int)comps.minute];
+        }
     }else {
         if (comps.year == compsNow.year){
             _timestamp = [NSString stringWithFormat:@"%d月%d日 %02d:%02d", (int)comps.month, (int)comps.day, (int)comps.hour, (int)comps.minute];
@@ -231,11 +260,11 @@ static bool dateFormatterOFUSInvalid ;
     if (distance < 0) {
         distance = 0;
     }
-    if (distance < 60*60*24*30) {
+    if (distance < DAY_SECOND*30) {
         _timestamp = [NSString stringWithFormat:@"%d%@", distance/60/60/24, @"天"];
-    } else if (distance < 60*60*24*365) {
+    } else if (distance < DAY_SECOND*365) {
         _timestamp = [NSString stringWithFormat:@"%d%@%d%@",distance/60/60/24/30,@"个月",distance/60/60/24%30,@"天"];
-    } else if (distance < 60*60*24*365*6){
+    } else if (distance < DAY_SECOND*365*6){
         _timestamp = [NSString stringWithFormat:@"%d%@%d%@",distance/60/60/24/365,@"岁",distance/60/60/24%365/30,@"个月"];
     } else {
         _timestamp = [NSString stringWithFormat:@"%d%@",distance/60/60/24/365,@"岁"];
@@ -245,9 +274,9 @@ static bool dateFormatterOFUSInvalid ;
     //        _timestamp = [NSString stringWithFormat:@"%d%@", distance, @"秒前"];
     //    } else if (distance < 60*60) {
     //        _timestamp = [NSString stringWithFormat:@"%d%@", distance/60, @"分钟前"];
-    //    }else if (distance < 60*60*24) {
+    //    }else if (distance < DAY_SECOND) {
     //        _timestamp = [NSString stringWithFormat:@"%d%@", distance/60/60, @"小时前"];
-    //    }else if (distance < 60*60*24*7) {
+    //    }else if (distance < DAY_SECOND*7) {
     //        _timestamp = [NSString stringWithFormat:@"%d%@", distance/60/60/24, @"天前"];
     //    }else {
     //        if (comps.year == compsNow.year){

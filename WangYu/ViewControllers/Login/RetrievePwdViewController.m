@@ -137,7 +137,7 @@
     if ([[_phoneTextField text] isPhone]) {
         _getCodeButton.enabled = YES;
         [_getCodeButton setBackgroundColor:SKIN_COLOR];
-        if (_codeTextField.text.length > 0) {
+        if (_codeTextField.text.length > 6) {
             _resetPasswordButton.enabled = YES;
             [_resetPasswordButton setBackgroundColor:SKIN_COLOR];
             return YES;

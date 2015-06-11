@@ -79,7 +79,7 @@
     [self setTilteLeftViewHide:NO];
     _isOpen = NO;
     [self refreshNewGuideView:NO];
-    _chooseCityName = @"选择城市";
+    _chooseCityName = @"城市";
     self.currentLocation = [WYLocationServiceUtil getLastRecordLocation];
     
     self.weekRedBagIconImgView.hidden = ![WYSettingConfig staticInstance].weekRedBagMessageUnreadEvent;
@@ -197,12 +197,16 @@
             [self refreshLeftIconViewUI];
             return YES;
         }else{
-            _chooseCityName = @"选择城市";
+            if (_chooseCityName.length > 0) {
+                _chooseCityName = [NSString stringWithString:_chooseCityName];
+            }else{
+                _chooseCityName = @"城市";
+            }
             [self refreshLeftIconViewUI];
             return NO;
         }
     }else{
-        _chooseCityName = @"选择城市";
+        _chooseCityName = @"城市";
         [self refreshLeftIconViewUI];
         return NO;
     }

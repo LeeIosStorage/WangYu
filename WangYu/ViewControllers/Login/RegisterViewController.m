@@ -323,7 +323,7 @@
             _getCodeButton.enabled = NO;
             [_getCodeButton setBackgroundColor:UIColorToRGB(0xe4e4e4)];
         }
-        if (_codeTextField.text.length > 0) {
+        if (_codeTextField.text.length > 6) {
             _registerButton.enabled = YES;
             [_registerButton setBackgroundColor:SKIN_COLOR];
             return YES;

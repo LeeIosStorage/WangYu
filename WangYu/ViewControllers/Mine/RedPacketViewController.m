@@ -523,6 +523,7 @@
     }
     cell.isPast = NO;
     RedPacketInfo *redPacketInfo = _freeRedPacketList[indexPath.row];
+    cell.redPacketInfo = redPacketInfo;
     if (_bChooseRed && _selectedItems) {
         for (RedPacketInfo *info in _selectedItems) {
             if ([info.rid isEqualToString:redPacketInfo.rid]) {
@@ -530,8 +531,16 @@
                 break;
             }
         }
+        cell.redPacketInfo = redPacketInfo;
+        UIImage *bgImage;
+        if (redPacketInfo.usable) {
+            bgImage = [UIImage imageNamed:@"redpacket_kuang_red"];
+        }else{
+            bgImage = [UIImage imageNamed:@"redpacket_kuang_gray"];
+        }
+        cell.redPacketBgImgView.image = bgImage;
     }
-    cell.redPacketInfo = redPacketInfo;
+    
     return cell;
 }
 
@@ -542,6 +551,12 @@
     }else{
         if (_bChooseRed) {
             RedPacketInfo *redPacketInfo = _freeRedPacketList[indexPath.row];
+            
+            //红包不能用
+            if (!redPacketInfo.usable) {
+                return;
+            }
+            
             redPacketInfo.selected = !redPacketInfo.selected;
             for (RedPacketInfo *info in _selectedItems) {
                 if (!redPacketInfo.selected && [info.rid isEqualToString:redPacketInfo.rid]) {
