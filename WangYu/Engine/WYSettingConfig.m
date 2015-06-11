@@ -12,6 +12,17 @@
 
 static int s_isFirstEnterVersion = -1;
 
+@interface WYSettingConfig (){
+    
+    NSMutableArray* _listeners;
+    
+    NSTimer *_waitRetrieveTimer;
+    int _waitRetrieveSecond;
+    
+    
+}
+@end
+
 @implementation WYSettingConfig
 
 static WYSettingConfig *s_instance = nil;
@@ -28,23 +39,32 @@ static WYSettingConfig *s_instance = nil;
         return s_instance;
     }
 }
+- (void)addListener:(id<WYSettingConfigListener>)listener{
+    [_listeners addObject:listener];
+}
+- (void)removeListener:(id<WYSettingConfigListener>)listener{
+    [_listeners removeObject:listener];
+}
 
 -(id)init
 {
     if (self = [super init]) {
         //默认自动
         _systemCameraFlashStatus = UIImagePickerControllerCameraFlashModeAuto;
+        [self login];
         
     }
     return self;
 }
 
-+ (void)logout {
+- (void)logout {
     s_instance = nil;
+    [_listeners removeAllObjects];
 }
 
 -(void)login{
     //.....
+    _listeners = [[NSMutableArray alloc] init];
 }
 
 //设置系统闪光灯状态
@@ -223,6 +243,34 @@ static WYSettingConfig *s_instance = nil;
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)addRetrieveTimer{
+    if(_waitRetrieveTimer){
+        [_waitRetrieveTimer invalidate];
+        _waitRetrieveTimer = nil;
+    }
+    
+    _waitRetrieveTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(waitRetrieveTimerInterval:) userInfo:nil repeats:YES];
+    _waitRetrieveSecond = 60;
+    [self waitRetrieveTimerInterval:_waitRetrieveTimer];
+}
+
+- (void)waitRetrieveTimerInterval:(NSTimer *)aTimer{
+    WYLog(@"a Timer waitSmsSecond = %d",_waitRetrieveSecond);
+    if (_waitRetrieveSecond <= 0) {
+        [aTimer invalidate];
+        _waitRetrieveTimer = nil;
+    }
+    _waitRetrieveSecond--;
+    
+    //通知lisnteners
+    NSArray* listeners = [_listeners copy];
+    for (id<WYSettingConfigListener> listener in listeners) {
+        if ([listener respondsToSelector:@selector(waitRetrieveTimer:waitSecond:)]) {
+            [listener waitRetrieveTimer:aTimer waitSecond:_waitRetrieveSecond];
+        }
+    }
 }
 
 @end

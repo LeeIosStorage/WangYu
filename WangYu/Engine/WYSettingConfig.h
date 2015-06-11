@@ -11,14 +11,17 @@
 #define WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION @"WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION"
 #define WY_WEEKREDBAG_UNREAD_EVENT_NOTIFICATION @"WY_WEEKREDBAG_UNREAD_EVENT_NOTIFICATION"
 
+@protocol WYSettingConfigListener;
 @interface WYSettingConfig : NSObject<NSCoding>
 
 //系统相机闪光灯状态
 @property (nonatomic, assign) int systemCameraFlashStatus;
 
 +(WYSettingConfig *)staticInstance;
+- (void)addListener:(id<WYSettingConfigListener>)listener;
+- (void)removeListener:(id<WYSettingConfigListener>)listener;
 
-+ (void)logout;
+- (void)logout;
 - (void)login;
 
 -(void)saveSettingCfg;
@@ -38,4 +41,12 @@
 -(void)addMessageNum:(int)count;
 -(void)removeMessageNum;
 
+//找回密码验证码倒计时
+-(void)addRetrieveTimer;
+
+@end
+
+@protocol WYSettingConfigListener <NSObject>
+@optional
+- (void)waitRetrieveTimer:(NSTimer *)aTimer waitSecond:(int)waitSecond;
 @end
