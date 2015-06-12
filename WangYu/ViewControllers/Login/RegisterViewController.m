@@ -370,7 +370,7 @@
     
     _invitationCodeTextField.text = [_invitationCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (_invitationCodeTextField.text.length == 0) {
-        [WYProgressHUD lightAlert:@"邀请码不能为空"];
+        [self officialRegisterAction:nil];
         return;
     }
     [self textFieldResignFirstResponder];
