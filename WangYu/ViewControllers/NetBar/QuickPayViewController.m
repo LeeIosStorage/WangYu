@@ -615,11 +615,11 @@
     [self.navigationController pushViewController:rpVc animated:YES];
 }
 
--(UINavigationController *) navigationController
-{
-    AppDelegate *appDele = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    return appDele.mainTabViewController.navigationController;
-}
+//-(UINavigationController *) navigationController
+//{
+//    AppDelegate *appDele = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    return appDele.mainTabViewController.navigationController;
+//}
 
 -(void)goToOrderViewController{
     OrdersViewController *orderVc = [[OrdersViewController alloc] init];
@@ -629,7 +629,7 @@
     //去掉衍生出来的部分viewController
     NSMutableArray *viewControllers = [NSMutableArray array];
     for (id vc in navVc.viewControllers) {
-        if ([vc isMemberOfClass:[QuickPayViewController class]] || [vc isMemberOfClass:[NetbarDetailViewController class]] || [vc isMemberOfClass:[OrdersViewController class]]) {
+        if ([vc isMemberOfClass:[QuickPayViewController class]] || [vc isMemberOfClass:[NetbarDetailViewController class]] || [NSStringFromClass([vc class]) isEqualToString:@"OrdersViewController"]) {
             continue;
         }
         [viewControllers addObject:vc];
@@ -648,7 +648,8 @@
         }
     }else{
         //一键支付 成功或失败都会生成支付订单 所以都跳支付订单页。
-        [self performSelector:@selector(goToOrderViewController) withObject:nil afterDelay:1.0];
+//        [self performSelector:@selector(goToOrderViewController) withObject:nil afterDelay:1.0];
+        [self goToOrderViewController];
     }
 }
 @end
