@@ -13,17 +13,23 @@
 #import "WYEngine.h"
 #import "WYSettingConfig.h"
 
-@interface RetrievePwdViewController ()<WYSettingConfigListener>
+@interface RetrievePwdViewController ()<WYSettingConfigListener,UIScrollViewDelegate>
 {
     int _waitSmsSecond;
 //    NSTimer *_waitTimer;
 }
+
+@property (nonatomic, strong) IBOutlet UIScrollView *mainScrollView;
+@property (nonatomic, strong) IBOutlet UIView *retrieveContainerView;
+
 @property (nonatomic, strong) IBOutlet UILabel *phoneTipLabel;
 @property (nonatomic, strong) IBOutlet UILabel *codeTipLabel;
 @property (strong, nonatomic) IBOutlet UITextField *phoneTextField;
 @property (strong, nonatomic) IBOutlet UITextField *codeTextField;
 @property (strong, nonatomic) IBOutlet UIButton *getCodeButton;
 @property (strong, nonatomic) IBOutlet UIButton *resetPasswordButton;
+
+@property (nonatomic, assign) BOOL bViewDisappear;
 
 - (IBAction)getCodeAction:(id)sender;
 - (IBAction)fresetPasswordAction:(id)sender;
@@ -41,12 +47,14 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    _bViewDisappear = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkTextChaneg:) name:UITextFieldTextDidChangeNotification object:nil];
     [[WYSettingConfig staticInstance] addListener:self];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    _bViewDisappear = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
     [[WYSettingConfig staticInstance] removeListener:self];
     //    [self TextFieldResignFirstResponder];
@@ -66,7 +74,20 @@
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor whiteColor];
     self.phoneTextField.text = [[WYEngine shareInstance] getMemoryLoginedAccout];
+    _waitSmsSecond = [[WYSettingConfig staticInstance] getRetrieveSecond];
     [self refreshUIControl];
+    
+    self.mainScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, self.retrieveContainerView.frame.size.height+12);
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
     UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizer:)];
     [self.view addGestureRecognizer:gestureRecongnizer];
@@ -171,6 +192,78 @@
     [self.codeTextField resignFirstResponder];
 }
 
+#pragma mark - KeyboardNotification
+-(void) keyboardWillShow:(NSNotification *)note{
+    
+    if (_bViewDisappear) {
+        return;
+    }
+    
+    // get keyboard size and loctaion
+    CGRect keyboardBounds;
+    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // Need to translate the bounds to account for rotation.
+    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+    
+    // get a rect for the textView frame
+    CGRect supViewFrame = self.retrieveContainerView.frame;
+    float gapHeight = self.mainScrollView.frame.origin.y + supViewFrame.origin.y + supViewFrame.size.height - keyboardBounds.origin.y;
+    BOOL isMove = (gapHeight > 0);
+    
+    
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    if (isMove) {
+        CGRect scrollViewFrame = self.mainScrollView.frame;
+        scrollViewFrame.size.height = keyboardBounds.origin.y - self.mainScrollView.frame.origin.y;
+        self.mainScrollView.frame = scrollViewFrame;
+        CGSize contentSize = self.mainScrollView.contentSize;
+        self.mainScrollView.contentSize = CGSizeMake(contentSize.width, self.retrieveContainerView.frame.origin.y+self.retrieveContainerView.frame.size.height+10);
+    }
+    
+    // commit animations
+    [UIView commitAnimations];
+}
+
+-(void) keyboardWillHide:(NSNotification *)note{
+    
+    if (_bViewDisappear) {
+        return;
+    }
+    
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    // set views with new info
+    
+    CGRect scrollViewFrame = self.mainScrollView.frame;
+    scrollViewFrame.size.height = self.view.frame.size.height - scrollViewFrame.origin.y;
+    self.mainScrollView.frame = scrollViewFrame;
+    CGSize contentSize = self.mainScrollView.contentSize;
+    self.mainScrollView.contentSize = CGSizeMake(contentSize.width, self.retrieveContainerView.frame.size.height + 12);
+    
+    // commit animations
+    [UIView commitAnimations];
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+//    [self textFieldResignFirstResponder];
+}
+
 #pragma mark - WYSettingConfigListener
 - (void)waitRetrieveTimer:(NSTimer *)aTimer waitSecond:(int)waitSecond{
     _waitSmsSecond = waitSecond;
@@ -185,6 +278,7 @@
     }
     
     [_getCodeButton setTitle:[NSString stringWithFormat:@"%d秒",_waitSmsSecond] forState:UIControlStateNormal];
+    [_getCodeButton setTitle:[NSString stringWithFormat:@"%d秒",_waitSmsSecond] forState:UIControlStateDisabled];
 }
 
 #pragma mark - IBAction

@@ -44,9 +44,11 @@
 //找回密码验证码倒计时
 -(void)addRetrieveTimer;
 -(void)removeRetrieveTimer;
+-(int)getRetrieveSecond;
 //注册时验证码倒计时
 -(void)addRegisterTimer;
 -(void)removeRegisterTimer;
+-(int)getRegisterSecond;
 
 @end
 

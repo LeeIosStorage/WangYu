@@ -472,7 +472,15 @@
     if (indexPath == nil) {
         return;
     }
+    
     WYNetbarInfo* netbarInfo = _netbarArray[indexPath.row];
+    
+    if (netbarInfo.latitude.length == 0 || netbarInfo.longitude == 0 || [netbarInfo.latitude intValue] == 0 || [netbarInfo.longitude intValue] == 0) {
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"该网吧暂无数据" cancelButtonTitle:@"好的"];
+        [alertView show];
+        return;
+    }
+    
     NetbarMapViewController *nmVc = [[NetbarMapViewController alloc] init];
     nmVc.netbarInfo = netbarInfo;
     CLLocationCoordinate2D coordinate;
