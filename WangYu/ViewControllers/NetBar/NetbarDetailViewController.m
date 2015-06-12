@@ -161,11 +161,18 @@
     }else {
         [self.collectButton setBackgroundImage:[UIImage imageNamed:@"netbar_detail_uncollect_icon"] forState:UIControlStateNormal];
     }
-    self.phoneLabel.text = self.netbarInfo.telephone;
+    if (self.netbarInfo.telephone.length > 0){
+        self.phoneLabel.text = self.netbarInfo.telephone;
+    }else {
+        self.phoneLabel.text = @"暂无电话数据";
+    }
     self.addressLabel.lineHeightMultiple = 0.8;
-    self.addressLabel.text = self.netbarInfo.address;
+    if (self.netbarInfo.address.length > 0){
+        self.addressLabel.text = self.netbarInfo.address;
+    }else {
+        self.addressLabel.text = @"暂无地址数据";
+    }
     self.netbarLabel.text = self.netbarInfo.netbarName;
-    
     self.priceLabel2.text = [NSString stringWithFormat:@"%@",self.netbarInfo.price];
     
     CGFloat priceLabelWidth = [WYCommonUtils widthWithText:self.priceLabel2.text font:self.priceLabel2.font lineBreakMode:self.priceLabel2.lineBreakMode];
