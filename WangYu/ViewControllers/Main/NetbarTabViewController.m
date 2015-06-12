@@ -34,6 +34,8 @@
     NSString *_chooseAreaCode;
     UIImageView *_chooseCityIconImgView;
     
+    NSString *_currentLocationLocality;
+    
     BOOL _isOpen;
     UIButton *_bgMarkButtonView;
     LocationViewController *_locationChooseVc;
@@ -173,6 +175,7 @@
         NSDictionary *addressDictionary = placemark.addressDictionary;
         WYLog(@"Placemark addressDictionary: %@", addressDictionary);
         NSString *locality = placemark.locality;
+        _currentLocationLocality = locality;
         BOOL isChange = [weakSelf setUserCity];
         if (isChange) {
             _chooseCityName = locality;
@@ -197,8 +200,8 @@
             [self refreshLeftIconViewUI];
             return YES;
         }else{
-            if (_chooseCityName.length > 0) {
-                _chooseCityName = [NSString stringWithString:_chooseCityName];
+            if (_currentLocationLocality.length > 0) {
+                _chooseCityName = [NSString stringWithString:_currentLocationLocality];
             }else{
                 _chooseCityName = @"城市";
             }

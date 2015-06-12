@@ -89,8 +89,8 @@
 //         
 //     }];
     
-    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+//    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self dismissViewControllerAnimated:YES completion:^{
         
     }];
 }
@@ -112,8 +112,10 @@
 
 - (IBAction)visitorAction:(id)sender {
     
-//    [self goBack];
-//    return;
+    if (_showBackButton) {
+        [self goBack];
+        return;
+    }
     [WYEngine shareInstance].firstLogin = NO;
     [[WYEngine shareInstance] visitorLogin];
     AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];

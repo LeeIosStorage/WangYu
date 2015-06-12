@@ -80,7 +80,6 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    [[WYPayManager shareInstance] removeListener:self];
 }
 
 - (void)viewDidLoad {
@@ -623,6 +622,8 @@
 -(void)goToOrderViewController{
     OrdersViewController *orderVc = [[OrdersViewController alloc] init];
     orderVc.isShowPayPage = YES;
+    
+    [[WYPayManager shareInstance] removeListener:self];
     
     UINavigationController *navVc = [self navigationController];
     //去掉衍生出来的部分viewController
