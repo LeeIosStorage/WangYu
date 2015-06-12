@@ -142,7 +142,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     //JPush
     if ([[WYEngine shareInstance] hasAccoutLoggedin]) {
-        NSString *alias = [NSString stringWithFormat:@"test_member_%@",[WYEngine shareInstance].uid];
+        NSString *alias = [NSString stringWithFormat:@"member_%@",[WYEngine shareInstance].uid];
         NSSet* set=[NSSet setWithObject:@"members"];
         [APService setTags:set alias:alias callbackSelector:@selector(tagsWithAliasCallback:tags:alias:) object:self];
     }
