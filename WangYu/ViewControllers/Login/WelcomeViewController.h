@@ -8,8 +8,11 @@
 
 #import "SuperMainViewController.h"
 
+typedef void(^BackActionCallBack)(BOOL isBack);
+
 @interface WelcomeViewController : SuperMainViewController
 
 @property (nonatomic, assign) BOOL showBackButton;
+@property (nonatomic, strong) BackActionCallBack backActionCallBack;
 
 @end

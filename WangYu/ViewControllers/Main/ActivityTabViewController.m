@@ -605,7 +605,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.leagueTableView) {
-        return 216;
+        return 221;
     }else if(tableView == self.newsTableView) {
         return 83;
     }
