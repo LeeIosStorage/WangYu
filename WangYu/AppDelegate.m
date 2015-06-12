@@ -104,6 +104,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     // Required
     [APService setupWithOption:launchOptions];
     
+    [[WYSettingConfig staticInstance] login];
+    
     if ([[WYEngine shareInstance] hasAccoutLoggedin] || ![WYEngine shareInstance].firstLogin) {
         if ([WYSettingConfig isFirstEnterVersion]) {
             [self showNewIntro];

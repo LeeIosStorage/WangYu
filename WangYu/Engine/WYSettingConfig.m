@@ -53,7 +53,7 @@ static WYSettingConfig *s_instance = nil;
     if (self = [super init]) {
         //默认自动
         _systemCameraFlashStatus = UIImagePickerControllerCameraFlashModeAuto;
-        [self login];
+//        [self login];
         
     }
     return self;
@@ -271,6 +271,13 @@ static WYSettingConfig *s_instance = nil;
         _waitRetrieveTimer = nil;
     }
 }
+-(int)getRetrieveSecond{
+    int second = _waitRetrieveSecond;
+    if (second <= 0) {
+        second = 0;
+    }
+    return second;
+}
 - (void)waitRetrieveTimerInterval:(NSTimer *)aTimer{
     WYLog(@"a Timer with WYSettingConfig waitRetrieveTimerInterval = %d",_waitRetrieveSecond);
     if (_waitRetrieveSecond <= 0) {
@@ -303,6 +310,13 @@ static WYSettingConfig *s_instance = nil;
         [_waitRegisterTimer invalidate];
         _waitRegisterTimer = nil;
     }
+}
+-(int)getRegisterSecond{
+    int second = _waitRegisterSecond;
+    if (second <= 0) {
+        second = 0;
+    }
+    return second;
 }
 - (void)waitRegisterTimerInterval:(NSTimer *)aTimer{
     WYLog(@"a Timer with WYSettingConfig waitRegisterTimerInterval = %d",_waitRegisterSecond);

@@ -19,6 +19,7 @@
 #import "NetbarMapViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "WYNavigationController.h"
+#import "WYAlertView.h"
 
 @interface NetbarSearchViewController ()<UITableViewDataSource,UITableViewDelegate,NetbarTabCellDelegate>
 {
@@ -694,6 +695,12 @@ static int historyLabel_Tag = 201;
     }
     
     if (!netbarInfo || netbarInfo.nid.length == 0) {
+        return;
+    }
+    
+    if (netbarInfo.latitude.length == 0 || netbarInfo.longitude == 0 || [netbarInfo.latitude intValue] == 0 || [netbarInfo.longitude intValue] == 0) {
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"该网吧暂无数据" cancelButtonTitle:@"好的"];
+        [alertView show];
         return;
     }
     

@@ -95,6 +95,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _invitationCodeText = nil;
     self.agreeIconButton.selected = YES;
+    _waitSmsSecond = [[WYSettingConfig staticInstance] getRegisterSecond];
     [self refreshUIControl];
     
     UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizer:)];
@@ -456,6 +457,7 @@
     }
     
     [_getCodeButton setTitle:[NSString stringWithFormat:@"%d秒",_waitSmsSecond] forState:UIControlStateNormal];
+    [_getCodeButton setTitle:[NSString stringWithFormat:@"%d秒",_waitSmsSecond] forState:UIControlStateDisabled];
 }
 
 -(void)checkPhoneCode{

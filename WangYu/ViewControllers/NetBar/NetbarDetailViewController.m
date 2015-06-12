@@ -389,6 +389,12 @@
 
 - (IBAction)locationAction:(id)sender {
     
+    if (self.netbarInfo.latitude.length == 0 || self.netbarInfo.longitude == 0 || [self.netbarInfo.latitude intValue] == 0 || [self.netbarInfo.longitude intValue] == 0) {
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"该网吧暂无数据" cancelButtonTitle:@"好的"];
+        [alertView show];
+        return;
+    }
+    
     for (UIViewController *vc in self.navigationController.viewControllers) {
         if ([vc isKindOfClass:[NetbarMapViewController class]]) {
             NetbarMapViewController *nmVc = (NetbarMapViewController *)vc;
