@@ -102,8 +102,8 @@ ZLSwipeableViewDelegate,GameCommendCardViewDelegate,WYTabBarControllerDelegate>
 
     self.disappearForTabSwitch = YES;
     
-    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    appDelegate.mainTabViewController.delegate = self;
+//    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    appDelegate.mainTabViewController.delegate = self;
     
     [self getCacheGameList];
     [self refreshGameInfos];

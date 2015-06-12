@@ -104,7 +104,7 @@ static WYPayManager* wy_payManager = nil;
     order.productName = [dictionary objectForKey:@"netbarName"]; //商品标题
     order.productDescription = @"上网费用"; //商品描述
     order.amount = [dictionary objectForKey:@"amount"]; //商品价格
-    order.notifyURL =  @"http://api.test.wangyuhudong.com/pay/alipayNotify"; //回调URL
+    order.notifyURL = @"http://api.wangyuhudong.com/pay/alipayNotify"; //回调URL
     
     order.service = @"mobile.securitypay.pay";
     order.paymentType = @"1";

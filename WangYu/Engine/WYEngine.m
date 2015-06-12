@@ -558,6 +558,8 @@ static WYEngine* s_ShareInstance = nil;
                 if (code == -1) {
                     [self gotoLogin];
 //                    return;
+                }else if (code == -4){
+                    [self needUserLogin:@"亲，您还没登陆咯"];
                 }
                 block(tag, jsonRet, errPtr);
             }

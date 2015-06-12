@@ -80,7 +80,6 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    [[WYPayManager shareInstance] removeListener:self];
 }
 
 - (void)viewDidLoad {
@@ -639,6 +638,7 @@
 
 #pragma mark -WYPayManagerListener
 - (void)payManagerResultStatus:(int)status payType:(int)payType{
+    [[WYPayManager shareInstance] removeListener:self];
     if (self.isBooked) {
         if (status == 1) {
             //预订订单加价支付成功 返回订单页。

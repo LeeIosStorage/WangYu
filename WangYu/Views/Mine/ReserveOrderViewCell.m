@@ -59,6 +59,7 @@
 -(void)setOrderInfo:(WYOrderInfo *)orderInfo{
     _orderInfo = orderInfo;
     
+    _orderTimeLabel.lineHeightMultiple = 0.8;
     _orderTimeLabel.text = [WYUIUtils dateDiscriptionFromNowBk:orderInfo.reservationDate];
     
     NSString *netbarName = orderInfo.netbarName;
@@ -162,6 +163,7 @@
 //    if([orderInfo.amount isEqualToString:@"0"])
 //        state = 2;
     self.stateLabel.text = stateLabelText;
+    self.introLabel.lineHeightMultiple = 0.8;
     self.introLabel.text = introLabelText;
     
     self.cancelOrderButton.hidden = YES;
