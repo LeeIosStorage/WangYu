@@ -340,29 +340,29 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSCharacterSet *cs;
     
-//    NSUInteger nDotLoc = [textField.text rangeOfString:@"."].location;
-//    if (NSNotFound == nDotLoc && 0 != range.location) {
-//        cs = [[NSCharacterSet characterSetWithCharactersInString:myNumbers] invertedSet];
-//        if ([string isEqualToString:@"."]) {
-//            return YES;
-//        }
-//        if (textField.text.length>=6) {  //小数点前面6位
-//            return NO;
-//        }
-//    }
-//    else {
-//        cs = [[NSCharacterSet characterSetWithCharactersInString:myNumbers] invertedSet];
-//    }
-//    NSString *filtered1 = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
-//    BOOL basicTest1 = [string isEqualToString:filtered1];
-//    if (!basicTest1) {
-//        WYLog(@"只能输入数字和小数点");
-//        return NO;
-//    }
-//    if (NSNotFound != nDotLoc && range.location > nDotLoc+2) {
-//        WYLog(@"小数点后最多2位");
-//        return NO;
-//    }
+    NSUInteger nDotLoc = [textField.text rangeOfString:@"."].location;
+    if (NSNotFound == nDotLoc && 0 != range.location) {
+        cs = [[NSCharacterSet characterSetWithCharactersInString:myNumbers] invertedSet];
+        if ([string isEqualToString:@"."]) {
+            return YES;
+        }
+        if (textField.text.length>=6) {  //小数点前面6位
+            return NO;
+        }
+    }
+    else {
+        cs = [[NSCharacterSet characterSetWithCharactersInString:myNumbers] invertedSet];
+    }
+    NSString *filtered1 = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    BOOL basicTest1 = [string isEqualToString:filtered1];
+    if (!basicTest1) {
+        WYLog(@"只能输入数字和小数点");
+        return NO;
+    }
+    if (NSNotFound != nDotLoc && range.location > nDotLoc+1) {
+        WYLog(@"小数点后最多1位");
+        return NO;
+    }
     
     cs = [[NSCharacterSet characterSetWithCharactersInString:myNumbers] invertedSet];
     NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
@@ -486,14 +486,15 @@
         [WYUIUtils showAlertWithMsg:@"微信支付失败！"];
         return;
     }
-    
+    self.payButton.enabled = NO;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     if (self.isBooked) {
         [WYProgressHUD AlertLoading:@"请求中..." At:weakSelf.view];
         [[WYEngine shareInstance] reservePayWithUid:[WYEngine shareInstance].uid body:self.orderInfo.netbarName orderId:self.orderInfo.orderId packetsId:nil type:self.isWeixin?0:1 tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-            [WYProgressHUD AlertLoadDone];
+//            [WYProgressHUD AlertLoadDone];
+            weakSelf.payButton.enabled = YES;
             NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
             if (!jsonRet || errorMsg) {
                 if (!errorMsg.length) {
@@ -529,10 +530,11 @@
             [WYProgressHUD lightAlert:@"请输入上网金额"];
             return;
         }
-        [WYProgressHUD AlertLoading:@"请求中..." At:weakSelf.view];
+//        [WYProgressHUD AlertLoading:@"请求中..." At:weakSelf.view];
         [[WYEngine shareInstance] orderPayWithUid:[WYEngine shareInstance].uid body:self.netbarInfo.netbarName amount:[_needPayAmount doubleValue] netbarId:self.netbarInfo.nid packetsId:_packetIds type:self.isWeixin?0:1 origAmount:[_amountField.text doubleValue] tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
 //            [WYProgressHUD AlertLoadDone];
+            weakSelf.payButton.enabled = YES;
             NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
             if (!jsonRet || errorMsg) {
                 if (!errorMsg.length) {
@@ -553,10 +555,10 @@
                 return;
             }
             if (weakSelf.isWeixin) {
-                [WYProgressHUD AlertLoadDone];
+//                [WYProgressHUD AlertLoadDone];
                 [[WYPayManager shareInstance] payForWinxinWith:dic];
             }else {
-                [WYProgressHUD AlertLoadDone];
+//                [WYProgressHUD AlertLoadDone];
                 
                 NSMutableDictionary *alipayDic = [NSMutableDictionary dictionary];
                 if ([dic stringObjectForKey:@"orderId"]) {
