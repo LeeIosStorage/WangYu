@@ -65,6 +65,7 @@
 -(void)setOrderInfo:(WYOrderInfo *)orderInfo{
     _orderInfo = orderInfo;
     
+    _orderTimeLabel.lineHeightMultiple = 0.8;
     _orderTimeLabel.text = [WYUIUtils dateDiscriptionFromNowBk:orderInfo.createDate];
     
     NSString *netbarName = orderInfo.netbarName;

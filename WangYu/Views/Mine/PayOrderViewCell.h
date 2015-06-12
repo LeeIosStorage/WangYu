@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WYOrderInfo.h"
+#import "TTTAttributedLabel.h"
 
 @protocol PayOrderViewCellDelegate;
 
@@ -23,7 +24,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *priceLabel;
 @property (strong, nonatomic) IBOutlet UILabel *privilegeYuanLabel;
 @property (strong, nonatomic) IBOutlet UILabel *redPacketLabel;
-@property (strong, nonatomic) IBOutlet UILabel *orderTimeLabel;
+@property (strong, nonatomic) IBOutlet TTTAttributedLabel *orderTimeLabel;
 @property (strong, nonatomic) IBOutlet UIButton *cancelOrderButton;
 @property (strong, nonatomic) IBOutlet UIButton *payOrderButton;
 

@@ -187,57 +187,55 @@ static bool dateFormatterOFUSInvalid ;
     NSDateComponents *comps = [calender components:unitFlags fromDate:date];
     NSDateComponents *compsNow = [calender components:unitFlags fromDate:nowDate];
     
-    
-    
-//    compsNow.day = 2;
-//    compsNow.month += 1;
-//    nowDate = [calender dateFromComponents:compsNow];
-//    comps.day = 30;
-//    date = [calender dateFromComponents:comps];
-//    distance = [nowDate timeIntervalSinceDate:date];
-    
-    
-    
-    
-    
-    if (distance < 0) {
-        distance = 0;
-    }
-    if (distance < 60) {
-        _timestamp = [NSString stringWithFormat:@"%@", @"刚刚"];
-    } else if (distance < 60*60) {
-        _timestamp = [NSString stringWithFormat:@"%d%@", distance/60, @"分钟前"];
-    }else if (distance < DAY_SECOND) {
-        if (comps.day == compsNow.day)
-        {
-            _timestamp = [NSString stringWithFormat:@"今天 %02d:%02d", (int)comps.hour,(int)comps.minute];
+    if (distance >= 0) {
+        if (distance < 60) {
+            _timestamp = [NSString stringWithFormat:@"%@", @"刚刚"];
+        } else if (distance < 60*60) {
+            _timestamp = [NSString stringWithFormat:@"%d%@", distance/60, @"分钟前"];
+        }else if (distance < DAY_SECOND) {
+            if (comps.day == compsNow.day)
+            {
+                _timestamp = [NSString stringWithFormat:@"今天 %02d:%02d", (int)comps.hour,(int)comps.minute];
+            }
+            else
+                _timestamp = [NSString stringWithFormat:@"昨天 %02d:%02d", (int)comps.hour,(int)comps.minute];
         }
-        else
-            _timestamp = [NSString stringWithFormat:@"昨天 %02d:%02d", (int)comps.hour,(int)comps.minute];
-    }else if (distance < DAY_SECOND*2) {
-//        compsNow.hour = compsNow.minute = compsNow.second = 0;
-//        NSDate *startOfToday = [calender dateFromComponents:compsNow];
-//        distance = [startOfToday timeIntervalSinceDate:date];
-        if ((comps.day == compsNow.day-1) || (comps.day != compsNow.day-1 && comps.day > compsNow.day-1)) {
-            _timestamp = [NSString stringWithFormat:@"昨天 %02d:%02d", (int)comps.hour,(int)comps.minute];
-        }else{
-            _timestamp = [NSString stringWithFormat:@"前天 %02d:%02d", (int)comps.hour,(int)comps.minute];
+        //    else if (distance < DAY_SECOND*2) {
+        ////        compsNow.hour = compsNow.minute = compsNow.second = 0;
+        ////        NSDate *startOfToday = [calender dateFromComponents:compsNow];
+        ////        distance = [startOfToday timeIntervalSinceDate:date];
+        //        if ((comps.day == compsNow.day-1) || (comps.day != compsNow.day-1 && comps.day > compsNow.day-1)) {
+        //            _timestamp = [NSString stringWithFormat:@"昨天 %02d:%02d", (int)comps.hour,(int)comps.minute];
+        //        }else{
+        //            _timestamp = [NSString stringWithFormat:@"前天 %02d:%02d", (int)comps.hour,(int)comps.minute];
+        //        }
+        //    }else if (distance < DAY_SECOND*3) {
+        ////        compsNow.hour = compsNow.minute = compsNow.second = 0;
+        ////        NSDate *startOfToday = [calender dateFromComponents:compsNow];
+        ////        distance = [startOfToday timeIntervalSinceDate:date];
+        //        if ((comps.day == compsNow.day-2) || (comps.day != compsNow.day-2 && comps.day > compsNow.day-2)){
+        //            _timestamp = [NSString stringWithFormat:@"前天 %02d:%02d", (int)comps.hour,(int)comps.minute];
+        //        }else{
+        //            _timestamp = [NSString stringWithFormat:@"%d月%d日 %02d:%02d", (int)comps.month, (int)comps.day, (int)comps.hour, (int)comps.minute];
+        //        }
+        //    }
+        else {
+            compsNow.hour = compsNow.minute = compsNow.second = 0;
+            NSDate *startOfToday = [calender dateFromComponents:compsNow];
+            distance = [startOfToday timeIntervalSinceDate:date];
+            if (distance <= DAY_SECOND) {
+                _timestamp = [NSString stringWithFormat:@"昨天 %02d:%02d", (int)comps.hour,(int)comps.minute];
+            }
+            else{
+                if (comps.year == compsNow.year){
+                    _timestamp = [NSString stringWithFormat:@"%d月%d日 %02d:%02d", (int)comps.month, (int)comps.day, (int)comps.hour, (int)comps.minute];
+                } else {
+                    _timestamp = [NSString stringWithFormat:@"%04d年%02d月%02d日 %02d:%02d", (int)comps.year, (int)comps.month, (int)comps.day, (int)comps.hour, (int)comps.minute];
+                }
+            }
         }
-    }else if (distance < DAY_SECOND*3) {
-//        compsNow.hour = compsNow.minute = compsNow.second = 0;
-//        NSDate *startOfToday = [calender dateFromComponents:compsNow];
-//        distance = [startOfToday timeIntervalSinceDate:date];
-        if ((comps.day == compsNow.day-2) || (comps.day != compsNow.day-2 && comps.day > compsNow.day-2)){
-            _timestamp = [NSString stringWithFormat:@"前天 %02d:%02d", (int)comps.hour,(int)comps.minute];
-        }else{
-            _timestamp = [NSString stringWithFormat:@"%d月%d日 %02d:%02d", (int)comps.month, (int)comps.day, (int)comps.hour, (int)comps.minute];
-        }
-    }else {
-        if (comps.year == compsNow.year){
-            _timestamp = [NSString stringWithFormat:@"%d月%d日 %02d:%02d", (int)comps.month, (int)comps.day, (int)comps.hour, (int)comps.minute];
-        } else {
-            _timestamp = [NSString stringWithFormat:@"%04d年%02d月%02d日 %02d:%02d", (int)comps.year, (int)comps.month, (int)comps.day, (int)comps.hour, (int)comps.minute];
-        }
+    }else{
+        _timestamp = [NSString stringWithFormat:@"%04d年%02d月%02d日 %02d:%02d", (int)comps.year, (int)comps.month, (int)comps.day, (int)comps.hour, (int)comps.minute];
     }
     
     return _timestamp;
