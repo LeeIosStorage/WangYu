@@ -107,27 +107,27 @@
             <point key="canvasLocation" x="249" y="234"/>
         </view>
         <view contentMode="scaleToFill" id="ZxC-Gh-xbp">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="DCR-m9-NCK">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
                 <view alpha="0.75" contentMode="scaleToFill" id="Y1P-TI-XjI">
-                    <rect key="frame" x="0.0" y="121" width="320" height="29"/>
+                    <rect key="frame" x="0.0" y="131" width="320" height="29"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="河南2015第八届英雄联盟争霸赛" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3tO-9v-Tmb">
-                    <rect key="frame" x="12" y="126" width="300" height="21"/>
+                    <rect key="frame" x="12" y="136" width="300" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="15"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view alpha="0.75" contentMode="scaleToFill" id="DjP-0S-Wlg">
-                    <rect key="frame" x="275" y="81" width="33" height="33"/>
+                    <rect key="frame" x="275" y="91" width="33" height="33"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="进行中" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tJa-w0-0Oj">
@@ -182,7 +182,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="267" y="893"/>
+            <point key="canvasLocation" x="261" y="937"/>
         </view>
     </objects>
     <resources>

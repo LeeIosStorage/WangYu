@@ -107,11 +107,14 @@
     if (self.activityInfo.status == 1) {
         self.statusLabel.text = @"进行中";
         self.statusView.backgroundColor = UIColorToRGB(0xfdd730);
+    }else if (self.activityInfo.status == 2){
+        self.statusLabel.text = @"未开始";
+        self.statusView.backgroundColor = UIColorToRGB(0xf1f1f1);
     }else if (self.activityInfo.status == 3){
         self.statusLabel.text = @"已截止";
         self.statusView.backgroundColor = UIColorToRGB(0xf1f1f1);
     }else if (self.activityInfo.status == 4){
-        self.statusLabel.text = @"进行中";
+        self.statusLabel.text = @"已结束";
         self.statusView.backgroundColor = UIColorToRGB(0xf1f1f1);
     }
     self.statusView.clipsToBounds = YES;
@@ -163,7 +166,7 @@
 }
 
 - (void)clickMermerAction:(id)sender {
-    NSLog(@"===========");
+    //NSLog(@"===========");
 }
 
 -(void)getCacheActivityInfo{

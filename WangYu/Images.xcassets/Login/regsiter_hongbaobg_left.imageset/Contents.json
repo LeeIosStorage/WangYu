@@ -7,11 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "hongbaobg01.png"
+      "filename" : "hongbaobg01@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "hongbaobg01@3x.png"
     }
   ],
   "info" : {
