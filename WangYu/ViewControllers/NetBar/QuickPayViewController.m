@@ -623,8 +623,6 @@
     OrdersViewController *orderVc = [[OrdersViewController alloc] init];
     orderVc.isShowPayPage = YES;
     
-    [[WYPayManager shareInstance] removeListener:self];
-    
     UINavigationController *navVc = [self navigationController];
     //去掉衍生出来的部分viewController
     NSMutableArray *viewControllers = [NSMutableArray array];
@@ -640,6 +638,7 @@
 
 #pragma mark -WYPayManagerListener
 - (void)payManagerResultStatus:(int)status payType:(int)payType{
+    [[WYPayManager shareInstance] removeListener:self];
     if (self.isBooked) {
         if (status == 1) {
             //预订订单加价支付成功 返回订单页。
