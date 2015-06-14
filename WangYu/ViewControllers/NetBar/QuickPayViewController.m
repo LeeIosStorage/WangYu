@@ -27,6 +27,7 @@
     
     int _discountRule;
     NSString *_needPayAmount;
+    UIButton *_pointButton;
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *payTable;
@@ -79,7 +80,15 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidDisappear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkTextChaneg:) name:UITextFieldTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [super viewDidAppear:animated];
 }
 
 - (void)viewDidLoad {
@@ -92,14 +101,64 @@
     _packetIds = [NSMutableArray array];
     [[WYPayManager shareInstance] addListener:self];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkTextChaneg:) name:UITextFieldTextDidChangeNotification object:nil];
-    
     [self refreshUI];
     [self calculateNeedPayAmount];
     [self.payTable reloadData];
     [self refreshNewGuideView:NO];
     
     [self refreshNetbarInfo];
+}
+
+- (void)keyboardWillShow:(NSNotification *)note
+{
+    CGRect keyboardBounds;
+    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    _pointButton = [[UIButton alloc] initWithFrame:CGRectMake(-0.5, SCREEN_HEIGHT - 53.5 + keyboardBounds.size.height, (SCREEN_WIDTH - 5)/3, 54)];
+    [_pointButton setImage:[UIImage imageNamed:@"keyboard_point_bg"] forState:UIControlStateNormal];
+    [_pointButton setImage:[UIImage imageNamed:@"keyboard_point_hover_bg"] forState:UIControlStateHighlighted];
+    [_pointButton addTarget:self action:@selector(pointAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIWindow * tempWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:2];
+    UIView * keyBoard = nil;
+    NSLog(@"%@",tempWindow);
+    for (int i = 0; i < tempWindow.subviews.count; i ++) {
+        keyBoard = [tempWindow.subviews objectAtIndex:i];
+        [keyBoard addSubview:_pointButton];
+    }
+    
+    // get a rect for the textView frame
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    if (self.amountField.isFirstResponder) {
+        CGRect frame = _pointButton.frame;
+        frame.origin.y -= keyboardBounds.size.height;
+        _pointButton.frame = frame;
+    }
+    
+    [UIView commitAnimations];
+}
+
+- (void)keyboardWillHide:(NSNotification *)note
+{
+    [_pointButton removeFromSuperview];
+    [self.amountField resignFirstResponder];
+}
+
+#pragma mark -
+- (void)pointAction:(UIButton *)btn{
+    NSUInteger nDotLoc = [self.amountField.text rangeOfString:@"."].location;
+    if (NSNotFound == nDotLoc) {
+        if (self.amountField.text.length > 0){
+            self.amountField.text = [self.amountField.text stringByAppendingString:@"."];
+        }else {
+            self.amountField.text = [self.amountField.text stringByAppendingString:@"0."];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -378,8 +437,10 @@
     NSString *newString = [oldString stringByReplacingCharactersInRange:range withString:string];
     if (textField == _amountField && textField.markedTextRange == nil) {
         WYLog(@"textField.text = %@",textField.text);
-        if (newString.length > 4) {
-            return NO;
+        if (NSNotFound != nDotLoc) {
+            if (newString.length > 5) return NO;
+        }else {
+            if (newString.length > 3) return NO;
         }
     }
     return YES;
@@ -652,4 +713,5 @@
         [self goToOrderViewController];
     }
 }
+
 @end
