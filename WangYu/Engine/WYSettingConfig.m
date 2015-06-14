@@ -14,7 +14,7 @@ static int s_isFirstEnterVersion = -1;
 
 @interface WYSettingConfig (){
     
-    NSMutableArray* _listeners;
+//    NSMutableArray* _listeners;
     
     NSTimer *_waitRetrieveTimer;
     int _waitRetrieveSecond;
@@ -41,19 +41,12 @@ static WYSettingConfig *s_instance = nil;
         return s_instance;
     }
 }
-- (void)addListener:(id<WYSettingConfigListener>)listener{
-    [_listeners addObject:listener];
-}
-- (void)removeListener:(id<WYSettingConfigListener>)listener{
-    [_listeners removeObject:listener];
-}
 
 -(id)init
 {
     if (self = [super init]) {
         //默认自动
         _systemCameraFlashStatus = UIImagePickerControllerCameraFlashModeAuto;
-//        [self login];
         
     }
     return self;
@@ -61,7 +54,6 @@ static WYSettingConfig *s_instance = nil;
 
 - (void)logout {
     s_instance = nil;
-    [_listeners removeAllObjects];
     if (_waitRetrieveTimer) {
         [_waitRetrieveTimer invalidate];
         _waitRetrieveTimer = nil;
@@ -74,7 +66,6 @@ static WYSettingConfig *s_instance = nil;
 
 -(void)login{
     //.....
-    _listeners = [[NSMutableArray alloc] init];
 }
 
 //设置系统闪光灯状态
@@ -270,6 +261,10 @@ static WYSettingConfig *s_instance = nil;
         [_waitRetrieveTimer invalidate];
         _waitRetrieveTimer = nil;
     }
+    _waitRetrieveSecond = 0;
+    if ([_settingDelegater respondsToSelector:@selector(waitRetrieveTimer:waitSecond:)]) {
+        [_settingDelegater waitRetrieveTimer:nil waitSecond:_waitRetrieveSecond];
+    }
 }
 -(int)getRetrieveSecond{
     int second = _waitRetrieveSecond;
@@ -285,13 +280,8 @@ static WYSettingConfig *s_instance = nil;
         _waitRetrieveTimer = nil;
     }
     _waitRetrieveSecond--;
-    
-    //通知lisnteners
-    NSArray* listeners = [_listeners copy];
-    for (id<WYSettingConfigListener> listener in listeners) {
-        if ([listener respondsToSelector:@selector(waitRetrieveTimer:waitSecond:)]) {
-            [listener waitRetrieveTimer:aTimer waitSecond:_waitRetrieveSecond];
-        }
+    if ([_settingDelegater respondsToSelector:@selector(waitRetrieveTimer:waitSecond:)]) {
+        [_settingDelegater waitRetrieveTimer:nil waitSecond:_waitRetrieveSecond];
     }
 }
 
@@ -310,6 +300,10 @@ static WYSettingConfig *s_instance = nil;
         [_waitRegisterTimer invalidate];
         _waitRegisterTimer = nil;
     }
+    _waitRegisterSecond = 0;
+    if ([_settingDelegater respondsToSelector:@selector(waitRegisterTimer:waitSecond:)]) {
+        [_settingDelegater waitRegisterTimer:nil waitSecond:_waitRegisterSecond];
+    }
 }
 -(int)getRegisterSecond{
     int second = _waitRegisterSecond;
@@ -325,13 +319,8 @@ static WYSettingConfig *s_instance = nil;
         _waitRegisterTimer = nil;
     }
     _waitRegisterSecond--;
-    
-    //通知lisnteners
-    NSArray* listeners = [_listeners copy];
-    for (id<WYSettingConfigListener> listener in listeners) {
-        if ([listener respondsToSelector:@selector(waitRegisterTimer:waitSecond:)]) {
-            [listener waitRegisterTimer:aTimer waitSecond:_waitRegisterSecond];
-        }
+    if ([_settingDelegater respondsToSelector:@selector(waitRegisterTimer:waitSecond:)]) {
+        [_settingDelegater waitRegisterTimer:nil waitSecond:_waitRegisterSecond];
     }
 }
 

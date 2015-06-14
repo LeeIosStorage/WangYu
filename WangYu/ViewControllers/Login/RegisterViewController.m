@@ -15,7 +15,7 @@
 #import "WYLinkerHandler.h"
 #import "WYSettingConfig.h"
 
-@interface RegisterViewController ()<WYSettingConfigListener>
+@interface RegisterViewController ()<SettingConfigChangeD>
 {
     NSString *_invitationCodeText;
     
@@ -56,6 +56,7 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [WYSettingConfig staticInstance].settingDelegater = nil;
 //    if (_waitTimer) {
 //        [_waitTimer invalidate];
 //        _waitTimer = nil;
@@ -64,13 +65,12 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkTextChaneg:) name:UITextFieldTextDidChangeNotification object:nil];
-    [[WYSettingConfig staticInstance] addListener:self];
+    [WYSettingConfig staticInstance].settingDelegater = self;
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
-    [[WYSettingConfig staticInstance] removeListener:self];
     
     //    [self TextFieldResignFirstResponder];
 //    if (_waitTimer) {
@@ -91,11 +91,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    _waitSmsSecond = [[WYSettingConfig staticInstance] getRegisterSecond];
+    
 //    self.phoneTextField.text = [[WYEngine shareInstance] getMemoryLoginedAccout];
     self.view.backgroundColor = [UIColor whiteColor];
     _invitationCodeText = nil;
     self.agreeIconButton.selected = YES;
-    _waitSmsSecond = [[WYSettingConfig staticInstance] getRegisterSecond];
     [self refreshUIControl];
     
     UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizer:)];
@@ -443,7 +444,7 @@
     
 }
 
-#pragma mark - WYSettingConfigListener
+#pragma mark - SettingConfigChangeD
 - (void)waitRegisterTimer:(NSTimer *)aTimer waitSecond:(int)waitSecond{
     _waitSmsSecond = waitSecond;
     WYLog(@"waitRegisterTimer waitSecond = %d",_waitSmsSecond);
@@ -453,6 +454,7 @@
             [_getCodeButton setBackgroundColor:SKIN_COLOR];
         }
         [_getCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [_getCodeButton setTitle:@"获取验证码" forState:UIControlStateDisabled];
         return;
     }
     

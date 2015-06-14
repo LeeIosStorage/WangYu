@@ -13,7 +13,7 @@
 #import "WYEngine.h"
 #import "WYSettingConfig.h"
 
-@interface RetrievePwdViewController ()<WYSettingConfigListener,UIScrollViewDelegate>
+@interface RetrievePwdViewController ()<SettingConfigChangeD,UIScrollViewDelegate>
 {
     int _waitSmsSecond;
 //    NSTimer *_waitTimer;
@@ -40,6 +40,7 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [WYSettingConfig staticInstance].settingDelegater = nil;
 //    if (_waitTimer) {
 //        [_waitTimer invalidate];
 //        _waitTimer = nil;
@@ -49,14 +50,13 @@
     [super viewWillAppear:animated];
     _bViewDisappear = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkTextChaneg:) name:UITextFieldTextDidChangeNotification object:nil];
-    [[WYSettingConfig staticInstance] addListener:self];
+    [WYSettingConfig staticInstance].settingDelegater = self;
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     _bViewDisappear = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
-    [[WYSettingConfig staticInstance] removeListener:self];
     //    [self TextFieldResignFirstResponder];
 //    if (_waitTimer) {
 //        [_waitTimer invalidate];
@@ -73,8 +73,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor whiteColor];
-    self.phoneTextField.text = [[WYEngine shareInstance] getMemoryLoginedAccout];
     _waitSmsSecond = [[WYSettingConfig staticInstance] getRetrieveSecond];
+    
+    self.phoneTextField.text = [[WYEngine shareInstance] getMemoryLoginedAccout];
     [self refreshUIControl];
     
     self.mainScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, self.retrieveContainerView.frame.size.height+12);
@@ -264,7 +265,7 @@
 //    [self textFieldResignFirstResponder];
 }
 
-#pragma mark - WYSettingConfigListener
+#pragma mark - SettingConfigChangeD
 - (void)waitRetrieveTimer:(NSTimer *)aTimer waitSecond:(int)waitSecond{
     _waitSmsSecond = waitSecond;
     WYLog(@"waitRetrieveTimer waitSecond = %d",_waitSmsSecond);
@@ -274,6 +275,7 @@
             [_getCodeButton setBackgroundColor:SKIN_COLOR];
         }
         [_getCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [_getCodeButton setTitle:@"获取验证码" forState:UIControlStateDisabled];
         return;
     }
     

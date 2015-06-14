@@ -629,10 +629,10 @@
     //去掉衍生出来的部分viewController
     NSMutableArray *viewControllers = [NSMutableArray array];
     for (id vc in navVc.viewControllers) {
-        if ([vc isMemberOfClass:[QuickPayViewController class]] || [vc isMemberOfClass:[NetbarDetailViewController class]] || [NSStringFromClass([vc class]) isEqualToString:@"OrdersViewController"]) {
-            continue;
+        if ([NSStringFromClass([vc class]) isEqualToString:@"WYTabBarViewController"]) {
+            [viewControllers addObject:vc];
+            break;
         }
-        [viewControllers addObject:vc];
     }
     [viewControllers addObject:orderVc];
     [[self navigationController] setViewControllers:viewControllers animated:YES];
