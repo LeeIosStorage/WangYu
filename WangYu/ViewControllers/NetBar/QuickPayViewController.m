@@ -120,11 +120,10 @@
     [_pointButton setImage:[UIImage imageNamed:(SCREEN_WIDTH == 320)?@"keyboard_point_hover_bg":@"keyboard_point6_hover_bg"] forState:UIControlStateHighlighted];
     [_pointButton addTarget:self action:@selector(pointAction:) forControlEvents:UIControlEventTouchUpInside];
     UIWindow * tempWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:2];
-    UIView * keyBoard = nil;
-    NSLog(@"%@",tempWindow);
-    for (int i = 0; i < tempWindow.subviews.count; i ++) {
-        keyBoard = [tempWindow.subviews objectAtIndex:i];
-        [keyBoard addSubview:_pointButton];
+//    NSLog(@"%@",tempWindow);
+    
+    if (_pointButton.superview == nil){
+        [tempWindow addSubview:_pointButton];
     }
     
     // get a rect for the textView frame
