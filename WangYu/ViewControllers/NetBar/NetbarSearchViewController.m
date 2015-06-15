@@ -50,6 +50,9 @@
 @property (strong, nonatomic) IBOutlet UITableView *searchTableView;
 @property (nonatomic, strong) NSMutableArray *searchNetBarInfos;
 
+@property (strong, nonatomic) IBOutlet UIView *searchBlankTipView;
+@property (strong, nonatomic) IBOutlet UILabel *searchBlankTipLabel;
+
 -(IBAction)removeSearchRecordAction:(id)sender;
 @end
 
@@ -165,6 +168,27 @@
     [self.clearHistoryButton.layer setBorderWidth:0.5]; //边框宽度
     [self.clearHistoryButton.layer setBorderColor:SKIN_TEXT_COLOR1.CGColor];//边框颜色
     self.clearHistoryButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
+}
+
+- (void)refreshSearchBlankShowUI:(int)type{
+    if (type == 1) {
+        [self.searchBlankTipView removeFromSuperview];
+        return;
+    }
+    self.searchBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
+    self.searchBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
+    if (self.searchNetBarInfos && self.searchNetBarInfos.count == 0) {
+        CGRect frame = self.searchBlankTipView.frame;
+        frame.origin.y = 0;
+        frame.size.width = SCREEN_WIDTH;
+        self.searchBlankTipView.frame = frame;
+        [self.searchTableView addSubview:self.searchBlankTipView];
+        
+    }else{
+        if (self.searchBlankTipView.superview) {
+            [self.searchBlankTipView removeFromSuperview];
+        }
+    }
 }
 
 #pragma mark - custom
@@ -332,6 +356,7 @@
 }
 
 -(void)refreshSearchTableView{
+    [self refreshSearchBlankShowUI:0];
     if (self.searchNetBarInfos.count == 0) {
         [WYProgressHUD AlertSuccess:@"搜索结果为空" At:self.view];
     }else{
@@ -347,10 +372,11 @@
         frame.size.height = self.view.bounds.size.height - self.titleNavBar.frame.size.height;
         self.searchContainerView.frame = frame;
         [self.view addSubview:self.searchContainerView];
+        self.searchContainerView.hidden = NO;
     }else{
         self.searchContainerView.hidden = NO;
     }
-    
+    self.searchTableView.hidden = NO;
     [self.searchTableView reloadData];
 }
 
@@ -421,7 +447,10 @@
 #pragma mark - UISearchBarDelegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     if (searchBar == self.searchBar) {
-        [self doSearchBarBeginEditing];
+        self.searchContent = [self.searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if (self.searchContent.length == 0) {
+            [self doSearchBarBeginEditing];
+        }
     }
     return YES;
 }
@@ -441,6 +470,7 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     
     if (searchBar == self.searchBar) {
+        [self refreshSearchBlankShowUI:1];
         self.searchContent = [self.searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if ([self.searchContent length] == 0) {
             [self.searchTableView reloadData];

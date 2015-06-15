@@ -13,6 +13,7 @@
 #import "WYProgressHUD.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "WYSettingConfig.h"
+#import "MessageDetailsViewController.h"
 
 @interface MessageListViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -243,6 +244,12 @@
 {
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+    
+    WYMessageInfo *messageInfo = _messageInfos[indexPath.row];
+    MessageDetailsViewController *msgVc = [[MessageDetailsViewController alloc] init];
+    msgVc.messageInfo = messageInfo;
+    [self.navigationController pushViewController:msgVc animated:YES];
+    
 }
 
 @end

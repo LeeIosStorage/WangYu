@@ -288,6 +288,8 @@
 		3BE090881B14CC7500DCAB3C /* MatchDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BE090861B14CC7500DCAB3C /* MatchDetailViewController.xib */; };
 		3BE0908D1B14CD3A00DCAB3C /* MatchDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0908B1B14CD3A00DCAB3C /* MatchDetailCell.m */; };
 		3BE0908E1B14CD3A00DCAB3C /* MatchDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */; };
+		44D55A9D1B2E6C7B0074D964 /* MessageDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */; };
+		44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -882,6 +884,9 @@
 		3BE0908A1B14CD3A00DCAB3C /* MatchDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchDetailCell.h; path = Activity/MatchDetailCell.h; sourceTree = "<group>"; };
 		3BE0908B1B14CD3A00DCAB3C /* MatchDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchDetailCell.m; path = Activity/MatchDetailCell.m; sourceTree = "<group>"; };
 		3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchDetailCell.xib; path = Activity/MatchDetailCell.xib; sourceTree = "<group>"; };
+		44D55A9A1B2E6C7B0074D964 /* MessageDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDetailsViewController.h; sourceTree = "<group>"; };
+		44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDetailsViewController.m; sourceTree = "<group>"; };
+		44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageDetailsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -945,6 +950,9 @@
 				0762191C1B15A0CB00D912A1 /* MessageListViewController.h */,
 				0762191D1B15A0CB00D912A1 /* MessageListViewController.m */,
 				0762191E1B15A0CB00D912A1 /* MessageListViewController.xib */,
+				44D55A9A1B2E6C7B0074D964 /* MessageDetailsViewController.h */,
+				44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */,
+				44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */,
 				076E0DE81B1475FE00E4363A /* PersonalEditViewController.h */,
 				076E0DE91B1475FE00E4363A /* PersonalEditViewController.m */,
 				076E0DEA1B1475FE00E4363A /* PersonalEditViewController.xib */,
@@ -2198,6 +2206,7 @@
 				0775704A1B16B4CF005C9DC7 /* ApplyActivityViewController.xib in Resources */,
 				071923DD1AF7738900432531 /* SetPwdViewController.xib in Resources */,
 				076219201B15A0CB00D912A1 /* MessageListViewController.xib in Resources */,
+				44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */,
 				0715C3AC1B09ECE000C37F82 /* WYCustomerWindow.xib in Resources */,
 				0715C3A61B09AD6F00C37F82 /* MapChooseViewController.xib in Resources */,
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
@@ -2419,6 +2428,7 @@
 				07566CAB1AFC663600F93B58 /* SettingViewCell.m in Sources */,
 				078EDBDB1AEF1EF800E93EE8 /* ASIFormDataRequest.m in Sources */,
 				3BBE46271B0CE79B009EAE02 /* WYPhotoItem.m in Sources */,
+				44D55A9D1B2E6C7B0074D964 /* MessageDetailsViewController.m in Sources */,
 				073DBD801AE77A3C009B49EB /* MineTabViewController.m in Sources */,
 				0715C3A51B09AD6F00C37F82 /* MapChooseViewController.m in Sources */,
 				071923D11AF74D8400432531 /* NewIntroViewController.m in Sources */,
