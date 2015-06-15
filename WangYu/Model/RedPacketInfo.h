@@ -18,6 +18,7 @@
 @property(nonatomic, strong) NSDate* endDate;
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) BOOL usable;//红包是否可用
+@property(nonatomic, assign) int cause;//1已使用 2已过期
 
 @property(nonatomic, strong) NSDictionary* redPacketInfoByJsonDic;
 

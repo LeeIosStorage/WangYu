@@ -12,6 +12,7 @@
 #import "Order.h"
 #import "DataSigner.h"
 #import "WYProgressHUD.h"
+#import "WYWeakArray.h"
 
 #define APP_ID          @"wxb10451ed2c4a6ce3"
 //商户号
@@ -23,7 +24,7 @@ static WYPayManager* wy_payManager = nil;
 
 @interface WYPayManager ()
 {
-    NSMutableArray* _listeners;
+    WYWeakArray* _listeners;
 }
 @end
 
@@ -53,7 +54,7 @@ static WYPayManager* wy_payManager = nil;
     [_listeners removeObject:listener];
 }
 - (void)login {
-    _listeners = [[NSMutableArray alloc] init];
+    _listeners = [[WYWeakArray alloc] init];
 }
 - (void)logout {
     [_listeners removeAllObjects];

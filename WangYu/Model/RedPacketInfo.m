@@ -19,6 +19,7 @@
     _money = [dic intValueForKey:@"money"];
     _day = [dic intValueForKey:@"day"];
     _usable = [dic boolValueForKey:@"usable"];
+    _cause = [dic intValueForKey:@"cause"];
     
     NSDateFormatter *dateFormatter = [WYUIUtils dateFormatterOFUS];
     if ([dic stringObjectForKey:@"begin_date"]) {
