@@ -115,10 +115,9 @@
     [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
     NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-    
-    _pointButton = [[UIButton alloc] initWithFrame:CGRectMake(-0.5, SCREEN_HEIGHT - 53.5 + keyboardBounds.size.height, (SCREEN_WIDTH - 5)/3, 54)];
-    [_pointButton setImage:[UIImage imageNamed:@"keyboard_point_bg"] forState:UIControlStateNormal];
-    [_pointButton setImage:[UIImage imageNamed:@"keyboard_point_hover_bg"] forState:UIControlStateHighlighted];
+    _pointButton = [[UIButton alloc] initWithFrame:CGRectMake(-0.5, SCREEN_HEIGHT - 53.5 + keyboardBounds.size.height - (SCREEN_WIDTH > 375?3:0), (SCREEN_WIDTH - 5)/3, keyboardBounds.size.height/4)];
+    [_pointButton setImage:[UIImage imageNamed:(SCREEN_WIDTH == 320)?@"keyboard_point_bg":@"keyboard_point6_bg"] forState:UIControlStateNormal];
+    [_pointButton setImage:[UIImage imageNamed:(SCREEN_WIDTH == 320)?@"keyboard_point_hover_bg":@"keyboard_point6_hover_bg"] forState:UIControlStateHighlighted];
     [_pointButton addTarget:self action:@selector(pointAction:) forControlEvents:UIControlEventTouchUpInside];
     UIWindow * tempWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:2];
     UIView * keyBoard = nil;
@@ -398,6 +397,9 @@
 #pragma mark - UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSCharacterSet *cs;
+    if (NSNotFound == [textField.text rangeOfString:@"0"].location && range.location == 0 && [string isEqualToString:@"0"]) {//第一位不允许输入0
+        return NO;
+    }
     
     NSUInteger nDotLoc = [textField.text rangeOfString:@"."].location;
     if (NSNotFound == nDotLoc && 0 != range.location) {
