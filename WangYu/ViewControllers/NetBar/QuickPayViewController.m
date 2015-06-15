@@ -239,7 +239,7 @@
     self.netbarLabel.textColor = SKIN_TEXT_COLOR1;
     self.addressLabel.font = SKIN_FONT_FROMNAME(12);
     self.addressLabel.textColor = SKIN_TEXT_COLOR2;
-    self.payforLabel.font = SKIN_FONT_FROMNAME(12);
+    self.payforLabel.font = SKIN_FONT_FROMNAME(15);
     self.payforLabel.textColor = SKIN_TEXT_COLOR1;
     self.priceLabel.font = SKIN_FONT_FROMNAME(12);
     self.priceLabel.textColor = SKIN_TEXT_COLOR1;

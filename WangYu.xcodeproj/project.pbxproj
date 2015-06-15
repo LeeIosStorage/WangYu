@@ -290,6 +290,7 @@
 		3BE0908E1B14CD3A00DCAB3C /* MatchDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */; };
 		44D55A9D1B2E6C7B0074D964 /* MessageDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */; };
 		44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */; };
+		44D55AA11B2EAD070074D964 /* WYWeakArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55AA01B2EAD070074D964 /* WYWeakArray.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -887,6 +888,8 @@
 		44D55A9A1B2E6C7B0074D964 /* MessageDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDetailsViewController.h; sourceTree = "<group>"; };
 		44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDetailsViewController.m; sourceTree = "<group>"; };
 		44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageDetailsViewController.xib; sourceTree = "<group>"; };
+		44D55A9F1B2EAD070074D964 /* WYWeakArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYWeakArray.h; sourceTree = "<group>"; };
+		44D55AA01B2EAD070074D964 /* WYWeakArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYWeakArray.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1241,6 +1244,8 @@
 				077D83881AF9C3BC00AAF31F /* NSString+Value.m */,
 				073DBD551AE7717D009B49EB /* NSDictionary+ObjectForKey.h */,
 				073DBD561AE7717D009B49EB /* NSDictionary+ObjectForKey.m */,
+				44D55A9F1B2EAD070074D964 /* WYWeakArray.h */,
+				44D55AA01B2EAD070074D964 /* WYWeakArray.m */,
 				073DBD591AE7717D009B49EB /* PathHelper.h */,
 				073DBD5A1AE7717D009B49EB /* PathHelper.m */,
 				073DBD5B1AE7717D009B49EB /* UIColor+bit.h */,
@@ -2257,6 +2262,7 @@
 				077BF3A01B1865E400450174 /* AvatarListViewController.m in Sources */,
 				073DBD741AE778CF009B49EB /* WYUserInfo.m in Sources */,
 				078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */,
+				44D55AA11B2EAD070074D964 /* WYWeakArray.m in Sources */,
 				0718716E1B2571B400FE9A35 /* TTTAttributedLabel.m in Sources */,
 				0791AB5A1AE8DE260009A5A7 /* AFURLConnectionOperation.m in Sources */,
 				073DBD611AE7717D009B49EB /* NSDictionary+ObjectForKey.m in Sources */,

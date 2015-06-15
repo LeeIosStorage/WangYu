@@ -168,6 +168,9 @@
     [self.clearHistoryButton.layer setBorderWidth:0.5]; //边框宽度
     [self.clearHistoryButton.layer setBorderColor:SKIN_TEXT_COLOR1.CGColor];//边框颜色
     self.clearHistoryButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
+    
+    self.searchContainerView.backgroundColor = self.view.backgroundColor;
+    self.searchTableView.backgroundColor = self.view.backgroundColor;
 }
 
 - (void)refreshSearchBlankShowUI:(int)type{

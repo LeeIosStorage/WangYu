@@ -50,6 +50,13 @@
         bgImage = [UIImage imageNamed:@"redpacket_kuang_gray"];
 //        [[UIImage imageNamed:@"redpacket_kuang_gray"] stretchableImageWithLeftCapWidth:148 topCapHeight:80];
         self.redPagStaleLabel.hidden = NO;
+        if (redPacketInfo.cause == 1) {
+            self.redPagStaleLabel.text = @"已使用";
+        }else if (redPacketInfo.cause == 2){
+            self.redPagStaleLabel.text = @"已过期";
+        }else{
+            self.redPagStaleLabel.text = nil;
+        }
     }
     self.redPacketBgImgView.image = bgImage;
 }
