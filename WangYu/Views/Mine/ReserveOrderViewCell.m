@@ -134,7 +134,7 @@
         
     }else if (isValid == 2){
         stateLabelText = @"已支付";
-        introLabelText = @"您已支付成功，请到网吧退还押金";
+        introLabelText = @"您已支付成功，请安心前往上网";
         if ([orderInfo.amount doubleValue] == 0) {
             //用户不加价
             stateLabelText = @"已接单";
@@ -151,7 +151,7 @@
         [self.payOrderButton setTitle:@"继续支付" forState:0];
     }else if (status == 1){
         stateLabelText = @"已支付";
-        introLabelText = @"您已支付成功，请到网吧退还押金";
+        introLabelText = @"您已支付成功，请安心前往上网";
         if ([orderInfo.amount doubleValue] == 0) {
             //用户不加价
             stateLabelText = @"已接单";
