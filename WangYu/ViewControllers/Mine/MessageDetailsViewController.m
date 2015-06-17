@@ -8,6 +8,7 @@
 
 #import "MessageDetailsViewController.h"
 #import "TTTAttributedLabel.h"
+#import "NSString+Value.h"
 
 @interface MessageDetailsViewController ()
 
@@ -49,8 +50,8 @@
 -(void)refreshShowUI{
     self.msgTitleLabel.textColor = SKIN_TEXT_COLOR1;
     self.msgTitleLabel.font = SKIN_FONT_FROMNAME(15);
-//    self.msgDescriptionLabel.textColor = SKIN_TEXT_COLOR2;
-//    self.msgDescriptionLabel.font = SKIN_FONT_FROMNAME(12);
+    self.msgDescriptionLabel.textColor = SKIN_TEXT_COLOR2;
+    self.msgDescriptionLabel.font = SKIN_FONT_FROMNAME(12);
     self.msgTimeLabel.textColor = SKIN_TEXT_COLOR2;
     self.msgTimeLabel.font = SKIN_FONT_FROMNAME(11);
     
@@ -58,9 +59,9 @@
     self.msgTimeLabel.text = [WYUIUtils dateDiscriptionFromNowBk:_messageInfo.createDate];
 //    self.msgTimeLabel.text = @"2015-06-15 09:15";
     
-//    self.msgDescriptionLabel.lineHeightMultiple = 1.3;
+    self.msgDescriptionLabel.lineHeightMultiple = 0.8;
     NSString *content = _messageInfo.content;
-//    content = @"消息消息升级了消息消息升级了消息消息升级了消息消息升级了消息消息升级了消息消息升级了消息消息升级了消息";
+//    content = @"消息消息升级了消息消息升级了消息消息升级了消息消息升级了消息消息升级了消息消息升级了消息消息升级了消息消息";
     self.msgDescriptionLabel.text = content;
     
     CGSize textSize = [WYCommonUtils sizeWithText:content font:self.msgDescriptionLabel.font width:SCREEN_WIDTH-24];

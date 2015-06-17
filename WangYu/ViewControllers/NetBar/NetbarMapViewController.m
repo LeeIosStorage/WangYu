@@ -372,8 +372,8 @@
         }
     }
     
-//    [self getCurrentCity:location];
-    [self addCustomMark:location];
+    [self getCurrentCity:location];
+//    [self addCustomMark:location];
     
 }
 -(void)getCurrentCity:(CLLocationCoordinate2D)location
@@ -396,13 +396,14 @@
         if (placemarks.count && !error) {
             [WYProgressHUD AlertLoadDone];
         }else {
-            [weakSelf addCustomMark:location];
+//            [weakSelf addCustomMark:location];
             _reseverLocation = CLLocationCoordinate2DMake(-180, -180);
             NSLog(@"did not FindPlacemark, error = %@",error);
             [WYProgressHUD AlertError:@"位置获取失败" At:weakSelf.view];
             return;
         }
-        [weakSelf showAnnotationAt:[placemarks objectAtIndex:0]];
+        [weakSelf addCustomMark:location];
+//        [weakSelf showAnnotationAt:[placemarks objectAtIndex:0]];
     }];
 }
 -(void)showAnnotationAt:(CLPlacemark*) place
@@ -476,7 +477,7 @@
     region.span.longitudeDelta = 0.01;
     region.span.latitudeDelta = 0.01;
     
-    [self.mapView setRegion:region animated:YES];
+    [self.mapView setRegion:region animated:NO];
     
     [self.mapView selectAnnotation:annotation animated:YES];
 }
