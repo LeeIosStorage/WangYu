@@ -125,7 +125,7 @@
     if (netbarInfo.isRecommend) {
         _recommendImage.hidden = NO;
         frame = _recommendImage.frame;
-        interval = netbarInfo.isOrder?(CGRectGetWidth(_bookImage.frame) + CGRectGetWidth(_recommendImage.frame) + 7):CGRectGetWidth(_recommendImage.frame) + (netbarInfo.isPay?(CGRectGetWidth(_recommendImage.frame) + 7):0);
+        interval = (netbarInfo.isOrder?(CGRectGetWidth(_bookImage.frame) + CGRectGetWidth(_recommendImage.frame) + 7):CGRectGetWidth(_recommendImage.frame)) + (netbarInfo.isPay?(CGRectGetWidth(_payImage.frame) + 7):0);
         frame.origin.x = SCREEN_WIDTH - 12 - interval;
         _recommendImage.frame = frame;
     }else {
