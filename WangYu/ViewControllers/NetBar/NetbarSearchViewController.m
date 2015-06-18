@@ -21,9 +21,19 @@
 #import "WYNavigationController.h"
 #import "WYAlertView.h"
 
+#define price_type @"price"
+#define price_name @"price_name"
+
 @interface NetbarSearchViewController ()<UITableViewDataSource,UITableViewDelegate,NetbarTabCellDelegate>
 {
     BOOL _searchBarIsEditing;
+    
+    int _filterType;
+    NSString *_filterAreaName;
+    NSString *_filterAreaCode;
+    NSString *_filterPriceName;
+    NSString *_filterPriceType;
+    
 }
 
 @property (nonatomic, assign) CLLocationCoordinate2D currentLocation;
@@ -33,6 +43,22 @@
 @property (nonatomic, strong) NSMutableArray *netBarInfos;
 @property (assign, nonatomic) SInt64  netBarNextCursor;
 @property (assign, nonatomic) BOOL netBarCanLoadMore;
+
+@property (nonatomic, strong) NSMutableArray *filterAreaArray;
+@property (nonatomic, strong) NSMutableArray *filterPriceArray;
+@property (nonatomic, strong) IBOutlet UIView *filterTableContainerView;
+@property (nonatomic, strong) IBOutlet UITableView *filterTableView;
+@property (nonatomic, strong) UIButton *bgMarkButtonView;
+
+@property (nonatomic, strong) IBOutlet UIView *filterContainerView;
+@property (nonatomic, strong) IBOutlet UIImageView *filterBottomImgView;
+@property (nonatomic, strong) IBOutlet UIImageView *filterMiddleImgView;
+@property (nonatomic, strong) IBOutlet UILabel *filterAreaLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *filterAreaIconImgView;
+@property (nonatomic, strong) IBOutlet UILabel *filterPriceLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *filterPriceIconImgView;
+@property (nonatomic, strong) IBOutlet UIButton *filterAreaButton;
+@property (nonatomic, strong) IBOutlet UIButton *filterPriceButton;
 
 @property (strong, nonatomic) IBOutlet UIView *historyContainerView;
 @property (strong, nonatomic) IBOutlet UIView *historyFooterView;
@@ -54,6 +80,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *searchBlankTipLabel;
 
 -(IBAction)removeSearchRecordAction:(id)sender;
+-(IBAction)filterAreaAction:(id)sender;
+-(IBAction)filterPriceAction:(id)sender;
+
 @end
 
 @implementation NetbarSearchViewController
@@ -65,12 +94,25 @@
     _groupDataSource = [[NSMutableArray alloc] init];
     _historyInfos = [[NSMutableArray alloc] init];
     _nearbyNetBarInfos = [[NSMutableArray alloc] init];
+    _filterAreaArray = [[NSMutableArray alloc] init];
+    _filterPriceArray = [[NSMutableArray alloc] init];
+    
+    _filterType = 0;
+    _filterAreaName = @"区域";
+    _filterAreaCode = _areaCode;
+    _filterPriceName = @"价格";
+    _filterPriceType = @"";
     
     self.currentLocation = [WYLocationServiceUtil getLastRecordLocation];
     
     self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.netBarTable];
     self.pullRefreshView.delegate = self;
     [self.netBarTable addSubview:self.pullRefreshView];
+    
+    
+    [self refreshFilterAreaData];
+    [self refreshFilterPriceData];
+    
     
     [self initControlUI];
     [self refreshHistorySearchData:NO];
@@ -171,6 +213,46 @@
     
     self.searchContainerView.backgroundColor = self.view.backgroundColor;
     self.searchTableView.backgroundColor = self.view.backgroundColor;
+    
+    self.filterTableContainerView.backgroundColor = self.view.backgroundColor;
+    self.filterBottomImgView.backgroundColor = UIColorToRGB(0xe4e4e4);
+    self.filterMiddleImgView.backgroundColor = UIColorToRGB(0xe4e4e4);
+    CGRect frame = self.filterBottomImgView.frame;
+    frame.size.height = 0.5;
+    self.filterBottomImgView.frame = frame;
+    frame = self.filterMiddleImgView.frame;
+    frame.size.width = 0.5;
+    self.filterMiddleImgView.frame = frame;
+    
+    self.filterAreaLabel.textColor = SKIN_TEXT_COLOR1;
+    self.filterAreaLabel.font = SKIN_FONT_FROMNAME(14);
+    self.filterPriceLabel.textColor = SKIN_TEXT_COLOR1;
+    self.filterPriceLabel.font = SKIN_FONT_FROMNAME(14);
+    [self refreshFilterViewShowUI];
+}
+
+- (void)refreshFilterViewShowUI{
+    self.filterAreaLabel.text = _filterAreaName;
+    self.filterPriceLabel.text = _filterPriceName;
+    CGFloat textWidth = [WYCommonUtils widthWithText:_filterAreaName font:self.filterAreaLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+    CGRect frame = self.filterAreaLabel.frame;
+    frame.origin.x = SCREEN_WIDTH/4-textWidth/2-7;
+    frame.size.width = textWidth;
+    self.filterAreaLabel.frame = frame;
+    frame = self.filterAreaIconImgView.frame;
+    frame.origin.x = self.filterAreaLabel.frame.origin.x + self.filterAreaLabel.frame.size.width + 5;
+    self.filterAreaIconImgView.frame = frame;
+    
+    textWidth = [WYCommonUtils widthWithText:_filterPriceName font:self.filterPriceLabel.font lineBreakMode:NSLineBreakByWordWrapping];
+    frame = self.filterPriceLabel.frame;
+    frame.origin.x = SCREEN_WIDTH/4-textWidth/2-7;
+    frame.size.width = textWidth;
+    self.filterPriceLabel.frame = frame;
+    frame = self.filterPriceIconImgView.frame;
+    frame.origin.x = self.filterPriceLabel.frame.origin.x + self.filterPriceLabel.frame.size.width + 5;
+    self.filterPriceIconImgView.frame = frame;
+    
+    
 }
 
 - (void)refreshSearchBlankShowUI:(int)type{
@@ -194,7 +276,82 @@
     }
 }
 
-#pragma mark - custom
+- (void)showFilterViewWith:(BOOL)showOpen{
+    
+    if (showOpen) {
+        
+        if (_bgMarkButtonView.superview) {
+            [_bgMarkButtonView removeFromSuperview];
+        }
+        
+        CGRect frame = self.filterTableContainerView.frame;
+        frame.origin.y = self.filterContainerView.frame.origin.y + self.filterContainerView.frame.size.height;
+        frame.size.width = self.view.bounds.size.width;
+        frame.size.height = 0;
+        self.filterTableContainerView.frame = frame;
+        [self.view addSubview:self.filterTableContainerView];
+        [self.view insertSubview:self.filterTableContainerView belowSubview:self.filterContainerView];
+        
+        CGFloat filterContainerViewHeight = 250;
+        if (self.filterAreaButton.selected) {
+            filterContainerViewHeight = self.filterAreaArray.count*36+1;
+        }else if (self.filterPriceButton.selected){
+            filterContainerViewHeight = self.filterPriceArray.count*36+1;
+        }
+        if (filterContainerViewHeight>250) {
+            filterContainerViewHeight = 250;
+        }
+        if (filterContainerViewHeight < 144) {
+            filterContainerViewHeight = 144;
+        }
+        
+        [self.filterTableView reloadData];
+        
+        _bgMarkButtonView = [UIButton buttonWithType:UIButtonTypeCustom];
+        _bgMarkButtonView.frame = self.view.bounds;
+        [_bgMarkButtonView addTarget:self action:@selector(hiddenFilterViewAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_bgMarkButtonView];
+        [self.view insertSubview:_bgMarkButtonView belowSubview:self.filterTableContainerView];
+        _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+        [UIView animateWithDuration:0.4 animations:^{
+            CGRect frame = self.filterTableContainerView.frame;
+            frame.size.height = filterContainerViewHeight;
+            self.filterTableContainerView.frame = frame;
+            _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.5];
+            _filterPriceIconImgView.transform = CGAffineTransformMakeRotation(180 *M_PI / 180.0);
+//            frame = _filterPriceIconImgView.frame;
+//            frame.origin.y = self.filterPriceLabel.center.y + 4;
+//            _filterPriceIconImgView.frame = frame;
+        } completion:^(BOOL finished) {
+            [_filterPriceIconImgView setImage:[UIImage imageNamed:@"search_netbar_list_deep_up"]];
+        }];
+    }else{
+        self.filterAreaButton.selected = NO;
+        self.filterPriceButton.selected = NO;
+        if (self.filterTableContainerView.superview) {
+            [UIView animateWithDuration:0.4 animations:^{
+                CGRect frame = self.filterTableContainerView.frame;
+                frame.size.height = 0;
+                self.filterTableContainerView.frame = frame;
+                _bgMarkButtonView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+                _filterPriceIconImgView.transform = CGAffineTransformMakeRotation(0 *M_PI / 180.0);
+//                frame = _filterPriceIconImgView.frame;
+//                frame.origin.y = self.filterPriceLabel.center.y;
+//                _filterPriceIconImgView.frame = frame;
+            } completion:^(BOOL finished) {
+                [_filterPriceIconImgView setImage:[UIImage imageNamed:@"search_netbar_list_tint_down"]];
+                [self.filterTableContainerView removeFromSuperview];
+                [_bgMarkButtonView removeFromSuperview];
+            }];
+        }
+    }
+}
+
+-(void)hiddenFilterViewAction{
+    [self showFilterViewWith:NO];
+}
+
+#pragma mark - request
 -(void)refreshHistorySearchData:(BOOL)lose{
     //搜索历史记录
     [_historyInfos removeAllObjects];
@@ -219,7 +376,30 @@
     [self.historyTable reloadData];
 }
 
+-(void)refreshFilterPriceData{
+    if (_filterPriceArray == nil) {
+        _filterPriceArray = [[NSMutableArray alloc] init];
+    }
+    [_filterPriceArray addObject:@{price_name:@"3元以下",price_type:@"1"}];
+    [_filterPriceArray addObject:@{price_name:@"3~5元",price_type:@"2"}];
+    [_filterPriceArray addObject:@{price_name:@"5元以上",price_type:@"3"}];
+    
+}
+
+-(void)refreshFilterAreaData{
+    
+}
+
 -(void)getCacheNetbarInfos{
+    
+    NSArray *allCacheNetbars = [[WYNetBarManager shareInstance] getAllCacheNetbars];
+    if (allCacheNetbars.count > 0) {
+        
+        self.netBarInfos = [[NSMutableArray alloc] initWithArray:allCacheNetbars];
+        [self.netBarTable reloadData];
+        return;
+    }
+    
     __weak NetbarSearchViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
@@ -280,6 +460,9 @@
         }
         
         [weakSelf.netBarTable reloadData];
+        
+        [[WYNetBarManager shareInstance] saveAllCacheNetbars:weakSelf.netBarInfos];
+        
     }tag:tag];
 }
 
@@ -358,6 +541,7 @@
     
 }
 
+#pragma mark - custom
 -(void)refreshSearchTableView{
     [self refreshSearchBlankShowUI:0];
     if (self.searchNetBarInfos.count == 0) {
@@ -403,6 +587,26 @@
     [[WYNetBarManager shareInstance] removeHistorySearchRecord];
     [self refreshHistorySearchData:YES];
 }
+-(IBAction)filterAreaAction:(id)sender{
+    _filterType = 0;
+    self.filterAreaButton.selected = !self.filterAreaButton.selected;
+    BOOL showOpen = self.filterAreaButton.selected;
+    if (self.filterPriceButton.selected) {
+        showOpen = YES;
+        self.filterPriceButton.selected = !self.filterPriceButton.selected;
+    }
+    [self showFilterViewWith:showOpen];
+}
+-(IBAction)filterPriceAction:(id)sender{
+    _filterType = 1;
+    self.filterPriceButton.selected = !self.filterPriceButton.selected;
+    BOOL showOpen = self.filterPriceButton.selected;
+    if (self.filterAreaButton.selected) {
+        showOpen = YES;
+        self.filterAreaButton.selected = !self.filterAreaButton.selected;
+    }
+    [self showFilterViewWith:showOpen];
+}
 
 - (void)doSearchBarEndEditing{
     [self.searchBar resignFirstResponder];
@@ -417,6 +621,7 @@
         
     }];
     self.netBarTable.hidden = NO;
+    self.filterContainerView.hidden = NO;
     if (self.historyContainerView.superview) {
         [self.historyContainerView removeFromSuperview];
     }
@@ -437,6 +642,8 @@
     }];
     
     self.netBarTable.hidden = YES;
+    self.filterContainerView.hidden = YES;
+    
     CGRect frame = self.historyContainerView.frame;
     frame.origin.y = self.titleNavBar.frame.size.height;
     frame.size.width = self.view.bounds.size.width;
@@ -593,6 +800,14 @@
         return rows.count;
     }else if (tableView == self.searchTableView){
         return self.searchNetBarInfos.count;
+    }else if (tableView == self.filterTableView){
+        if (_filterType == 0) {
+            return self.filterAreaArray.count;
+        }else if (_filterType == 1){
+            return self.filterPriceArray.count;
+        }else{
+            return 0;
+        }
     }
     return self.netBarInfos.count;
 }
@@ -601,11 +816,13 @@
 {
     if (tableView == self.historyTable) {
         return 44;
+    }else if (tableView == self.filterTableView){
+        return 36;
     }
     return 94;
 }
 
-static int historyLabel_Tag = 201;
+static int historyLabel_Tag = 201, filterLabel_Tag = 202, filterLineImg_Tag = 203;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.historyTable) {
@@ -667,6 +884,42 @@ static int historyLabel_Tag = 201;
         WYNetbarInfo *netbarInfo = _searchNetBarInfos[indexPath.row];
         cell.netbarInfo = netbarInfo;
         return cell;
+    }else if (tableView == self.filterTableView){
+        static NSString *CellIdentifier = @"filterTableViewCellIdentifier";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            UIImageView *botLineImgView = [[UIImageView alloc] init];
+            botLineImgView.backgroundColor = UIColorToRGB(0xe4e4e4);
+            botLineImgView.frame = CGRectMake(12, 35, self.view.bounds.size.width-24, .5);
+            botLineImgView.tag = filterLineImg_Tag;
+            [cell addSubview:botLineImgView];
+            
+            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, self.view.bounds.size.width-12*2, 36)];
+            nameLabel.tag = filterLabel_Tag;
+            nameLabel.backgroundColor = [UIColor clearColor];
+            nameLabel.numberOfLines = 1;
+            nameLabel.textAlignment = NSTextAlignmentLeft;
+            nameLabel.font = SKIN_FONT_FROMNAME(12);
+            [cell addSubview:nameLabel];
+            cell.backgroundColor = [UIColor clearColor];
+        }
+        UILabel *nameLabel = (UILabel *)[cell viewWithTag:filterLabel_Tag];
+        UIImageView *botImgView = (UIImageView *)[cell viewWithTag:filterLineImg_Tag];
+        if (_filterType == 0) {
+            
+        }else if (_filterType == 1){
+            NSDictionary *infoDic = _filterPriceArray[indexPath.row];
+            nameLabel.text = [infoDic stringObjectForKey:price_name];
+            if ([[infoDic stringObjectForKey:price_type] isEqualToString:_filterPriceType]) {
+                nameLabel.textColor = UIColorToRGB(0xa58600);
+                botImgView.backgroundColor = UIColorToRGB(0xa58600);
+            }else{
+                nameLabel.textColor = SKIN_TEXT_COLOR2;
+                botImgView.backgroundColor = UIColorToRGB(0xe4e4e4);
+            }
+        }
+        return cell;
     }
     return nil;
 }
@@ -702,6 +955,17 @@ static int historyLabel_Tag = 201;
         NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
         ndVc.netbarInfo = netbarInfo;
         [self.navigationController pushViewController:ndVc animated:YES];
+    }else if (tableView == self.filterTableView){
+        if (_filterType == 0) {
+            
+        }else if (_filterType == 1){
+            NSDictionary *infoDic = _filterPriceArray[indexPath.row];
+            _filterPriceName = [infoDic stringObjectForKey:price_name];
+            _filterPriceType = [infoDic stringObjectForKey:price_type];
+            [self showFilterViewWith:NO];
+            [self refreshFilterViewShowUI];
+            [self refreshNetbarInfos];
+        }
     }
 }
 

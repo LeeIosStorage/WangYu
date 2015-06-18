@@ -16,4 +16,8 @@
 - (NSMutableArray *)addSaveHistorySearchRecord:(NSString *)record;
 - (void)removeHistorySearchRecord;
 
+- (void)saveAllCacheNetbars:(NSMutableArray *)netbarsArray;
+- (NSArray *)getAllCacheNetbars;
+- (void)removeAllCacheNetbars;
+
 @end
