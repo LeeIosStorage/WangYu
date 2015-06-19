@@ -34,6 +34,7 @@
     NSString *_chooseAreaCode;
     UIImageView *_chooseCityIconImgView;
     
+    BOOL _locationStatus;
     NSString *_currentLocationLocality;
     
     BOOL _isOpen;
@@ -82,6 +83,7 @@
     _isOpen = NO;
     [self refreshNewGuideView:NO];
     _chooseCityName = @"城市";
+    _locationStatus = NO;
     self.currentLocation = [WYLocationServiceUtil getLastRecordLocation];
     
     self.weekRedBagIconImgView.hidden = ![WYSettingConfig staticInstance].weekRedBagMessageUnreadEvent;
@@ -151,16 +153,25 @@
         //获取用户位置
         [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString) {
             
+            _locationStatus = NO;
+            CLLocationCoordinate2D location;
+            location.latitude = 0;
+            location.longitude = 0;
+            weakSelf.currentLocation = location;
+            
             [weakSelf setUserCity];//定位失败时 默认用户已选择的城市
             [weakSelf getNetbarInfos];
-            WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:errorString cancelButtonTitle:@"取消" cancelBlock:^{
-            } okButtonTitle:@"确定" okBlock:^{
-                [weakSelf chooseCityAction:nil];
-//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-            }];
-            [alertView show];
+            errorString = [NSString stringWithFormat:@"%@ 或 选择已开通城市",errorString];
+            [weakSelf locationServiceFailureTip:errorString];
+//            WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:errorString cancelButtonTitle:@"取消" cancelBlock:^{
+//            } okButtonTitle:@"确定" okBlock:^{
+//                [weakSelf chooseCityAction:nil];
+////                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+//            }];
+//            [alertView show];
             return;
         } location:^(CLLocation *location) {
+            _locationStatus = YES;
             weakSelf.currentLocation = [location coordinate];//当前经纬
             [weakSelf getNetbarInfos];
             [weakSelf placemarkReverseLocation:location];
@@ -176,6 +187,7 @@
         WYLog(@"Placemark addressDictionary: %@", addressDictionary);
         NSString *locality = placemark.locality;
         _currentLocationLocality = locality;
+        [weakSelf validateArea:locality];
         BOOL isChange = [weakSelf setUserCity];
         if (isChange) {
             _chooseCityName = locality;
@@ -200,7 +212,9 @@
             [self refreshLeftIconViewUI];
             return YES;
         }else{
-            if (_currentLocationLocality.length > 0) {
+            if (_chooseCityName.length > 0 && _chooseAreaCode.length > 0) {
+                
+            }else if (_currentLocationLocality.length > 0) {
                 _chooseCityName = [NSString stringWithString:_currentLocationLocality];
             }else{
                 _chooseCityName = @"城市";
@@ -293,7 +307,9 @@
 }
 
 - (void)serviceAction {
-    [self searchNetbarAction:nil];
+    NetbarSearchViewController *searchVc = [[NetbarSearchViewController alloc] init];
+    searchVc.areaCode = _chooseAreaCode;
+    [self.navigationController pushViewController:searchVc animated:YES];
 }
 
 - (void)chooseCityAction:(id)sender{
@@ -354,6 +370,49 @@
 -(void)cancelChooseCity{
     _isOpen = YES;
     [self chooseCityAction:nil];
+}
+
+-(void)locationServiceFailureTip:(NSString*)message{
+    WS(weakSelf);
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:message cancelButtonTitle:@"取消" cancelBlock:^{
+    } okButtonTitle:@"去选择" okBlock:^{
+        [weakSelf chooseCityAction:nil];
+    }];
+    [alertView show];
+}
+
+- (void)notOpenCityTip{
+    WS(weakSelf);
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"温馨提示" message:@"当前城市未开通，请选择已开通城市" cancelButtonTitle:@"取消" cancelBlock:^{
+    } okButtonTitle:@"去选择" okBlock:^{
+        [weakSelf chooseCityAction:nil];
+    }];
+    [alertView show];
+}
+#pragma mark - request
+- (void)validateArea:(NSString *)city{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] validateAreaWithAreaName:city tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            int code = [jsonRet intValueForKey:@"code"];
+            if (code == 1){
+                [weakSelf notOpenCityTip];
+            }
+            return;
+        }
+        int code = [jsonRet intValueForKey:@"code"];
+        if (code == 0) {
+            _chooseAreaCode = [jsonRet stringObjectForKey:@"object"];
+            [weakSelf searchNetbarAction:nil];
+        }
+        
+    }tag:tag];
 }
 
 -(void)getCacheNetbarInfos{
@@ -501,9 +560,29 @@
 }
 
 - (IBAction)searchNetbarAction:(id)sender {
-    NetbarSearchViewController *searchVc = [[NetbarSearchViewController alloc] init];
-    searchVc.areaCode = _chooseAreaCode;
-    [self.navigationController pushViewController:searchVc animated:YES];
+    if (_chooseAreaCode.length == 0) {
+        
+        if (!_locationStatus) {
+            //定位失败
+            [self locationServiceFailureTip:@"定位失败，请选择已开通城市"];
+            return;
+        }
+        if (_currentLocationLocality.length > 0) {
+            [self validateArea:_currentLocationLocality];
+            return;
+        }
+        
+        //未开通城市
+        [self notOpenCityTip];
+        return;
+    }
+    if (_chooseAreaCode.length > 0) {
+        NetbarSearchViewController *searchVc = [[NetbarSearchViewController alloc] init];
+        searchVc.areaCode = _chooseAreaCode;
+        searchVc.showFilter = YES;
+        [self.navigationController pushViewController:searchVc animated:YES];
+        return;
+    }
 }
 
 - (IBAction)moreNetbarAction:(id)sender{

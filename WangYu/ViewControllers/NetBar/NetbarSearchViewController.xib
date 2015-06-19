@@ -37,7 +37,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Dcs-lu-lw6">
-                    <rect key="frame" x="0.0" y="100" width="320" height="468"/>
+                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <connections>
@@ -60,7 +60,7 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_netbar_list_tint_down" id="F89-hG-nl2">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_netbar_list_tint_down" highlightedImage="search_netbar_list_deep_up" id="F89-hG-nl2">
                                     <rect key="frame" x="99" y="15" width="10" height="6"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
@@ -87,7 +87,7 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_netbar_list_tint_down" id="ej2-9u-9Ls">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_netbar_list_tint_down" highlightedImage="search_netbar_list_deep_up" id="ej2-9u-9Ls">
                                     <rect key="frame" x="99" y="15" width="10" height="6"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
@@ -219,6 +219,7 @@
     </objects>
     <resources>
         <image name="search_netbar_blank_tip_icon" width="120" height="120"/>
+        <image name="search_netbar_list_deep_up" width="10" height="6"/>
         <image name="search_netbar_list_tint_down" width="10" height="6"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

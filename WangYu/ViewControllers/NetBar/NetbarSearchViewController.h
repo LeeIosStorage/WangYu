@@ -11,5 +11,6 @@
 @interface NetbarSearchViewController : WYSuperViewController
 
 @property (nonatomic, strong) NSString *areaCode;//选择城市code
+@property (nonatomic, assign) BOOL showFilter;
 
 @end

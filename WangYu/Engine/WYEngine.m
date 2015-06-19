@@ -989,6 +989,15 @@ static WYEngine* s_ShareInstance = nil;
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/common/area/allvalidcity",API_URL] type:1 parameters:nil];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
+- (BOOL)getValidChildrenListWithCode:(NSString *)code tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (code) {
+        [params setObject:code forKey:@"code"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/common/area/validchildren",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 - (BOOL)validateAreaWithAreaName:(NSString *)areaName tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (areaName) {
