@@ -15,6 +15,7 @@
 #import "WYLinkerHandler.h"
 #import "AppDelegate.h"
 #import "NetbarDetailViewController.h"
+#import "MatchApplyViewController.h"
 
 @interface MatchPlaceViewController ()<UITableViewDelegate,UITableViewDataSource,MatchPlaceCellDelegate>
 
@@ -148,11 +149,14 @@
     if (indexPath == nil) {
         return;
     }
-    WYMatchInfo* matchInfo = _matchInfos[indexPath.row];
-    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/web/apply?id=%@&userId=%@&token=%@&round=%d", [WYEngine shareInstance].baseUrl, self.activityId , [WYEngine shareInstance].uid, [WYEngine shareInstance].token, matchInfo.round] From:self.navigationController];
-    if (vc) {
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+//    WYMatchInfo* matchInfo = _matchInfos[indexPath.row];
+//    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/web/apply?id=%@&userId=%@&token=%@&round=%d", [WYEngine shareInstance].baseUrl, self.activityId , [WYEngine shareInstance].uid, [WYEngine shareInstance].token, matchInfo.round] From:self.navigationController];
+//    if (vc) {
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
+    
+    MatchApplyViewController *maVc = [[MatchApplyViewController alloc] init];
+    [self.navigationController pushViewController:maVc animated:YES];
 }
 
 - (void)matchPlaceCellClickNetbarWithCell:(id)cell netbarInfo:(WYNetbarInfo *)netbar {
