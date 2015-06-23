@@ -136,7 +136,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //设置消息已读
 - (BOOL)setMessageReadWithUid:(NSString *)uid type:(int)type tag:(int)tag;
 //消息
-- (BOOL)getMessageListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
+- (BOOL)getMessageListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize type:(int)type tag:(int)tag;
 //收藏的网吧
 - (BOOL)getCollectNetBarListWithUid:(NSString *)uid latitude:(float)latitude longitude:(float)longitude page:(int)page pageSize:(int)pageSize tag:(int)tag;
 //收藏的游戏
