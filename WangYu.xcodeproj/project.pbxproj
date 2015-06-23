@@ -288,6 +288,8 @@
 		3BE090881B14CC7500DCAB3C /* MatchDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BE090861B14CC7500DCAB3C /* MatchDetailViewController.xib */; };
 		3BE0908D1B14CD3A00DCAB3C /* MatchDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0908B1B14CD3A00DCAB3C /* MatchDetailCell.m */; };
 		3BE0908E1B14CD3A00DCAB3C /* MatchDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */; };
+		446E1EC01B34129B005CE745 /* PersonalProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */; };
+		446E1EC11B34129B005CE745 /* PersonalProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */; };
 		44D55A9D1B2E6C7B0074D964 /* MessageDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */; };
 		44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */; };
 		44D55AA11B2EAD070074D964 /* WYWeakArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55AA01B2EAD070074D964 /* WYWeakArray.m */; };
@@ -885,6 +887,9 @@
 		3BE0908A1B14CD3A00DCAB3C /* MatchDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchDetailCell.h; path = Activity/MatchDetailCell.h; sourceTree = "<group>"; };
 		3BE0908B1B14CD3A00DCAB3C /* MatchDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchDetailCell.m; path = Activity/MatchDetailCell.m; sourceTree = "<group>"; };
 		3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchDetailCell.xib; path = Activity/MatchDetailCell.xib; sourceTree = "<group>"; };
+		446E1EBD1B34129B005CE745 /* PersonalProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProfileViewController.h; sourceTree = "<group>"; };
+		446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProfileViewController.m; sourceTree = "<group>"; };
+		446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalProfileViewController.xib; sourceTree = "<group>"; };
 		44D55A9A1B2E6C7B0074D964 /* MessageDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDetailsViewController.h; sourceTree = "<group>"; };
 		44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDetailsViewController.m; sourceTree = "<group>"; };
 		44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageDetailsViewController.xib; sourceTree = "<group>"; };
@@ -956,6 +961,9 @@
 				44D55A9A1B2E6C7B0074D964 /* MessageDetailsViewController.h */,
 				44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */,
 				44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */,
+				446E1EBD1B34129B005CE745 /* PersonalProfileViewController.h */,
+				446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */,
+				446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */,
 				076E0DE81B1475FE00E4363A /* PersonalEditViewController.h */,
 				076E0DE91B1475FE00E4363A /* PersonalEditViewController.m */,
 				076E0DEA1B1475FE00E4363A /* PersonalEditViewController.xib */,
@@ -2226,6 +2234,7 @@
 				078FD0411B05FC8D00CBD699 /* LocationViewController.xib in Resources */,
 				07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */,
 				3BE090881B14CC7500DCAB3C /* MatchDetailViewController.xib in Resources */,
+				446E1EC11B34129B005CE745 /* PersonalProfileViewController.xib in Resources */,
 				07868DF01AF8581100160070 /* WYTabBarView.xib in Resources */,
 				073DBDB41AE794C4009B49EB /* arrow.png in Resources */,
 				073DBDB51AE794C4009B49EB /* arrow@2x.png in Resources */,
@@ -2348,6 +2357,7 @@
 				3B357C6E1B20AA3B00AE30A0 /* WYUserGuideConfig.m in Sources */,
 				071691EE1B1C4E49006A832E /* GameDetailsViewController.m in Sources */,
 				076E0DEB1B1475FE00E4363A /* PersonalEditViewController.m in Sources */,
+				446E1EC01B34129B005CE745 /* PersonalProfileViewController.m in Sources */,
 				07358A991AF760D000D546E5 /* SKSplashIcon.m in Sources */,
 				07C4C9FD1AF9B283008DA5D3 /* ColorGradView.m in Sources */,
 				0791AB591AE8DE260009A5A7 /* AFSecurityPolicy.m in Sources */,
