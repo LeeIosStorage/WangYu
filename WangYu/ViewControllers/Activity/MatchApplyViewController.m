@@ -77,7 +77,7 @@
         view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 10);
     }else{
         view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 24);
-        UILabel *indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, 100, view.frame.size.height)];
+        UILabel *indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 3, 100, view.frame.size.height)];
         indexLabel.backgroundColor = [UIColor clearColor];
         indexLabel.textColor = SKIN_TEXT_COLOR2;
         indexLabel.font = SKIN_FONT_FROMNAME(12);
