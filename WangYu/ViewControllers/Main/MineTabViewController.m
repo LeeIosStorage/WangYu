@@ -152,7 +152,7 @@ enum TABLEVIEW_SECTION_INDEX {
 - (void)getUnReadMessage{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getUnReadMessageCountWithUid:[WYEngine shareInstance].uid type:0 tag:tag];
+    [[WYEngine shareInstance] getUnReadMessageCountWithUid:[WYEngine shareInstance].uid tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
@@ -163,9 +163,13 @@ enum TABLEVIEW_SECTION_INDEX {
         }
         
 //        int unreadNum = [[WYSettingConfig staticInstance] getMessageCount];
-        
-        int unreadNum = [jsonRet intValueForKey:@"object"];
-        [[WYSettingConfig staticInstance] addMessageNum:unreadNum];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[jsonRet dictionaryObjectForKey:@"object"]];
+//        int activityNum = [[jsonRet objectForKey:@"object"] intValueForKey:@"activity"];
+//        int orderNum = [[jsonRet objectForKey:@"object"] intValueForKey:@"order"];
+//        int systemNum = [[jsonRet objectForKey:@"object"] intValueForKey:@"sys"];
+//        int unreadNum = activityNum + orderNum + systemNum;
+//        [[WYSettingConfig staticInstance] addMessageNum:unreadNum];
+        [[WYSettingConfig staticInstance] saveMessageDic:dic];
         [weakSelf refreshBadgeView];
         
     }tag:tag];

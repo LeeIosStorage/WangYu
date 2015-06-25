@@ -135,10 +135,12 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)getHeadAvatarListWithTag:(int)tag;
 //未读消息个数
 - (BOOL)getUnReadMessageCountWithUid:(NSString *)uid type:(int)type tag:(int)tag;
+//新未读消息个数
+- (BOOL)getUnReadMessageCountWithUid:(NSString *)uid tag:(int)tag;
 //设置消息已读
 - (BOOL)setMessageReadWithUid:(NSString *)uid type:(int)type tag:(int)tag;
 //消息
-- (BOOL)getMessageListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
+- (BOOL)getMessageListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize type:(int)type tag:(int)tag;
 //收藏的网吧
 - (BOOL)getCollectNetBarListWithUid:(NSString *)uid latitude:(float)latitude longitude:(float)longitude page:(int)page pageSize:(int)pageSize tag:(int)tag;
 //收藏的游戏

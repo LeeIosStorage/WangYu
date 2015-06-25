@@ -599,10 +599,6 @@
     return 10;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-//    return 44;
-//}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.leagueTableView) {
         return 221;
@@ -611,19 +607,6 @@
     }
     return 138;
 }
-
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView *view = [[UIView alloc] init];
-//
-//    view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
-//    CGRect frame = self.sectionView.frame;
-//    frame.size.width = SCREEN_WIDTH;
-//    self.sectionView.frame = frame;
-//    [view addSubview:self.sectionView];
-//    
-//    return view;
-//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -741,12 +724,6 @@
     if (index != self.selectedIndex) {
         _selectedIndex = index;
         [self transitionToViewAtIndex:index];
-//        if ([self categoryNecessaryRefreshWith:index-1]) {
-//            XECategoryView *cv = _categoryViews[index-1];
-//            cv.delegate = self;
-//            [cv.pullRefreshView triggerPullToRefresh];
-//            //[self getCategoryInfoWithTag:_titles[_selectedIndex-1] andIndex:_selectedIndex-1];
-//        }
     }
 }
 

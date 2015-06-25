@@ -215,10 +215,10 @@ static WYSettingConfig *s_instance = nil;
 -(NSString *)getMessagePath{
     return [[self getAccoutStorePath] stringByAppendingPathComponent:@"message.xml"];
 }
--(int)getMessageCount{
-    NSMutableDictionary *messageDic = [NSMutableDictionary dictionaryWithContentsOfFile:[self getMessagePath]];
-    return [messageDic intValueForKey:@"last_message"];
-}
+//-(int)getMessageCount{
+//    NSMutableDictionary *messageDic = [NSMutableDictionary dictionaryWithContentsOfFile:[self getMessagePath]];
+//    return [messageDic intValueForKey:@"last_message"];
+//}
 
 -(void)addMessageNum:(int)count{
     
@@ -234,6 +234,28 @@ static WYSettingConfig *s_instance = nil;
     [messageDic setObject:messageNum forKey:@"last_message"];
     [messageDic writeToFile:[self getMessagePath] atomically:YES];
 }
+
+- (void)saveMessageDic:(NSDictionary *)dic {
+    NSMutableDictionary *messageDic = [NSMutableDictionary dictionaryWithContentsOfFile:[self getMessagePath]];
+    if (!messageDic) {
+        messageDic = [NSMutableDictionary dictionary];
+    }
+    [messageDic removeAllObjects];
+    messageDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+    [messageDic writeToFile:[self getMessagePath] atomically:YES];
+}
+
+- (NSDictionary *)getMessageDic {
+    NSMutableDictionary *messageDic = [NSMutableDictionary dictionaryWithContentsOfFile:[self getMessagePath]];
+    return messageDic;
+}
+
+- (int)getMessageCount{
+    NSMutableDictionary *messageDic = [NSMutableDictionary dictionaryWithContentsOfFile:[self getMessagePath]];
+    return ([messageDic intValueForKey:@"activity"] + [messageDic intValueForKey:@"order"] + [messageDic intValueForKey:@"sys"]);
+}
+
+
 -(void)removeMessageNum{
     NSString* path = [self getMessagePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {

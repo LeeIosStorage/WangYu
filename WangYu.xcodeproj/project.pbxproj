@@ -288,6 +288,16 @@
 		3BE090881B14CC7500DCAB3C /* MatchDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BE090861B14CC7500DCAB3C /* MatchDetailViewController.xib */; };
 		3BE0908D1B14CD3A00DCAB3C /* MatchDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0908B1B14CD3A00DCAB3C /* MatchDetailCell.m */; };
 		3BE0908E1B14CD3A00DCAB3C /* MatchDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */; };
+		3BF8B7BD1B39478F00BBA346 /* MatchApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF8B7BB1B39478F00BBA346 /* MatchApplyViewController.m */; };
+		3BF8B7BE1B39478F00BBA346 /* MatchApplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF8B7BC1B39478F00BBA346 /* MatchApplyViewController.xib */; };
+		3BF8B7C21B394A4000BBA346 /* MatchApplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF8B7C01B394A4000BBA346 /* MatchApplyCell.m */; };
+		3BF8B7C31B394A4000BBA346 /* MatchApplyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF8B7C11B394A4000BBA346 /* MatchApplyCell.xib */; };
+		3BF8B7C71B3969B600BBA346 /* MatchMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF8B7C51B3969B600BBA346 /* MatchMemberViewController.m */; };
+		3BF8B7C81B3969B600BBA346 /* MatchMemberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF8B7C61B3969B600BBA346 /* MatchMemberViewController.xib */; };
+		3BF8B7CC1B396A8D00BBA346 /* MatchMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF8B7CA1B396A8D00BBA346 /* MatchMemberCell.m */; };
+		3BF8B7CD1B396A8D00BBA346 /* MatchMemberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF8B7CB1B396A8D00BBA346 /* MatchMemberCell.xib */; };
+		3BF8B7D11B396D6700BBA346 /* InviteMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF8B7CF1B396D6700BBA346 /* InviteMemberViewController.m */; };
+		3BF8B7D21B396D6700BBA346 /* InviteMemberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF8B7D01B396D6700BBA346 /* InviteMemberViewController.xib */; };
 		446E1EC01B34129B005CE745 /* PersonalProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */; };
 		446E1EC11B34129B005CE745 /* PersonalProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */; };
 		44C8ABEE1B3BD89800BFA4D2 /* WYInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8ABEC1B3BD89800BFA4D2 /* WYInputViewController.m */; };
@@ -889,6 +899,21 @@
 		3BE0908A1B14CD3A00DCAB3C /* MatchDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchDetailCell.h; path = Activity/MatchDetailCell.h; sourceTree = "<group>"; };
 		3BE0908B1B14CD3A00DCAB3C /* MatchDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchDetailCell.m; path = Activity/MatchDetailCell.m; sourceTree = "<group>"; };
 		3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchDetailCell.xib; path = Activity/MatchDetailCell.xib; sourceTree = "<group>"; };
+		3BF8B7BA1B39478F00BBA346 /* MatchApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchApplyViewController.h; path = Activity/MatchApplyViewController.h; sourceTree = "<group>"; };
+		3BF8B7BB1B39478F00BBA346 /* MatchApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchApplyViewController.m; path = Activity/MatchApplyViewController.m; sourceTree = "<group>"; };
+		3BF8B7BC1B39478F00BBA346 /* MatchApplyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchApplyViewController.xib; path = Activity/MatchApplyViewController.xib; sourceTree = "<group>"; };
+		3BF8B7BF1B394A4000BBA346 /* MatchApplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchApplyCell.h; path = Activity/MatchApplyCell.h; sourceTree = "<group>"; };
+		3BF8B7C01B394A4000BBA346 /* MatchApplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchApplyCell.m; path = Activity/MatchApplyCell.m; sourceTree = "<group>"; };
+		3BF8B7C11B394A4000BBA346 /* MatchApplyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchApplyCell.xib; path = Activity/MatchApplyCell.xib; sourceTree = "<group>"; };
+		3BF8B7C41B3969B600BBA346 /* MatchMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchMemberViewController.h; path = Activity/MatchMemberViewController.h; sourceTree = "<group>"; };
+		3BF8B7C51B3969B600BBA346 /* MatchMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchMemberViewController.m; path = Activity/MatchMemberViewController.m; sourceTree = "<group>"; };
+		3BF8B7C61B3969B600BBA346 /* MatchMemberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchMemberViewController.xib; path = Activity/MatchMemberViewController.xib; sourceTree = "<group>"; };
+		3BF8B7C91B396A8D00BBA346 /* MatchMemberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchMemberCell.h; path = Activity/MatchMemberCell.h; sourceTree = "<group>"; };
+		3BF8B7CA1B396A8D00BBA346 /* MatchMemberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchMemberCell.m; path = Activity/MatchMemberCell.m; sourceTree = "<group>"; };
+		3BF8B7CB1B396A8D00BBA346 /* MatchMemberCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchMemberCell.xib; path = Activity/MatchMemberCell.xib; sourceTree = "<group>"; };
+		3BF8B7CE1B396D6700BBA346 /* InviteMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InviteMemberViewController.h; path = Activity/InviteMemberViewController.h; sourceTree = "<group>"; };
+		3BF8B7CF1B396D6700BBA346 /* InviteMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InviteMemberViewController.m; path = Activity/InviteMemberViewController.m; sourceTree = "<group>"; };
+		3BF8B7D01B396D6700BBA346 /* InviteMemberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InviteMemberViewController.xib; path = Activity/InviteMemberViewController.xib; sourceTree = "<group>"; };
 		446E1EBD1B34129B005CE745 /* PersonalProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProfileViewController.h; sourceTree = "<group>"; };
 		446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProfileViewController.m; sourceTree = "<group>"; };
 		446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalProfileViewController.xib; sourceTree = "<group>"; };
@@ -2075,6 +2100,15 @@
 				07E96B861B15BB8B006ED6B7 /* MatchPlaceViewController.h */,
 				07E96B871B15BB8B006ED6B7 /* MatchPlaceViewController.m */,
 				07E96B881B15BB8B006ED6B7 /* MatchPlaceViewController.xib */,
+				3BF8B7BA1B39478F00BBA346 /* MatchApplyViewController.h */,
+				3BF8B7BB1B39478F00BBA346 /* MatchApplyViewController.m */,
+				3BF8B7BC1B39478F00BBA346 /* MatchApplyViewController.xib */,
+				3BF8B7C41B3969B600BBA346 /* MatchMemberViewController.h */,
+				3BF8B7C51B3969B600BBA346 /* MatchMemberViewController.m */,
+				3BF8B7C61B3969B600BBA346 /* MatchMemberViewController.xib */,
+				3BF8B7CE1B396D6700BBA346 /* InviteMemberViewController.h */,
+				3BF8B7CF1B396D6700BBA346 /* InviteMemberViewController.m */,
+				3BF8B7D01B396D6700BBA346 /* InviteMemberViewController.xib */,
 				078A04361B1C2387008ADA76 /* TopicsViewController.h */,
 				078A04371B1C2387008ADA76 /* TopicsViewController.m */,
 				078A04381B1C2387008ADA76 /* TopicsViewController.xib */,
@@ -2097,6 +2131,12 @@
 				0775705D1B16EDF2005C9DC7 /* MatchWarViewCell.h */,
 				0775705E1B16EDF2005C9DC7 /* MatchWarViewCell.m */,
 				0775705F1B16EDF2005C9DC7 /* MatchWarViewCell.xib */,
+				3BF8B7BF1B394A4000BBA346 /* MatchApplyCell.h */,
+				3BF8B7C01B394A4000BBA346 /* MatchApplyCell.m */,
+				3BF8B7C11B394A4000BBA346 /* MatchApplyCell.xib */,
+				3BF8B7C91B396A8D00BBA346 /* MatchMemberCell.h */,
+				3BF8B7CA1B396A8D00BBA346 /* MatchMemberCell.m */,
+				3BF8B7CB1B396A8D00BBA346 /* MatchMemberCell.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -2190,6 +2230,7 @@
 				076E22501B02F73200F33815 /* NetbarSearchViewController.xib in Resources */,
 				0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */,
 				071923D01AF74D8400432531 /* LoginViewController.xib in Resources */,
+				3BF8B7BE1B39478F00BBA346 /* MatchApplyViewController.xib in Resources */,
 				0766C2971B0EF9390051A897 /* NetbarDetailViewController.xib in Resources */,
 				07A427AA1B186AF5009197D5 /* WYScrollPage.xib in Resources */,
 				071923D31AF74D8400432531 /* WelcomeViewController.xib in Resources */,
@@ -2197,6 +2238,7 @@
 				0762193A1B15C19600D912A1 /* RedPacketViewController.xib in Resources */,
 				0799C8B01AF1D88E00E407BB /* GameCommendViewController.xib in Resources */,
 				44C8ABEF1B3BD89800BFA4D2 /* WYInputViewController.xib in Resources */,
+				3BF8B7CD1B396A8D00BBA346 /* MatchMemberCell.xib in Resources */,
 				077E608C1B0B2D5F0079BC9E /* WeiboSDK.bundle in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
 				07E96B8A1B15BB8B006ED6B7 /* MatchPlaceViewController.xib in Resources */,
@@ -2211,9 +2253,11 @@
 				070DCBE01B00762F00B27C19 /* OrdersViewController.xib in Resources */,
 				07B48B401B0C4D1F0000857F /* read_me.txt in Resources */,
 				07566CA61AFC648B00F93B58 /* SettingViewController.xib in Resources */,
+				3BF8B7C81B3969B600BBA346 /* MatchMemberViewController.xib in Resources */,
 				076F82901B05E0CB00CACF0D /* NetbarMapViewController.xib in Resources */,
 				0745B3891B007AF3006D6853 /* NetbarDetailCell.xib in Resources */,
 				07E96B8F1B15BD35006ED6B7 /* MatchPlaceCell.xib in Resources */,
+				3BF8B7D21B396D6700BBA346 /* InviteMemberViewController.xib in Resources */,
 				076219251B15A29400D912A1 /* MessageViewCell.xib in Resources */,
 				0777DFD11B01C4CB00E1E314 /* QuickPayViewController.xib in Resources */,
 				0728D03C1B0F252A00239D96 /* ActivityTabViewController.xib in Resources */,
@@ -2255,6 +2299,7 @@
 				077570571B16E0A8005C9DC7 /* MineMatchWarViewController.xib in Resources */,
 				07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */,
 				077570611B16EDF2005C9DC7 /* MatchWarViewCell.xib in Resources */,
+				3BF8B7C31B394A4000BBA346 /* MatchApplyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2285,7 +2330,9 @@
 				0791AB5A1AE8DE260009A5A7 /* AFURLConnectionOperation.m in Sources */,
 				073DBD611AE7717D009B49EB /* NSDictionary+ObjectForKey.m in Sources */,
 				078E5AFA1B1BF0B90041C7D2 /* WYCommonWebVc.m in Sources */,
+				3BF8B7C71B3969B600BBA346 /* MatchMemberViewController.m in Sources */,
 				070DCBDF1B00762F00B27C19 /* OrdersViewController.m in Sources */,
+				3BF8B7BD1B39478F00BBA346 /* MatchApplyViewController.m in Sources */,
 				07868DE71AF8581100160070 /* WYBaseSuperViewController.m in Sources */,
 				07868DE91AF8581100160070 /* WYSuperViewController.m in Sources */,
 				076F82861B059CB700CACF0D /* WYNetBarManager.m in Sources */,
@@ -2329,6 +2376,7 @@
 				076219411B15C7FD00D912A1 /* RedPacketViewCell.m in Sources */,
 				073DBCE51AE7492A009B49EB /* AppDelegate.m in Sources */,
 				073DBD4C1AE7712F009B49EB /* UIButton+WebCache.m in Sources */,
+				3BF8B7D11B396D6700BBA346 /* InviteMemberViewController.m in Sources */,
 				077D83861AF9AF3E00AAF31F /* WYProgressHUD.m in Sources */,
 				07868DED1AF8581100160070 /* WYTabBarItemView.m in Sources */,
 				07868DE81AF8581100160070 /* WYNavigationController.m in Sources */,
@@ -2440,10 +2488,12 @@
 				077570561B16E0A8005C9DC7 /* MineMatchWarViewController.m in Sources */,
 				0791AB581AE8DE260009A5A7 /* AFNetworkReachabilityManager.m in Sources */,
 				0762192C1B15AEB200D912A1 /* CollectListViewController.m in Sources */,
+				3BF8B7CC1B396A8D00BBA346 /* MatchMemberCell.m in Sources */,
 				0791AB3B1AE8D8600009A5A7 /* WYSettingConfig.m in Sources */,
 				0745B3881B007AF3006D6853 /* NetbarDetailCell.m in Sources */,
 				077BF3B01B186BFC00450174 /* GMGridViewCell.m in Sources */,
 				073DBD421AE7712F009B49EB /* MKAnnotationView+WebCache.m in Sources */,
+				3BF8B7C21B394A4000BBA346 /* MatchApplyCell.m in Sources */,
 				073DBD641AE7717D009B49EB /* UIColor+bit.m in Sources */,
 				073DBDF51AE7A1B0009B49EB /* UIImage+Alpha.m in Sources */,
 				0794938E1B0D9C3D008152A6 /* openssl_wrapper.m in Sources */,

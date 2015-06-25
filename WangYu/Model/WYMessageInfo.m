@@ -18,7 +18,9 @@
     if ([dic stringObjectForKey:@"content"]) {
         _content = [dic stringObjectForKey:@"content"];
     }
-    
+    if ([dic stringObjectForKey:@"is_read"]) {
+        _isRead = [dic boolValueForKey:@"is_read"];
+    }
     _type = [dic intValueForKey:@"type"];
     
     NSDateFormatter *dateFormatter = [WYUIUtils dateFormatterOFUS];
@@ -32,7 +34,7 @@
         return;
     }
     _messageInfoByJsonDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
-    
+    _msgId = [[dic objectForKey:@"id"] description];
     @try {
         [self doSetMessageInfoByJsonDic:dic];
     }

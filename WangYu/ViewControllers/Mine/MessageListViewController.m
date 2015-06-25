@@ -14,13 +14,35 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "WYSettingConfig.h"
 #import "MessageDetailsViewController.h"
+#import "DVSwitch.h"
 
 @interface MessageListViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *messageInfos;
-@property (assign, nonatomic) SInt64  messageNextCursor;
-@property (assign, nonatomic) BOOL messageCanLoadMore;
+@property (weak, nonatomic) IBOutlet UIView *containSwitcher;
+@property (weak, nonatomic) IBOutlet UIScrollView *containScroll;
+//@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITableView *orderTableView;
+@property (weak, nonatomic) IBOutlet UITableView *activityTableView;
+@property (weak, nonatomic) IBOutlet UITableView *systemTableView;
+
+@property (strong, nonatomic) DVSwitch *switcher;
+@property (assign, nonatomic) NSUInteger selectedIndex;
+
+@property (nonatomic, strong) NSMutableArray *orderInfos;
+@property (nonatomic, strong) NSMutableArray *activityInfos;
+@property (nonatomic, strong) NSMutableArray *systemInfos;
+@property (assign, nonatomic) SInt64 orderNextCursor;
+@property (assign, nonatomic) SInt64 activityNextCursor;
+@property (assign, nonatomic) SInt64 systemNextCursor;
+@property (assign, nonatomic) BOOL orderLoadMore;
+@property (assign, nonatomic) BOOL activityLoadMore;
+@property (assign, nonatomic) BOOL systemLoadMore;
+
+//@property (assign, nonatomic) SInt64 messageNextCursor;
+//@property (assign, nonatomic) BOOL messageCanLoadMore;
+//
+//@property (nonatomic, strong) NSMutableArray *messageInfos;
+
 
 @property (strong, nonatomic) IBOutlet UIView *messageBlankTipView;
 @property (strong, nonatomic) IBOutlet UILabel *messageBlankTipLabel;
@@ -32,36 +54,48 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self initSwitchView];
+    [self initContainerScrollView];
     
-    [self setMessageRead];
-    _messageInfos = [[NSMutableArray alloc] init];
+    _selectedIndex = 1;
+    [self refreshMessageWithIndex:_selectedIndex];
     
-    self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.tableView];
+    
+    //[self setMessageRead];
+    _orderInfos = [[NSMutableArray alloc] init];
+    
+    self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.orderTableView];
     self.pullRefreshView.delegate = self;
-    [self.tableView addSubview:self.pullRefreshView];
+    [self.orderTableView addSubview:self.pullRefreshView];
+    self.pullRefreshView2 = [[PullToRefreshView alloc] initWithScrollView:self.activityTableView];
+    self.pullRefreshView2.delegate = self;
+    [self.activityTableView addSubview:self.pullRefreshView2];
+    self.pullRefreshView3 = [[PullToRefreshView alloc] initWithScrollView:self.systemTableView];
+    self.pullRefreshView3.delegate = self;
+    [self.systemTableView addSubview:self.pullRefreshView3];
     
-    [self getCacheMessageList];
-    [self refreshMessageInfos];
+//    [self getCacheMessageList];
+//    [self refreshMessageInfos];
     
     WS(weakSelf);
     
-    [self.tableView addInfiniteScrollingWithActionHandler:^{
+    [self.orderTableView addInfiniteScrollingWithActionHandler:^{
         if (!weakSelf) {
             return;
         }
-        if (weakSelf.messageCanLoadMore) {
-            [weakSelf.tableView.infiniteScrollingView stopAnimating];
-            weakSelf.tableView.showsInfiniteScrolling = NO;
+        if (weakSelf.orderLoadMore) {
+            [weakSelf.orderTableView.infiniteScrollingView stopAnimating];
+            weakSelf.orderTableView.showsInfiniteScrolling = NO;
             return ;
         }
         
         int tag = [[WYEngine shareInstance] getConnectTag];
-        [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.messageNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.orderNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT type:1 tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
             if (!weakSelf) {
                 return;
             }
-            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            [weakSelf.orderTableView.infiniteScrollingView stopAnimating];
             NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
             if (!jsonRet || errorMsg) {
                 if (!errorMsg.length) {
@@ -74,104 +108,230 @@
             for (NSDictionary *dic in object) {
                 WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
                 [messageInfo setMessageInfoByJsonDic:dic];
-                [weakSelf.messageInfos addObject:messageInfo];
+                [weakSelf.orderInfos addObject:messageInfo];
             }
             
-            weakSelf.messageCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
-            if (weakSelf.messageCanLoadMore) {
-                weakSelf.tableView.showsInfiniteScrolling = NO;
+            weakSelf.orderLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.orderLoadMore) {
+                weakSelf.orderTableView.showsInfiniteScrolling = NO;
             }else{
-                weakSelf.tableView.showsInfiniteScrolling = YES;
-                weakSelf.messageNextCursor ++;
+                weakSelf.orderTableView.showsInfiniteScrolling = YES;
+                weakSelf.orderNextCursor ++;
             }
             
-            [weakSelf.tableView reloadData];
+            [weakSelf.orderTableView reloadData];
             
         } tag:tag];
     }];
-    weakSelf.tableView.showsInfiniteScrolling = NO;
+    [self.activityTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.activityLoadMore) {
+            [weakSelf.activityTableView.infiniteScrollingView stopAnimating];
+            weakSelf.activityTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.activityNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT type:2 tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.activityTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
+                [messageInfo setMessageInfoByJsonDic:dic];
+                [weakSelf.activityInfos addObject:messageInfo];
+            }
+            
+            weakSelf.activityLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.activityLoadMore) {
+                weakSelf.activityTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.activityTableView.showsInfiniteScrolling = YES;
+                weakSelf.activityNextCursor ++;
+            }
+            
+            [weakSelf.activityTableView reloadData];
+            
+        } tag:tag];
+    }];
+
+    [self.systemTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.systemLoadMore) {
+            [weakSelf.systemTableView.infiniteScrollingView stopAnimating];
+            weakSelf.systemTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.orderNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT type:3 tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.systemTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
+                [messageInfo setMessageInfoByJsonDic:dic];
+                [weakSelf.systemInfos addObject:messageInfo];
+            }
+            
+            weakSelf.systemLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.systemLoadMore) {
+                weakSelf.systemTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.systemTableView.showsInfiniteScrolling = YES;
+                weakSelf.systemNextCursor ++;
+            }
+            
+            [weakSelf.systemTableView reloadData];
+            
+        } tag:tag];
+    }];
+    weakSelf.orderTableView.showsInfiniteScrolling = NO;
+    weakSelf.activityTableView.showsInfiniteScrolling = NO;
+    weakSelf.systemTableView.showsInfiniteScrolling = NO;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)initNormalTitleNavBarSubviews{
-    [self setTitle:@"消息"];
-}
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)initNormalTitleNavBarSubviews{
+    [self setTitle:@"我的消息"];
 }
-*/
+
+- (void)initSwitchView{
+    self.switcher = [DVSwitch switchWithStringsArray:@[@"订单消息", @"活动消息", @"系统消息"]];
+    self.switcher.frame = CGRectMake(12, 7, SCREEN_WIDTH - 12 * 2, 30);
+    self.switcher.font = SKIN_FONT_FROMNAME(14);
+    self.switcher.cornerRadius = 4;
+    self.switcher.sliderOffset = 0.5;
+    [self.switcher.layer setMasksToBounds:YES];
+    [self.switcher.layer setCornerRadius:4.0];
+    [self.switcher.layer setBorderWidth:0.5]; //边框宽度
+    [self.switcher.layer setBorderColor:UIColorToRGB(0xadadad).CGColor];//边框颜色
+    
+    self.switcher.backgroundColor = [UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1.0];
+    self.switcher.sliderColor = [UIColor whiteColor];
+    
+    self.switcher.labelTextColorInsideSlider = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
+    self.switcher.labelTextColorOutsideSlider = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
+    [self.containSwitcher addSubview:self.switcher];
+    WS(weakSelf);
+    [self.switcher setPressedHandler:^(NSUInteger index) {
+        NSLog(@"Did press position on first switch at index: %lu", (unsigned long)index);
+        weakSelf.selectedIndex = index + 1;
+        [weakSelf refreshMessageWithIndex:index + 1];
+    }];
+}
+
+- (void)initContainerScrollView{
+    CGRect frame = _containScroll.frame;
+    frame.size.height = SCREEN_HEIGHT - CGRectGetHeight(self.titleNavBar.frame) - CGRectGetHeight(self.containSwitcher.frame);
+    _containScroll.frame = frame;
+    _containScroll.contentSize = CGSizeMake(SCREEN_WIDTH * 3, _containScroll.frame.size.height);
+    
+    frame = self.activityTableView.frame;
+    frame.origin.x = SCREEN_WIDTH;
+    self.activityTableView.frame = frame;
+    
+    frame = self.systemTableView.frame;
+    frame.origin.x = SCREEN_WIDTH*2;
+    self.systemTableView.frame = frame;
+}
 
 - (void)refreshShowUI{
     self.messageBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
     self.messageBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
-    if (self.messageInfos && self.messageInfos.count == 0) {
-        CGRect frame = self.messageBlankTipView.frame;
-        frame.origin.y = 0;
-        frame.size.width = SCREEN_WIDTH;
-        self.messageBlankTipView.frame = frame;
-        [self.tableView addSubview:self.messageBlankTipView];
-        
-    }else{
-        if (self.messageBlankTipView.superview) {
-            [self.messageBlankTipView removeFromSuperview];
+    CGRect frame = self.messageBlankTipView.frame;
+    frame.size.width = SCREEN_WIDTH;
+    frame.origin.y = 0;
+    if (_selectedIndex == 1) {
+        if (self.orderInfos && self.orderInfos.count == 0) {
+            frame.origin.x = 0;
+            [self.orderTableView addSubview:self.messageBlankTipView];
+        }else {
+            if (self.messageBlankTipView.superview) {
+                [self.messageBlankTipView removeFromSuperview];
+            }
+        }
+    } else if (_selectedIndex == 2) {
+        if (self.activityInfos && self.activityInfos.count == 0) {
+            frame.origin.x = SCREEN_WIDTH;
+            [self.activityTableView addSubview:self.messageBlankTipView];
+        }else {
+            if (self.messageBlankTipView.superview) {
+                [self.messageBlankTipView removeFromSuperview];
+            }
+        }
+    } else if (_selectedIndex == 3) {
+        if (self.systemInfos && self.systemInfos.count == 0) {
+            frame.origin.x = 2*SCREEN_WIDTH;
+            [self.systemTableView addSubview:self.messageBlankTipView];
+        }else {
+            if (self.messageBlankTipView.superview) {
+                [self.messageBlankTipView removeFromSuperview];
+            }
         }
     }
 }
 
-#pragma mark - request
-- (void)setMessageRead{
-    
-    [[WYSettingConfig staticInstance] removeMessageNum];
-    [[WYSettingConfig staticInstance] setMineMessageUnreadEvent:NO];
-    
-    int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] setMessageReadWithUid:[WYEngine shareInstance].uid type:0 tag:tag];
-    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
-        if (!jsonRet || errorMsg) {
-            if (!errorMsg.length) {
-                errorMsg = @"请求失败";
-            }
-            return;
-        }
-    }tag:tag];
-}
+//- (void)refreshShowUI{
+//    self.messageBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
+//    self.messageBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
+//    if (self.orderInfos && self.orderInfos.count == 0) {
+//        CGRect frame = self.messageBlankTipView.frame;
+//        frame.origin.y = 0;
+//        frame.size.width = SCREEN_WIDTH;
+//        self.messageBlankTipView.frame = frame;
+//        [self.orderTableView addSubview:self.messageBlankTipView];
+//        
+//    }else{
+//        if (self.messageBlankTipView.superview) {
+//            [self.messageBlankTipView removeFromSuperview];
+//        }
+//    }
+//}
 
--(void)getCacheMessageList{
+- (void)refreshMessageWithIndex:(NSUInteger)index{
+    _orderNextCursor = 1;
     __weak MessageListViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
-    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
-        if (jsonRet == nil) {
-            //...
-        }else{
-            weakSelf.messageInfos = [[NSMutableArray alloc] init];
-            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
-            for (NSDictionary *dic in object) {
-                WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
-                [messageInfo setMessageInfoByJsonDic:dic];
-                [weakSelf.messageInfos addObject:messageInfo];
-            }
-            [weakSelf.tableView reloadData];
-        }
-    }];
-}
--(void)refreshMessageInfos{
-    _messageNextCursor = 1;
-    __weak MessageListViewController *weakSelf = self;
-    int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)_messageNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+    [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)_orderNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT type:(int)index tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        [weakSelf.pullRefreshView finishedLoading];
+        if (index == 1) {
+            [weakSelf.pullRefreshView finishedLoading];
+        }else if (index == 2) {
+            [weakSelf.pullRefreshView2 finishedLoading];
+        }else if (index == 3) {
+            [weakSelf.pullRefreshView3 finishedLoading];
+        }
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -181,32 +341,181 @@
             return;
         }
         
-        weakSelf.messageInfos = [[NSMutableArray alloc] init];
-        NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
-        for (NSDictionary *dic in object) {
-            WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
-            [messageInfo setMessageInfoByJsonDic:dic];
-            [weakSelf.messageInfos addObject:messageInfo];
+        if (index == 1) {
+            weakSelf.orderInfos = [[NSMutableArray alloc] init];
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
+                [messageInfo setMessageInfoByJsonDic:dic];
+                [weakSelf.orderInfos addObject:messageInfo];
+            }
+            [weakSelf refreshShowUI];
+            [weakSelf.orderTableView reloadData];
+            weakSelf.orderLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.orderLoadMore) {
+                weakSelf.orderTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.orderTableView.showsInfiniteScrolling = YES;
+                weakSelf.orderNextCursor ++;
+            }
+        }else if (index == 2) {
+            weakSelf.activityInfos = [[NSMutableArray alloc] init];
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
+                [messageInfo setMessageInfoByJsonDic:dic];
+                [weakSelf.activityInfos addObject:messageInfo];
+            }
+            [weakSelf refreshShowUI];
+            [weakSelf.activityTableView reloadData];
+            weakSelf.activityLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.activityLoadMore) {
+                weakSelf.activityTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.activityTableView.showsInfiniteScrolling = YES;
+                weakSelf.activityNextCursor ++;
+            }
+        }else if (index == 3) {
+            weakSelf.systemInfos = [[NSMutableArray alloc] init];
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
+                [messageInfo setMessageInfoByJsonDic:dic];
+                [weakSelf.systemInfos addObject:messageInfo];
+            }
+            [weakSelf refreshShowUI];
+            [weakSelf.systemTableView reloadData];
+            weakSelf.systemLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+            if (weakSelf.systemLoadMore) {
+                weakSelf.systemTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.systemTableView.showsInfiniteScrolling = YES;
+                weakSelf.systemNextCursor ++;
+            }
         }
-        
-        weakSelf.messageCanLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
-        if (weakSelf.messageCanLoadMore) {
-            weakSelf.tableView.showsInfiniteScrolling = NO;
-        }else{
-            weakSelf.tableView.showsInfiniteScrolling = YES;
-            weakSelf.messageNextCursor ++;
-        }
-        [weakSelf refreshShowUI];
-        [weakSelf.tableView reloadData];
-        
     }tag:tag];
 }
-#pragma mark - custom
+
+- (void)doRefreshWithRespond:(NSDictionary *)jsonRet{
+    
+}
+
+//#pragma mark - request
+//- (void)setMessageRead{
+//    
+//    [[WYSettingConfig staticInstance] removeMessageNum];
+//    [[WYSettingConfig staticInstance] setMineMessageUnreadEvent:NO];
+//    
+//    int tag = [[WYEngine shareInstance] getConnectTag];
+//    [[WYEngine shareInstance] setMessageReadWithUid:[WYEngine shareInstance].uid type:0 tag:tag];
+//    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+//        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+//        if (!jsonRet || errorMsg) {
+//            if (!errorMsg.length) {
+//                errorMsg = @"请求失败";
+//            }
+//            return;
+//        }
+//    }tag:tag];
+//}
+//
+//-(void)getCacheMessageList{
+//    __weak MessageListViewController *weakSelf = self;
+//    int tag = [[WYEngine shareInstance] getConnectTag];
+//    [[WYEngine shareInstance] addGetCacheTag:tag];
+//    [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT type:1 tag:tag];
+//    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+//        if (jsonRet == nil) {
+//            //...
+//        }else{
+//            weakSelf.orderInfos = [[NSMutableArray alloc] init];
+//            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+//            for (NSDictionary *dic in object) {
+//                WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
+//                [messageInfo setMessageInfoByJsonDic:dic];
+//                [weakSelf.orderInfos addObject:messageInfo];
+//            }
+//            [weakSelf.orderTableView reloadData];
+//        }
+//    }];
+//}
+
+//-(void)refreshMessageInfos{
+//    _orderNextCursor = 1;
+//    __weak MessageListViewController *weakSelf = self;
+//    int tag = [[WYEngine shareInstance] getConnectTag];
+//    [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)_orderNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT type:1 tag:tag];
+//    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+//        [weakSelf.pullRefreshView finishedLoading];
+//        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+//        if (!jsonRet || errorMsg) {
+//            if (!errorMsg.length) {
+//                errorMsg = @"请求失败";
+//            }
+//            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+//            return;
+//        }
+//        
+//        weakSelf.orderInfos = [[NSMutableArray alloc] init];
+//        NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+//        for (NSDictionary *dic in object) {
+//            WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
+//            [messageInfo setMessageInfoByJsonDic:dic];
+//            [weakSelf.orderInfos addObject:messageInfo];
+//        }
+//        
+//        weakSelf.orderLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+//        if (weakSelf.orderLoadMore) {
+//            weakSelf.orderTableView.showsInfiniteScrolling = NO;
+//        }else{
+//            weakSelf.orderTableView.showsInfiniteScrolling = YES;
+//            weakSelf.orderNextCursor ++;
+//        }
+//        [weakSelf refreshShowUI];
+//        [weakSelf.orderTableView reloadData];
+//        
+//    }tag:tag];
+//}
+
+//#pragma mark - scrollView
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    if(scrollView == self.containScroll){
+//
+//    }
+//}
+//
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+//    if (scrollView == self.containScroll) {
+//        if (0==fmod(scrollView.contentOffset.x,SCREEN_WIDTH)){
+//            _selectedIndex = scrollView.contentOffset.x/SCREEN_WIDTH;
+//            [self.switcher forceSelectedIndex:_selectedIndex animated:YES];
+//        }
+//    }
+//}
+//
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+//    if (scrollView == self.containScroll) {
+//        if (decelerate) {
+//            _selectedIndex = scrollView.contentOffset.x/SCREEN_WIDTH;
+//        }
+//    }
+//}
+
+- (void)transitionToViewAtIndex:(NSUInteger)index{
+    [_containScroll setContentOffset:CGPointMake((index-1) * SCREEN_WIDTH, 0)];
+}
+
+- (void)setSelectedIndex:(NSUInteger)index{
+    if (index != self.selectedIndex) {
+        _selectedIndex = index;
+        [self transitionToViewAtIndex:index];
+    }
+}
 
 #pragma mark PullToRefreshViewDelegate
 - (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {
     if (view == self.pullRefreshView) {
-        [self refreshMessageInfos];
+        [self refreshMessageWithIndex:_selectedIndex];
     }
 }
 
@@ -222,11 +531,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _messageInfos.count;
+    if(tableView == self.orderTableView)
+        return _orderInfos.count;
+    else if (tableView == self.activityTableView)
+        return _activityInfos.count;
+    else
+        return _systemInfos.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 68;
+    return 80;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -236,7 +550,13 @@
         NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
         cell = [cells objectAtIndex:0];
     }
-    cell.messageInfo = _messageInfos[indexPath.row];
+    if (tableView == _orderTableView) {
+        cell.messageInfo = _orderInfos[indexPath.row];
+    }else if (tableView == _activityTableView) {
+        cell.messageInfo = _activityInfos[indexPath.row];
+    }else if (tableView == _systemTableView) {
+        cell.messageInfo = _systemInfos[indexPath.row];
+    }
     return cell;
 }
 
@@ -244,12 +564,45 @@
 {
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
-    
-    WYMessageInfo *messageInfo = _messageInfos[indexPath.row];
-    MessageDetailsViewController *msgVc = [[MessageDetailsViewController alloc] init];
-    msgVc.messageInfo = messageInfo;
-    [self.navigationController pushViewController:msgVc animated:YES];
-    
+    WYMessageInfo *messageInfo;
+    if (tableView == _orderTableView) {
+        messageInfo = _orderInfos[indexPath.row];
+    }else if (tableView == _activityTableView) {
+        messageInfo = _activityInfos[indexPath.row];
+    }else if (tableView == _systemTableView) {
+        messageInfo = _systemInfos[indexPath.row];
+    }
+//    MessageDetailsViewController *msgVc = [[MessageDetailsViewController alloc] init];
+//    msgVc.messageInfo = messageInfo;
+//    [self.navigationController pushViewController:msgVc animated:YES];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        if (tableView == self.orderTableView) {
+            [_orderInfos removeObjectAtIndex:indexPath.row];
+            [self.orderTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }else if (tableView == self.activityTableView) {
+            [_activityInfos removeObjectAtIndex:indexPath.row];
+            [self.activityTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }else if (tableView == self.systemTableView) {
+            [_systemInfos removeObjectAtIndex:indexPath.row];
+            [self.systemTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
+    }
+}
+
+- (void)dealloc {
+    _orderTableView.delegate = nil;
+    _orderTableView.dataSource = nil;
+    _activityTableView.delegate = nil;
+    _activityTableView.dataSource = nil;
+    _systemTableView.delegate = nil;
+    _systemTableView.dataSource = nil;
 }
 
 @end

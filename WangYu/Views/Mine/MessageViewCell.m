@@ -38,8 +38,21 @@
     self.titleLabel.text = messageInfo.title;
     self.descriptionLabel.text = messageInfo.content;
     self.timeLabel.text = [WYUIUtils dateDiscriptionFromNowBk:messageInfo.createDate];
-    self.messageAvatarImageView.image = [UIImage imageNamed:@"wangyu_message_icon"];
-//    [self.messageAvatarImageView sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"wangyu_message_icon"]];
+    if (messageInfo.type == SYS_NOTIFY) {
+        self.messageAvatarImageView.image = [UIImage imageNamed:@"message_system_icon"];
+    } else if (messageInfo.type == SYS_REDBAG) {
+        self.messageAvatarImageView.image = [UIImage imageNamed:@"message_pactket_icon"];
+    } else if (messageInfo.type == SYS_MEMBER) {
+        self.messageAvatarImageView.image = [UIImage imageNamed:@"message_vip_icon"];
+    } else if (messageInfo.type == ORDER_RESERVE) {
+        self.messageAvatarImageView.image = [UIImage imageNamed:@"message_netbar_icon"];
+    } else if (messageInfo.type == ORDER_PAY) {
+        self.messageAvatarImageView.image = [UIImage imageNamed:@"message_book_icon"];
+    } else if (messageInfo.type == ACTIVITY_MATCH) {
+        self.messageAvatarImageView.image = [UIImage imageNamed:@"message_activity_icon"];
+    } else if (messageInfo.type == ACTIVITY_FIGHT) {
+        self.messageAvatarImageView.image = [UIImage imageNamed:@"message_fight_icon"];
+    }
 }
 
 @end
