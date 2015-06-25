@@ -874,7 +874,7 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
-- (BOOL)getNetbarAllListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize latitude:(float)latitude longitude:(float)longitude areaCode:(NSString *)areaCode tag:(int)tag{
+- (BOOL)getNetbarAllListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize latitude:(float)latitude longitude:(float)longitude areaCode:(NSString *)areaCode type:(int)type tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (uid) {
         [params setObject:uid forKey:@"userId"];
@@ -892,6 +892,8 @@ static WYEngine* s_ShareInstance = nil;
     if (areaCode) {
         [params setObject:areaCode forKey:@"areaCode"];
     }
+    [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+    
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
@@ -1008,13 +1010,25 @@ static WYEngine* s_ShareInstance = nil;
 }
 
 #pragma mark - mine
-- (BOOL)editUserInfoWithUid:(NSString *)uid nickName:(NSString *)nickName avatar:(NSArray *)avatar userHead:(NSString *)userHead tag:(int)tag;{
+- (BOOL)editUserInfoWithUid:(NSString *)uid nickName:(NSString *)nickName avatar:(NSArray *)avatar userHead:(NSString *)userHead qqNumber:(NSString *)qqNumber  sex:(NSString*)sex realName:(NSString *)realName idCard:(NSString*)idCard tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (nickName) {
         [params setObject:nickName forKey:@"nickname"];
     }
     if (userHead) {
         [params setObject:userHead forKey:@"userhead"];
+    }
+    if (qqNumber) {
+        [params setObject:qqNumber forKey:@"qq"];
+    }
+    if (sex) {
+        [params setObject:sex forKey:@"sex"];
+    }
+    if (realName) {
+        [params setObject:realName forKey:@"realName"];
+    }
+    if (idCard) {
+        [params setObject:idCard forKey:@"idcard"];
     }
     if (_token) {
         [params setObject:_token forKey:@"token"];

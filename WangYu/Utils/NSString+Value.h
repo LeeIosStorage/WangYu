@@ -14,6 +14,8 @@
 - (BOOL)isEmail;
 //检测email是否合法
 - (BOOL)isValidateEmail;
+//身份证验证
+- (BOOL) validateIdentityCard;
 
 //统计混编字符
 - (int)      GetLength;

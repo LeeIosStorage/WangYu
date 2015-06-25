@@ -187,7 +187,7 @@
         WYLog(@"Placemark addressDictionary: %@", addressDictionary);
         NSString *locality = placemark.locality;
         _currentLocationLocality = locality;
-        [weakSelf validateArea:locality];
+//        [weakSelf validateArea:locality];
         BOOL isChange = [weakSelf setUserCity];
         if (isChange) {
             _chooseCityName = locality;

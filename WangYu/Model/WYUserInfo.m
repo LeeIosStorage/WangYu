@@ -20,6 +20,19 @@
     if ([dic stringObjectForKey:@"telephone"]) {
         _telephone = [dic stringObjectForKey:@"telephone"];
     }
+    if ([dic stringObjectForKey:@"sex"]) {
+        _gender = [dic stringObjectForKey:@"sex"];
+    }
+    if ([dic stringObjectForKey:@"idCard"]) {
+        _idCard = [dic stringObjectForKey:@"idCard"];
+    }
+    if ([dic stringObjectForKey:@"realName"]) {
+        _realName = [dic stringObjectForKey:@"realName"];
+    }
+    if ([dic stringObjectForKey:@"qq"]) {
+        _qq = [dic stringObjectForKey:@"qq"];
+    }
+    
     if ([dic stringObjectForKey:@"icon"]) {
         _avatar = [dic stringObjectForKey:@"icon"];
     }
