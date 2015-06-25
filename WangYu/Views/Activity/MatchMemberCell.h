@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WYUserInfo.h"
 
 @interface MatchMemberCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UILabel *memberTitleLabel;
+
+@property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UILabel *phoneLable;
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
+@property (strong, nonatomic) WYUserInfo *userInfo;
 
 @end

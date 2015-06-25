@@ -10,9 +10,11 @@
 
 @interface WYMessageInfo : NSObject
 
+@property(nonatomic, strong) NSString* msgId;
 @property(nonatomic, strong) NSString* title;
 @property(nonatomic, strong) NSString* content;
 @property(nonatomic, assign) int type;
+@property(nonatomic, assign) BOOL isRead;
 @property(nonatomic, strong) NSDate* createDate;
 
 @property(nonatomic, strong) NSDictionary* messageInfoByJsonDic;

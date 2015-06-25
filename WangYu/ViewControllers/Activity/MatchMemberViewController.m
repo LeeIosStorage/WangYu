@@ -12,6 +12,9 @@
 
 @interface MatchMemberViewController ()<UITableViewDelegate, UITableViewDataSource>
 
+@property (strong, nonatomic) NSMutableArray *userInfos;
+@property (strong, nonatomic) IBOutlet UITableView *memberTableView;
+
 @end
 
 @implementation MatchMemberViewController
@@ -65,6 +68,17 @@
 {
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        [_userInfos removeObjectAtIndex:indexPath.row];
+//        [self.memberTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
 
 - (void)inviteAction {

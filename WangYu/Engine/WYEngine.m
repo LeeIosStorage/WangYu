@@ -23,7 +23,7 @@
 #import "WYUserGuideConfig.h"
 #import "WYPayManager.h"
 
-#define CONNECT_TIMEOUT 20
+#define CONNECT_TIMEOUT 8
 
 static NSString* IMG_URL = @"http://img.wangyuhudong.com";
 static NSString* API_URL = @"http://api.wangyuhudong.com";//
@@ -1062,6 +1062,19 @@ static WYEngine* s_ShareInstance = nil;
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/my/msgCount",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
+
+- (BOOL)getUnReadMessageCountWithUid:(NSString *)uid tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/msg/typeCount",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 - (BOOL)setMessageReadWithUid:(NSString *)uid type:(int)type tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (_token) {

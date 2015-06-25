@@ -40,6 +40,8 @@
 -(void)addMessageNum:(int)count;
 -(void)removeMessageNum;
 
+-(void)saveMessageDic:(NSDictionary *)dic;
+
 //找回密码验证码倒计时
 -(void)addRetrieveTimer;
 -(void)removeRetrieveTimer;

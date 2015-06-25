@@ -57,7 +57,7 @@
     [self initSwitchView];
     [self initContainerScrollView];
     
-    _selectedIndex = 0;
+    _selectedIndex = 1;
     [self refreshMessageWithIndex:_selectedIndex];
     
     
@@ -246,8 +246,8 @@
     WS(weakSelf);
     [self.switcher setPressedHandler:^(NSUInteger index) {
         NSLog(@"Did press position on first switch at index: %lu", (unsigned long)index);
-        weakSelf.selectedIndex = index;
-        [weakSelf refreshMessageWithIndex:index];
+        weakSelf.selectedIndex = index + 1;
+        [weakSelf refreshMessageWithIndex:index + 1];
     }];
 }
 
@@ -272,7 +272,7 @@
     CGRect frame = self.messageBlankTipView.frame;
     frame.size.width = SCREEN_WIDTH;
     frame.origin.y = 0;
-    if (_selectedIndex == 0) {
+    if (_selectedIndex == 1) {
         if (self.orderInfos && self.orderInfos.count == 0) {
             frame.origin.x = 0;
             [self.orderTableView addSubview:self.messageBlankTipView];
@@ -281,7 +281,7 @@
                 [self.messageBlankTipView removeFromSuperview];
             }
         }
-    } else if (_selectedIndex == 1) {
+    } else if (_selectedIndex == 2) {
         if (self.activityInfos && self.activityInfos.count == 0) {
             frame.origin.x = SCREEN_WIDTH;
             [self.activityTableView addSubview:self.messageBlankTipView];
@@ -290,7 +290,7 @@
                 [self.messageBlankTipView removeFromSuperview];
             }
         }
-    } else if (_selectedIndex == 2) {
+    } else if (_selectedIndex == 3) {
         if (self.systemInfos && self.systemInfos.count == 0) {
             frame.origin.x = 2*SCREEN_WIDTH;
             [self.systemTableView addSubview:self.messageBlankTipView];
@@ -325,7 +325,13 @@
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)_orderNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT type:(int)index tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        [weakSelf.pullRefreshView finishedLoading];
+        if (index == 1) {
+            [weakSelf.pullRefreshView finishedLoading];
+        }else if (index == 2) {
+            [weakSelf.pullRefreshView2 finishedLoading];
+        }else if (index == 3) {
+            [weakSelf.pullRefreshView3 finishedLoading];
+        }
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -335,7 +341,7 @@
             return;
         }
         
-        if (index == 0) {
+        if (index == 1) {
             weakSelf.orderInfos = [[NSMutableArray alloc] init];
             NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
             for (NSDictionary *dic in object) {
@@ -352,7 +358,7 @@
                 weakSelf.orderTableView.showsInfiniteScrolling = YES;
                 weakSelf.orderNextCursor ++;
             }
-        }else if (index == 1) {
+        }else if (index == 2) {
             weakSelf.activityInfos = [[NSMutableArray alloc] init];
             NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
             for (NSDictionary *dic in object) {
@@ -369,7 +375,7 @@
                 weakSelf.activityTableView.showsInfiniteScrolling = YES;
                 weakSelf.activityNextCursor ++;
             }
-        }else if (index == 2) {
+        }else if (index == 3) {
             weakSelf.systemInfos = [[NSMutableArray alloc] init];
             NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
             for (NSDictionary *dic in object) {
@@ -394,109 +400,109 @@
     
 }
 
-#pragma mark - request
-- (void)setMessageRead{
-    
-    [[WYSettingConfig staticInstance] removeMessageNum];
-    [[WYSettingConfig staticInstance] setMineMessageUnreadEvent:NO];
-    
-    int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] setMessageReadWithUid:[WYEngine shareInstance].uid type:0 tag:tag];
-    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
-        if (!jsonRet || errorMsg) {
-            if (!errorMsg.length) {
-                errorMsg = @"请求失败";
-            }
-            return;
-        }
-    }tag:tag];
-}
+//#pragma mark - request
+//- (void)setMessageRead{
+//    
+//    [[WYSettingConfig staticInstance] removeMessageNum];
+//    [[WYSettingConfig staticInstance] setMineMessageUnreadEvent:NO];
+//    
+//    int tag = [[WYEngine shareInstance] getConnectTag];
+//    [[WYEngine shareInstance] setMessageReadWithUid:[WYEngine shareInstance].uid type:0 tag:tag];
+//    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+//        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+//        if (!jsonRet || errorMsg) {
+//            if (!errorMsg.length) {
+//                errorMsg = @"请求失败";
+//            }
+//            return;
+//        }
+//    }tag:tag];
+//}
+//
+//-(void)getCacheMessageList{
+//    __weak MessageListViewController *weakSelf = self;
+//    int tag = [[WYEngine shareInstance] getConnectTag];
+//    [[WYEngine shareInstance] addGetCacheTag:tag];
+//    [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT type:1 tag:tag];
+//    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+//        if (jsonRet == nil) {
+//            //...
+//        }else{
+//            weakSelf.orderInfos = [[NSMutableArray alloc] init];
+//            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+//            for (NSDictionary *dic in object) {
+//                WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
+//                [messageInfo setMessageInfoByJsonDic:dic];
+//                [weakSelf.orderInfos addObject:messageInfo];
+//            }
+//            [weakSelf.orderTableView reloadData];
+//        }
+//    }];
+//}
 
--(void)getCacheMessageList{
-    __weak MessageListViewController *weakSelf = self;
-    int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT type:1 tag:tag];
-    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
-        if (jsonRet == nil) {
-            //...
-        }else{
-            weakSelf.orderInfos = [[NSMutableArray alloc] init];
-            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
-            for (NSDictionary *dic in object) {
-                WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
-                [messageInfo setMessageInfoByJsonDic:dic];
-                [weakSelf.orderInfos addObject:messageInfo];
-            }
-            [weakSelf.orderTableView reloadData];
-        }
-    }];
-}
+//-(void)refreshMessageInfos{
+//    _orderNextCursor = 1;
+//    __weak MessageListViewController *weakSelf = self;
+//    int tag = [[WYEngine shareInstance] getConnectTag];
+//    [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)_orderNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT type:1 tag:tag];
+//    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+//        [weakSelf.pullRefreshView finishedLoading];
+//        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+//        if (!jsonRet || errorMsg) {
+//            if (!errorMsg.length) {
+//                errorMsg = @"请求失败";
+//            }
+//            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+//            return;
+//        }
+//        
+//        weakSelf.orderInfos = [[NSMutableArray alloc] init];
+//        NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+//        for (NSDictionary *dic in object) {
+//            WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
+//            [messageInfo setMessageInfoByJsonDic:dic];
+//            [weakSelf.orderInfos addObject:messageInfo];
+//        }
+//        
+//        weakSelf.orderLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
+//        if (weakSelf.orderLoadMore) {
+//            weakSelf.orderTableView.showsInfiniteScrolling = NO;
+//        }else{
+//            weakSelf.orderTableView.showsInfiniteScrolling = YES;
+//            weakSelf.orderNextCursor ++;
+//        }
+//        [weakSelf refreshShowUI];
+//        [weakSelf.orderTableView reloadData];
+//        
+//    }tag:tag];
+//}
 
--(void)refreshMessageInfos{
-    _orderNextCursor = 1;
-    __weak MessageListViewController *weakSelf = self;
-    int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)_orderNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT type:1 tag:tag];
-    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        [weakSelf.pullRefreshView finishedLoading];
-        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
-        if (!jsonRet || errorMsg) {
-            if (!errorMsg.length) {
-                errorMsg = @"请求失败";
-            }
-            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
-            return;
-        }
-        
-        weakSelf.orderInfos = [[NSMutableArray alloc] init];
-        NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
-        for (NSDictionary *dic in object) {
-            WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
-            [messageInfo setMessageInfoByJsonDic:dic];
-            [weakSelf.orderInfos addObject:messageInfo];
-        }
-        
-        weakSelf.orderLoadMore = [[[jsonRet objectForKey:@"object"] objectForKey:@"isLast"] boolValue];
-        if (weakSelf.orderLoadMore) {
-            weakSelf.orderTableView.showsInfiniteScrolling = NO;
-        }else{
-            weakSelf.orderTableView.showsInfiniteScrolling = YES;
-            weakSelf.orderNextCursor ++;
-        }
-        [weakSelf refreshShowUI];
-        [weakSelf.orderTableView reloadData];
-        
-    }tag:tag];
-}
-
-#pragma mark - scrollView
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(scrollView == self.containScroll){
-
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    if (scrollView == self.containScroll) {
-        if (0==fmod(scrollView.contentOffset.x,SCREEN_WIDTH)){
-            _selectedIndex = scrollView.contentOffset.x/SCREEN_WIDTH;
-            [self.switcher forceSelectedIndex:_selectedIndex animated:YES];
-        }
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    if (scrollView == self.containScroll) {
-        if (decelerate) {
-            _selectedIndex = scrollView.contentOffset.x/SCREEN_WIDTH;
-        }
-    }
-}
+//#pragma mark - scrollView
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    if(scrollView == self.containScroll){
+//
+//    }
+//}
+//
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+//    if (scrollView == self.containScroll) {
+//        if (0==fmod(scrollView.contentOffset.x,SCREEN_WIDTH)){
+//            _selectedIndex = scrollView.contentOffset.x/SCREEN_WIDTH;
+//            [self.switcher forceSelectedIndex:_selectedIndex animated:YES];
+//        }
+//    }
+//}
+//
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+//    if (scrollView == self.containScroll) {
+//        if (decelerate) {
+//            _selectedIndex = scrollView.contentOffset.x/SCREEN_WIDTH;
+//        }
+//    }
+//}
 
 - (void)transitionToViewAtIndex:(NSUInteger)index{
-    [_containScroll setContentOffset:CGPointMake(index * SCREEN_WIDTH, 0)];
+    [_containScroll setContentOffset:CGPointMake((index-1) * SCREEN_WIDTH, 0)];
 }
 
 - (void)setSelectedIndex:(NSUInteger)index{
