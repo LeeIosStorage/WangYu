@@ -11,6 +11,10 @@
 #import "WYEngine.h"
 #import "WYAlertView.h"
 #import "WYSettingConfig.h"
+#import "OrdersViewController.h"
+#import "RedPacketViewController.h"
+#import "MessageDetailsViewController.h"
+#import "WYMessageInfo.h"
 
 @implementation WYLinkerHandler
 
@@ -27,19 +31,26 @@
         WYLog(@"paramDic = %@",paramDic);
         if ([[realUrl host] isEqualToString:@"sys"]) {
             //系统消息
-            
+            MessageDetailsViewController *mdVc = [[MessageDetailsViewController alloc] init];
+            WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
+            messageInfo.msgId = [[paramDic objectForKey:@"msgId"] description];;
+            mdVc.messageInfo = messageInfo;
+            return mdVc;
         }else if ([[realUrl host] isEqualToString:@"redbag"]){
-            // 红包消息
-//            WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"推送" message:@"收到红包消息" cancelButtonTitle:@"好的"];
-//            [alertView show];
+            //红包消息
+            RedPacketViewController *rpVc = [[RedPacketViewController alloc] init];
+            return rpVc;
         }else if ([[realUrl host] isEqualToString:@"reservation"]){
-            // 预定订单消息
-            
+            //预定订单消息
+            OrdersViewController *oVc = [[OrdersViewController alloc] init];
+            return oVc;
         }else if ([[realUrl host] isEqualToString:@"pay"]){
-            // 支付消息
-            
+            //支付消息
+            OrdersViewController *oVc = [[OrdersViewController alloc] init];
+            oVc.isShowPayPage = YES;
+            return oVc;
         }else if ([[realUrl host] isEqualToString:@"activity"]){
-            // 活动赛事消息
+            //活动赛事消息
             
         }else if ([[realUrl host] isEqualToString:@"match"]){
             //约战消息
@@ -47,6 +58,8 @@
         }else if ([[realUrl host] isEqualToString:@"redbag_weekly"]){
             //每周红包推送消息
             [[WYSettingConfig staticInstance] setWeekRedBagMessageUnreadEvent:YES];
+        }else if ([[realUrl host] isEqualToString:@"member"]){
+            //会员消息
         }
         return nil;
         
@@ -58,24 +71,6 @@
         if (nav) {
             NSString *url = [realUrl description];
             WYCommonWebVc *webvc = [[WYCommonWebVc alloc] initWithAddress:url];
-            
-//            if ([url hasPrefix:[NSString stringWithFormat:@"%@/info/detail",[XEEngine shareInstance].baseUrl]]) {
-//                NSDictionary *paramDic = [XECommonUtils getParamDictFrom:realUrl.query];
-//                NSString *openId = [paramDic stringObjectForKey:@"id"];
-//                webvc.isShareViewOut = YES;
-//                webvc.openId = openId;
-//            }
-//            if ([url hasPrefix:[NSString stringWithFormat:@"%@/eva/test/start",[XEEngine shareInstance].baseUrl]]) {
-//                webvc.isCanClosed = YES;
-//            }
-//            if ([url hasPrefix:[NSString stringWithFormat:@"%@/eva/result",[XEEngine shareInstance].baseUrl]]) {
-//                webvc.isCanClosed = YES;
-//                webvc.isResult = YES;
-//            }
-//            if ([url hasPrefix:[NSString stringWithFormat:@"%@/train/cat",[XEEngine shareInstance].baseUrl]]) {
-//                webvc.isFullScreen = YES;
-//            }
-            //            webvc.availableActions = SVWebViewControllerAvailableActionsOpenInSafari | SVWebViewControllerAvailableActionsOpenInChrome | SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink;
             [nav pushViewController:webvc animated:YES];
         }
         return nil;

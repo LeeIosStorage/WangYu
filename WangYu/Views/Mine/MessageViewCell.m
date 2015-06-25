@@ -53,6 +53,11 @@
     } else if (messageInfo.type == ACTIVITY_FIGHT) {
         self.messageAvatarImageView.image = [UIImage imageNamed:@"message_fight_icon"];
     }
+    if (messageInfo.isRead) {
+        self.badgeImageView.hidden = YES;
+    }else {
+        self.badgeImageView.hidden = NO;
+    }
 }
 
 @end

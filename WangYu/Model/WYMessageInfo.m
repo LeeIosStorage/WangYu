@@ -43,4 +43,24 @@
     }
 }
 
+- (NSString *) realUrlHost{
+    NSString *realUrlHostString = nil;
+    if (_type == SYS_NOTIFY) {
+        realUrlHostString = @"sys";
+    }else if (_type == SYS_REDBAG) {
+        realUrlHostString = @"redbag";
+    }else if (_type == SYS_MEMBER) {
+        realUrlHostString = @"member";
+    }else if (_type == ORDER_RESERVE) {
+        realUrlHostString = @"reservation";
+    }else if (_type == ORDER_PAY) {
+        realUrlHostString = @"pay";
+    }else if (_type == ACTIVITY_MATCH) {
+        realUrlHostString = @"activity";
+    }else if (_type == ACTIVITY_FIGHT) {
+        realUrlHostString = @"match";
+    }
+    return realUrlHostString;
+}
+
 @end

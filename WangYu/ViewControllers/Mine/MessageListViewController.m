@@ -15,6 +15,8 @@
 #import "WYSettingConfig.h"
 #import "MessageDetailsViewController.h"
 #import "DVSwitch.h"
+#import "WYBadgeView.h"
+#import "WYLinkerHandler.h"
 
 @interface MessageListViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -43,9 +45,12 @@
 //
 //@property (nonatomic, strong) NSMutableArray *messageInfos;
 
-
 @property (strong, nonatomic) IBOutlet UIView *messageBlankTipView;
 @property (strong, nonatomic) IBOutlet UILabel *messageBlankTipLabel;
+
+@property (strong, nonatomic) WYBadgeView *badgeView1;
+@property (strong, nonatomic) WYBadgeView *badgeView2;
+@property (strong, nonatomic) WYBadgeView *badgeView3;
 
 @end
 
@@ -55,15 +60,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self initSwitchView];
+    [self refreshBadgeView];
     [self initContainerScrollView];
     
     _selectedIndex = 1;
     [self refreshMessageWithIndex:_selectedIndex];
-    
-    
+
     //[self setMessageRead];
     _orderInfos = [[NSMutableArray alloc] init];
-    
     self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.orderTableView];
     self.pullRefreshView.delegate = self;
     [self.orderTableView addSubview:self.pullRefreshView];
@@ -249,6 +253,15 @@
         weakSelf.selectedIndex = index + 1;
         [weakSelf refreshMessageWithIndex:index + 1];
     }];
+    CGRect messageIconFrame = CGRectMake(100 , 0, 35, 20);
+    _badgeView1 = [[WYBadgeView alloc] initWithFrame:messageIconFrame];
+    [self.containSwitcher addSubview:_badgeView1];
+    messageIconFrame = CGRectMake(210 , 0, 35, 20);
+    _badgeView2 = [[WYBadgeView alloc] initWithFrame:messageIconFrame];
+    [self.containSwitcher addSubview:_badgeView2];
+    messageIconFrame = CGRectMake(330 , 0, 35, 20);
+    _badgeView3 = [[WYBadgeView alloc] initWithFrame:messageIconFrame];
+    [self.containSwitcher addSubview:_badgeView3];
 }
 
 - (void)initContainerScrollView{
@@ -264,6 +277,28 @@
     frame = self.systemTableView.frame;
     frame.origin.x = SCREEN_WIDTH*2;
     self.systemTableView.frame = frame;
+}
+
+- (void)refreshBadgeView{
+    NSDictionary *messageDic = [[WYSettingConfig staticInstance] getMessageDic];
+    self.badgeView1.unreadNum = [messageDic intValueForKey:@"order"];
+    if ([messageDic intValueForKey:@"order"] == 0) {
+        self.badgeView1.hidden = YES;
+    }else{
+        self.badgeView1.hidden = NO;
+    }
+    self.badgeView2.unreadNum = [messageDic intValueForKey:@"activity"];
+    if ([messageDic intValueForKey:@"activity"] == 0) {
+        self.badgeView2.hidden = YES;
+    }else{
+        self.badgeView2.hidden = NO;
+    }
+    self.badgeView3.unreadNum = [messageDic intValueForKey:@"sys"];
+    if ([messageDic intValueForKey:@"sys"] == 0) {
+        self.badgeView3.hidden = YES;
+    }else{
+        self.badgeView3.hidden = NO;
+    }
 }
 
 - (void)refreshShowUI{
@@ -301,23 +336,6 @@
         }
     }
 }
-
-//- (void)refreshShowUI{
-//    self.messageBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
-//    self.messageBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
-//    if (self.orderInfos && self.orderInfos.count == 0) {
-//        CGRect frame = self.messageBlankTipView.frame;
-//        frame.origin.y = 0;
-//        frame.size.width = SCREEN_WIDTH;
-//        self.messageBlankTipView.frame = frame;
-//        [self.orderTableView addSubview:self.messageBlankTipView];
-//        
-//    }else{
-//        if (self.messageBlankTipView.superview) {
-//            [self.messageBlankTipView removeFromSuperview];
-//        }
-//    }
-//}
 
 - (void)refreshMessageWithIndex:(NSUInteger)index{
     _orderNextCursor = 1;
@@ -400,7 +418,53 @@
     
 }
 
-//#pragma mark - request
+#pragma mark - request
+- (void)deleteMessage:(WYMessageInfo *)messageInfo tableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] deleteMessageWithUid:[WYEngine shareInstance].uid msgId:messageInfo.msgId type:messageInfo.type tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            return;
+        }
+        if (!messageInfo.isRead) {
+            [[WYSettingConfig staticInstance] calculateMessageNum:weakSelf.selectedIndex];
+            [weakSelf refreshBadgeView];
+        }
+        [weakSelf deleteMessageWith:tableView forRowAtIndexPath:indexPath];
+    } tag:tag];
+}
+
+- (void)setMessageRead:(WYMessageInfo *)messageInfo tableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] setMessageReadWithUid:[WYEngine shareInstance].uid msgId:messageInfo.msgId type:messageInfo.type tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            return;
+        }
+        [[WYSettingConfig staticInstance] calculateMessageNum:weakSelf.selectedIndex];
+        [weakSelf refreshBadgeView];
+        messageInfo.isRead = YES;
+        [weakSelf refreshMessageWith:tableView forRowAtIndexPath:indexPath];
+        
+        NSString *wyHref = [NSString stringWithFormat:@"wycategory://%@?msgId=%@",messageInfo.realUrlHost,messageInfo.msgId];
+            
+        id vc = [WYLinkerHandler handleDealWithHref:wyHref From:self.navigationController];
+        if (vc) {
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        }
+    } tag:tag];
+}
+
 //- (void)setMessageRead{
 //    
 //    [[WYSettingConfig staticInstance] removeMessageNum];
@@ -514,9 +578,7 @@
 
 #pragma mark PullToRefreshViewDelegate
 - (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {
-    if (view == self.pullRefreshView) {
-        [self refreshMessageWithIndex:_selectedIndex];
-    }
+    [self refreshMessageWithIndex:_selectedIndex];
 }
 
 - (NSDate *)pullToRefreshViewLastUpdated:(PullToRefreshView *)view {
@@ -572,9 +634,18 @@
     }else if (tableView == _systemTableView) {
         messageInfo = _systemInfos[indexPath.row];
     }
-//    MessageDetailsViewController *msgVc = [[MessageDetailsViewController alloc] init];
-//    msgVc.messageInfo = messageInfo;
-//    [self.navigationController pushViewController:msgVc animated:YES];
+    if (!messageInfo) {
+        return;
+    }
+    if (!messageInfo.isRead) {
+        [self setMessageRead:messageInfo tableView:tableView forRowAtIndexPath:indexPath];
+    }else {
+        NSString *wyHref = [NSString stringWithFormat:@"wycategory://%@?msgId=%@",messageInfo.realUrlHost,messageInfo.msgId];
+        id vc = [WYLinkerHandler handleDealWithHref:wyHref From:self.navigationController];
+        if (vc) {
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -583,16 +654,41 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        WYMessageInfo *messageInfo;
         if (tableView == self.orderTableView) {
-            [_orderInfos removeObjectAtIndex:indexPath.row];
-            [self.orderTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            messageInfo = [_orderInfos objectAtIndex:indexPath.row];
         }else if (tableView == self.activityTableView) {
-            [_activityInfos removeObjectAtIndex:indexPath.row];
-            [self.activityTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            messageInfo = [_activityInfos objectAtIndex:indexPath.row];
         }else if (tableView == self.systemTableView) {
-            [_systemInfos removeObjectAtIndex:indexPath.row];
-            [self.systemTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            messageInfo = [_systemInfos objectAtIndex:indexPath.row];
         }
+        if (!messageInfo) {
+            return;
+        }
+        [self deleteMessage:messageInfo tableView:tableView forRowAtIndexPath:indexPath];
+    }
+}
+
+- (void)deleteMessageWith:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.orderTableView) {
+        [_orderInfos removeObjectAtIndex:indexPath.row];
+        [self.orderTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }else if (tableView == self.activityTableView) {
+        [_activityInfos removeObjectAtIndex:indexPath.row];
+        [self.activityTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }else if (tableView == self.systemTableView) {
+        [_systemInfos removeObjectAtIndex:indexPath.row];
+        [self.systemTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (void)refreshMessageWith:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.orderTableView) {
+        [self.orderTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }else if (tableView == self.activityTableView) {
+        [self.activityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }else if (tableView == self.systemTableView) {
+        [self.systemTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 

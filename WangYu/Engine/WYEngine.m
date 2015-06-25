@@ -1088,6 +1088,32 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
+//新设置消息已读（2.0以后）
+- (BOOL)setMessageReadWithUid:(NSString *)uid msgId:(NSString *)mid type:(int)type tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    [params setObject:uid forKey:@"userId"];
+    [params setObject:mid forKey:@"msgId"];
+    [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/msg/read",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+//删除消息
+- (BOOL)deleteMessageWithUid:(NSString *)uid msgId:(NSString *)mid type:(int)type tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    [params setObject:uid forKey:@"userId"];
+    [params setObject:mid forKey:@"msgId"];
+    [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/msg/delete",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 - (BOOL)getMessageListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize type:(int)type tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (_token) {

@@ -18,6 +18,10 @@
                         <rect key="frame" x="13" y="12" width="44" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_n_round_red" id="EGl-Et-nvS">
+                        <rect key="frame" x="38" y="16" width="8" height="8"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="网娱大师" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8vE-hK-ySW">
                         <rect key="frame" x="66" y="12" width="121" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -50,6 +54,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="badgeImageView" destination="EGl-Et-nvS" id="vTa-zw-5NA"/>
                 <outlet property="descriptionLabel" destination="e8e-bI-uZd" id="kYM-ls-2ax"/>
                 <outlet property="messageAvatarImageView" destination="utx-cu-hPn" id="GgX-FU-gmk"/>
                 <outlet property="timeLabel" destination="KKP-w3-Eo8" id="qSm-Kp-gt3"/>
@@ -60,6 +65,7 @@
     </objects>
     <resources>
         <image name="netbar_detail_indicator_icon" width="14" height="14"/>
+        <image name="s_n_round_red" width="20" height="20"/>
         <image name="s_n_set_line" width="320" height="1"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -255,6 +255,26 @@ static WYSettingConfig *s_instance = nil;
     return ([messageDic intValueForKey:@"activity"] + [messageDic intValueForKey:@"order"] + [messageDic intValueForKey:@"sys"]);
 }
 
+-(void)calculateMessageNum:(NSInteger)type{
+    
+    NSMutableDictionary *messageDic = [NSMutableDictionary dictionaryWithContentsOfFile:[self getMessagePath]];
+    if (!messageDic) {
+        messageDic = [NSMutableDictionary dictionary];
+    }
+    NSString *messageNum = nil;
+    if(type == 1){
+        messageNum = [NSString stringWithFormat:@"%d",[messageDic intValueForKey:@"order"] - 1];
+        [messageDic setObject:messageNum forKey:@"order"];
+    }else if(type == 2){
+        messageNum = [NSString stringWithFormat:@"%d",[messageDic intValueForKey:@"activity"] - 1];
+        [messageDic setObject:messageNum forKey:@"activity"];
+    }else if(type == 3){
+        messageNum = [NSString stringWithFormat:@"%d",[messageDic intValueForKey:@"sys"] - 1];
+        [messageDic setObject:messageNum forKey:@"sys"];
+    }
+    [messageDic writeToFile:[self getMessagePath] atomically:YES];
+}
+
 
 -(void)removeMessageNum{
     NSString* path = [self getMessagePath];
