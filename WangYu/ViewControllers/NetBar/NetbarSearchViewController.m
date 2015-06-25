@@ -32,7 +32,6 @@
     NSString *_filterAreaName;
     NSString *_filterAreaCode;
     NSString *_filterPriceName;
-    NSString *_filterPriceType;
     
 }
 
@@ -44,6 +43,7 @@
 @property (assign, nonatomic) SInt64  netBarNextCursor;
 @property (assign, nonatomic) BOOL netBarCanLoadMore;
 
+@property (nonatomic, strong) NSString *filterPriceType;
 @property (nonatomic, strong) NSMutableArray *filterAreaArray;
 @property (nonatomic, strong) NSMutableArray *filterPriceArray;
 @property (nonatomic, strong) IBOutlet UIView *filterTableContainerView;
@@ -109,7 +109,7 @@
         _filterType = 0;
         _filterAreaName = @"区域";
         _filterAreaCode = _areaCode;
-        _filterPriceName = @"价格";
+        _filterPriceName = @"排序";
         _filterPriceType = @"";
         self.filterContainerView.hidden = NO;
         CGRect frame = self.netBarTable.frame;
@@ -150,7 +150,7 @@
         }
         
         int tag = [[WYEngine shareInstance] getConnectTag];
-        [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:weakSelf.areaCode tag:tag];
+        [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:weakSelf.areaCode type:[weakSelf.filterPriceType intValue] tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
             if (!weakSelf) {
                 return;
@@ -397,9 +397,9 @@
     if (_filterPriceArray == nil) {
         _filterPriceArray = [[NSMutableArray alloc] init];
     }
-    [_filterPriceArray addObject:@{price_name:@"10元以上",price_type:@"1"}];
-    [_filterPriceArray addObject:@{price_name:@"3到10元",price_type:@"2"}];
-    [_filterPriceArray addObject:@{price_name:@"3元以下",price_type:@"3"}];
+    [_filterPriceArray addObject:@{price_name:@"按距离",price_type:@"1"}];
+    [_filterPriceArray addObject:@{price_name:@"按推荐",price_type:@"2"}];
+    [_filterPriceArray addObject:@{price_name:@"按热度",price_type:@"3"}];
     
 }
 
@@ -440,7 +440,7 @@
     __weak NetbarSearchViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode tag:tag];
+    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode type:[_filterPriceType intValue] tag:tag];
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -465,7 +465,7 @@
     _netBarNextCursor = 1;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)_netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode tag:tag];
+    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)_netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode type:[_filterPriceType intValue] tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [weakSelf.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -1008,6 +1008,7 @@ static int historyLabel_Tag = 201, filterLabel_Tag = 202, filterLineImg_Tag = 20
             NSDictionary *infoDic = _filterAreaArray[indexPath.row];
             _filterAreaName = [infoDic stringObjectForKey:@"name"];
             _filterAreaCode = [infoDic stringObjectForKey:@"areaCode"];
+            _areaCode = _filterAreaCode;
             [self showFilterViewWith:NO];
             [self refreshFilterViewShowUI];
             [self refreshNetbarInfos];

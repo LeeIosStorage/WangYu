@@ -290,6 +290,8 @@
 		3BE0908E1B14CD3A00DCAB3C /* MatchDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BE0908C1B14CD3A00DCAB3C /* MatchDetailCell.xib */; };
 		446E1EC01B34129B005CE745 /* PersonalProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */; };
 		446E1EC11B34129B005CE745 /* PersonalProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */; };
+		44C8ABEE1B3BD89800BFA4D2 /* WYInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8ABEC1B3BD89800BFA4D2 /* WYInputViewController.m */; };
+		44C8ABEF1B3BD89800BFA4D2 /* WYInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C8ABED1B3BD89800BFA4D2 /* WYInputViewController.xib */; };
 		44D55A9D1B2E6C7B0074D964 /* MessageDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */; };
 		44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */; };
 		44D55AA11B2EAD070074D964 /* WYWeakArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55AA01B2EAD070074D964 /* WYWeakArray.m */; };
@@ -890,6 +892,9 @@
 		446E1EBD1B34129B005CE745 /* PersonalProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProfileViewController.h; sourceTree = "<group>"; };
 		446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProfileViewController.m; sourceTree = "<group>"; };
 		446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalProfileViewController.xib; sourceTree = "<group>"; };
+		44C8ABEB1B3BD89800BFA4D2 /* WYInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYInputViewController.h; sourceTree = "<group>"; };
+		44C8ABEC1B3BD89800BFA4D2 /* WYInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYInputViewController.m; sourceTree = "<group>"; };
+		44C8ABED1B3BD89800BFA4D2 /* WYInputViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYInputViewController.xib; sourceTree = "<group>"; };
 		44D55A9A1B2E6C7B0074D964 /* MessageDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDetailsViewController.h; sourceTree = "<group>"; };
 		44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDetailsViewController.m; sourceTree = "<group>"; };
 		44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageDetailsViewController.xib; sourceTree = "<group>"; };
@@ -1663,6 +1668,9 @@
 				076E0DFD1B14804000E4363A /* WYImagePickerController.m */,
 				078E5AF81B1BF0B90041C7D2 /* WYCommonWebVc.h */,
 				078E5AF91B1BF0B90041C7D2 /* WYCommonWebVc.m */,
+				44C8ABEB1B3BD89800BFA4D2 /* WYInputViewController.h */,
+				44C8ABEC1B3BD89800BFA4D2 /* WYInputViewController.m */,
+				44C8ABED1B3BD89800BFA4D2 /* WYInputViewController.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2188,6 +2196,7 @@
 				079D52531B01E48600DF4D6B /* GameCommendCardView.xib in Resources */,
 				0762193A1B15C19600D912A1 /* RedPacketViewController.xib in Resources */,
 				0799C8B01AF1D88E00E407BB /* GameCommendViewController.xib in Resources */,
+				44C8ABEF1B3BD89800BFA4D2 /* WYInputViewController.xib in Resources */,
 				077E608C1B0B2D5F0079BC9E /* WeiboSDK.bundle in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
 				07E96B8A1B15BB8B006ED6B7 /* MatchPlaceViewController.xib in Resources */,
@@ -2416,6 +2425,7 @@
 				076219341B15BDC900D912A1 /* GameCollectViewCell.m in Sources */,
 				076F828F1B05E0CB00CACF0D /* NetbarMapViewController.m in Sources */,
 				073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */,
+				44C8ABEE1B3BD89800BFA4D2 /* WYInputViewController.m in Sources */,
 				0777DFDA1B01D6DF00E1E314 /* QuickPayCell.m in Sources */,
 				073DBDB71AE794C4009B49EB /* PullToRefreshView.m in Sources */,
 				0794938B1B0D9C3D008152A6 /* DataVerifier.m in Sources */,

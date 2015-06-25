@@ -24,6 +24,7 @@
 #import "WYBadgeView.h"
 #import "WYLinkerHandler.h"
 #import "WYSettingConfig.h"
+#import "PersonalProfileViewController.h"
 
 enum TABLEVIEW_SECTION_INDEX {
     kMessage = 0,
@@ -182,6 +183,10 @@ enum TABLEVIEW_SECTION_INDEX {
     [self.navigationController pushViewController:messageVc animated:YES];
 }
 - (IBAction)editAction:(id)sender{
+    PersonalProfileViewController *vc = [[PersonalProfileViewController alloc] init];
+    vc.userInfo = [WYEngine shareInstance].userInfo;
+    [self.navigationController pushViewController:vc animated:YES];
+    return;
     PersonalEditViewController *personalEditVc = [[PersonalEditViewController alloc] init];
     [self.navigationController pushViewController:personalEditVc animated:YES];
 }

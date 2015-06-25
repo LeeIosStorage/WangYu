@@ -268,7 +268,7 @@
     [WYProgressHUD AlertLoading:@"资料修改中..." At:self.view];
     __weak PersonalEditViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] editUserInfoWithUid:[WYEngine shareInstance].uid nickName:_nickNameTextField.text avatar:dataArray userHead:_recommendUserHeadPic tag:tag];
+    [[WYEngine shareInstance] editUserInfoWithUid:[WYEngine shareInstance].uid nickName:_nickNameTextField.text avatar:dataArray userHead:_recommendUserHeadPic qqNumber:nil sex:nil realName:nil idCard:nil tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
