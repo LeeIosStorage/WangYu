@@ -6,8 +6,9 @@
 //  Copyright (c) 2015年 KID. All rights reserved.
 //
 
-#import "SuperMainViewController.h"
+//#import "SuperMainViewController.h"
+#import "WYSuperViewController.h"
 
-@interface GameCommendViewController : SuperMainViewController
+@interface GameCommendViewController : WYSuperViewController
 
 @end

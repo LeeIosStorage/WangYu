@@ -125,7 +125,6 @@
 		0762193D1B15C58700D912A1 /* RedPacketInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0762193C1B15C58700D912A1 /* RedPacketInfo.m */; };
 		076219411B15C7FD00D912A1 /* RedPacketViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0762193F1B15C7FD00D912A1 /* RedPacketViewCell.m */; };
 		076219421B15C7FD00D912A1 /* RedPacketViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076219401B15C7FD00D912A1 /* RedPacketViewCell.xib */; };
-		0766C2971B0EF9390051A897 /* NetbarDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0766C2961B0EF9390051A897 /* NetbarDetailViewController.xib */; };
 		07695CDF1B03231000F4806C /* WYNetbarInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 07695CDE1B03231000F4806C /* WYNetbarInfo.m */; };
 		076C8CE81B048A5C00421460 /* WYLocationServiceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C8CE71B048A5C00421460 /* WYLocationServiceUtil.m */; };
 		076C8CEC1B048BBB00421460 /* CLLocation+Sino.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C8CEB1B048BBB00421460 /* CLLocation+Sino.m */; };
@@ -302,6 +301,11 @@
 		446E1EC11B34129B005CE745 /* PersonalProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */; };
 		44C8ABEE1B3BD89800BFA4D2 /* WYInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8ABEC1B3BD89800BFA4D2 /* WYInputViewController.m */; };
 		44C8ABEF1B3BD89800BFA4D2 /* WYInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C8ABED1B3BD89800BFA4D2 /* WYInputViewController.xib */; };
+		44CF41E21B3CF9D400E1DBA5 /* MatchWarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44CF41E01B3CF9D400E1DBA5 /* MatchWarViewController.m */; };
+		44CF41E31B3CF9D400E1DBA5 /* MatchWarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44CF41E11B3CF9D400E1DBA5 /* MatchWarViewController.xib */; };
+		44CF41E51B3D1BE200E1DBA5 /* NetbarDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44CF41E41B3D1BE200E1DBA5 /* NetbarDetailViewController.xib */; };
+		44CF41EE1B3D1D1100E1DBA5 /* PublishMatchWarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44CF41EC1B3D1D1100E1DBA5 /* PublishMatchWarViewController.m */; };
+		44CF41EF1B3D1D1100E1DBA5 /* PublishMatchWarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44CF41ED1B3D1D1100E1DBA5 /* PublishMatchWarViewController.xib */; };
 		44D55A9D1B2E6C7B0074D964 /* MessageDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */; };
 		44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */; };
 		44D55AA11B2EAD070074D964 /* WYWeakArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55AA01B2EAD070074D964 /* WYWeakArray.m */; };
@@ -517,7 +521,6 @@
 		0762193E1B15C7FD00D912A1 /* RedPacketViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPacketViewCell.h; sourceTree = "<group>"; };
 		0762193F1B15C7FD00D912A1 /* RedPacketViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPacketViewCell.m; sourceTree = "<group>"; };
 		076219401B15C7FD00D912A1 /* RedPacketViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RedPacketViewCell.xib; sourceTree = "<group>"; };
-		0766C2961B0EF9390051A897 /* NetbarDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetbarDetailViewController.xib; sourceTree = "<group>"; };
 		07695CDD1B03231000F4806C /* WYNetbarInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYNetbarInfo.h; sourceTree = "<group>"; };
 		07695CDE1B03231000F4806C /* WYNetbarInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYNetbarInfo.m; sourceTree = "<group>"; };
 		076C8CE61B048A5C00421460 /* WYLocationServiceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYLocationServiceUtil.h; sourceTree = "<group>"; };
@@ -920,6 +923,13 @@
 		44C8ABEB1B3BD89800BFA4D2 /* WYInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYInputViewController.h; sourceTree = "<group>"; };
 		44C8ABEC1B3BD89800BFA4D2 /* WYInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYInputViewController.m; sourceTree = "<group>"; };
 		44C8ABED1B3BD89800BFA4D2 /* WYInputViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYInputViewController.xib; sourceTree = "<group>"; };
+		44CF41DF1B3CF9D400E1DBA5 /* MatchWarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchWarViewController.h; sourceTree = "<group>"; };
+		44CF41E01B3CF9D400E1DBA5 /* MatchWarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchWarViewController.m; sourceTree = "<group>"; };
+		44CF41E11B3CF9D400E1DBA5 /* MatchWarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MatchWarViewController.xib; sourceTree = "<group>"; };
+		44CF41E41B3D1BE200E1DBA5 /* NetbarDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NetbarDetailViewController.xib; path = NetBar/NetbarDetailViewController.xib; sourceTree = "<group>"; };
+		44CF41EB1B3D1D1100E1DBA5 /* PublishMatchWarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishMatchWarViewController.h; sourceTree = "<group>"; };
+		44CF41EC1B3D1D1100E1DBA5 /* PublishMatchWarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishMatchWarViewController.m; sourceTree = "<group>"; };
+		44CF41ED1B3D1D1100E1DBA5 /* PublishMatchWarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishMatchWarViewController.xib; sourceTree = "<group>"; };
 		44D55A9A1B2E6C7B0074D964 /* MessageDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDetailsViewController.h; sourceTree = "<group>"; };
 		44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDetailsViewController.m; sourceTree = "<group>"; };
 		44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageDetailsViewController.xib; sourceTree = "<group>"; };
@@ -1225,6 +1235,7 @@
 				0745B37E1B005646006D6853 /* NetBar */,
 				3BE090831B14CAF400DCAB3C /* Activity */,
 				071691EA1B1C4E24006A832E /* Game */,
+				44CF41EA1B3D1CCF00E1DBA5 /* MatchWar */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1391,6 +1402,9 @@
 				0728D0381B0F252A00239D96 /* ActivityTabViewController.h */,
 				0728D0391B0F252A00239D96 /* ActivityTabViewController.m */,
 				0728D03A1B0F252A00239D96 /* ActivityTabViewController.xib */,
+				44CF41DF1B3CF9D400E1DBA5 /* MatchWarViewController.h */,
+				44CF41E01B3CF9D400E1DBA5 /* MatchWarViewController.m */,
+				44CF41E11B3CF9D400E1DBA5 /* MatchWarViewController.xib */,
 				0799C8AC1AF1D88E00E407BB /* GameCommendViewController.h */,
 				0799C8AD1AF1D88E00E407BB /* GameCommendViewController.m */,
 				0799C8AE1AF1D88E00E407BB /* GameCommendViewController.xib */,
@@ -1453,7 +1467,7 @@
 			children = (
 				074DDC841B0080140081AFA4 /* NetbarDetailViewController.h */,
 				074DDC851B0080140081AFA4 /* NetbarDetailViewController.m */,
-				0766C2961B0EF9390051A897 /* NetbarDetailViewController.xib */,
+				44CF41E41B3D1BE200E1DBA5 /* NetbarDetailViewController.xib */,
 				0777DFC81B01C4AA00E1E314 /* QuickBookViewController.h */,
 				0777DFC91B01C4AA00E1E314 /* QuickBookViewController.m */,
 				0777DFCA1B01C4AA00E1E314 /* QuickBookViewController.xib */,
@@ -2141,6 +2155,16 @@
 			name = Activity;
 			sourceTree = "<group>";
 		};
+		44CF41EA1B3D1CCF00E1DBA5 /* MatchWar */ = {
+			isa = PBXGroup;
+			children = (
+				44CF41EB1B3D1D1100E1DBA5 /* PublishMatchWarViewController.h */,
+				44CF41EC1B3D1D1100E1DBA5 /* PublishMatchWarViewController.m */,
+				44CF41ED1B3D1D1100E1DBA5 /* PublishMatchWarViewController.xib */,
+			);
+			path = MatchWar;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2231,7 +2255,6 @@
 				0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */,
 				071923D01AF74D8400432531 /* LoginViewController.xib in Resources */,
 				3BF8B7BE1B39478F00BBA346 /* MatchApplyViewController.xib in Resources */,
-				0766C2971B0EF9390051A897 /* NetbarDetailViewController.xib in Resources */,
 				07A427AA1B186AF5009197D5 /* WYScrollPage.xib in Resources */,
 				071923D31AF74D8400432531 /* WelcomeViewController.xib in Resources */,
 				079D52531B01E48600DF4D6B /* GameCommendCardView.xib in Resources */,
@@ -2256,6 +2279,7 @@
 				3BF8B7C81B3969B600BBA346 /* MatchMemberViewController.xib in Resources */,
 				076F82901B05E0CB00CACF0D /* NetbarMapViewController.xib in Resources */,
 				0745B3891B007AF3006D6853 /* NetbarDetailCell.xib in Resources */,
+				44CF41EF1B3D1D1100E1DBA5 /* PublishMatchWarViewController.xib in Resources */,
 				07E96B8F1B15BD35006ED6B7 /* MatchPlaceCell.xib in Resources */,
 				3BF8B7D21B396D6700BBA346 /* InviteMemberViewController.xib in Resources */,
 				076219251B15A29400D912A1 /* MessageViewCell.xib in Resources */,
@@ -2282,6 +2306,7 @@
 				079493841B0D9C3C008152A6 /* AlipaySDK.bundle in Resources */,
 				07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */,
 				3BE0908E1B14CD3A00DCAB3C /* MatchDetailCell.xib in Resources */,
+				44CF41E31B3CF9D400E1DBA5 /* MatchWarViewController.xib in Resources */,
 				077BF3A11B1865E400450174 /* AvatarListViewController.xib in Resources */,
 				0777DFD61B01C7E100E1E314 /* QuickBookCell.xib in Resources */,
 				078FD0411B05FC8D00CBD699 /* LocationViewController.xib in Resources */,
@@ -2295,6 +2320,7 @@
 				07B48B4A1B0C6E9D0000857F /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				078A043A1B1C2387008ADA76 /* TopicsViewController.xib in Resources */,
 				076195ED1B008FAC00397711 /* PayOrderViewCell.xib in Resources */,
+				44CF41E51B3D1BE200E1DBA5 /* NetbarDetailViewController.xib in Resources */,
 				0775704F1B16B982005C9DC7 /* ApplyActivityViewCell.xib in Resources */,
 				077570571B16E0A8005C9DC7 /* MineMatchWarViewController.xib in Resources */,
 				07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */,
@@ -2484,12 +2510,14 @@
 				0723DDFF1B0F19830040295B /* CallOutAnnotationView.m in Sources */,
 				0775704E1B16B982005C9DC7 /* ApplyActivityViewCell.m in Sources */,
 				0791AB5D1AE8DE260009A5A7 /* AFURLSessionManager.m in Sources */,
+				44CF41EE1B3D1D1100E1DBA5 /* PublishMatchWarViewController.m in Sources */,
 				078EDBD71AEF1EF800E93EE8 /* ASIAuthenticationDialog.m in Sources */,
 				077570561B16E0A8005C9DC7 /* MineMatchWarViewController.m in Sources */,
 				0791AB581AE8DE260009A5A7 /* AFNetworkReachabilityManager.m in Sources */,
 				0762192C1B15AEB200D912A1 /* CollectListViewController.m in Sources */,
 				3BF8B7CC1B396A8D00BBA346 /* MatchMemberCell.m in Sources */,
 				0791AB3B1AE8D8600009A5A7 /* WYSettingConfig.m in Sources */,
+				44CF41E21B3CF9D400E1DBA5 /* MatchWarViewController.m in Sources */,
 				0745B3881B007AF3006D6853 /* NetbarDetailCell.m in Sources */,
 				077BF3B01B186BFC00450174 /* GMGridViewCell.m in Sources */,
 				073DBD421AE7712F009B49EB /* MKAnnotationView+WebCache.m in Sources */,

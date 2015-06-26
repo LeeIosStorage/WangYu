@@ -304,7 +304,7 @@
     } else if (indexPath.section == 1){
         if (indexPath.row == 0) {
             cell.titleName.text = @"附加小费";
-            cell.leftImage.image = [UIImage imageNamed:@"netbar_orders_add_icon"];
+            cell.leftImage.image = [UIImage imageNamed:@"match_war_expenses_icon"];
             cell.rightLabel.text = costString;
         }
     }

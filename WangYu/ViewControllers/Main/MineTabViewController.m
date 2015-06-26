@@ -25,11 +25,13 @@
 #import "WYLinkerHandler.h"
 #import "WYSettingConfig.h"
 #import "PersonalProfileViewController.h"
+#import "GameCommendViewController.h"
 
 enum TABLEVIEW_SECTION_INDEX {
     kMessage = 0,
     kEvents,
     kCollect,
+    kGames,
     kSettings,
 };
 
@@ -190,9 +192,9 @@ enum TABLEVIEW_SECTION_INDEX {
     PersonalProfileViewController *vc = [[PersonalProfileViewController alloc] init];
     vc.userInfo = [WYEngine shareInstance].userInfo;
     [self.navigationController pushViewController:vc animated:YES];
-    return;
-    PersonalEditViewController *personalEditVc = [[PersonalEditViewController alloc] init];
-    [self.navigationController pushViewController:personalEditVc animated:YES];
+    
+//    PersonalEditViewController *personalEditVc = [[PersonalEditViewController alloc] init];
+//    [self.navigationController pushViewController:personalEditVc animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -208,6 +210,8 @@ enum TABLEVIEW_SECTION_INDEX {
     }else if (section == kEvents){
         return 3;
     }else if (section == kCollect){
+        return 1;
+    }else if (section == kGames){
         return 1;
     }else if (section == kSettings){
         return 1;
@@ -281,6 +285,14 @@ enum TABLEVIEW_SECTION_INDEX {
             }
         }
             break;
+        case kGames:{
+            if (indexPath.row == 0){
+                cell.titleLabel.text = @"手游中心";
+                cell.avatarImageView.image = [UIImage imageNamed:@"tabbar_recomm_icon_hover"];
+                [cell setLineImageViewWithType:-1];
+            }
+        }
+            break;
         case kSettings:{
             if (indexPath.row == 0){
                 cell.titleLabel.text = @"设置";
@@ -325,6 +337,13 @@ enum TABLEVIEW_SECTION_INDEX {
         case kCollect:{
             if (indexPath.row == 0){
                 CollectListViewController *vc = [[CollectListViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+            break;
+        case kGames:{
+            if (indexPath.row == 0){
+                GameCommendViewController *vc = [[GameCommendViewController alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }
