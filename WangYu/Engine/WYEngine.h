@@ -110,6 +110,10 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)reserveToOrderWithUid:(NSString *)uid reserveId:(NSString *)reserveId tag:(int)tag;
 //确认到店
 - (BOOL)confirmReserveWithUid:(NSString *)uid reserveId:(NSString *)reserveId tag:(int)tag;
+//预订订单详情
+- (BOOL)getReserveDetailWithUid:(NSString *)uid reserveId:(NSString *)reserveId tag:(int)tag;
+//支付订单详情
+- (BOOL)getOrderDetailwithUid:(NSString *)uid orderId:(NSString *)orderId tag:(int)tag;
 
 //网吧收藏
 - (BOOL)collectionNetbarWithUid:(NSString *)uid netbarId:(NSString *)nid tag:(int)tag;

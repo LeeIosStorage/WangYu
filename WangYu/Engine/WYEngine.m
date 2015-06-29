@@ -794,6 +794,7 @@ static WYEngine* s_ShareInstance = nil;
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/reserveToOrder",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
+
 - (BOOL)confirmReserveWithUid:(NSString *)uid reserveId:(NSString *)reserveId tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (uid) {
@@ -805,7 +806,39 @@ static WYEngine* s_ShareInstance = nil;
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/confirmReserve",API_URL] type:0 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/confirmReserve",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+//预订订单详情
+- (BOOL)getReserveDetailWithUid:(NSString *)uid reserveId:(NSString *)reserveId tag:(int)tag {
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (reserveId) {
+        [params setObject:reserveId forKey:@"reserveId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/reserveDetail",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+//支付订单详情
+- (BOOL)getOrderDetailwithUid:(NSString *)uid orderId:(NSString *)orderId tag:(int)tag {
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (orderId) {
+        [params setObject:orderId forKey:@"orderId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/orderDetail",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 

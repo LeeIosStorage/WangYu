@@ -7,6 +7,7 @@
 //
 
 #import "WYOrderInfo.h"
+#import "WYEngine.h"
 
 @implementation WYOrderInfo
 
@@ -70,6 +71,18 @@
     if ([dic objectForKey:@"telephone"]) {
         _telephone = [[dic stringObjectForKey:@"telephone"] description];
     }
+    if ([dic objectForKey:@"begin_time"]) {
+        _beginTime = [dateFormatter dateFromString:[dic stringObjectForKey:@"begin_time"]];
+    }
+    if ([dic objectForKey:@"end_time"]) {
+        _endTime = [dateFormatter dateFromString:[dic stringObjectForKey:@"end_time"]];
+    }
+    if ([dic objectForKey:@"netbar_tel"]) {
+        _netbarTel = [dic stringObjectForKey:@"netbar_tel"];
+    }
+    if ([dic objectForKey:@"state"]) {
+        _rStatus = [dic intValueForKey:@"state"];
+    }
 }
 
 - (void)setOrderInfoByJsonDic:(NSDictionary*)dic{
@@ -85,6 +98,13 @@
     @catch (NSException *exception) {
         NSLog(@"####WYOrderInfo setOrderInfoByJsonDic exception:%@", exception);
     }
+}
+
+- (NSURL *)netbarImageUrl {
+    if (_icon == nil) {
+        return nil;
+    }
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _icon]];
 }
 
 @end
