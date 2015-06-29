@@ -30,9 +30,10 @@
 +(void)showAlertWithMsg:(NSString *)msg;
 +(void)showAlertWithMsg:(NSString *)msg title:(NSString *) title;
 
-//年龄
+//时间换算
 + (int)getAgeByDate:(NSDate*)date;
 + (NSString*)dateYearToDayDiscriptionFromDate:(NSDate*)date;
++ (NSString*)dateYearToMinuteDiscriptionFromDate:(NSDate*)date;
 + (NSString*)dateDiscriptionFromDate:(NSDate*)date;
 + (NSString*)dateDiscriptionFromNowBk:(NSDate*)date;
 + (NSString*)dateDiscription1FromNowBk:(NSDate*)date;

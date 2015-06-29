@@ -152,6 +152,22 @@ static bool dateFormatterOFUSInvalid ;
     
     return _timestamp;
 }
+
++ (NSString*)dateYearToMinuteDiscriptionFromDate:(NSDate*)date{
+    NSString *_timestamp = nil;
+    if (date == nil) {
+        return @"";
+    }
+    NSCalendar * calender = [NSCalendar currentCalendar];
+    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit |
+    NSHourCalendarUnit | NSMinuteCalendarUnit |NSSecondCalendarUnit | NSWeekdayCalendarUnit;
+    NSDateComponents *comps = [calender components:unitFlags fromDate:date];
+    
+    _timestamp = [NSString stringWithFormat:@"%04d.%02d.%02d %02d:%02d", (int)comps.year, (int)comps.month, (int)comps.day, (int)comps.hour, (int)comps.minute];
+    
+    return _timestamp;
+}
+
 + (NSString*)dateDiscriptionFromDate:(NSDate*)date{
     NSString *_timestamp = nil;
     NSDate* nowDate = [NSDate date];

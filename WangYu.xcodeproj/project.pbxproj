@@ -282,7 +282,13 @@
 		3BBE46321B0CF44A009EAE02 /* WYWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46311B0CF44A009EAE02 /* WYWaitingView.m */; };
 		3BBE46351B0CF92A009EAE02 /* WYBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46341B0CF92A009EAE02 /* WYBrowserImageView.m */; };
 		3BCF86171B29659E006C289B /* WYPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF86161B29659E006C289B /* WYPageControl.m */; };
+		3BD212151B3C43E6003FD10D /* BookDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD212131B3C43E6003FD10D /* BookDetailViewController.m */; };
+		3BD212161B3C43E6003FD10D /* BookDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD212141B3C43E6003FD10D /* BookDetailViewController.xib */; };
+		3BD2121A1B3C643F003FD10D /* BookDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD212181B3C643F003FD10D /* BookDetailCell.m */; };
+		3BD2121B1B3C643F003FD10D /* BookDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD212191B3C643F003FD10D /* BookDetailCell.xib */; };
 		3BD58F901B275217007D8F0B /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BD58F8D1B275217007D8F0B /* libMobClickLibrary.a */; };
+		3BD6E2F91B4142CD00A0EAFB /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD6E2F71B4142CD00A0EAFB /* OrderDetailViewController.m */; };
+		3BD6E2FA1B4142CD00A0EAFB /* OrderDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD6E2F81B4142CD00A0EAFB /* OrderDetailViewController.xib */; };
 		3BE090871B14CC7500DCAB3C /* MatchDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE090851B14CC7500DCAB3C /* MatchDetailViewController.m */; };
 		3BE090881B14CC7500DCAB3C /* MatchDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BE090861B14CC7500DCAB3C /* MatchDetailViewController.xib */; };
 		3BE0908D1B14CD3A00DCAB3C /* MatchDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE0908B1B14CD3A00DCAB3C /* MatchDetailCell.m */; };
@@ -899,9 +905,18 @@
 		3BBE46341B0CF92A009EAE02 /* WYBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYBrowserImageView.m; path = WYPhotoBrower/WYBrowserImageView.m; sourceTree = "<group>"; };
 		3BCF86151B29659E006C289B /* WYPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPageControl.h; sourceTree = "<group>"; };
 		3BCF86161B29659E006C289B /* WYPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPageControl.m; sourceTree = "<group>"; };
+		3BD212121B3C43E6003FD10D /* BookDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookDetailViewController.h; path = NetBar/BookDetailViewController.h; sourceTree = "<group>"; };
+		3BD212131B3C43E6003FD10D /* BookDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookDetailViewController.m; path = NetBar/BookDetailViewController.m; sourceTree = "<group>"; };
+		3BD212141B3C43E6003FD10D /* BookDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BookDetailViewController.xib; path = NetBar/BookDetailViewController.xib; sourceTree = "<group>"; };
+		3BD212171B3C643F003FD10D /* BookDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookDetailCell.h; path = Netbar/BookDetailCell.h; sourceTree = "<group>"; };
+		3BD212181B3C643F003FD10D /* BookDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookDetailCell.m; path = Netbar/BookDetailCell.m; sourceTree = "<group>"; };
+		3BD212191B3C643F003FD10D /* BookDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BookDetailCell.xib; path = Netbar/BookDetailCell.xib; sourceTree = "<group>"; };
 		3BD58F8D1B275217007D8F0B /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = UMAnalytics/libMobClickLibrary.a; sourceTree = "<group>"; };
 		3BD58F8E1B275217007D8F0B /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = UMAnalytics/MobClick.h; sourceTree = "<group>"; };
 		3BD58F8F1B275217007D8F0B /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClickSocialAnalytics.h; path = UMAnalytics/MobClickSocialAnalytics.h; sourceTree = "<group>"; };
+		3BD6E2F61B4142CD00A0EAFB /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderDetailViewController.h; path = NetBar/OrderDetailViewController.h; sourceTree = "<group>"; };
+		3BD6E2F71B4142CD00A0EAFB /* OrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderDetailViewController.m; path = NetBar/OrderDetailViewController.m; sourceTree = "<group>"; };
+		3BD6E2F81B4142CD00A0EAFB /* OrderDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OrderDetailViewController.xib; path = NetBar/OrderDetailViewController.xib; sourceTree = "<group>"; };
 		3BE090841B14CC7500DCAB3C /* MatchDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchDetailViewController.h; path = Activity/MatchDetailViewController.h; sourceTree = "<group>"; };
 		3BE090851B14CC7500DCAB3C /* MatchDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchDetailViewController.m; path = Activity/MatchDetailViewController.m; sourceTree = "<group>"; };
 		3BE090861B14CC7500DCAB3C /* MatchDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchDetailViewController.xib; path = Activity/MatchDetailViewController.xib; sourceTree = "<group>"; };
@@ -1495,6 +1510,12 @@
 				076F828C1B05E0CB00CACF0D /* NetbarMapViewController.h */,
 				076F828D1B05E0CB00CACF0D /* NetbarMapViewController.m */,
 				076F828E1B05E0CB00CACF0D /* NetbarMapViewController.xib */,
+				3BD212121B3C43E6003FD10D /* BookDetailViewController.h */,
+				3BD212131B3C43E6003FD10D /* BookDetailViewController.m */,
+				3BD212141B3C43E6003FD10D /* BookDetailViewController.xib */,
+				3BD6E2F61B4142CD00A0EAFB /* OrderDetailViewController.h */,
+				3BD6E2F71B4142CD00A0EAFB /* OrderDetailViewController.m */,
+				3BD6E2F81B4142CD00A0EAFB /* OrderDetailViewController.xib */,
 			);
 			name = NetBar;
 			sourceTree = "<group>";
@@ -1511,6 +1532,9 @@
 				0777DFD71B01D6DF00E1E314 /* QuickPayCell.h */,
 				0777DFD81B01D6DF00E1E314 /* QuickPayCell.m */,
 				0777DFD91B01D6DF00E1E314 /* QuickPayCell.xib */,
+				3BD212171B3C643F003FD10D /* BookDetailCell.h */,
+				3BD212181B3C643F003FD10D /* BookDetailCell.m */,
+				3BD212191B3C643F003FD10D /* BookDetailCell.xib */,
 			);
 			name = Netbar;
 			sourceTree = "<group>";
@@ -2282,6 +2306,7 @@
 				07A427AA1B186AF5009197D5 /* WYScrollPage.xib in Resources */,
 				071923D31AF74D8400432531 /* WelcomeViewController.xib in Resources */,
 				079D52531B01E48600DF4D6B /* GameCommendCardView.xib in Resources */,
+				3BD6E2FA1B4142CD00A0EAFB /* OrderDetailViewController.xib in Resources */,
 				0762193A1B15C19600D912A1 /* RedPacketViewController.xib in Resources */,
 				0799C8B01AF1D88E00E407BB /* GameCommendViewController.xib in Resources */,
 				44C8ABEF1B3BD89800BFA4D2 /* WYInputViewController.xib in Resources */,
@@ -2296,6 +2321,7 @@
 				071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */,
 				0715C3A71B09AD6F00C37F82 /* Pin_Ios7@2x.png in Resources */,
 				07868DEE1AF8581100160070 /* WYTabBarItemView.xib in Resources */,
+				3BD2121B1B3C643F003FD10D /* BookDetailCell.xib in Resources */,
 				0777DFDB1B01D6DF00E1E314 /* QuickPayCell.xib in Resources */,
 				070DCBE01B00762F00B27C19 /* OrdersViewController.xib in Resources */,
 				07B48B401B0C4D1F0000857F /* read_me.txt in Resources */,
@@ -2316,6 +2342,7 @@
 				076219421B15C7FD00D912A1 /* RedPacketViewCell.xib in Resources */,
 				071923E21AF7771A00432531 /* RegisterViewController.xib in Resources */,
 				07DE26A51B16FFB0007667DB /* NewsViewCell.xib in Resources */,
+				3BD212161B3C43E6003FD10D /* BookDetailViewController.xib in Resources */,
 				07566CAC1AFC663600F93B58 /* SettingViewCell.xib in Resources */,
 				07868DEB1AF8581100160070 /* WYTitleNavBarView.xib in Resources */,
 				0775704A1B16B4CF005C9DC7 /* ApplyActivityViewController.xib in Resources */,
@@ -2375,6 +2402,7 @@
 				079D52571B01E52900DF4D6B /* WYSegmentedView.m in Sources */,
 				073DBD4A1AE7712F009B49EB /* SDWebImageManager.m in Sources */,
 				076E0DF91B147FD600E4363A /* AVCamRecorder.m in Sources */,
+				3BD2121A1B3C643F003FD10D /* BookDetailCell.m in Sources */,
 				077BF3A01B1865E400450174 /* AvatarListViewController.m in Sources */,
 				073DBD741AE778CF009B49EB /* WYUserInfo.m in Sources */,
 				078EDBDE1AEF1EF800E93EE8 /* ASINetworkQueue.m in Sources */,
@@ -2395,6 +2423,7 @@
 				0723DE081B0F2F5D0040295B /* CustomMapCell.m in Sources */,
 				0790494D1AEA236100E46795 /* WYService.m in Sources */,
 				3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */,
+				3BD6E2F91B4142CD00A0EAFB /* OrderDetailViewController.m in Sources */,
 				077570641B1719CE005C9DC7 /* WYBadgeView.m in Sources */,
 				076219241B15A29400D912A1 /* MessageViewCell.m in Sources */,
 				077BF39C1B18016B00450174 /* UIScrollView+SVPullToRefresh.m in Sources */,
@@ -2438,6 +2467,7 @@
 				0791AB571AE8DE260009A5A7 /* AFHTTPSessionManager.m in Sources */,
 				079493891B0D9C3D008152A6 /* base64.m in Sources */,
 				0791AB2E1AE89B960009A5A7 /* WYAlertView.m in Sources */,
+				3BD212151B3C43E6003FD10D /* BookDetailViewController.m in Sources */,
 				07358A9A1AF760D000D546E5 /* SKSplashView.m in Sources */,
 				078EDBDC1AEF1EF800E93EE8 /* ASIHTTPRequest.m in Sources */,
 				07868DEF1AF8581100160070 /* WYTabBarView.m in Sources */,

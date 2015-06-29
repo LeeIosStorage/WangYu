@@ -18,6 +18,8 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "WYPayManager.h"
 #import "WYAlertView.h"
+#import "BookDetailViewController.h"
+#import "OrderDetailViewController.h"
 
 #define ORDER_TYPE_RESERVE     0
 #define ORDER_TYPE_PAY         1
@@ -481,6 +483,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
+    if (_selectedSegmentIndex == ORDER_TYPE_PAY) {
+        orderInfo = _payOrderList[indexPath.row];
+        OrderDetailViewController *odVc = [[OrderDetailViewController alloc] init];
+        odVc.orderInfo = orderInfo;
+        [self.navigationController pushViewController:odVc animated:YES];
+    }else {
+        orderInfo = _reserveOrderList[indexPath.row];
+        BookDetailViewController *bdVc = [[BookDetailViewController alloc] init];
+        bdVc.orderInfo = orderInfo;
+        [self.navigationController pushViewController:bdVc animated:YES];
+    }
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
