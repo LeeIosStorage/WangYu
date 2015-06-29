@@ -21,9 +21,15 @@
 @property(nonatomic, strong) NSString* toolRightType;
 @property(nonatomic, assign) UIKeyboardType keyboardType;
 
+//约战发布选择游戏时用
+@property(nonatomic, strong) NSDictionary *gameDic;
+
 @end
 
 @protocol WYInputViewControllerDelegate <NSObject>
 @optional
 - (void)inputViewControllerWithText:(NSString*)text;
+//约战游戏选择
+- (void)inputViewControllerWithGameDic:(NSDictionary*)gameDic;
+
 @end

@@ -54,10 +54,13 @@
     if (_titleText != nil) {
         [self setTitle:_titleText];
         self.placeHolderLabel.text = [NSString stringWithFormat:@"输入%@",_titleText];
+        if ([_toolRightType isEqualToString:@"wy_Server"]) {
+            self.placeHolderLabel.text = @"请输入正确服务器";
+        }
     }
     
-    if ([_toolRightType isEqualToString:@"Finish"]) {
-        [self.titleNavBarRightBtn setTitle:@"提交" forState:0];
+    if ([_toolRightType isEqualToString:@"wy_Server"]) {
+        [self.titleNavBarRightBtn setTitle:@"下一步" forState:0];
     }else{
         [self.titleNavBarRightBtn setTitle:@"提交" forState:0];
     }
@@ -170,6 +173,9 @@
             [alertView show];
             return;
         }
+    }else if ([_toolRightType isEqualToString:@"wy_Server"]){
+        [self selectGameServer];
+        return;
     }else{
         int existTextNum = [WYCommonUtils getHanziTextNum:_inputTextField.text];
         if (existTextNum < _minTextLength) {
@@ -188,6 +194,23 @@
     [self backAction:nil];
 }
 
+-(void)selectGameServer{
+    _inputTextField.text = [[_inputTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    if (_inputTextField.text.length == 0) {
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"请输入正确的服务器" cancelButtonTitle:@"好的"];
+        [alertView show];
+        return;
+    }
+    
+    NSMutableDictionary *tmpDic = [NSMutableDictionary dictionaryWithDictionary:_gameDic];
+    if (_inputTextField.text) {
+        [tmpDic setObject:_inputTextField.text forKey:@"game_server"];
+    }
+//    [self.navigationController popViewControllerAnimated:NO];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(inputViewControllerWithGameDic:)]) {
+        [self.delegate inputViewControllerWithGameDic:tmpDic];
+    }
+}
 
 #pragma mark - UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
@@ -205,6 +228,7 @@
     int newLength = [WYCommonUtils getHanziTextNum:[textField.text stringByAppendingString:string]];
     if(newLength >= _maxTextLength && textField.markedTextRange == nil) {
         _inputTextField.text = [WYCommonUtils getHanziTextWithText:[textField.text stringByReplacingCharactersInRange:range withString:string] maxLength:_maxTextLength];
+        [self updatePlaceHolderLabel];
         return NO;
     }
     return YES;
