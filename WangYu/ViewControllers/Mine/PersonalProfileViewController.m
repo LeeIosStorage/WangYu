@@ -100,6 +100,9 @@
                 errorMsg = @"更新失败";
             }
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            
+            [_newUserInfo setUserInfoByJsonDic:[WYEngine shareInstance].userInfo.userInfoByJsonDic];
+            [weakSelf.tableView reloadData];
             return;
         }
         
@@ -107,6 +110,9 @@
         WYUserInfo *userInfo = [[WYUserInfo alloc] init];
         [userInfo setUserInfoByJsonDic:object];
         [WYEngine shareInstance].userInfo = userInfo;
+        
+        [_newUserInfo setUserInfoByJsonDic:object];
+        
         [weakSelf.tableView reloadData];
         
     }tag:tag];
@@ -150,14 +156,23 @@
     //section = 2
     NSMutableDictionary *sectionDict2 = [NSMutableDictionary dictionary];
     intro = _newUserInfo.realName;
+    if (_newUserInfo.realName.length == 0) {
+        intro = nil;
+    }
     NSDictionary *dict20 = @{@"titleLabel": @"真实姓名",
                              @"intro": intro!=nil?intro:@"未填写",
                              };
     intro = _newUserInfo.idCard;
+    if (_newUserInfo.idCard.length == 0) {
+        intro = nil;
+    }
     NSDictionary *dict21 = @{@"titleLabel": @"身份证",
                              @"intro": intro!=nil?intro:@"未填写",
                              };
     intro = _newUserInfo.qq;
+    if (_newUserInfo.qq.length == 0) {
+        intro = nil;
+    }
     NSDictionary *dict22 = @{@"titleLabel": @"QQ",
                              @"intro": intro!=nil?intro:@"未填写",
                              };

@@ -12,6 +12,7 @@
 #import "ActivityTabViewController.h"
 #import "GameCommendViewController.h"
 #import "WYNavigationController.h"
+#import "MatchWarViewController.h"
 #import "WYSettingConfig.h"
 #import "WYEngine.h"
 #import "NewIntroViewController.h"
@@ -162,7 +163,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         tabViewController.viewControllers = [NSArray arrayWithObjects:
                                              [[NetbarTabViewController alloc] init],
                                              [[ActivityTabViewController alloc] init],
-                                             [[GameCommendViewController alloc] init],
+                                             [[MatchWarViewController alloc] init],
                                              [[MineTabViewController alloc] init],
                                              nil];
     }
