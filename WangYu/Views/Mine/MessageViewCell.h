@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WYMessageInfo.h"
+#import "TTTAttributedLabel.h"
 
 @interface MessageViewCell : UITableViewCell
 
@@ -16,6 +17,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *messageAvatarImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *badgeImageView;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
-@property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (strong, nonatomic) IBOutlet TTTAttributedLabel *descriptionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @end

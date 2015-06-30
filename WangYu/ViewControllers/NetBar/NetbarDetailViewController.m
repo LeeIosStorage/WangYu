@@ -108,7 +108,7 @@
     self.colorLabel.layer.cornerRadius = 1.0;
     self.colorLabel.layer.masksToBounds = YES;
     
-    self.sectionLabel.textColor = SKIN_TEXT_COLOR1;   
+    self.sectionLabel.textColor = SKIN_TEXT_COLOR1;
     self.sectionLabel.font = SKIN_FONT_FROMNAME(15);
     
     [self.bookButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];

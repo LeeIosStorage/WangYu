@@ -183,7 +183,7 @@
         }
         
         int tag = [[WYEngine shareInstance] getConnectTag];
-        [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.orderNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT type:3 tag:tag];
+        [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.systemNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT type:3 tag:tag];
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
             if (!weakSelf) {
                 return;
@@ -253,13 +253,17 @@
         weakSelf.selectedIndex = index + 1;
         [weakSelf refreshMessageWithIndex:index + 1];
     }];
-    CGRect messageIconFrame = CGRectMake(100 , 0, 35, 20);
+    CGFloat sliderWidth = self.switcher.frame.size.width / 3;
+    float width = [WYCommonUtils widthWithText:@"订单消息" font:self.switcher.font lineBreakMode:NSLineBreakByWordWrapping];
+    float space = (sliderWidth - width) / 2 - 8;
+
+    CGRect messageIconFrame = CGRectMake(sliderWidth - space, 0, 35, 20);
     _badgeView1 = [[WYBadgeView alloc] initWithFrame:messageIconFrame];
     [self.containSwitcher addSubview:_badgeView1];
-    messageIconFrame = CGRectMake(210 , 0, 35, 20);
+    messageIconFrame = CGRectMake(sliderWidth*2 - space, 0, 35, 20);
     _badgeView2 = [[WYBadgeView alloc] initWithFrame:messageIconFrame];
     [self.containSwitcher addSubview:_badgeView2];
-    messageIconFrame = CGRectMake(330 , 0, 35, 20);
+    messageIconFrame = CGRectMake(sliderWidth*3 - space, 0, 35, 20);
     _badgeView3 = [[WYBadgeView alloc] initWithFrame:messageIconFrame];
     [self.containSwitcher addSubview:_badgeView3];
 }

@@ -24,6 +24,7 @@
     self.descriptionLabel.font = SKIN_FONT_FROMNAME(14);
     self.timeLabel.textColor = SKIN_TEXT_COLOR2;
     self.timeLabel.font = SKIN_FONT_FROMNAME(12);
+    self.descriptionLabel.lineHeightMultiple = 0.8;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
