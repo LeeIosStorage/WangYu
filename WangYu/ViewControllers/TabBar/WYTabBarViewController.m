@@ -135,8 +135,8 @@
                 tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_activity_icon_hover"];
                 tabItem.itemLabel.text = @"活动";
             }else if (tagIndex == 2){
-                tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_matchwar_icon"];
-                tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_matchwar_icon_hover"];
+                tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_recomm_icon"];
+                tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_recomm_icon_hover"];
                 tabItem.itemLabel.text = @"约战";
             }else if (tagIndex == 3){
                 tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_mine_icon"];

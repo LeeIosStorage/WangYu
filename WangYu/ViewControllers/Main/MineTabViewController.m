@@ -30,9 +30,9 @@
 enum TABLEVIEW_SECTION_INDEX {
     kMessage = 0,
     kEvents,
-    kCollect,
+//    kCollect,
     kGames,
-    kSettings,
+    //kSettings,
 };
 
 @interface MineTabViewController () <UITableViewDataSource,UITableViewDelegate>
@@ -64,7 +64,6 @@ enum TABLEVIEW_SECTION_INDEX {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     [self setTilteLeftViewHide:NO];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFriendTimelineUreadEvent) name:WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION object:nil];
@@ -90,7 +89,8 @@ enum TABLEVIEW_SECTION_INDEX {
 
 -(void)initNormalTitleNavBarSubviews{
     [self setTitle:@"我的"];
-    [self setRightButtonWithImageName:@"netbar_service_icon" selector:@selector(serviceAction:)];
+//    [self setRightButtonWithImageName:@"netbar_service_icon" selector:@selector(serviceAction:)];
+    [self setRightButtonWithImageName:@"mine_seeting_icon" selector:@selector(settingAction:)];
     [self setLeftButtonWithImageName:@"personal_email_icon"];
     [self setLeftButtonWithSelector:@selector(messageAction:)];
     
@@ -176,7 +176,13 @@ enum TABLEVIEW_SECTION_INDEX {
         
     }tag:tag];
 }
+
 #pragma mark - IBAction
+- (void)settingAction:(id)sender{
+    SettingViewController *setVc = [[SettingViewController alloc] init];
+    [self.navigationController pushViewController:setVc animated:YES];
+}
+
 - (void)serviceAction:(id)sender{
     id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/cs/web/detail", [WYEngine shareInstance].baseUrl] From:self.navigationController];
     if (vc) {
@@ -200,7 +206,7 @@ enum TABLEVIEW_SECTION_INDEX {
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return kSettings + 1;
+    return kGames + 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -208,14 +214,16 @@ enum TABLEVIEW_SECTION_INDEX {
     if (section == kMessage) {
         return 1;
     }else if (section == kEvents){
-        return 3;
-    }else if (section == kCollect){
-        return 1;
+        return 4;
     }else if (section == kGames){
         return 1;
-    }else if (section == kSettings){
-        return 1;
     }
+//    else if (section == kCollect){
+//        return 1;
+//    }
+//    else if (section == kSettings){
+//        return 1;
+//    }
     return 0;
 }
 
@@ -273,34 +281,38 @@ enum TABLEVIEW_SECTION_INDEX {
             }else if (indexPath.row == 2){
                 cell.titleLabel.text = @"我的红包";
                 cell.avatarImageView.image = [UIImage imageNamed:@"personal_redpacket_icon"];
+                [cell setLineImageViewWithType:1];
+            }else if (indexPath.row == 3){
+                cell.titleLabel.text = @"我的收藏";
+                cell.avatarImageView.image = [UIImage imageNamed:@"personal_collcet_icon"];
                 [cell setLineImageViewWithType:2];
             }
         }
             break;
-        case kCollect:{
-            if (indexPath.row == 0){
-                cell.titleLabel.text = @"我的收藏";
-                cell.avatarImageView.image = [UIImage imageNamed:@"personal_collcet_icon"];
-                [cell setLineImageViewWithType:-1];
-            }
-        }
-            break;
+//        case kCollect:{
+//            if (indexPath.row == 0){
+//                cell.titleLabel.text = @"我的收藏";
+//                cell.avatarImageView.image = [UIImage imageNamed:@"personal_collcet_icon"];
+//                [cell setLineImageViewWithType:-1];
+//            }
+//        }
+//            break;
         case kGames:{
             if (indexPath.row == 0){
                 cell.titleLabel.text = @"手游中心";
-                cell.avatarImageView.image = [UIImage imageNamed:@"tabbar_recomm_icon_hover"];
+                cell.avatarImageView.image = [UIImage imageNamed:@"personal_game_icon"];
                 [cell setLineImageViewWithType:-1];
             }
         }
             break;
-        case kSettings:{
-            if (indexPath.row == 0){
-                cell.titleLabel.text = @"设置";
-                cell.avatarImageView.image = [UIImage imageNamed:@"personal_setting_icon"];
-                [cell setLineImageViewWithType:-1];
-            }
-        }
-            break;
+//        case kSettings:{
+//            if (indexPath.row == 0){
+//                cell.titleLabel.text = @"设置";
+//                cell.avatarImageView.image = [UIImage imageNamed:@"personal_setting_icon"];
+//                [cell setLineImageViewWithType:-1];
+//            }
+//        }
+//            break;
         default:
             break;
     }
@@ -331,16 +343,19 @@ enum TABLEVIEW_SECTION_INDEX {
             }else if (indexPath.row == 2){
                 RedPacketViewController *vc = [[RedPacketViewController alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];
-            }
-        }
-            break;
-        case kCollect:{
-            if (indexPath.row == 0){
+            }else if (indexPath.row == 3){
                 CollectListViewController *vc = [[CollectListViewController alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }
             break;
+//        case kCollect:{
+//            if (indexPath.row == 0){
+//                CollectListViewController *vc = [[CollectListViewController alloc] init];
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }
+//        }
+//            break;
         case kGames:{
             if (indexPath.row == 0){
                 GameCommendViewController *vc = [[GameCommendViewController alloc] init];
@@ -348,13 +363,13 @@ enum TABLEVIEW_SECTION_INDEX {
             }
         }
             break;
-        case kSettings:{
-            if (indexPath.row == 0){
-                SettingViewController *setVc = [[SettingViewController alloc] init];
-                [self.navigationController pushViewController:setVc animated:YES];
-            }
-        }
-            break;
+//        case kSettings:{
+//            if (indexPath.row == 0){
+//                SettingViewController *setVc = [[SettingViewController alloc] init];
+//                [self.navigationController pushViewController:setVc animated:YES];
+//            }
+//        }
+//            break;
         default:
             break;
     }

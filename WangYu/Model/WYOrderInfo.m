@@ -83,6 +83,9 @@
     if ([dic objectForKey:@"state"]) {
         _rStatus = [dic intValueForKey:@"state"];
     }
+    if ([dic objectForKey:@"rebate"]) {
+        _rebate = [dic intValueForKey:@"rebate"];
+    }
 }
 
 - (void)setOrderInfoByJsonDic:(NSDictionary*)dic{

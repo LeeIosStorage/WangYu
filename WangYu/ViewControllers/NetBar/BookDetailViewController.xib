@@ -27,6 +27,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BookDetailViewController">
             <connections>
                 <outlet property="bookTableView" destination="Fy5-B3-Iaj" id="eRe-cI-ZpG"/>
+                <outlet property="colorLabel" destination="zBG-bf-Zqh" id="HyY-TI-ETq"/>
                 <outlet property="headerView" destination="uk4-6N-rA7" id="iMZ-yv-Gki"/>
                 <outlet property="lineImage1" destination="adM-ov-C85" id="wxe-VO-fUM"/>
                 <outlet property="lineImage2" destination="CHc-Kn-vr0" id="UmG-Nh-dzk"/>
@@ -44,6 +45,7 @@
                 <outlet property="netbarImageView" destination="eku-Sh-d4B" id="uYG-ld-IC7"/>
                 <outlet property="netbarName" destination="rWR-nE-1yX" id="pD3-AI-cHB"/>
                 <outlet property="reserveLabel" destination="0cR-De-WWI" id="iMB-WI-Hug"/>
+                <outlet property="sectionLabel" destination="YMf-Lr-k7u" id="nxJ-Wg-Qgu"/>
                 <outlet property="sectionView" destination="YHl-wT-Klq" id="xCr-i2-9PY"/>
                 <outlet property="serviceContactBtn" destination="9Ds-cX-xeP" id="YqM-fX-o9a"/>
                 <outlet property="serviceContactLabel" destination="prh-Cd-gSW" id="DrH-nS-nb7"/>

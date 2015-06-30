@@ -38,6 +38,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *markerLabel3;
 @property (strong, nonatomic) IBOutlet UILabel *markerLabel4;
 
+@property (strong, nonatomic) IBOutlet UILabel *colorLabel;
+@property (strong, nonatomic) IBOutlet UILabel *sectionLabel;
+
 @property (strong, nonatomic) NSDictionary *moduleDict;
 
 - (IBAction)netbarContactAction:(id)sender;
@@ -87,6 +90,9 @@
 
 - (void)refreshUI {
     self.bookTableView.tableHeaderView = self.headerView;
+    self.reserveLabel.font = SKIN_FONT_FROMNAME(15);
+    self.reserveLabel.textColor = SKIN_TEXT_COLOR1;
+    
     self.netbarContactLabel.font = SKIN_FONT_FROMNAME(14);
     self.netbarContactLabel.textColor = SKIN_TEXT_COLOR2;
     self.serviceContactLabel.font = SKIN_FONT_FROMNAME(14);
@@ -101,6 +107,13 @@
     [self.serviceContactBtn.layer setCornerRadius:4.0];
     [self.serviceContactBtn.layer setBorderWidth:1];
     [self.serviceContactBtn.layer setBorderColor:SKIN_TEXT_COLOR2.CGColor];
+    
+    self.colorLabel.backgroundColor = UIColorToRGB(0xfac402);
+    self.colorLabel.layer.cornerRadius = 1.0;
+    self.colorLabel.layer.masksToBounds = YES;
+    
+    self.sectionLabel.textColor = SKIN_TEXT_COLOR1;
+    self.sectionLabel.font = SKIN_FONT_FROMNAME(15);
     
     if (![self.orderInfo.netbarImageUrl isEqual:[NSNull null]]) {
         [self.netbarImageView sd_setImageWithURL:self.orderInfo.netbarImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];

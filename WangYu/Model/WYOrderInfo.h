@@ -49,6 +49,7 @@ typedef enum RESERVESTATUS_{
 
 @property(nonatomic, assign) int scoreAmount;                       //积分抵消金额
 @property(nonatomic, assign) double redbagAmount;                   //红包抵消金额
+@property(nonatomic, assign) int rebate;                            //打折力度
 
 
 @property(nonatomic, strong) NSString* netbarId;                    //网吧id

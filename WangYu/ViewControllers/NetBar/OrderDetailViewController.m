@@ -11,6 +11,7 @@
 #import "WYEngine.h"
 #import "WYProgressHUD.h"
 #import "UIImageView+WebCache.h"
+#import "NetbarDetailViewController.h"
 
 @interface OrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -24,11 +25,15 @@
 @property (strong, nonatomic) IBOutlet UILabel *netbarName;
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImageView;
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
+@property (strong, nonatomic) IBOutlet UILabel *createLabel;
+@property (strong, nonatomic) IBOutlet UILabel *colorLabel;
+@property (strong, nonatomic) IBOutlet UILabel *sectionLabel;
 
 
 @property (strong, nonatomic) NSDictionary *moduleDict;
 
 - (IBAction)serviceContactAction:(id)sender;
+- (IBAction)netbarAction:(id)sender;
 
 @end
 
@@ -51,6 +56,11 @@
 
 - (void)refreshUI {
     self.orderTableView.tableHeaderView = self.headerView;
+    self.statusLabel.font = SKIN_FONT_FROMNAME(15);
+    self.statusLabel.textColor = SKIN_TEXT_COLOR1;
+    self.createLabel.font = SKIN_FONT_FROMNAME(12);
+    self.createLabel.textColor = SKIN_TEXT_COLOR2;
+    
     self.netbarCollectLabel.font = SKIN_FONT_FROMNAME(14);
     self.netbarCollectLabel.textColor = SKIN_TEXT_COLOR2;
     self.serviceContactLabel.font = SKIN_FONT_FROMNAME(14);
@@ -66,6 +76,13 @@
     [self.serviceContactBtn.layer setBorderWidth:1];
     [self.serviceContactBtn.layer setBorderColor:SKIN_TEXT_COLOR2.CGColor];
     
+    self.colorLabel.backgroundColor = UIColorToRGB(0xfac402);
+    self.colorLabel.layer.cornerRadius = 1.0;
+    self.colorLabel.layer.masksToBounds = YES;
+    
+    self.sectionLabel.textColor = SKIN_TEXT_COLOR1;
+    self.sectionLabel.font = SKIN_FONT_FROMNAME(15);
+    
     if (![self.orderInfo.netbarImageUrl isEqual:[NSNull null]]) {
         [self.netbarImageView sd_setImageWithURL:self.orderInfo.netbarImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
     }else{
@@ -77,6 +94,7 @@
     [self.netbarImageView.layer setCornerRadius:self.netbarImageView.frame.size.width/2];
     
     self.netbarName.text = self.orderInfo.netbarName;
+    self.createLabel.text = [WYUIUtils dateYearToMinuteDiscriptionFromDate:self.orderInfo.createDate];
 }
 
 - (void)getOrderDataSource{
@@ -112,9 +130,9 @@
 
 - (NSDictionary *)tableDataModule{
     NSMutableDictionary *tmpMutDict = [NSMutableDictionary dictionary];
-    NSDictionary *dict0 = @{@"titleLabel":@"上网金额：",@"contentLabel":[NSString stringWithFormat:@"%d台",_orderInfo.seating]};
-    NSDictionary *dict1 = @{@"titleLabel":@"网吧抵扣：",@"contentLabel":[NSString stringWithFormat:@"%@－%@",[WYUIUtils dateYearToMinuteDiscriptionFromDate:_orderInfo.beginTime],[WYUIUtils dateYearToMinuteDiscriptionFromDate:_orderInfo.endTime]]};
-    NSDictionary *dict2 = @{@"titleLabel":@"红包抵扣：",@"contentLabel":[NSString stringWithFormat:@"%d小时",_orderInfo.hours]};
+    NSDictionary *dict0 = @{@"titleLabel":@"上网金额：",@"contentLabel":[NSString stringWithFormat:@"%d元",_orderInfo.totalAmount]};
+    NSDictionary *dict1 = @{@"titleLabel":@"网吧抵扣：",@"contentLabel":[NSString stringWithFormat:@"%d折",_orderInfo.rebate/10]};
+    NSDictionary *dict2 = @{@"titleLabel":@"红包抵扣：",@"contentLabel":[NSString stringWithFormat:@"%@元",[NSNumber numberWithDouble:_orderInfo.redbagAmount]]};
     NSDictionary *dict3 = @{@"titleLabel":@"实际支付：",@"contentLabel":[NSString stringWithFormat:@"%@元",_orderInfo.amount]};
     
     [tmpMutDict setObject:dict0 forKey:[NSString stringWithFormat:@"r%d",(int)tmpMutDict.count]];
@@ -180,6 +198,15 @@
 }
 
 - (IBAction)serviceContactAction:(id)sender {
-     [WYCommonUtils usePhoneNumAction:@"0371-55336615"];
+    [WYCommonUtils usePhoneNumAction:@"0371-55336615"];
 }
+
+- (IBAction)netbarAction:(id)sender {
+    NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
+    WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
+    netbarInfo.nid = self.orderInfo.netbarId;
+    ndVc.netbarInfo = netbarInfo;
+    [self.navigationController pushViewController:ndVc animated:YES];
+}
+
 @end

@@ -98,15 +98,16 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
+    if (section == 0 || section == 1) {
         return 1;
-    }else if (section == 1){
-        return 3;
+    }
+    else if (section == 2){
+        return 4;
     }
 #ifdef DEBUG
     return 1;
@@ -152,7 +153,20 @@
             }
         }
         case 1:{
+            if (indexPath.row == 0){
+                cell.titleLabel.text = @"客服中心";
+                cell.rightLabel.text = _cityName;
+                cell.rightLabel.hidden = NO;
+                [cell setLineImageViewWithType:-1];
+                break;
+            }
+        }
+        case 2:{
             if (indexPath.row == 0) {
+                cell.titleLabel.text = @"填写邀请码";
+                [cell setLineImageViewWithType:-1];
+                break;
+            }else if (indexPath.row == 1) {
                 cell.titleLabel.text = @"清理缓存";
                 [cell setLineImageViewWithType:0];
                 if (self.cacheSize != UINT64_MAX) {
@@ -167,19 +181,19 @@
                 }
                 break;
             }
-            else if (indexPath.row == 1){
+            else if (indexPath.row == 2){
                 cell.titleLabel.text = @"给我评分";
                 [cell setLineImageViewWithType:1];
                 break;
             }
-            else if (indexPath.row == 2){
+            else if (indexPath.row == 3){
                 cell.titleLabel.text = @"关于我们";
                 [cell setLineImageViewWithType:2];
                 break;
             }
             
         }
-        case 2:{
+        case 3:{
             if (indexPath.row == 0){
                 if ([WYEngine shareInstance].serverPlatform == OnlinePlatform) {
                     cell.titleLabel.text = @"测试环境";
@@ -212,14 +226,24 @@
             break;
         }
         case 1:{
+            id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/cs/web/detail", [WYEngine shareInstance].baseUrl] From:self.navigationController];
+            if (vc) {
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            break;
+        }
+        case 2:{
             if (indexPath.row == 0) {
+                
+                break;
+            }else if (indexPath.row == 1) {
                 [self showClearCacheAction];
                 break;
             }
-            else if (indexPath.row == 1){
+            else if (indexPath.row == 2){
                 [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id986749236"]];//
                 break;
-            }else if (indexPath.row == 2){
+            }else if (indexPath.row == 3){
                 AboutViewController *aVc = [[AboutViewController alloc] init];
                 [self.navigationController pushViewController:aVc animated:YES];
 //                id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/my/web/about", [WYEngine shareInstance].baseUrl] From:self.navigationController];
@@ -229,7 +253,7 @@
                 break;
             }
         }
-        case 2:{
+        case 3:{
             if (indexPath.row == 0){
                 [self onLogoutWithError:nil];
                 break;
