@@ -986,6 +986,12 @@ static int historyLabel_Tag = 201, filterLabel_Tag = 202, filterLineImg_Tag = 20
             
         }else if ([rowData isKindOfClass:[WYNetbarInfo class]]){
             WYNetbarInfo *netbarInfo = rowData;
+            if (_isChoose) {
+                if (self.delegate && [self.delegate respondsToSelector:@selector(searchViewControllerSelectWithNetbarInfo:)]) {
+                    [self.delegate searchViewControllerSelectWithNetbarInfo:netbarInfo];
+                }
+                return;
+            }
             NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
             ndVc.netbarInfo = netbarInfo;
             [self.navigationController pushViewController:ndVc animated:YES];
@@ -993,12 +999,24 @@ static int historyLabel_Tag = 201, filterLabel_Tag = 202, filterLineImg_Tag = 20
     }else if (tableView == self.netBarTable){
         
         WYNetbarInfo *netbarInfo = _netBarInfos[indexPath.row];
+        if (_isChoose) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(searchViewControllerSelectWithNetbarInfo:)]) {
+                [self.delegate searchViewControllerSelectWithNetbarInfo:netbarInfo];
+            }
+            return;
+        }
         NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
         ndVc.netbarInfo = netbarInfo;
         [self.navigationController pushViewController:ndVc animated:YES];
     }else if (tableView == self.searchTableView){
         
         WYNetbarInfo *netbarInfo = _searchNetBarInfos[indexPath.row];
+        if (_isChoose) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(searchViewControllerSelectWithNetbarInfo:)]) {
+                [self.delegate searchViewControllerSelectWithNetbarInfo:netbarInfo];
+            }
+            return;
+        }
         NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
         ndVc.netbarInfo = netbarInfo;
         [self.navigationController pushViewController:ndVc animated:YES];

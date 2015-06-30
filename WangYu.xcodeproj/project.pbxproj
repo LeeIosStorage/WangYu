@@ -305,6 +305,12 @@
 		3BF8B7D21B396D6700BBA346 /* InviteMemberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF8B7D01B396D6700BBA346 /* InviteMemberViewController.xib */; };
 		446E1EC01B34129B005CE745 /* PersonalProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */; };
 		446E1EC11B34129B005CE745 /* PersonalProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */; };
+		44C791FE1B40DE2100EEF641 /* SelectGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C791FC1B40DE2100EEF641 /* SelectGameViewController.m */; };
+		44C791FF1B40DE2100EEF641 /* SelectGameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C791FD1B40DE2100EEF641 /* SelectGameViewController.xib */; };
+		44C792031B41283C00EEF641 /* WYInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C792011B41283C00EEF641 /* WYInputTextViewController.m */; };
+		44C792041B41283C00EEF641 /* WYInputTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C792021B41283C00EEF641 /* WYInputTextViewController.xib */; };
+		44C792081B414D5D00EEF641 /* ContactWayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C792061B414D5D00EEF641 /* ContactWayViewController.m */; };
+		44C792091B414D5D00EEF641 /* ContactWayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C792071B414D5D00EEF641 /* ContactWayViewController.xib */; };
 		44C8ABEE1B3BD89800BFA4D2 /* WYInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C8ABEC1B3BD89800BFA4D2 /* WYInputViewController.m */; };
 		44C8ABEF1B3BD89800BFA4D2 /* WYInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C8ABED1B3BD89800BFA4D2 /* WYInputViewController.xib */; };
 		44CF41E21B3CF9D400E1DBA5 /* MatchWarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44CF41E01B3CF9D400E1DBA5 /* MatchWarViewController.m */; };
@@ -935,6 +941,15 @@
 		446E1EBD1B34129B005CE745 /* PersonalProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProfileViewController.h; sourceTree = "<group>"; };
 		446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProfileViewController.m; sourceTree = "<group>"; };
 		446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalProfileViewController.xib; sourceTree = "<group>"; };
+		44C791FB1B40DE2100EEF641 /* SelectGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectGameViewController.h; sourceTree = "<group>"; };
+		44C791FC1B40DE2100EEF641 /* SelectGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectGameViewController.m; sourceTree = "<group>"; };
+		44C791FD1B40DE2100EEF641 /* SelectGameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectGameViewController.xib; sourceTree = "<group>"; };
+		44C792001B41283C00EEF641 /* WYInputTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYInputTextViewController.h; sourceTree = "<group>"; };
+		44C792011B41283C00EEF641 /* WYInputTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYInputTextViewController.m; sourceTree = "<group>"; };
+		44C792021B41283C00EEF641 /* WYInputTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYInputTextViewController.xib; sourceTree = "<group>"; };
+		44C792051B414D5D00EEF641 /* ContactWayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactWayViewController.h; sourceTree = "<group>"; };
+		44C792061B414D5D00EEF641 /* ContactWayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactWayViewController.m; sourceTree = "<group>"; };
+		44C792071B414D5D00EEF641 /* ContactWayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactWayViewController.xib; sourceTree = "<group>"; };
 		44C8ABEB1B3BD89800BFA4D2 /* WYInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYInputViewController.h; sourceTree = "<group>"; };
 		44C8ABEC1B3BD89800BFA4D2 /* WYInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYInputViewController.m; sourceTree = "<group>"; };
 		44C8ABED1B3BD89800BFA4D2 /* WYInputViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYInputViewController.xib; sourceTree = "<group>"; };
@@ -1734,6 +1749,9 @@
 				44C8ABEB1B3BD89800BFA4D2 /* WYInputViewController.h */,
 				44C8ABEC1B3BD89800BFA4D2 /* WYInputViewController.m */,
 				44C8ABED1B3BD89800BFA4D2 /* WYInputViewController.xib */,
+				44C792001B41283C00EEF641 /* WYInputTextViewController.h */,
+				44C792011B41283C00EEF641 /* WYInputTextViewController.m */,
+				44C792021B41283C00EEF641 /* WYInputTextViewController.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2185,6 +2203,12 @@
 				44CF41EB1B3D1D1100E1DBA5 /* PublishMatchWarViewController.h */,
 				44CF41EC1B3D1D1100E1DBA5 /* PublishMatchWarViewController.m */,
 				44CF41ED1B3D1D1100E1DBA5 /* PublishMatchWarViewController.xib */,
+				44C791FB1B40DE2100EEF641 /* SelectGameViewController.h */,
+				44C791FC1B40DE2100EEF641 /* SelectGameViewController.m */,
+				44C791FD1B40DE2100EEF641 /* SelectGameViewController.xib */,
+				44C792051B414D5D00EEF641 /* ContactWayViewController.h */,
+				44C792061B414D5D00EEF641 /* ContactWayViewController.m */,
+				44C792071B414D5D00EEF641 /* ContactWayViewController.xib */,
 			);
 			path = MatchWar;
 			sourceTree = "<group>";
@@ -2303,6 +2327,7 @@
 				07B48B401B0C4D1F0000857F /* read_me.txt in Resources */,
 				07566CA61AFC648B00F93B58 /* SettingViewController.xib in Resources */,
 				3BF8B7C81B3969B600BBA346 /* MatchMemberViewController.xib in Resources */,
+				44C791FF1B40DE2100EEF641 /* SelectGameViewController.xib in Resources */,
 				076F82901B05E0CB00CACF0D /* NetbarMapViewController.xib in Resources */,
 				0745B3891B007AF3006D6853 /* NetbarDetailCell.xib in Resources */,
 				44CF41EF1B3D1D1100E1DBA5 /* PublishMatchWarViewController.xib in Resources */,
@@ -2322,6 +2347,7 @@
 				07868DEB1AF8581100160070 /* WYTitleNavBarView.xib in Resources */,
 				0775704A1B16B4CF005C9DC7 /* ApplyActivityViewController.xib in Resources */,
 				071923DD1AF7738900432531 /* SetPwdViewController.xib in Resources */,
+				44C792041B41283C00EEF641 /* WYInputTextViewController.xib in Resources */,
 				076219201B15A0CB00D912A1 /* MessageListViewController.xib in Resources */,
 				44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */,
 				0715C3AC1B09ECE000C37F82 /* WYCustomerWindow.xib in Resources */,
@@ -2331,6 +2357,7 @@
 				073DBCED1AE7492A009B49EB /* Images.xcassets in Resources */,
 				076195E81B008F8C00397711 /* ReserveOrderViewCell.xib in Resources */,
 				079493841B0D9C3C008152A6 /* AlipaySDK.bundle in Resources */,
+				44C792091B414D5D00EEF641 /* ContactWayViewController.xib in Resources */,
 				07203A0F1AF1CE460056A74B /* NetbarTabViewController.xib in Resources */,
 				3BE0908E1B14CD3A00DCAB3C /* MatchDetailCell.xib in Resources */,
 				44CF41E31B3CF9D400E1DBA5 /* MatchWarViewController.xib in Resources */,
@@ -2490,6 +2517,7 @@
 				077570601B16EDF2005C9DC7 /* MatchWarViewCell.m in Sources */,
 				073DBDF61AE7A1B0009B49EB /* UIImage+Resize.m in Sources */,
 				0715C3AA1B09ECB200C37F82 /* WYCustomerWindow.m in Sources */,
+				44C791FE1B40DE2100EEF641 /* SelectGameViewController.m in Sources */,
 				076E0DF81B147FD600E4363A /* AVCamCaptureManager.m in Sources */,
 				073DBDAC1AE79457009B49EB /* WYUIUtils.m in Sources */,
 				0799C8AF1AF1D88E00E407BB /* GameCommendViewController.m in Sources */,
@@ -2515,6 +2543,7 @@
 				076219281B15A64600D912A1 /* WYMessageInfo.m in Sources */,
 				077BF39B1B18016B00450174 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				07DE26A01B16F846007667DB /* WYNewsInfo.m in Sources */,
+				44C792081B414D5D00EEF641 /* ContactWayViewController.m in Sources */,
 				07203A0E1AF1CE460056A74B /* NetbarTabViewController.m in Sources */,
 				0723DE001B0F19830040295B /* CalloutMapAnnotation.m in Sources */,
 				079D52521B01E48600DF4D6B /* GameCommendCardView.m in Sources */,
@@ -2538,6 +2567,7 @@
 				077570521B16DC9B005C9DC7 /* WYMatchWarInfo.m in Sources */,
 				076219301B15B4D700D912A1 /* WYGameInfo.m in Sources */,
 				0723DDFF1B0F19830040295B /* CallOutAnnotationView.m in Sources */,
+				44C792031B41283C00EEF641 /* WYInputTextViewController.m in Sources */,
 				0775704E1B16B982005C9DC7 /* ApplyActivityViewCell.m in Sources */,
 				0791AB5D1AE8DE260009A5A7 /* AFURLSessionManager.m in Sources */,
 				44CF41EE1B3D1D1100E1DBA5 /* PublishMatchWarViewController.m in Sources */,

@@ -7,10 +7,21 @@
 //
 
 #import "WYSuperViewController.h"
+#import "WYNetbarInfo.h"
+
+@protocol NetbarSearchViewControllerDelegate;
 
 @interface NetbarSearchViewController : WYSuperViewController
 
+@property (nonatomic, assign) BOOL isChoose;
+@property (nonatomic, assign) id<NetbarSearchViewControllerDelegate>delegate;
+
 @property (nonatomic, strong) NSString *areaCode;//选择城市code
 @property (nonatomic, assign) BOOL showFilter;
+
+@end
+
+@protocol NetbarSearchViewControllerDelegate <NSObject>
+- (void)searchViewControllerSelectWithNetbarInfo:(WYNetbarInfo*)netbarInfo;
 
 @end
