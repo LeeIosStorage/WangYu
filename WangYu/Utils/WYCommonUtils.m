@@ -9,6 +9,8 @@
 #import "WYCommonUtils.h"
 #import "WYAlertView.h"
 #import "SDImageCache.h"
+#import <AddressBook/AddressBook.h>
+#import "PbUserInfo.h"
 
 @implementation WYCommonUtils
 
@@ -173,6 +175,103 @@
         }
     }
     return FALSE;
+}
+
++ (NSArray*)getAllPbPhoneContacts{
+    return [WYCommonUtils getPbPhoneContactsAffterDate:nil ids:nil];
+}
++ (NSArray*)getPbPhoneContactsAffterDate:(NSDate*)date ids:(NSMutableArray*)ids{
+    CFErrorRef myError = NULL;
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &myError);
+    if (addressBook == nil) {
+        return nil;
+    }
+    CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
+    if (nPeople < 0) {
+        CFRelease(addressBook);
+        return nil;
+    }
+    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople( addressBook );
+    NSMutableArray* allContacts = [[NSMutableArray alloc] initWithCapacity:nPeople];
+    
+    for (int i = 0; i < nPeople; i++)
+    {
+        ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
+        
+        CFDateRef updateDate = ABRecordCopyValue(person, kABPersonModificationDateProperty);
+        NSDate* upDate =  (__bridge NSDate *)updateDate;
+        //NSLog(@"date=%@", upDate.description);
+        if (updateDate) CFRelease(updateDate);
+        ABRecordID recordId = 0;
+        if (ids) {
+            recordId = ABRecordGetRecordID(person);
+            [ids addObject:[NSNumber numberWithInt:recordId]];
+        }
+        if (date) {
+            if([upDate timeIntervalSince1970] <= [date timeIntervalSince1970]){
+                continue;
+            }
+        }
+        
+        if (recordId == 0) {
+            recordId = ABRecordGetRecordID(person);
+        }
+        
+        CFStringRef name;
+        name = ABRecordCopyValue(person, kABPersonFirstNameProperty);
+        CFStringRef lastNameString;
+        lastNameString = ABRecordCopyValue(person, kABPersonLastNameProperty);
+        ABMultiValueRef phoneNumberProperty = ABRecordCopyValue(person, kABPersonPhoneProperty);
+        
+        NSString *nameString = (__bridge NSString *)name;
+        NSString *lastName = (__bridge NSString *)lastNameString;
+        
+        if (nameString && lastName) {
+            nameString = [NSString stringWithFormat:@"%@%@", lastName, nameString];
+        }else{
+            if (lastName) {
+                nameString = [NSString stringWithFormat:@"%@", lastName];
+            }else{
+                //nameString = [NSString stringWithFormat:@"%@", nameString];
+            }
+        }
+        
+        
+        if (name) CFRelease(name);
+        if (lastNameString) CFRelease(lastNameString);
+        
+        
+        NSArray *telephone = CFBridgingRelease(ABMultiValueCopyArrayOfAllValues(phoneNumberProperty));
+        CFRelease(phoneNumberProperty);
+        
+        if (!([telephone count] > 0)) {
+            
+            continue;
+        }
+        
+        nameString = [nameString stringByReplacingOccurrencesOfString:@" " withString:@""];
+        for (NSString* phone in telephone) {
+            
+            NSMutableString* mString = [[NSMutableString alloc] initWithCapacity:phone.length];
+            //            NSString* filerPhone = [phone1 stringByReplacingOccurrencesOfString:@"+86" withString:@""];
+            
+            //phone = [phone stringByReplacingOccurrencesOfString:@"+86" withString:@""];
+            for (int i = 0; i < phone.length; ++i) {
+                unichar character = [phone characterAtIndex:i];
+                if((character >= '0' && character <= '9') || character == '+'){
+                    [mString appendString:[phone substringWithRange:NSMakeRange(i, 1)]];
+                }
+            }
+            PbUserInfo* pbUserInfo = [[PbUserInfo alloc] init];
+            pbUserInfo.name = nameString;
+            pbUserInfo.phoneNUm = mString;
+            pbUserInfo.recordId = recordId;
+            [allContacts addObject:pbUserInfo];
+        }
+    }
+    CFRelease(allPeople);
+    CFRelease(addressBook);
+    return allContacts;
 }
 
 @end

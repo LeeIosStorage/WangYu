@@ -15,10 +15,19 @@
 #import "WYInputTextViewController.h"
 #import "ContactWayViewController.h"
 #import "TTTAttributedLabel.h"
+#import "UIImageView+WebCache.h"
+#import "GMGridViewLayoutStrategies.h"
+#import "GMGridViewCell+Extended.h"
+#import "InviteFriendsViewController.h"
+#import "PbUserInfo.h"
+#import <AddressBook/AddressBook.h>
 
 #define Title_maxTextLength 18
 
-@interface PublishMatchWarViewController ()<UITableViewDelegate,UITableViewDataSource,SelectGameViewControllerDelegate,UIPickerViewDataSource, UIPickerViewDelegate,NetbarSearchViewControllerDelegate,WYInputTextViewControllerDelegate,ContactWayViewControllerDelegate>
+#define GRID_IMAGE_SIZE       31
+#define item_spacing          7
+
+@interface PublishMatchWarViewController ()<UITableViewDelegate,UITableViewDataSource,SelectGameViewControllerDelegate,UIPickerViewDataSource, UIPickerViewDelegate,NetbarSearchViewControllerDelegate,WYInputTextViewControllerDelegate,ContactWayViewControllerDelegate,GMGridViewDataSource, GMGridViewActionDelegate>
 {
     NSString *_matchGameName;
     NSDictionary *_matchGameDic;
@@ -41,6 +50,7 @@
     NSDictionary *_matchContactDic;
     NSString *_matchContactWay;
     
+    ABAddressBookRef _addressBook;
 }
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
@@ -58,9 +68,11 @@
 @property (nonatomic, strong) IBOutlet UILabel *matchContactTipLabel;
 @property (nonatomic, strong) IBOutlet TTTAttributedLabel *matchContactLabel;
 
+@property (nonatomic, strong) NSMutableArray *invitePeopleData;
 @property (nonatomic, strong) IBOutlet UIView *inviteContainerView;
 @property (nonatomic, strong) IBOutlet UILabel *inviteTipLabel;
-@property (nonatomic, strong) IBOutlet UIView *invitePeopleGridView;
+@property (nonatomic, strong) IBOutlet UIButton *inviteDeleteButton;
+@property (nonatomic, strong) IBOutlet GMGridView *invitePeopleGridView;
 
 @property (nonatomic, strong) IBOutlet UIView *bottomContainerView;
 @property (nonatomic, strong) IBOutlet UIButton *bottomButton;
@@ -82,6 +94,9 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (_addressBook) {
+        CFRelease(_addressBook);
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -97,8 +112,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    CFErrorRef myError = NULL;
+    _addressBook = ABAddressBookCreateWithOptions(NULL, &myError);
+    
     self.bottomButton.enabled = NO;
     _matchContactDic = [[NSDictionary alloc] init];
+    _invitePeopleData = [[NSMutableArray alloc] init];
+//    for (int i = 0; i < 100; i ++) {
+//        [_invitePeopleData addObject:@{@"phone":@"13803833466"}];
+//    }
+    
+    //GridView
+    _invitePeopleGridView.backgroundColor = [UIColor clearColor];
+    _invitePeopleGridView.style = GMGridViewStyleSwap;
+    _invitePeopleGridView.itemSpacing = item_spacing;
+    _invitePeopleGridView.minEdgeInsets = UIEdgeInsetsMake(3, 0, 0, 0);
+    _invitePeopleGridView.centerGrid = NO;
+    _invitePeopleGridView.layoutStrategy = [GMGridViewLayoutStrategyFactory strategyFromType:GMGridViewLayoutVertical];
+    _invitePeopleGridView.actionDelegate = self;
+    _invitePeopleGridView.showsHorizontalScrollIndicator = NO;
+    _invitePeopleGridView.showsVerticalScrollIndicator = NO;
+    _invitePeopleGridView.dataSource = self;
+    _invitePeopleGridView.enableEditOnLongPress = YES;
+    _invitePeopleGridView.disableEditOnEmptySpaceTap = YES;
+    
     
     _peopleNumbers = @[@(2),@(3),@(4),@(5),@(6),@(7),@(8),@(9),@(10),@(11),@(12),@(13),@(14),@(15),@(16),@(17),@(18),@(19),@(20)];
     
@@ -170,10 +208,44 @@
     NSDateComponents *compsNow = [calender components:unitFlags fromDate:[NSDate date]];
     _datePicker.minimumDate = [calender dateFromComponents:compsNow];
     
+    //邀请人GridView
+    CGFloat inviteContainerViewHeight = 85;
+    self.invitePeopleGridView.hidden = YES;
+    if (self.invitePeopleData.count > 0) {
+        self.invitePeopleGridView.hidden = NO;
+        int peopleCount = (int)self.invitePeopleData.count;
+        int lineCount = (SCREEN_WIDTH - 12*2)/(GRID_IMAGE_SIZE+item_spacing);
+        int rowCount = 0;
+        if (peopleCount%lineCount == 0) {
+            rowCount = peopleCount/lineCount;
+        }else{
+            rowCount = peopleCount/lineCount + 1;
+        }
+        if (rowCount > 3) {
+            rowCount = 3;
+        }
+        
+        CGRect frame1 = self.invitePeopleGridView.frame;
+        frame1.size.width = (GRID_IMAGE_SIZE+item_spacing)*peopleCount;
+        if (frame1.size.width > (SCREEN_WIDTH - 12*2)) {
+            frame1.size.width = (SCREEN_WIDTH - 12*2)+7;
+        }
+        frame1.size.height = (GRID_IMAGE_SIZE+item_spacing)*rowCount-3;
+        if (frame1.size.height < GRID_IMAGE_SIZE) {
+            frame1.size.height = GRID_IMAGE_SIZE;
+        }
+        self.invitePeopleGridView.frame = frame1;
+        
+        inviteContainerViewHeight = self.invitePeopleGridView.frame.origin.y + self.invitePeopleGridView.frame.size.height +10;
+    }
+    [self.invitePeopleGridView reloadData];
     
+    //邀请view
     frame = self.inviteContainerView.frame;
     frame.origin.y = self.matchContactView.frame.origin.y + self.matchContactView.frame.size.height + 10;
+    frame.size.height = inviteContainerViewHeight;
     self.inviteContainerView.frame = frame;
+    
     
     frame = self.footerView.frame;
     frame.size.height = self.inviteContainerView.frame.origin.y + self.inviteContainerView.frame.size.height;
@@ -196,6 +268,13 @@
         self.bottomButton.backgroundColor = SKIN_COLOR;
     }else{
         self.bottomButton.backgroundColor = UIColorToRGB(0xe4e4e4);
+    }
+}
+-(void)refreshInviteDeleteButton{
+    if (_invitePeopleGridView.editing) {
+        [_inviteDeleteButton setImage:[UIImage imageNamed:@"match_publish_check_icon"] forState:UIControlStateNormal];
+    }else{
+        [_inviteDeleteButton setImage:[UIImage imageNamed:@"match_publish_delete_icon"] forState:UIControlStateNormal];
     }
 }
 
@@ -305,11 +384,21 @@
 }
 
 -(IBAction)addPeopleAction:(id)sender{
-    
+    WS(weakSelf);
+    InviteFriendsViewController *inviteFriendsVc = [[InviteFriendsViewController alloc] init];
+    inviteFriendsVc.slePbUserInfos = self.invitePeopleData;
+    inviteFriendsVc.sendInviteFriendsCallBack = ^(NSArray *array){
+        
+        weakSelf.invitePeopleData = [NSMutableArray arrayWithArray:array];
+//        [weakSelf.invitePeopleGridView reloadData];
+        [weakSelf refreshHeadViewShowUI];
+    };
+    [self.navigationController pushViewController:inviteFriendsVc animated:YES];
 }
 
 -(IBAction)deletePeopleAction:(id)sender{
-    
+    _invitePeopleGridView.editing = !_invitePeopleGridView.editing;
+    [self refreshInviteDeleteButton];
 }
 
 -(IBAction)submitAction:(id)sender{
@@ -557,6 +646,80 @@
             [self setMatchIntro];
         }
     }
+}
+
+#pragma mark GMGridViewDataSource
+- (NSInteger)numberOfItemsInGMGridView:(GMGridView *)gridView
+{
+    return _invitePeopleData.count;
+    
+}
+- (CGSize)GMGridView:(GMGridView *)gridView sizeForItemsInInterfaceOrientation:(UIInterfaceOrientation)orientation {
+    return CGSizeMake(GRID_IMAGE_SIZE, GRID_IMAGE_SIZE);
+}
+
+
+- (GMGridViewCell *)GMGridView:(GMGridView *)gridView cellForItemAtIndex:(NSInteger)index
+{
+    GMGridViewCell *cell = [gridView dequeueReusableCell];
+    
+    if (!cell)
+    {
+        cell = [[GMGridViewCell alloc] init];
+        cell.deleteButtonIcon = [UIImage imageNamed:@"match_publish_remove_icon"];
+        cell.deleteButtonOffset = CGPointMake(12, -12);
+        UIImageView* imageview = [[UIImageView alloc] init];
+        imageview.contentMode = UIViewContentModeScaleAspectFill;
+        imageview.clipsToBounds = YES;
+        imageview.layer.masksToBounds = YES;
+        imageview.layer.cornerRadius = GRID_IMAGE_SIZE/2;
+        cell.contentView = imageview;
+    }
+    
+    UIImageView* imageiew = (UIImageView*)cell.contentView;
+    id info = [self.invitePeopleData objectAtIndex:index];
+    if ([info isKindOfClass:[PbUserInfo class]]) {
+        PbUserInfo* pbUserInfo = (PbUserInfo*)info;
+        if (_addressBook) {
+            ABRecordRef person = ABAddressBookGetPersonWithRecordID(_addressBook, pbUserInfo.recordId);
+            if(ABPersonHasImageData(person)){
+                CFDataRef dataRef = ABPersonCopyImageData(person);
+                UIImage *image = [UIImage imageWithData:(__bridge NSData *)dataRef];
+                if(dataRef) CFRelease(dataRef);
+                [imageiew setImage:image];
+            }else{
+                imageiew.image = [UIImage imageNamed:@"personal_avatar_default_icon_small"];
+            }
+        }else{
+            imageiew.image = [UIImage imageNamed:@"personal_avatar_default_icon_small"];
+        }
+    }else{
+        imageiew.image = [UIImage imageNamed:@"personal_avatar_default_icon_small"];
+    }
+    
+    return cell;
+}
+-(BOOL)GMGridView:(GMGridView *)gridView canDeleteItemAtIndex:(NSInteger)index
+{
+    return YES;
+}
+#pragma mark GMGridViewActionDelegate
+-(void)GMGridView:(GMGridView *)gridView processDeleteActionForItemAtIndex:(NSInteger)index {
+    [self.invitePeopleData removeObjectAtIndex:index];
+    [self.invitePeopleGridView removeObjectAtIndex:index withAnimation:GMGridViewItemAnimationFade];
+//    [self.invitePeopleGridView reloadData];
+    [self refreshHeadViewShowUI];
+}
+- (void)GMGridView:(GMGridView *)gridView changedEdit:(BOOL)edit{
+    [self refreshInviteDeleteButton];
+}
+- (BOOL)GMGridView:(GMGridView *)gridView didLongTapOnItemAtIndex:(NSInteger)position{
+    
+    return YES;
+}
+- (void)GMGridView:(GMGridView *)gridView didTapOnItemAtIndex:(NSInteger)position
+{
+    NSLog(@"Did tap at index %ld", position);
 }
 
 #pragma mark - UIScrollViewDelegate

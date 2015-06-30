@@ -305,6 +305,13 @@
 		3BF8B7D21B396D6700BBA346 /* InviteMemberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF8B7D01B396D6700BBA346 /* InviteMemberViewController.xib */; };
 		446E1EC01B34129B005CE745 /* PersonalProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */; };
 		446E1EC11B34129B005CE745 /* PersonalProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */; };
+		44C6AE381B42679200746A54 /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C6AE361B42679200746A54 /* InviteFriendsViewController.m */; };
+		44C6AE391B42679200746A54 /* InviteFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C6AE371B42679200746A54 /* InviteFriendsViewController.xib */; };
+		44C6AE3C1B4271A100746A54 /* PbUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C6AE3B1B4271A100746A54 /* PbUserInfo.m */; };
+		44C6AE3F1B42728A00746A54 /* PinyinUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C6AE3E1B42728A00746A54 /* PinyinUtils.m */; };
+		44C6AE411B42738400746A54 /* UnicodeToPinYin.dat in Resources */ = {isa = PBXBuildFile; fileRef = 44C6AE401B42738400746A54 /* UnicodeToPinYin.dat */; };
+		44C6AE461B42786600746A54 /* InviteFriendsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C6AE441B42786600746A54 /* InviteFriendsViewCell.m */; };
+		44C6AE471B42786600746A54 /* InviteFriendsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C6AE451B42786600746A54 /* InviteFriendsViewCell.xib */; };
 		44C791FE1B40DE2100EEF641 /* SelectGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C791FC1B40DE2100EEF641 /* SelectGameViewController.m */; };
 		44C791FF1B40DE2100EEF641 /* SelectGameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C791FD1B40DE2100EEF641 /* SelectGameViewController.xib */; };
 		44C792031B41283C00EEF641 /* WYInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C792011B41283C00EEF641 /* WYInputTextViewController.m */; };
@@ -941,6 +948,17 @@
 		446E1EBD1B34129B005CE745 /* PersonalProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProfileViewController.h; sourceTree = "<group>"; };
 		446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProfileViewController.m; sourceTree = "<group>"; };
 		446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalProfileViewController.xib; sourceTree = "<group>"; };
+		44C6AE351B42679200746A54 /* InviteFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendsViewController.h; sourceTree = "<group>"; };
+		44C6AE361B42679200746A54 /* InviteFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsViewController.m; sourceTree = "<group>"; };
+		44C6AE371B42679200746A54 /* InviteFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InviteFriendsViewController.xib; sourceTree = "<group>"; };
+		44C6AE3A1B4271A100746A54 /* PbUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PbUserInfo.h; sourceTree = "<group>"; };
+		44C6AE3B1B4271A100746A54 /* PbUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PbUserInfo.m; sourceTree = "<group>"; };
+		44C6AE3D1B42728A00746A54 /* PinyinUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinyinUtils.h; sourceTree = "<group>"; };
+		44C6AE3E1B42728A00746A54 /* PinyinUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinyinUtils.m; sourceTree = "<group>"; };
+		44C6AE401B42738400746A54 /* UnicodeToPinYin.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = UnicodeToPinYin.dat; path = Assets/UnicodeToPinYin.dat; sourceTree = "<group>"; };
+		44C6AE431B42786600746A54 /* InviteFriendsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendsViewCell.h; sourceTree = "<group>"; };
+		44C6AE441B42786600746A54 /* InviteFriendsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsViewCell.m; sourceTree = "<group>"; };
+		44C6AE451B42786600746A54 /* InviteFriendsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InviteFriendsViewCell.xib; sourceTree = "<group>"; };
 		44C791FB1B40DE2100EEF641 /* SelectGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectGameViewController.h; sourceTree = "<group>"; };
 		44C791FC1B40DE2100EEF641 /* SelectGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectGameViewController.m; sourceTree = "<group>"; };
 		44C791FD1B40DE2100EEF641 /* SelectGameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectGameViewController.xib; sourceTree = "<group>"; };
@@ -1116,6 +1134,7 @@
 			isa = PBXGroup;
 			children = (
 				07203A191AF1FE8C0056A74B /* dqw3.otf */,
+				44C6AE401B42738400746A54 /* UnicodeToPinYin.dat */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -1279,6 +1298,7 @@
 				076195E31B008F4800397711 /* Mine */,
 				07566CA71AFC663600F93B58 /* Setting */,
 				07203A101AF1D5EE0056A74B /* Main */,
+				44C6AE421B42782300746A54 /* MatchWar */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1288,6 +1308,8 @@
 			children = (
 				073DBD721AE778CF009B49EB /* WYUserInfo.h */,
 				073DBD731AE778CF009B49EB /* WYUserInfo.m */,
+				44C6AE3A1B4271A100746A54 /* PbUserInfo.h */,
+				44C6AE3B1B4271A100746A54 /* PbUserInfo.m */,
 				07695CDD1B03231000F4806C /* WYNetbarInfo.h */,
 				07695CDE1B03231000F4806C /* WYNetbarInfo.m */,
 				076E22541B03512700F33815 /* WYOrderInfo.h */,
@@ -1319,6 +1341,8 @@
 				073DBDA81AE7939C009B49EB /* WYCommonUtils.m */,
 				073DBDAA1AE79456009B49EB /* WYUIUtils.h */,
 				073DBDAB1AE79457009B49EB /* WYUIUtils.m */,
+				44C6AE3D1B42728A00746A54 /* PinyinUtils.h */,
+				44C6AE3E1B42728A00746A54 /* PinyinUtils.m */,
 				077D83871AF9C3BC00AAF31F /* NSString+Value.h */,
 				077D83881AF9C3BC00AAF31F /* NSString+Value.m */,
 				073DBD551AE7717D009B49EB /* NSDictionary+ObjectForKey.h */,
@@ -2197,6 +2221,16 @@
 			name = Activity;
 			sourceTree = "<group>";
 		};
+		44C6AE421B42782300746A54 /* MatchWar */ = {
+			isa = PBXGroup;
+			children = (
+				44C6AE431B42786600746A54 /* InviteFriendsViewCell.h */,
+				44C6AE441B42786600746A54 /* InviteFriendsViewCell.m */,
+				44C6AE451B42786600746A54 /* InviteFriendsViewCell.xib */,
+			);
+			path = MatchWar;
+			sourceTree = "<group>";
+		};
 		44CF41EA1B3D1CCF00E1DBA5 /* MatchWar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2209,6 +2243,9 @@
 				44C792051B414D5D00EEF641 /* ContactWayViewController.h */,
 				44C792061B414D5D00EEF641 /* ContactWayViewController.m */,
 				44C792071B414D5D00EEF641 /* ContactWayViewController.xib */,
+				44C6AE351B42679200746A54 /* InviteFriendsViewController.h */,
+				44C6AE361B42679200746A54 /* InviteFriendsViewController.m */,
+				44C6AE371B42679200746A54 /* InviteFriendsViewController.xib */,
 			);
 			path = MatchWar;
 			sourceTree = "<group>";
@@ -2313,6 +2350,7 @@
 				3BF8B7CD1B396A8D00BBA346 /* MatchMemberCell.xib in Resources */,
 				077E608C1B0B2D5F0079BC9E /* WeiboSDK.bundle in Resources */,
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
+				44C6AE411B42738400746A54 /* UnicodeToPinYin.dat in Resources */,
 				07E96B8A1B15BB8B006ED6B7 /* MatchPlaceViewController.xib in Resources */,
 				071691EF1B1C4E49006A832E /* GameDetailsViewController.xib in Resources */,
 				077E4ACF1B14461D009D1692 /* ActivityViewCell.xib in Resources */,
@@ -2333,6 +2371,7 @@
 				44CF41EF1B3D1D1100E1DBA5 /* PublishMatchWarViewController.xib in Resources */,
 				07E96B8F1B15BD35006ED6B7 /* MatchPlaceCell.xib in Resources */,
 				3BF8B7D21B396D6700BBA346 /* InviteMemberViewController.xib in Resources */,
+				44C6AE471B42786600746A54 /* InviteFriendsViewCell.xib in Resources */,
 				076219251B15A29400D912A1 /* MessageViewCell.xib in Resources */,
 				0777DFD11B01C4CB00E1E314 /* QuickPayViewController.xib in Resources */,
 				0728D03C1B0F252A00239D96 /* ActivityTabViewController.xib in Resources */,
@@ -2350,6 +2389,7 @@
 				44C792041B41283C00EEF641 /* WYInputTextViewController.xib in Resources */,
 				076219201B15A0CB00D912A1 /* MessageListViewController.xib in Resources */,
 				44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */,
+				44C6AE391B42679200746A54 /* InviteFriendsViewController.xib in Resources */,
 				0715C3AC1B09ECE000C37F82 /* WYCustomerWindow.xib in Resources */,
 				0715C3A61B09AD6F00C37F82 /* MapChooseViewController.xib in Resources */,
 				073DBCF01AE7492A009B49EB /* LaunchScreen.xib in Resources */,
@@ -2418,6 +2458,7 @@
 				07868DE91AF8581100160070 /* WYSuperViewController.m in Sources */,
 				076F82861B059CB700CACF0D /* WYNetBarManager.m in Sources */,
 				07DE26A41B16FFB0007667DB /* NewsViewCell.m in Sources */,
+				44C6AE461B42786600746A54 /* InviteFriendsViewCell.m in Sources */,
 				077BF3B11B186BFC00450174 /* GMGridViewLayoutStrategies.m in Sources */,
 				073DBD631AE7717D009B49EB /* PathHelper.m in Sources */,
 				0723DE081B0F2F5D0040295B /* CustomMapCell.m in Sources */,
@@ -2576,6 +2617,8 @@
 				0791AB581AE8DE260009A5A7 /* AFNetworkReachabilityManager.m in Sources */,
 				0762192C1B15AEB200D912A1 /* CollectListViewController.m in Sources */,
 				3BF8B7CC1B396A8D00BBA346 /* MatchMemberCell.m in Sources */,
+				44C6AE381B42679200746A54 /* InviteFriendsViewController.m in Sources */,
+				44C6AE3C1B4271A100746A54 /* PbUserInfo.m in Sources */,
 				0791AB3B1AE8D8600009A5A7 /* WYSettingConfig.m in Sources */,
 				44CF41E21B3CF9D400E1DBA5 /* MatchWarViewController.m in Sources */,
 				0745B3881B007AF3006D6853 /* NetbarDetailCell.m in Sources */,
@@ -2606,6 +2649,7 @@
 				073DBD501AE7712F009B49EB /* UIImageView+HighlightedWebCache.m in Sources */,
 				0723DDFE1B0F19830040295B /* BasicMapAnnotation.m in Sources */,
 				074DDC871B0080140081AFA4 /* NetbarDetailViewController.m in Sources */,
+				44C6AE3F1B42728A00746A54 /* PinyinUtils.m in Sources */,
 				073DBD4D1AE7712F009B49EB /* UIImage+GIF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
