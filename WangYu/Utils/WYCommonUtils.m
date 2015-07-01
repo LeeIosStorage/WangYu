@@ -177,9 +177,14 @@
     return FALSE;
 }
 
++(BOOL) isIphone4 {
+    return ([[UIScreen mainScreen] bounds].size.height == 480);
+}
+
 + (NSArray*)getAllPbPhoneContacts{
     return [WYCommonUtils getPbPhoneContactsAffterDate:nil ids:nil];
 }
+
 + (NSArray*)getPbPhoneContactsAffterDate:(NSDate*)date ids:(NSMutableArray*)ids{
     CFErrorRef myError = NULL;
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &myError);

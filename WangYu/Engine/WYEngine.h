@@ -181,6 +181,8 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)getTopicsInfoWithTag:(int)tag;
 //专题资讯列表
 - (BOOL)getTopicsListWithTid:(NSString *)tid page:(int)page pageSize:(int)pageSize tag:(int)tag;
+//战队报名(创建战队)
+- (BOOL)createMatchTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId name:(NSString *)name telephone:(NSString *)telephone idcard:(NSString *)idcard qqNum:(NSString *)qqNum labor:(NSString *)labor round:(int)round server:(NSString *)server tag:(int)tag;
 
 #pragma mark - 手游
 //手游列表

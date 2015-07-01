@@ -61,6 +61,8 @@ dispatch_sync(dispatch_get_main_queue(), block);\
 //版本信息
 + (BOOL)isVersion:(NSString *)versionA greaterThanVersion:(NSString *)versionB;
 
++(BOOL) isIphone4;
+
 //手机联系人
 + (NSArray*)getAllPbPhoneContacts;
 + (NSArray*)getPbPhoneContactsAffterDate:(NSDate*)date ids:(NSMutableArray*)ids;

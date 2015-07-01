@@ -276,6 +276,8 @@
 		07E96B8F1B15BD35006ED6B7 /* MatchPlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E96B8D1B15BD35006ED6B7 /* MatchPlaceCell.xib */; };
 		07EEF6C21B0C789000DBC511 /* WYPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EEF6C11B0C789000DBC511 /* WYPayManager.m */; };
 		3B357C6E1B20AA3B00AE30A0 /* WYUserGuideConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B357C6D1B20AA3B00AE30A0 /* WYUserGuideConfig.m */; };
+		3B6554AB1B43BA2F008F4ED0 /* SelectNetbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B6554A91B43BA2F008F4ED0 /* SelectNetbarViewController.m */; };
+		3B6554AC1B43BA2F008F4ED0 /* SelectNetbarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B6554AA1B43BA2F008F4ED0 /* SelectNetbarViewController.xib */; };
 		3BBE46271B0CE79B009EAE02 /* WYPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46261B0CE79B009EAE02 /* WYPhotoItem.m */; };
 		3BBE462A1B0CE8BA009EAE02 /* WYPhotoGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46291B0CE8BA009EAE02 /* WYPhotoGroup.m */; };
 		3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE462C1B0CE9AB009EAE02 /* WYPhotoBrowser.m */; };
@@ -905,6 +907,9 @@
 		07EEF6C11B0C789000DBC511 /* WYPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPayManager.m; sourceTree = "<group>"; };
 		3B357C6C1B20AA3B00AE30A0 /* WYUserGuideConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYUserGuideConfig.h; sourceTree = "<group>"; };
 		3B357C6D1B20AA3B00AE30A0 /* WYUserGuideConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYUserGuideConfig.m; sourceTree = "<group>"; };
+		3B6554A81B43BA2F008F4ED0 /* SelectNetbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectNetbarViewController.h; path = Activity/SelectNetbarViewController.h; sourceTree = "<group>"; };
+		3B6554A91B43BA2F008F4ED0 /* SelectNetbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectNetbarViewController.m; path = Activity/SelectNetbarViewController.m; sourceTree = "<group>"; };
+		3B6554AA1B43BA2F008F4ED0 /* SelectNetbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectNetbarViewController.xib; path = Activity/SelectNetbarViewController.xib; sourceTree = "<group>"; };
 		3BBE46251B0CE79B009EAE02 /* WYPhotoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYPhotoItem.h; path = WYPhotoBrower/WYPhotoItem.h; sourceTree = "<group>"; };
 		3BBE46261B0CE79B009EAE02 /* WYPhotoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYPhotoItem.m; path = WYPhotoBrower/WYPhotoItem.m; sourceTree = "<group>"; };
 		3BBE46281B0CE8BA009EAE02 /* WYPhotoGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYPhotoGroup.h; path = WYPhotoBrower/WYPhotoGroup.h; sourceTree = "<group>"; };
@@ -2207,6 +2212,9 @@
 				078A04361B1C2387008ADA76 /* TopicsViewController.h */,
 				078A04371B1C2387008ADA76 /* TopicsViewController.m */,
 				078A04381B1C2387008ADA76 /* TopicsViewController.xib */,
+				3B6554A81B43BA2F008F4ED0 /* SelectNetbarViewController.h */,
+				3B6554A91B43BA2F008F4ED0 /* SelectNetbarViewController.m */,
+				3B6554AA1B43BA2F008F4ED0 /* SelectNetbarViewController.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -2412,6 +2420,7 @@
 				07868DEB1AF8581100160070 /* WYTitleNavBarView.xib in Resources */,
 				0775704A1B16B4CF005C9DC7 /* ApplyActivityViewController.xib in Resources */,
 				071923DD1AF7738900432531 /* SetPwdViewController.xib in Resources */,
+				3B6554AC1B43BA2F008F4ED0 /* SelectNetbarViewController.xib in Resources */,
 				44C792041B41283C00EEF641 /* WYInputTextViewController.xib in Resources */,
 				076219201B15A0CB00D912A1 /* MessageListViewController.xib in Resources */,
 				44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */,
@@ -2601,6 +2610,7 @@
 				0791AB5E1AE8DE260009A5A7 /* QHQnetworkingTool.m in Sources */,
 				076C8CE81B048A5C00421460 /* WYLocationServiceUtil.m in Sources */,
 				076E224F1B02F73200F33815 /* NetbarSearchViewController.m in Sources */,
+				3B6554AB1B43BA2F008F4ED0 /* SelectNetbarViewController.m in Sources */,
 				07E96B8E1B15BD35006ED6B7 /* MatchPlaceCell.m in Sources */,
 				073DBD431AE7712F009B49EB /* NSData+GIF.m in Sources */,
 				073DBD461AE7712F009B49EB /* SDWebImageCompat.m in Sources */,
