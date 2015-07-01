@@ -15,6 +15,7 @@
 #import "MatchWarViewCell.h"
 #import "WYTabBarViewController.h"
 #import "PublishMatchWarViewController.h"
+#import "MatchWarDetailViewController.h"
 
 @interface MatchWarViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -240,10 +241,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     WYMatchWarInfo *matchWarInfo = _matchInfos[indexPath.row];
-    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/detail?id=%@&userId=%@&token=%@", [WYEngine shareInstance].baseUrl, matchWarInfo.mId, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
-    if (vc) {
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    MatchWarDetailViewController *mVc = [[MatchWarDetailViewController alloc] init];
+    mVc.matchWarInfo = matchWarInfo;
+    [self.navigationController pushViewController:mVc animated:YES];
+    
+//    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/detail?id=%@&userId=%@&token=%@", [WYEngine shareInstance].baseUrl, matchWarInfo.mId, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
+//    if (vc) {
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];

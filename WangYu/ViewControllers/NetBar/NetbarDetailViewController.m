@@ -24,6 +24,8 @@
 #import "WYLinkerHandler.h"
 #import "AppDelegate.h"
 #import "TTTAttributedLabel.h"
+#import "PublishMatchWarViewController.h"
+#import "MatchWarDetailViewController.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate,WYPhotoGroupDelegate>
 {
@@ -330,10 +332,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     WYMatchWarInfo *matchWarInfo = _netbarInfo.matches[indexPath.row];
-    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/detail?id=%@&userId=%@&token=%@", [WYEngine shareInstance].baseUrl, matchWarInfo.mId, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
-    if (vc) {
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    MatchWarDetailViewController *mVc = [[MatchWarDetailViewController alloc] init];
+    mVc.matchWarInfo = matchWarInfo;
+    [self.navigationController pushViewController:mVc animated:YES];
+    
+//    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/detail?id=%@&userId=%@&token=%@", [WYEngine shareInstance].baseUrl, matchWarInfo.mId, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
+//    if (vc) {
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
 
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
@@ -435,10 +441,12 @@
     if ([[WYEngine shareInstance] needUserLogin:@"注册或登录后才能发起约战"]) {
         return;
     }
-    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/release?userId=%@&token=%@&netbarId=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token, self.netbarInfo.nid] From:self.navigationController];
-    if (vc) {
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    PublishMatchWarViewController *publishVc = [[PublishMatchWarViewController alloc] init];
+    [self.navigationController pushViewController:publishVc animated:YES];
+//    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/release?userId=%@&token=%@&netbarId=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token, self.netbarInfo.nid] From:self.navigationController];
+//    if (vc) {
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
 }
 
 - (IBAction)detailAction:(id)sender {

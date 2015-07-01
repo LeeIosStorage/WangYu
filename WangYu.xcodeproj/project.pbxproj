@@ -309,6 +309,8 @@
 		44C69E251B43B789000BA948 /* PublishSucceedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C69E231B43B789000BA948 /* PublishSucceedViewController.xib */; };
 		44C69E291B43D0B1000BA948 /* MatchWarDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C69E271B43D0B1000BA948 /* MatchWarDetailViewController.m */; };
 		44C69E2A1B43D0B1000BA948 /* MatchWarDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C69E281B43D0B1000BA948 /* MatchWarDetailViewController.xib */; };
+		44C69E2E1B43EF22000BA948 /* MatchCommentViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C69E2C1B43EF22000BA948 /* MatchCommentViewCell.m */; };
+		44C69E2F1B43EF22000BA948 /* MatchCommentViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C69E2D1B43EF22000BA948 /* MatchCommentViewCell.xib */; };
 		44C6AE381B42679200746A54 /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C6AE361B42679200746A54 /* InviteFriendsViewController.m */; };
 		44C6AE391B42679200746A54 /* InviteFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C6AE371B42679200746A54 /* InviteFriendsViewController.xib */; };
 		44C6AE3C1B4271A100746A54 /* PbUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C6AE3B1B4271A100746A54 /* PbUserInfo.m */; };
@@ -958,6 +960,9 @@
 		44C69E261B43D0B1000BA948 /* MatchWarDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchWarDetailViewController.h; sourceTree = "<group>"; };
 		44C69E271B43D0B1000BA948 /* MatchWarDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchWarDetailViewController.m; sourceTree = "<group>"; };
 		44C69E281B43D0B1000BA948 /* MatchWarDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MatchWarDetailViewController.xib; sourceTree = "<group>"; };
+		44C69E2B1B43EF22000BA948 /* MatchCommentViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchCommentViewCell.h; sourceTree = "<group>"; };
+		44C69E2C1B43EF22000BA948 /* MatchCommentViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchCommentViewCell.m; sourceTree = "<group>"; };
+		44C69E2D1B43EF22000BA948 /* MatchCommentViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MatchCommentViewCell.xib; sourceTree = "<group>"; };
 		44C6AE351B42679200746A54 /* InviteFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendsViewController.h; sourceTree = "<group>"; };
 		44C6AE361B42679200746A54 /* InviteFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsViewController.m; sourceTree = "<group>"; };
 		44C6AE371B42679200746A54 /* InviteFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InviteFriendsViewController.xib; sourceTree = "<group>"; };
@@ -2237,6 +2242,9 @@
 				44C6AE431B42786600746A54 /* InviteFriendsViewCell.h */,
 				44C6AE441B42786600746A54 /* InviteFriendsViewCell.m */,
 				44C6AE451B42786600746A54 /* InviteFriendsViewCell.xib */,
+				44C69E2B1B43EF22000BA948 /* MatchCommentViewCell.h */,
+				44C69E2C1B43EF22000BA948 /* MatchCommentViewCell.m */,
+				44C69E2D1B43EF22000BA948 /* MatchCommentViewCell.xib */,
 			);
 			path = MatchWar;
 			sourceTree = "<group>";
@@ -2355,6 +2363,7 @@
 				076E22501B02F73200F33815 /* NetbarSearchViewController.xib in Resources */,
 				0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */,
 				071923D01AF74D8400432531 /* LoginViewController.xib in Resources */,
+				44C69E2F1B43EF22000BA948 /* MatchCommentViewCell.xib in Resources */,
 				3BF8B7BE1B39478F00BBA346 /* MatchApplyViewController.xib in Resources */,
 				07A427AA1B186AF5009197D5 /* WYScrollPage.xib in Resources */,
 				071923D31AF74D8400432531 /* WelcomeViewController.xib in Resources */,
@@ -2484,6 +2493,7 @@
 				44C69E291B43D0B1000BA948 /* MatchWarDetailViewController.m in Sources */,
 				3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */,
 				3BD6E2F91B4142CD00A0EAFB /* OrderDetailViewController.m in Sources */,
+				44C69E2E1B43EF22000BA948 /* MatchCommentViewCell.m in Sources */,
 				077570641B1719CE005C9DC7 /* WYBadgeView.m in Sources */,
 				076219241B15A29400D912A1 /* MessageViewCell.m in Sources */,
 				077BF39C1B18016B00450174 /* UIScrollView+SVPullToRefresh.m in Sources */,
