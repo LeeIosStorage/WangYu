@@ -8,13 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MatchApplyCellDelegate <NSObject>
+
+@required
+-(void) textDidChanged:(id) cell cellContent:(NSString *)content;
+-(void) textDidEditing:(id) cell;
+
+@end
+
 @interface MatchApplyCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UIImageView *rightImageView;
-@property (nonatomic, weak) IBOutlet UIImageView *topline;
-@property (nonatomic, weak) IBOutlet UIImageView *sepline;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UITextField *textField;
+@property (strong, nonatomic) IBOutlet UIImageView *rightImageView;
+@property (nonatomic, strong) IBOutlet UIImageView *topline;
+@property (nonatomic, strong) IBOutlet UIImageView *sepline;
+@property (nonatomic, weak) id<MatchApplyCellDelegate> delegate;
 
 - (void) setbottomLineWithType:(int)type;
 

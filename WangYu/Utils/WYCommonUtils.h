@@ -61,4 +61,6 @@ dispatch_sync(dispatch_get_main_queue(), block);\
 //版本信息
 + (BOOL)isVersion:(NSString *)versionA greaterThanVersion:(NSString *)versionB;
 
++(BOOL) isIphone4;
+
 @end

@@ -149,6 +149,7 @@
     if (indexPath == nil) {
         return;
     }
+    WYMatchInfo *matchInfo = _matchInfos[indexPath.row];
 //    WYMatchInfo* matchInfo = _matchInfos[indexPath.row];
 //    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/web/apply?id=%@&userId=%@&token=%@&round=%d", [WYEngine shareInstance].baseUrl, self.activityId , [WYEngine shareInstance].uid, [WYEngine shareInstance].token, matchInfo.round] From:self.navigationController];
 //    if (vc) {
@@ -156,6 +157,8 @@
 //    }
     
     MatchApplyViewController *maVc = [[MatchApplyViewController alloc] init];
+    maVc.activityId = self.activityId;
+    maVc.matchInfo = matchInfo;
     [self.navigationController pushViewController:maVc animated:YES];
 }
 

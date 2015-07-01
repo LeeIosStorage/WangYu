@@ -7,7 +7,11 @@
 //
 
 #import "WYSuperViewController.h"
+#import "WYMatchInfo.h"
 
 @interface MatchApplyViewController : WYSuperViewController
+
+@property (nonatomic, strong) NSString *activityId;
+@property (nonatomic, strong) WYMatchInfo *matchInfo;
 
 @end

@@ -175,4 +175,9 @@
     return FALSE;
 }
 
++(BOOL) isIphone4
+{
+    return ([[UIScreen mainScreen] bounds].size.height == 480);
+}
+
 @end
