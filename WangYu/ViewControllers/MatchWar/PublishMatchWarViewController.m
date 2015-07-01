@@ -21,6 +21,10 @@
 #import "InviteFriendsViewController.h"
 #import "PbUserInfo.h"
 #import <AddressBook/AddressBook.h>
+#import "WYEngine.h"
+#import "WYProgressHUD.h"
+#import "WYMatchWarInfo.h"
+#import "PublishSucceedViewController.h"
 
 #define Title_maxTextLength 18
 
@@ -49,6 +53,7 @@
     //联系方式
     NSDictionary *_matchContactDic;
     NSString *_matchContactWay;
+    NSString *_matchContactWayToServer;
     
     ABAddressBookRef _addressBook;
 }
@@ -162,6 +167,71 @@
 }
 */
 
+- (BOOL)isCanPublish{
+    
+    if (_matchGameName.length > 0 && self.textField.text.length > 0 && _matchDateString.length > 0 && _matchWay >= 1 && _matchPeopleNumber.length > 0 && _matchContactWay.length > 0) {
+        return YES;
+    }
+    return NO;
+}
+
+-(void)publishMatchWar{
+    
+    NSString *itemId = [_matchGameDic stringObjectForKey:@"item_id"];
+    NSString *server = [_matchGameDic stringObjectForKey:@"game_server"];
+    
+    NSMutableArray *invitedPhones = nil;
+    if (_invitePeopleData.count > 0) {
+        invitedPhones = [NSMutableArray array];
+        for (PbUserInfo *pbUserInfo in _invitePeopleData) {
+            if (pbUserInfo.phoneNUm.length > 0) {
+                [invitedPhones addObject:pbUserInfo.phoneNUm];
+            }
+        }
+    }
+    
+    [WYProgressHUD AlertLoading:@"约战发布中..." At:self.view];
+    __weak PublishMatchWarViewController *weakSelf = self;
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] matchPublishWithUid:[WYEngine shareInstance].uid title:_textField.text itemId:itemId server:server way:_matchWay netbarId:_netbarInfo.nid beginTime:_matchDateString num:_peopleNumber contactWay:_matchContactWayToServer intro:_matchIntro invitedPhones:invitedPhones tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"发布失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+//            return;
+        }
+        NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
+        WYMatchWarInfo *matchInfo = [[WYMatchWarInfo alloc] init];
+        [matchInfo setMatchWarInfoByJsonDic:object];
+        matchInfo.mId = [[object objectForKey:@"battle_id"] description];
+        if (_netbarInfo.nid.length > 0) {
+            matchInfo.netbarId = _netbarInfo.nid;
+        }
+        [weakSelf goToSucceedViewController:matchInfo];
+        
+    }tag:tag];
+}
+
+-(void)goToSucceedViewController:(WYMatchWarInfo*)matchInfo{
+    PublishSucceedViewController *succeedVc = [[PublishSucceedViewController alloc] init];
+    succeedVc.matchWarInfo = matchInfo;
+    
+    UINavigationController *navVc = [self navigationController];
+    //去掉衍生出来的部分viewController
+    NSMutableArray *viewControllers = [NSMutableArray array];
+    for (id vc in navVc.viewControllers) {
+        if ([NSStringFromClass([vc class]) isEqualToString:@"PublishMatchWarViewController"]) {
+            continue;
+        }
+        [viewControllers addObject:vc];
+    }
+    [viewControllers addObject:succeedVc];
+    [[self navigationController] setViewControllers:viewControllers animated:YES];
+}
+
 #pragma mark - custom
 -(void)refreshHeadViewShowUI{
     
@@ -207,6 +277,9 @@
     NSHourCalendarUnit | NSMinuteCalendarUnit |NSSecondCalendarUnit;
     NSDateComponents *compsNow = [calender components:unitFlags fromDate:[NSDate date]];
     _datePicker.minimumDate = [calender dateFromComponents:compsNow];
+    
+    compsNow.day += 7;
+    _datePicker.maximumDate = [calender dateFromComponents:compsNow];
     
     //邀请人GridView
     CGFloat inviteContainerViewHeight = 85;
@@ -264,6 +337,8 @@
     self.bottomButton.titleLabel.font = SKIN_FONT_FROMNAME(15);
     self.bottomButton.layer.cornerRadius = 4;
     self.bottomButton.layer.masksToBounds = YES;
+    
+    self.bottomButton.enabled = [self isCanPublish];
     if (self.bottomButton.enabled) {
         self.bottomButton.backgroundColor = SKIN_COLOR;
     }else{
@@ -281,6 +356,7 @@
 //人数选择
 -(void)peopleNumberChoose{
     
+    [self pickerComfirm];
     UIView *Pickermask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     Pickermask.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     [[UIApplication sharedApplication].keyWindow addSubview:Pickermask];
@@ -322,6 +398,7 @@
 //时间选择
 -(void)showDatePicker{
     
+    [self datePickerValueChanged:nil];
     UIView *Pickermask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     Pickermask.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     [[UIApplication sharedApplication].keyWindow addSubview:Pickermask];
@@ -397,17 +474,25 @@
 }
 
 -(IBAction)deletePeopleAction:(id)sender{
+    
     _invitePeopleGridView.editing = !_invitePeopleGridView.editing;
     [self refreshInviteDeleteButton];
 }
 
 -(IBAction)submitAction:(id)sender{
-    
+    [self publishMatchWar];
 }
 
 - (IBAction)datePickerValueChanged:(id)sender{
     _matchDate = _datePicker.date;
-    _matchDateString = [WYUIUtils dateDiscriptionFromDate:_matchDate];
+    
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:usLocale];
+    _matchDateString = [dateFormatter stringFromDate:_matchDate];
+    
+//    _matchDateString = [WYUIUtils dateDiscriptionFromDate:_matchDate];
     [self.tableView reloadData];
 }
 
@@ -630,6 +715,8 @@
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
     
+    [self.textField resignFirstResponder];
+    
 //    NSDictionary *cellDicts = [[self tableDataModule] objectForKey:[NSString stringWithFormat:@"s%d", (int)indexPath.section]];
 //    NSDictionary *rowDicts = [cellDicts objectForKey:[NSString stringWithFormat:@"r%d", (int)indexPath.row]];
     if (indexPath.section == 0) {
@@ -730,6 +817,7 @@
 #pragma mark - UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
+    [self refreshBottomViewShow];
     if ([string isEqualToString:@"\n"]) {
         return NO;
     }
@@ -746,6 +834,7 @@
 }
 - (void)checkTextChaneg:(NSNotification *)notif
 {
+    [self refreshBottomViewShow];
     if (_textField.markedTextRange != nil) {
         return;
     }
@@ -782,8 +871,8 @@
 - (void)selectGameViewControllerWithGameDic:(NSDictionary*)gameDic{
     WYLog(@"gameDic %@",gameDic);
     _matchGameDic = gameDic;
-    if ([gameDic stringObjectForKey:@"gameName"] && [gameDic stringObjectForKey:@"game_server"]) {
-        _matchGameName = [NSString stringWithFormat:@"%@•%@",[gameDic stringObjectForKey:@"gameName"],[gameDic stringObjectForKey:@"game_server"]];
+    if ([gameDic stringObjectForKey:@"item_name"] && [gameDic stringObjectForKey:@"game_server"]) {
+        _matchGameName = [NSString stringWithFormat:@"%@•%@",[gameDic stringObjectForKey:@"item_name"],[gameDic stringObjectForKey:@"game_server"]];
     }
     [self refreshHeadViewShowUI];
 }
@@ -800,10 +889,8 @@
 }
 #pragma mark - WYInputTextViewControllerDelegate
 - (void)inputTextViewControllerWithText:(NSString*)text{
-    if (text.length > 0) {
-        _matchIntro = text;
-        [self.tableView reloadData];
-    }
+    _matchIntro = text;
+    [self.tableView reloadData];
 }
 #pragma mark - ContactWayViewControllerDelegate
 -(void)contactWayViewControllerWithContactDic:(NSDictionary *)contactDic{
@@ -823,17 +910,22 @@
             if (value.length > 0) {
                 if ([key isEqualToString:contact_YY]) {
                     _matchContactWay = [NSString stringWithFormat:@"YY房号:%@",value];
+                    _matchContactWayToServer = [NSString stringWithFormat:@"YY房号:%@",value];
                 }else if ([key isEqualToString:contact_WX]){
                     if (_matchContactWay.length > 0) {
                         _matchContactWay = [NSString stringWithFormat:@"%@\n微信号:%@",_matchContactWay,value];
+                        _matchContactWayToServer = [NSString stringWithFormat:@"%@ 微信号:%@",_matchContactWayToServer,value];
                     }else{
                         _matchContactWay = [NSString stringWithFormat:@"微信号:%@",value];
+                        _matchContactWayToServer = [NSString stringWithFormat:@"微信号:%@",value];
                     }
                 }else if ([key isEqualToString:contact_QQ]){
                     if (_matchContactWay.length > 0) {
                         _matchContactWay = [NSString stringWithFormat:@"%@\nQQ:%@",_matchContactWay,value];
+                        _matchContactWayToServer = [NSString stringWithFormat:@"%@ QQ:%@",_matchContactWayToServer,value];
                     }else{
                         _matchContactWay = [NSString stringWithFormat:@"QQ:%@",value];
+                        _matchContactWayToServer = [NSString stringWithFormat:@"QQ:%@",value];
                     }
                 }
             }

@@ -82,6 +82,9 @@
             self.shareImage = [UIImage imageNamed:@"netbar_load_icon"];
         }
     }
+    if (self.matchWarInfo) {
+        
+    }
 }
 
 

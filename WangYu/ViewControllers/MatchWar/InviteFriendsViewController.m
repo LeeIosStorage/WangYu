@@ -253,7 +253,7 @@
     NSArray *array = [_indexAllContacts objectAtIndex:indexPath.section];
     PbUserInfo *pbUserInfo = array[indexPath.row];
     if (_selectedUserPbs) {
-        for (PbUserInfo *info in array) {
+        for (PbUserInfo *info in _selectedUserPbs) {
             if ([info.phoneNUm isEqualToString:pbUserInfo.phoneNUm]) {
                 pbUserInfo.selected = YES;
                 break;

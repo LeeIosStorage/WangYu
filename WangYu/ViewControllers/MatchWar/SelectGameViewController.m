@@ -10,6 +10,8 @@
 #import "SettingViewCell.h"
 #import "WYInputViewController.h"
 #import "PublishMatchWarViewController.h"
+#import "WYEngine.h"
+#import "WYProgressHUD.h"
 
 @interface SelectGameViewController ()<WYInputViewControllerDelegate>
 
@@ -27,11 +29,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     _gameLists = [[NSMutableArray alloc] init];
-    [_gameLists addObject:@{@"icon":@"game_crossFire_icon",@"gameName":@"英雄联盟"}];
-    [_gameLists addObject:@{@"icon":@"game_crossFire_icon",@"gameName":@"DOTA2"}];
-    [_gameLists addObject:@{@"icon":@"game_crossFire_icon",@"gameName":@"星际争霸"}];
-    [_gameLists addObject:@{@"icon":@"game_crossFire_icon",@"gameName":@"穿越火线"}];
-    [self.tableView reloadData];
+//    [_gameLists addObject:@{@"icon":@"game_crossFire_icon",@"gameName":@"英雄联盟"}];
+//    [_gameLists addObject:@{@"icon":@"game_crossFire_icon",@"gameName":@"DOTA2"}];
+//    [_gameLists addObject:@{@"icon":@"game_crossFire_icon",@"gameName":@"星际争霸"}];
+//    [_gameLists addObject:@{@"icon":@"game_crossFire_icon",@"gameName":@"穿越火线"}];
+//    [self.tableView reloadData];
+    
+    [self getCacheMatchGames];
+    [self refreshMatchGameList];
     
     [self refreshViewUI];
 }
@@ -53,6 +58,56 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)getCacheMatchGames{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] addGetCacheTag:tag];
+    [[WYEngine shareInstance] getMatchGameItemsWithUid:[WYEngine shareInstance].uid tag:tag];
+    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+        if (jsonRet == nil) {
+            //...
+        }else{
+            weakSelf.gameLists = [[NSMutableArray alloc] init];
+            NSArray *object = [jsonRet arrayObjectForKey:@"object"];
+            for (NSDictionary *dic in object) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                [weakSelf.gameLists addObject:dic];
+            }
+            
+            [weakSelf.tableView reloadData];
+        }
+    }];
+    
+}
+-(void)refreshMatchGameList{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getMatchGameItemsWithUid:[WYEngine shareInstance].uid tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        weakSelf.gameLists = [[NSMutableArray alloc] init];
+        NSArray *object = [jsonRet arrayObjectForKey:@"object"];
+        for (NSDictionary *dic in object) {
+            if (![dic isKindOfClass:[NSDictionary class]]) {
+                continue;
+            }
+            [weakSelf.gameLists addObject:dic];
+        }
+        
+        [weakSelf.tableView reloadData];
+        
+    }tag:tag];
+}
 
 -(void)refreshViewUI{
     self.tipLabel.font = SKIN_FONT_FROMNAME(12);
@@ -112,8 +167,8 @@
     cell.titleLabel.frame = frame;
     
     NSDictionary *rowDicts = _gameLists[indexPath.row];
-    cell.titleLabel.text = [rowDicts objectForKey:@"gameName"];
-    cell.avatarImageView.image = [UIImage imageNamed:[rowDicts objectForKey:@"icon"]];
+    cell.titleLabel.text = [rowDicts objectForKey:@"item_name"];
+//    cell.avatarImageView.image = [UIImage imageNamed:[rowDicts objectForKey:@"icon"]];
     
     return cell;
 }
