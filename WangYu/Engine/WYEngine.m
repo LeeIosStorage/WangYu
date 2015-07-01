@@ -1509,4 +1509,59 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
+#pragma mark - Match
+- (BOOL)getMatchGameItemsWithUid:(NSString *)uid tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/item",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)matchPublishWithUid:(NSString *)uid title:(NSString *)title itemId:(NSString *)itemId server:(NSString *)server way:(int)way netbarId:(NSString *)netbarId beginTime:(NSString *)beginTime num:(int)num contactWay:(NSString *)contactWay intro:(NSString *)intro invitedPhones:(NSArray *)invitedPhones tag:(int)tag{
+    
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (title) {
+        [params setObject:title forKey:@"title"];
+    }
+    if (itemId) {
+        [params setObject:itemId forKey:@"itemId"];
+    }
+    if (server) {
+        [params setObject:server forKey:@"server"];
+    }
+    [params setObject:[NSNumber numberWithInt:way] forKey:@"way"];
+    [params setObject:[NSNumber numberWithInt:num] forKey:@"num"];
+    if (beginTime) {
+        [params setObject:beginTime forKey:@"beginTime"];
+    }
+    if (contactWay) {
+        [params setObject:contactWay forKey:@"contactWay"];
+    }
+    if (intro) {
+        [params setObject:intro forKey:@"intro"];
+    }
+    if (netbarId) {
+        [params setObject:netbarId forKey:@"netbarId"];
+    }
+    if (invitedPhones != nil && invitedPhones.count > 0) {
+        NSString * pidsString;
+        pidsString = [WYCommonUtils stringSplitWithCommaForIds:invitedPhones];
+        [params setObject:pidsString forKey:@"invitedMan"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/publishBattle",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+    
+}
+
 @end

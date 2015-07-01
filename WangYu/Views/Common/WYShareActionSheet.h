@@ -10,6 +10,7 @@
 #import "WYNetbarInfo.h"
 #import "WYActivityInfo.h"
 #import "WYGameInfo.h"
+#import "WYMatchWarInfo.h"
 
 @protocol WYShareActionSheetDelegate <NSObject>
 @optional
@@ -25,6 +26,8 @@
 @property (nonatomic, strong) WYActivityInfo *activityInfo;
 
 @property (nonatomic, strong) WYGameInfo *gameInfo;
+
+@property (nonatomic, strong) WYMatchWarInfo *matchWarInfo;//约战
 
 -(void) showShareAction;
 

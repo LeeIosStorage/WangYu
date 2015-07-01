@@ -15,10 +15,23 @@
 #import "WYInputTextViewController.h"
 #import "ContactWayViewController.h"
 #import "TTTAttributedLabel.h"
+#import "UIImageView+WebCache.h"
+#import "GMGridViewLayoutStrategies.h"
+#import "GMGridViewCell+Extended.h"
+#import "InviteFriendsViewController.h"
+#import "PbUserInfo.h"
+#import <AddressBook/AddressBook.h>
+#import "WYEngine.h"
+#import "WYProgressHUD.h"
+#import "WYMatchWarInfo.h"
+#import "PublishSucceedViewController.h"
 
 #define Title_maxTextLength 18
 
-@interface PublishMatchWarViewController ()<UITableViewDelegate,UITableViewDataSource,SelectGameViewControllerDelegate,UIPickerViewDataSource, UIPickerViewDelegate,NetbarSearchViewControllerDelegate,WYInputTextViewControllerDelegate,ContactWayViewControllerDelegate>
+#define GRID_IMAGE_SIZE       31
+#define item_spacing          7
+
+@interface PublishMatchWarViewController ()<UITableViewDelegate,UITableViewDataSource,SelectGameViewControllerDelegate,UIPickerViewDataSource, UIPickerViewDelegate,NetbarSearchViewControllerDelegate,WYInputTextViewControllerDelegate,ContactWayViewControllerDelegate,GMGridViewDataSource, GMGridViewActionDelegate>
 {
     NSString *_matchGameName;
     NSDictionary *_matchGameDic;
@@ -40,7 +53,9 @@
     //联系方式
     NSDictionary *_matchContactDic;
     NSString *_matchContactWay;
+    NSString *_matchContactWayToServer;
     
+    ABAddressBookRef _addressBook;
 }
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
@@ -58,9 +73,11 @@
 @property (nonatomic, strong) IBOutlet UILabel *matchContactTipLabel;
 @property (nonatomic, strong) IBOutlet TTTAttributedLabel *matchContactLabel;
 
+@property (nonatomic, strong) NSMutableArray *invitePeopleData;
 @property (nonatomic, strong) IBOutlet UIView *inviteContainerView;
 @property (nonatomic, strong) IBOutlet UILabel *inviteTipLabel;
-@property (nonatomic, strong) IBOutlet UIView *invitePeopleGridView;
+@property (nonatomic, strong) IBOutlet UIButton *inviteDeleteButton;
+@property (nonatomic, strong) IBOutlet GMGridView *invitePeopleGridView;
 
 @property (nonatomic, strong) IBOutlet UIView *bottomContainerView;
 @property (nonatomic, strong) IBOutlet UIButton *bottomButton;
@@ -82,6 +99,9 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (_addressBook) {
+        CFRelease(_addressBook);
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -97,8 +117,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    CFErrorRef myError = NULL;
+    _addressBook = ABAddressBookCreateWithOptions(NULL, &myError);
+    
     self.bottomButton.enabled = NO;
     _matchContactDic = [[NSDictionary alloc] init];
+    _invitePeopleData = [[NSMutableArray alloc] init];
+//    for (int i = 0; i < 100; i ++) {
+//        [_invitePeopleData addObject:@{@"phone":@"13803833466"}];
+//    }
+    
+    //GridView
+    _invitePeopleGridView.backgroundColor = [UIColor clearColor];
+    _invitePeopleGridView.style = GMGridViewStyleSwap;
+    _invitePeopleGridView.itemSpacing = item_spacing;
+    _invitePeopleGridView.minEdgeInsets = UIEdgeInsetsMake(3, 0, 0, 0);
+    _invitePeopleGridView.centerGrid = NO;
+    _invitePeopleGridView.layoutStrategy = [GMGridViewLayoutStrategyFactory strategyFromType:GMGridViewLayoutVertical];
+    _invitePeopleGridView.actionDelegate = self;
+    _invitePeopleGridView.showsHorizontalScrollIndicator = NO;
+    _invitePeopleGridView.showsVerticalScrollIndicator = NO;
+    _invitePeopleGridView.dataSource = self;
+    _invitePeopleGridView.enableEditOnLongPress = YES;
+    _invitePeopleGridView.disableEditOnEmptySpaceTap = YES;
+    
     
     _peopleNumbers = @[@(2),@(3),@(4),@(5),@(6),@(7),@(8),@(9),@(10),@(11),@(12),@(13),@(14),@(15),@(16),@(17),@(18),@(19),@(20)];
     
@@ -123,6 +166,71 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (BOOL)isCanPublish{
+    
+    if (_matchGameName.length > 0 && self.textField.text.length > 0 && _matchDateString.length > 0 && _matchWay >= 1 && _matchPeopleNumber.length > 0 && _matchContactWay.length > 0) {
+        return YES;
+    }
+    return NO;
+}
+
+-(void)publishMatchWar{
+    
+    NSString *itemId = [_matchGameDic stringObjectForKey:@"item_id"];
+    NSString *server = [_matchGameDic stringObjectForKey:@"game_server"];
+    
+    NSMutableArray *invitedPhones = nil;
+    if (_invitePeopleData.count > 0) {
+        invitedPhones = [NSMutableArray array];
+        for (PbUserInfo *pbUserInfo in _invitePeopleData) {
+            if (pbUserInfo.phoneNUm.length > 0) {
+                [invitedPhones addObject:pbUserInfo.phoneNUm];
+            }
+        }
+    }
+    
+    [WYProgressHUD AlertLoading:@"约战发布中..." At:self.view];
+    __weak PublishMatchWarViewController *weakSelf = self;
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] matchPublishWithUid:[WYEngine shareInstance].uid title:_textField.text itemId:itemId server:server way:_matchWay netbarId:_netbarInfo.nid beginTime:_matchDateString num:_peopleNumber contactWay:_matchContactWayToServer intro:_matchIntro invitedPhones:invitedPhones tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"发布失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+//            return;
+        }
+        NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
+        WYMatchWarInfo *matchInfo = [[WYMatchWarInfo alloc] init];
+        [matchInfo setMatchWarInfoByJsonDic:object];
+        matchInfo.mId = [[object objectForKey:@"battle_id"] description];
+        if (_netbarInfo.nid.length > 0) {
+            matchInfo.netbarId = _netbarInfo.nid;
+        }
+        [weakSelf goToSucceedViewController:matchInfo];
+        
+    }tag:tag];
+}
+
+-(void)goToSucceedViewController:(WYMatchWarInfo*)matchInfo{
+    PublishSucceedViewController *succeedVc = [[PublishSucceedViewController alloc] init];
+    succeedVc.matchWarInfo = matchInfo;
+    
+    UINavigationController *navVc = [self navigationController];
+    //去掉衍生出来的部分viewController
+    NSMutableArray *viewControllers = [NSMutableArray array];
+    for (id vc in navVc.viewControllers) {
+        if ([NSStringFromClass([vc class]) isEqualToString:@"PublishMatchWarViewController"]) {
+            continue;
+        }
+        [viewControllers addObject:vc];
+    }
+    [viewControllers addObject:succeedVc];
+    [[self navigationController] setViewControllers:viewControllers animated:YES];
+}
 
 #pragma mark - custom
 -(void)refreshHeadViewShowUI{
@@ -170,10 +278,47 @@
     NSDateComponents *compsNow = [calender components:unitFlags fromDate:[NSDate date]];
     _datePicker.minimumDate = [calender dateFromComponents:compsNow];
     
+    compsNow.day += 7;
+    _datePicker.maximumDate = [calender dateFromComponents:compsNow];
     
+    //邀请人GridView
+    CGFloat inviteContainerViewHeight = 85;
+    self.invitePeopleGridView.hidden = YES;
+    if (self.invitePeopleData.count > 0) {
+        self.invitePeopleGridView.hidden = NO;
+        int peopleCount = (int)self.invitePeopleData.count;
+        int lineCount = (SCREEN_WIDTH - 12*2)/(GRID_IMAGE_SIZE+item_spacing);
+        int rowCount = 0;
+        if (peopleCount%lineCount == 0) {
+            rowCount = peopleCount/lineCount;
+        }else{
+            rowCount = peopleCount/lineCount + 1;
+        }
+        if (rowCount > 3) {
+            rowCount = 3;
+        }
+        
+        CGRect frame1 = self.invitePeopleGridView.frame;
+        frame1.size.width = (GRID_IMAGE_SIZE+item_spacing)*peopleCount;
+        if (frame1.size.width > (SCREEN_WIDTH - 12*2)) {
+            frame1.size.width = (SCREEN_WIDTH - 12*2)+7;
+        }
+        frame1.size.height = (GRID_IMAGE_SIZE+item_spacing)*rowCount-3;
+        if (frame1.size.height < GRID_IMAGE_SIZE) {
+            frame1.size.height = GRID_IMAGE_SIZE;
+        }
+        self.invitePeopleGridView.frame = frame1;
+        
+        inviteContainerViewHeight = self.invitePeopleGridView.frame.origin.y + self.invitePeopleGridView.frame.size.height +10;
+    }
+    [self.invitePeopleGridView reloadData];
+    
+    //邀请view
     frame = self.inviteContainerView.frame;
     frame.origin.y = self.matchContactView.frame.origin.y + self.matchContactView.frame.size.height + 10;
+    frame.size.height = inviteContainerViewHeight;
     self.inviteContainerView.frame = frame;
+    
     
     frame = self.footerView.frame;
     frame.size.height = self.inviteContainerView.frame.origin.y + self.inviteContainerView.frame.size.height;
@@ -192,16 +337,26 @@
     self.bottomButton.titleLabel.font = SKIN_FONT_FROMNAME(15);
     self.bottomButton.layer.cornerRadius = 4;
     self.bottomButton.layer.masksToBounds = YES;
+    
+    self.bottomButton.enabled = [self isCanPublish];
     if (self.bottomButton.enabled) {
         self.bottomButton.backgroundColor = SKIN_COLOR;
     }else{
         self.bottomButton.backgroundColor = UIColorToRGB(0xe4e4e4);
     }
 }
+-(void)refreshInviteDeleteButton{
+    if (_invitePeopleGridView.editing) {
+        [_inviteDeleteButton setImage:[UIImage imageNamed:@"match_publish_check_icon"] forState:UIControlStateNormal];
+    }else{
+        [_inviteDeleteButton setImage:[UIImage imageNamed:@"match_publish_delete_icon"] forState:UIControlStateNormal];
+    }
+}
 
 //人数选择
 -(void)peopleNumberChoose{
     
+    [self pickerComfirm];
     UIView *Pickermask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     Pickermask.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     [[UIApplication sharedApplication].keyWindow addSubview:Pickermask];
@@ -243,6 +398,7 @@
 //时间选择
 -(void)showDatePicker{
     
+    [self datePickerValueChanged:nil];
     UIView *Pickermask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     Pickermask.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     [[UIApplication sharedApplication].keyWindow addSubview:Pickermask];
@@ -305,20 +461,38 @@
 }
 
 -(IBAction)addPeopleAction:(id)sender{
-    
+    WS(weakSelf);
+    InviteFriendsViewController *inviteFriendsVc = [[InviteFriendsViewController alloc] init];
+    inviteFriendsVc.slePbUserInfos = self.invitePeopleData;
+    inviteFriendsVc.sendInviteFriendsCallBack = ^(NSArray *array){
+        
+        weakSelf.invitePeopleData = [NSMutableArray arrayWithArray:array];
+//        [weakSelf.invitePeopleGridView reloadData];
+        [weakSelf refreshHeadViewShowUI];
+    };
+    [self.navigationController pushViewController:inviteFriendsVc animated:YES];
 }
 
 -(IBAction)deletePeopleAction:(id)sender{
     
+    _invitePeopleGridView.editing = !_invitePeopleGridView.editing;
+    [self refreshInviteDeleteButton];
 }
 
 -(IBAction)submitAction:(id)sender{
-    
+    [self publishMatchWar];
 }
 
 - (IBAction)datePickerValueChanged:(id)sender{
     _matchDate = _datePicker.date;
-    _matchDateString = [WYUIUtils dateDiscriptionFromDate:_matchDate];
+    
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:usLocale];
+    _matchDateString = [dateFormatter stringFromDate:_matchDate];
+    
+//    _matchDateString = [WYUIUtils dateDiscriptionFromDate:_matchDate];
     [self.tableView reloadData];
 }
 
@@ -541,6 +715,8 @@
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
     
+    [self.textField resignFirstResponder];
+    
 //    NSDictionary *cellDicts = [[self tableDataModule] objectForKey:[NSString stringWithFormat:@"s%d", (int)indexPath.section]];
 //    NSDictionary *rowDicts = [cellDicts objectForKey:[NSString stringWithFormat:@"r%d", (int)indexPath.row]];
     if (indexPath.section == 0) {
@@ -559,6 +735,80 @@
     }
 }
 
+#pragma mark GMGridViewDataSource
+- (NSInteger)numberOfItemsInGMGridView:(GMGridView *)gridView
+{
+    return _invitePeopleData.count;
+    
+}
+- (CGSize)GMGridView:(GMGridView *)gridView sizeForItemsInInterfaceOrientation:(UIInterfaceOrientation)orientation {
+    return CGSizeMake(GRID_IMAGE_SIZE, GRID_IMAGE_SIZE);
+}
+
+
+- (GMGridViewCell *)GMGridView:(GMGridView *)gridView cellForItemAtIndex:(NSInteger)index
+{
+    GMGridViewCell *cell = [gridView dequeueReusableCell];
+    
+    if (!cell)
+    {
+        cell = [[GMGridViewCell alloc] init];
+        cell.deleteButtonIcon = [UIImage imageNamed:@"match_publish_remove_icon"];
+        cell.deleteButtonOffset = CGPointMake(12, -12);
+        UIImageView* imageview = [[UIImageView alloc] init];
+        imageview.contentMode = UIViewContentModeScaleAspectFill;
+        imageview.clipsToBounds = YES;
+        imageview.layer.masksToBounds = YES;
+        imageview.layer.cornerRadius = GRID_IMAGE_SIZE/2;
+        cell.contentView = imageview;
+    }
+    
+    UIImageView* imageiew = (UIImageView*)cell.contentView;
+    id info = [self.invitePeopleData objectAtIndex:index];
+    if ([info isKindOfClass:[PbUserInfo class]]) {
+        PbUserInfo* pbUserInfo = (PbUserInfo*)info;
+        if (_addressBook) {
+            ABRecordRef person = ABAddressBookGetPersonWithRecordID(_addressBook, pbUserInfo.recordId);
+            if(ABPersonHasImageData(person)){
+                CFDataRef dataRef = ABPersonCopyImageData(person);
+                UIImage *image = [UIImage imageWithData:(__bridge NSData *)dataRef];
+                if(dataRef) CFRelease(dataRef);
+                [imageiew setImage:image];
+            }else{
+                imageiew.image = [UIImage imageNamed:@"personal_avatar_default_icon_small"];
+            }
+        }else{
+            imageiew.image = [UIImage imageNamed:@"personal_avatar_default_icon_small"];
+        }
+    }else{
+        imageiew.image = [UIImage imageNamed:@"personal_avatar_default_icon_small"];
+    }
+    
+    return cell;
+}
+-(BOOL)GMGridView:(GMGridView *)gridView canDeleteItemAtIndex:(NSInteger)index
+{
+    return YES;
+}
+#pragma mark GMGridViewActionDelegate
+-(void)GMGridView:(GMGridView *)gridView processDeleteActionForItemAtIndex:(NSInteger)index {
+    [self.invitePeopleData removeObjectAtIndex:index];
+    [self.invitePeopleGridView removeObjectAtIndex:index withAnimation:GMGridViewItemAnimationFade];
+//    [self.invitePeopleGridView reloadData];
+    [self refreshHeadViewShowUI];
+}
+- (void)GMGridView:(GMGridView *)gridView changedEdit:(BOOL)edit{
+    [self refreshInviteDeleteButton];
+}
+- (BOOL)GMGridView:(GMGridView *)gridView didLongTapOnItemAtIndex:(NSInteger)position{
+    
+    return YES;
+}
+- (void)GMGridView:(GMGridView *)gridView didTapOnItemAtIndex:(NSInteger)position
+{
+    NSLog(@"Did tap at index %ld", position);
+}
+
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     [self.textField resignFirstResponder];
@@ -567,6 +817,7 @@
 #pragma mark - UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
+    [self refreshBottomViewShow];
     if ([string isEqualToString:@"\n"]) {
         return NO;
     }
@@ -583,6 +834,7 @@
 }
 - (void)checkTextChaneg:(NSNotification *)notif
 {
+    [self refreshBottomViewShow];
     if (_textField.markedTextRange != nil) {
         return;
     }
@@ -619,8 +871,8 @@
 - (void)selectGameViewControllerWithGameDic:(NSDictionary*)gameDic{
     WYLog(@"gameDic %@",gameDic);
     _matchGameDic = gameDic;
-    if ([gameDic stringObjectForKey:@"gameName"] && [gameDic stringObjectForKey:@"game_server"]) {
-        _matchGameName = [NSString stringWithFormat:@"%@•%@",[gameDic stringObjectForKey:@"gameName"],[gameDic stringObjectForKey:@"game_server"]];
+    if ([gameDic stringObjectForKey:@"item_name"] && [gameDic stringObjectForKey:@"game_server"]) {
+        _matchGameName = [NSString stringWithFormat:@"%@•%@",[gameDic stringObjectForKey:@"item_name"],[gameDic stringObjectForKey:@"game_server"]];
     }
     [self refreshHeadViewShowUI];
 }
@@ -637,10 +889,8 @@
 }
 #pragma mark - WYInputTextViewControllerDelegate
 - (void)inputTextViewControllerWithText:(NSString*)text{
-    if (text.length > 0) {
-        _matchIntro = text;
-        [self.tableView reloadData];
-    }
+    _matchIntro = text;
+    [self.tableView reloadData];
 }
 #pragma mark - ContactWayViewControllerDelegate
 -(void)contactWayViewControllerWithContactDic:(NSDictionary *)contactDic{
@@ -660,17 +910,22 @@
             if (value.length > 0) {
                 if ([key isEqualToString:contact_YY]) {
                     _matchContactWay = [NSString stringWithFormat:@"YY房号:%@",value];
+                    _matchContactWayToServer = [NSString stringWithFormat:@"YY房号:%@",value];
                 }else if ([key isEqualToString:contact_WX]){
                     if (_matchContactWay.length > 0) {
                         _matchContactWay = [NSString stringWithFormat:@"%@\n微信号:%@",_matchContactWay,value];
+                        _matchContactWayToServer = [NSString stringWithFormat:@"%@ 微信号:%@",_matchContactWayToServer,value];
                     }else{
                         _matchContactWay = [NSString stringWithFormat:@"微信号:%@",value];
+                        _matchContactWayToServer = [NSString stringWithFormat:@"微信号:%@",value];
                     }
                 }else if ([key isEqualToString:contact_QQ]){
                     if (_matchContactWay.length > 0) {
                         _matchContactWay = [NSString stringWithFormat:@"%@\nQQ:%@",_matchContactWay,value];
+                        _matchContactWayToServer = [NSString stringWithFormat:@"%@ QQ:%@",_matchContactWayToServer,value];
                     }else{
                         _matchContactWay = [NSString stringWithFormat:@"QQ:%@",value];
+                        _matchContactWayToServer = [NSString stringWithFormat:@"QQ:%@",value];
                     }
                 }
             }

@@ -14,6 +14,8 @@
                 <outlet property="footerView" destination="Onv-gf-tHn" id="dVj-LG-WfZ"/>
                 <outlet property="headView" destination="Hyl-ns-SXG" id="5co-UP-A1t"/>
                 <outlet property="inviteContainerView" destination="l6V-cc-E10" id="haq-Z5-n2g"/>
+                <outlet property="inviteDeleteButton" destination="K7B-GQ-bRE" id="2eU-C7-6ZA"/>
+                <outlet property="invitePeopleGridView" destination="Iv4-sC-OAR" id="xuM-F7-dPs"/>
                 <outlet property="inviteTipLabel" destination="NKR-iJ-SbT" id="jCh-kx-NP9"/>
                 <outlet property="matchContactLabel" destination="jCU-6M-LX8" id="udU-Pl-HdN"/>
                 <outlet property="matchContactTipLabel" destination="vof-vA-IyM" id="bnG-RV-R0Y"/>
@@ -221,7 +223,7 @@
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="邀请" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NKR-iJ-SbT">
                             <rect key="frame" x="12" y="12" width="30" height="14"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -240,10 +242,10 @@
                             <rect key="frame" x="0.0" y="92" width="320" height="1"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         </imageView>
-                        <view contentMode="scaleToFill" id="Iv4-sC-OAR">
+                        <view contentMode="scaleToFill" id="Iv4-sC-OAR" customClass="GMGridView">
                             <rect key="frame" x="12" y="40" width="296" height="42"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hVS-QN-pZX">
                             <rect key="frame" x="249" y="4" width="33" height="30"/>

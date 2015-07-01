@@ -23,6 +23,9 @@
 @property (nonatomic, strong) NSString *itemPicUrl;         //约战项目图片
 @property (nonatomic, readonly) NSURL* itemPicURL;          //图片网络地址
 
+@property (nonatomic, strong) NSString *netbarId;
+@property (nonatomic, strong) NSString *netbarName;
+
 @property(nonatomic, strong) NSDictionary* matchWarInfoByJsonDic;
 
 @end
