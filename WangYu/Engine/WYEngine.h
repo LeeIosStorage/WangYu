@@ -197,5 +197,6 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //约战竞技项目
 - (BOOL)getMatchGameItemsWithUid:(NSString *)uid tag:(int)tag;
 - (BOOL)matchPublishWithUid:(NSString *)uid title:(NSString *)title itemId:(NSString *)itemId server:(NSString *)server way:(int)way netbarId:(NSString *)netbarId beginTime:(NSString *)beginTime num:(int)num contactWay:(NSString *)contactWay intro:(NSString *)intro invitedPhones:(NSArray *)invitedPhones tag:(int)tag;
+- (BOOL)getMatchDetailsWithMatchId:(NSString*)matchId uid:(NSString*)uid tag:(int)tag;
 
 @end

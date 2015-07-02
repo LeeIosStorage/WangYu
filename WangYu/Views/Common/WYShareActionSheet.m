@@ -83,7 +83,16 @@
         }
     }
     if (self.matchWarInfo) {
+        self.shareTitle = [NSString stringWithFormat:@"网娱大师-%@",_matchWarInfo.title];
+        self.shareDescription = [NSString stringWithFormat:@"游戏类型:%@ 开始时间:%@ 服务器:%@",_matchWarInfo.itemName,[WYUIUtils dateDiscriptionFromDate:_matchWarInfo.startTime],_matchWarInfo.itemServer];
+        self.shareWebpageUrl = [NSString stringWithFormat:@"%@/share/match/%@",[WYEngine shareInstance].baseUrl,_matchWarInfo.mId];
         
+        if (![self.matchWarInfo.itemPicURL isEqual:[NSNull null]]) {
+            self.shareImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[self.matchWarInfo.itemPicURL absoluteString]];
+        }
+        if (!self.shareImage) {
+            self.shareImage = [UIImage imageNamed:@"netbar_load_icon"];
+        }
     }
 }
 

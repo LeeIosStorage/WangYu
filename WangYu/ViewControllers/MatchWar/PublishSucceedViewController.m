@@ -104,6 +104,7 @@
 
 -(void)shareAction:(id)sender{
     _shareAction = [[WYShareActionSheet alloc] init];
+    _shareAction.matchWarInfo = _matchWarInfo;
     _shareAction.owner = self;
     [_shareAction showShareAction];
 }

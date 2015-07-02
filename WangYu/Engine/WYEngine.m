@@ -1541,7 +1541,7 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:server forKey:@"server"];
     }
     [params setObject:[NSNumber numberWithInt:way] forKey:@"way"];
-    [params setObject:[NSNumber numberWithInt:num] forKey:@"num"];
+    [params setObject:[NSNumber numberWithInt:num] forKey:@"peopleNum"];
     if (beginTime) {
         [params setObject:beginTime forKey:@"beginTime"];
     }
@@ -1562,6 +1562,21 @@ static WYEngine* s_ShareInstance = nil;
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/publishBattle",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
     
+}
+
+- (BOOL)getMatchDetailsWithMatchId:(NSString*)matchId uid:(NSString*)uid tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (matchId) {
+        [params setObject:matchId forKey:@"id"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/detail",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
 @end
