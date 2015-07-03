@@ -206,7 +206,7 @@
         NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
         WYMatchWarInfo *matchInfo = [[WYMatchWarInfo alloc] init];
         [matchInfo setMatchWarInfoByJsonDic:object];
-        matchInfo.mId = [[object objectForKey:@"battle_id"] description];
+        matchInfo.mId = [[object objectForKey:@"id"] description];
         if (_netbarInfo.nid.length > 0) {
             matchInfo.netbarId = _netbarInfo.nid;
         }
