@@ -140,7 +140,9 @@ static WYEngine* s_ShareInstance = nil;
 
 - (void)serverInit{
     if (self.serverPlatform == TestPlatform) {
-        API_URL = @"http://192.168.16.29";
+        //API_URL = @"http://192.168.16.29";
+        //zheng哥专用
+        API_URL = @"http://192.168.16.44";
     } else {
         API_URL = @"http://api.wangyuhudong.com";
     }
@@ -1449,6 +1451,29 @@ static WYEngine* s_ShareInstance = nil;
     }
     
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/createTeam",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+//已报名战队
+- (BOOL)getMatchJoinedTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId page:(int)page pageSize:(int)pageSize tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    [params setObject:aId forKey:@"activityId"];
+    if (nId) {
+        [params setObject:nId forKey:@"netbarId"];
+    }
+    if (page > 0) {
+        [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    }
+    if (pageSize > 0) {
+        [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/alreadyAppliedTeam",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
