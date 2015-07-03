@@ -305,10 +305,14 @@
 		3BF8B7CD1B396A8D00BBA346 /* MatchMemberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF8B7CB1B396A8D00BBA346 /* MatchMemberCell.xib */; };
 		3BF8B7D11B396D6700BBA346 /* InviteMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF8B7CF1B396D6700BBA346 /* InviteMemberViewController.m */; };
 		3BF8B7D21B396D6700BBA346 /* InviteMemberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF8B7D01B396D6700BBA346 /* InviteMemberViewController.xib */; };
+		4428CFC71B46854900B404D2 /* ManageMatchWarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4428CFC51B46854900B404D2 /* ManageMatchWarViewController.m */; };
+		4428CFC81B46854900B404D2 /* ManageMatchWarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4428CFC61B46854900B404D2 /* ManageMatchWarViewController.xib */; };
 		446E1EC01B34129B005CE745 /* PersonalProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */; };
 		446E1EC11B34129B005CE745 /* PersonalProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */; };
 		44C4FE6A1B453B2D00258CEA /* WYMatchApplyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C4FE691B453B2D00258CEA /* WYMatchApplyInfo.m */; };
 		44C4FE6D1B453B4800258CEA /* WYMatchCommentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C4FE6C1B453B4800258CEA /* WYMatchCommentInfo.m */; };
+		44C4FE731B465F9D00258CEA /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C4FE701B465F9D00258CEA /* HPGrowingTextView.m */; };
+		44C4FE741B465F9D00258CEA /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C4FE721B465F9D00258CEA /* HPTextViewInternal.m */; };
 		44C69E241B43B789000BA948 /* PublishSucceedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C69E221B43B789000BA948 /* PublishSucceedViewController.m */; };
 		44C69E251B43B789000BA948 /* PublishSucceedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C69E231B43B789000BA948 /* PublishSucceedViewController.xib */; };
 		44C69E291B43D0B1000BA948 /* MatchWarDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C69E271B43D0B1000BA948 /* MatchWarDetailViewController.m */; };
@@ -958,6 +962,9 @@
 		3BF8B7CE1B396D6700BBA346 /* InviteMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InviteMemberViewController.h; path = Activity/InviteMemberViewController.h; sourceTree = "<group>"; };
 		3BF8B7CF1B396D6700BBA346 /* InviteMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InviteMemberViewController.m; path = Activity/InviteMemberViewController.m; sourceTree = "<group>"; };
 		3BF8B7D01B396D6700BBA346 /* InviteMemberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InviteMemberViewController.xib; path = Activity/InviteMemberViewController.xib; sourceTree = "<group>"; };
+		4428CFC41B46854900B404D2 /* ManageMatchWarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageMatchWarViewController.h; sourceTree = "<group>"; };
+		4428CFC51B46854900B404D2 /* ManageMatchWarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageMatchWarViewController.m; sourceTree = "<group>"; };
+		4428CFC61B46854900B404D2 /* ManageMatchWarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManageMatchWarViewController.xib; sourceTree = "<group>"; };
 		446E1EBD1B34129B005CE745 /* PersonalProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProfileViewController.h; sourceTree = "<group>"; };
 		446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProfileViewController.m; sourceTree = "<group>"; };
 		446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalProfileViewController.xib; sourceTree = "<group>"; };
@@ -965,6 +972,10 @@
 		44C4FE691B453B2D00258CEA /* WYMatchApplyInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYMatchApplyInfo.m; sourceTree = "<group>"; };
 		44C4FE6B1B453B4800258CEA /* WYMatchCommentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYMatchCommentInfo.h; sourceTree = "<group>"; };
 		44C4FE6C1B453B4800258CEA /* WYMatchCommentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYMatchCommentInfo.m; sourceTree = "<group>"; };
+		44C4FE6F1B465F9D00258CEA /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		44C4FE701B465F9D00258CEA /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		44C4FE711B465F9D00258CEA /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		44C4FE721B465F9D00258CEA /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		44C69E211B43B789000BA948 /* PublishSucceedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishSucceedViewController.h; sourceTree = "<group>"; };
 		44C69E221B43B789000BA948 /* PublishSucceedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSucceedViewController.m; sourceTree = "<group>"; };
 		44C69E231B43B789000BA948 /* PublishSucceedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishSucceedViewController.xib; sourceTree = "<group>"; };
@@ -1398,6 +1409,7 @@
 		073DBD171AE770F1009B49EB /* External */ = {
 			isa = PBXGroup;
 			children = (
+				44C4FE6E1B465F9D00258CEA /* HPGrowingTextView */,
 				3BD58F8C1B275150007D8F0B /* UMAnalytics */,
 				07115AA51B26C6A100582008 /* GenieEffect */,
 				0718716B1B2571B400FE9A35 /* TTTAttributedLabel */,
@@ -2254,6 +2266,17 @@
 			name = Activity;
 			sourceTree = "<group>";
 		};
+		44C4FE6E1B465F9D00258CEA /* HPGrowingTextView */ = {
+			isa = PBXGroup;
+			children = (
+				44C4FE6F1B465F9D00258CEA /* HPGrowingTextView.h */,
+				44C4FE701B465F9D00258CEA /* HPGrowingTextView.m */,
+				44C4FE711B465F9D00258CEA /* HPTextViewInternal.h */,
+				44C4FE721B465F9D00258CEA /* HPTextViewInternal.m */,
+			);
+			path = HPGrowingTextView;
+			sourceTree = "<group>";
+		};
 		44C6AE421B42782300746A54 /* MatchWar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2276,6 +2299,9 @@
 				44C69E261B43D0B1000BA948 /* MatchWarDetailViewController.h */,
 				44C69E271B43D0B1000BA948 /* MatchWarDetailViewController.m */,
 				44C69E281B43D0B1000BA948 /* MatchWarDetailViewController.xib */,
+				4428CFC41B46854900B404D2 /* ManageMatchWarViewController.h */,
+				4428CFC51B46854900B404D2 /* ManageMatchWarViewController.m */,
+				4428CFC61B46854900B404D2 /* ManageMatchWarViewController.xib */,
 				44C69E211B43B789000BA948 /* PublishSucceedViewController.h */,
 				44C69E221B43B789000BA948 /* PublishSucceedViewController.m */,
 				44C69E231B43B789000BA948 /* PublishSucceedViewController.xib */,
@@ -2419,6 +2445,7 @@
 				076219251B15A29400D912A1 /* MessageViewCell.xib in Resources */,
 				0777DFD11B01C4CB00E1E314 /* QuickPayViewController.xib in Resources */,
 				0728D03C1B0F252A00239D96 /* ActivityTabViewController.xib in Resources */,
+				4428CFC81B46854900B404D2 /* ManageMatchWarViewController.xib in Resources */,
 				073DBD811AE77A3C009B49EB /* MineTabViewController.xib in Resources */,
 				0791AB341AE8B7DD0009A5A7 /* AboutViewController.xib in Resources */,
 				0723DE0A1B0F2F720040295B /* CustomMapCell.xib in Resources */,
@@ -2577,6 +2604,7 @@
 				3BE0908D1B14CD3A00DCAB3C /* MatchDetailCell.m in Sources */,
 				0791AB331AE8B7DD0009A5A7 /* AboutViewController.m in Sources */,
 				0715C3A41B09AD6F00C37F82 /* MapChooseAnnotationView.m in Sources */,
+				4428CFC71B46854900B404D2 /* ManageMatchWarViewController.m in Sources */,
 				076219391B15C19600D912A1 /* RedPacketViewController.m in Sources */,
 				076195E71B008F8C00397711 /* ReserveOrderViewCell.m in Sources */,
 				07868DF11AF8581100160070 /* WYTabBarViewController.m in Sources */,
@@ -2609,6 +2637,7 @@
 				44C791FE1B40DE2100EEF641 /* SelectGameViewController.m in Sources */,
 				076E0DF81B147FD600E4363A /* AVCamCaptureManager.m in Sources */,
 				073DBDAC1AE79457009B49EB /* WYUIUtils.m in Sources */,
+				44C4FE741B465F9D00258CEA /* HPTextViewInternal.m in Sources */,
 				0799C8AF1AF1D88E00E407BB /* GameCommendViewController.m in Sources */,
 				073DBD511AE7712F009B49EB /* UIImageView+WebCache.m in Sources */,
 				077BF3B21B186BFD00450174 /* UIGestureRecognizer+GMGridViewAdditions.m in Sources */,
@@ -2696,6 +2725,7 @@
 				0794938D1B0D9C3D008152A6 /* NSDataEx.m in Sources */,
 				44C4FE6D1B453B4800258CEA /* WYMatchCommentInfo.m in Sources */,
 				076E22531B03187100F33815 /* WYSearchBar.m in Sources */,
+				44C4FE731B465F9D00258CEA /* HPGrowingTextView.m in Sources */,
 				07CB97661AFC5D3400928CB7 /* MMMaterialDesignSpinner.m in Sources */,
 				079049411AE9DF5A00E46795 /* WYOAuthService.m in Sources */,
 				073DBD501AE7712F009B49EB /* UIImageView+HighlightedWebCache.m in Sources */,

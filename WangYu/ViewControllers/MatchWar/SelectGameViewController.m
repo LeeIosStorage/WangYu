@@ -12,6 +12,7 @@
 #import "PublishMatchWarViewController.h"
 #import "WYEngine.h"
 #import "WYProgressHUD.h"
+#import "UIImageView+WebCache.h"
 
 @interface SelectGameViewController ()<WYInputViewControllerDelegate>
 
@@ -147,7 +148,7 @@
     if (indexPath.row == 0) {
         [cell setLineImageViewWithType:0];
     }else if (indexPath.row == _gameLists.count-1){
-        [cell setLineImageViewWithType:-1];
+        [cell setLineImageViewWithType:2];
     }else{
         [cell setLineImageViewWithType:1];
     }
@@ -155,6 +156,8 @@
     cell.rightLabel.hidden = YES;
     cell.avatarImageView.hidden = NO;
     cell.indicatorImage.hidden = NO;
+    cell.avatarImageView.clipsToBounds = YES;
+    cell.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     CGRect frame = cell.avatarImageView.frame;
     frame.origin.y = (44-42)/2;
@@ -168,7 +171,9 @@
     
     NSDictionary *rowDicts = _gameLists[indexPath.row];
     cell.titleLabel.text = [rowDicts objectForKey:@"item_name"];
-//    cell.avatarImageView.image = [UIImage imageNamed:[rowDicts objectForKey:@"icon"]];
+    NSURL *itemUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",[WYEngine shareInstance].baseImgUrl,[rowDicts objectForKey:@"item_icon"]]];
+    [cell.avatarImageView sd_setImageWithURL:itemUrl placeholderImage:[UIImage imageNamed:@"activity_load_icon"]];
+    
     
     return cell;
 }
