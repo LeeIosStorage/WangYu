@@ -16,6 +16,7 @@
 #import "MatchPlaceViewController.h"
 #import "TopicsViewController.h"
 #import "WYLinkerHandler.h"
+#import "MatchTeamsViewController.h"
 
 @interface MatchDetailViewController ()<UITableViewDelegate,UITableViewDataSource,WYShareActionSheetDelegate>{
     WYShareActionSheet *_shareAction;
@@ -219,7 +220,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
+    if (section == 0 || section == 1) {
         return 2;
     }
     return 1;
@@ -300,6 +301,13 @@
                 cell.avatarImageView.image = [UIImage imageNamed:@"match_detail_advance_icon"];
                 cell.titleLabel.text = @"赛事详情";
                 cell.indicatorImage.hidden = NO;
+                [cell setbottomLineWithType:0];
+                break;
+            }else if (indexPath.row == 1) {
+                cell.avatarImageView.image = [UIImage imageNamed:@"match_detail_joined_icon"];
+                cell.titleLabel.text = @"已报战队";
+                cell.indicatorImage.hidden = NO;
+                cell.topline.hidden = YES;
                 [cell setbottomLineWithType:1];
                 break;
             }
@@ -347,6 +355,10 @@
                     [self.navigationController pushViewController:vc animated:YES];
                 }
                 break;
+            }else if (indexPath.row == 1) {
+                MatchTeamsViewController *mtVc = [[MatchTeamsViewController alloc] init];
+                mtVc.activityId = self.activityInfo.aId;
+                [self.navigationController pushViewController:mtVc animated:YES];
             }
         }
         default:

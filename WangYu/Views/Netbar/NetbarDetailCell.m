@@ -33,7 +33,7 @@
     self.nameLabel.textColor = SKIN_TEXT_COLOR1;
     self.totalCountLabel.textColor = SKIN_TEXT_COLOR2;
     self.totalCountLabel.font = SKIN_FONT_FROMNAME(12);
-    self.applyCountLabel.textColor = UIColorToRGB(0xf03f3f);
+    self.applyCountLabel.textColor = SKIN_TEXT_COLORRED;
     self.applyCountLabel.font = SKIN_FONT_FROMNAME(12);
 }
 

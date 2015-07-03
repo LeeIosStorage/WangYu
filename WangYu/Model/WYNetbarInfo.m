@@ -60,6 +60,12 @@
     if ([dic objectForKey:@"algorithm"]) {
         _algorithm = [dic intValueForKey:@"algorithm"];
     }
+    if ([dic objectForKey:@"area_code"]) {
+        _areaCode = [dic stringObjectForKey:@"area_code"];
+    }
+    if ([dic objectForKey:@"city"]) {
+        _city = [dic stringObjectForKey:@"city"];
+    }
     id objectForKey = [dic arrayObjectForKey:@"imgs"];
     if (objectForKey) {
         _picIds = [NSMutableArray array];

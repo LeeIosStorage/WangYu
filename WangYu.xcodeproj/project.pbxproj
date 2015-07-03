@@ -288,6 +288,11 @@
 		3BD212161B3C43E6003FD10D /* BookDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD212141B3C43E6003FD10D /* BookDetailViewController.xib */; };
 		3BD2121A1B3C643F003FD10D /* BookDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD212181B3C643F003FD10D /* BookDetailCell.m */; };
 		3BD2121B1B3C643F003FD10D /* BookDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD212191B3C643F003FD10D /* BookDetailCell.xib */; };
+		3BD4397C1B44D5C100CB47C0 /* MatchTeamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD4397A1B44D5C100CB47C0 /* MatchTeamsViewController.m */; };
+		3BD4397D1B44D5C100CB47C0 /* MatchTeamsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4397B1B44D5C100CB47C0 /* MatchTeamsViewController.xib */; };
+		3BD439811B45072C00CB47C0 /* MatchTeamsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD4397F1B45072C00CB47C0 /* MatchTeamsCell.m */; };
+		3BD439821B45072C00CB47C0 /* MatchTeamsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD439801B45072C00CB47C0 /* MatchTeamsCell.xib */; };
+		3BD439851B45268C00CB47C0 /* WYTeamInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD439841B45268C00CB47C0 /* WYTeamInfo.m */; };
 		3BD58F901B275217007D8F0B /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BD58F8D1B275217007D8F0B /* libMobClickLibrary.a */; };
 		3BD6E2F91B4142CD00A0EAFB /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD6E2F71B4142CD00A0EAFB /* OrderDetailViewController.m */; };
 		3BD6E2FA1B4142CD00A0EAFB /* OrderDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD6E2F81B4142CD00A0EAFB /* OrderDetailViewController.xib */; };
@@ -929,6 +934,14 @@
 		3BD212171B3C643F003FD10D /* BookDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookDetailCell.h; path = Netbar/BookDetailCell.h; sourceTree = "<group>"; };
 		3BD212181B3C643F003FD10D /* BookDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookDetailCell.m; path = Netbar/BookDetailCell.m; sourceTree = "<group>"; };
 		3BD212191B3C643F003FD10D /* BookDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BookDetailCell.xib; path = Netbar/BookDetailCell.xib; sourceTree = "<group>"; };
+		3BD439791B44D5C100CB47C0 /* MatchTeamsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchTeamsViewController.h; path = Activity/MatchTeamsViewController.h; sourceTree = "<group>"; };
+		3BD4397A1B44D5C100CB47C0 /* MatchTeamsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchTeamsViewController.m; path = Activity/MatchTeamsViewController.m; sourceTree = "<group>"; };
+		3BD4397B1B44D5C100CB47C0 /* MatchTeamsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchTeamsViewController.xib; path = Activity/MatchTeamsViewController.xib; sourceTree = "<group>"; };
+		3BD4397E1B45072C00CB47C0 /* MatchTeamsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchTeamsCell.h; path = Activity/MatchTeamsCell.h; sourceTree = "<group>"; };
+		3BD4397F1B45072C00CB47C0 /* MatchTeamsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchTeamsCell.m; path = Activity/MatchTeamsCell.m; sourceTree = "<group>"; };
+		3BD439801B45072C00CB47C0 /* MatchTeamsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MatchTeamsCell.xib; path = Activity/MatchTeamsCell.xib; sourceTree = "<group>"; };
+		3BD439831B45268B00CB47C0 /* WYTeamInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYTeamInfo.h; sourceTree = "<group>"; };
+		3BD439841B45268C00CB47C0 /* WYTeamInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYTeamInfo.m; sourceTree = "<group>"; };
 		3BD58F8D1B275217007D8F0B /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = UMAnalytics/libMobClickLibrary.a; sourceTree = "<group>"; };
 		3BD58F8E1B275217007D8F0B /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = UMAnalytics/MobClick.h; sourceTree = "<group>"; };
 		3BD58F8F1B275217007D8F0B /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClickSocialAnalytics.h; path = UMAnalytics/MobClickSocialAnalytics.h; sourceTree = "<group>"; };
@@ -1348,6 +1361,8 @@
 				07DE269C1B16B0AC007667DB /* WYMatchInfo.m */,
 				07DE269E1B16F846007667DB /* WYNewsInfo.h */,
 				07DE269F1B16F846007667DB /* WYNewsInfo.m */,
+				3BD439831B45268B00CB47C0 /* WYTeamInfo.h */,
+				3BD439841B45268C00CB47C0 /* WYTeamInfo.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2215,6 +2230,9 @@
 				3B6554A81B43BA2F008F4ED0 /* SelectNetbarViewController.h */,
 				3B6554A91B43BA2F008F4ED0 /* SelectNetbarViewController.m */,
 				3B6554AA1B43BA2F008F4ED0 /* SelectNetbarViewController.xib */,
+				3BD439791B44D5C100CB47C0 /* MatchTeamsViewController.h */,
+				3BD4397A1B44D5C100CB47C0 /* MatchTeamsViewController.m */,
+				3BD4397B1B44D5C100CB47C0 /* MatchTeamsViewController.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -2240,6 +2258,9 @@
 				3BF8B7C91B396A8D00BBA346 /* MatchMemberCell.h */,
 				3BF8B7CA1B396A8D00BBA346 /* MatchMemberCell.m */,
 				3BF8B7CB1B396A8D00BBA346 /* MatchMemberCell.xib */,
+				3BD4397E1B45072C00CB47C0 /* MatchTeamsCell.h */,
+				3BD4397F1B45072C00CB47C0 /* MatchTeamsCell.m */,
+				3BD439801B45072C00CB47C0 /* MatchTeamsCell.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -2370,6 +2391,7 @@
 			files = (
 				076E22501B02F73200F33815 /* NetbarSearchViewController.xib in Resources */,
 				0777DFCC1B01C4AA00E1E314 /* QuickBookViewController.xib in Resources */,
+				3BD439821B45072C00CB47C0 /* MatchTeamsCell.xib in Resources */,
 				071923D01AF74D8400432531 /* LoginViewController.xib in Resources */,
 				44C69E2F1B43EF22000BA948 /* MatchCommentViewCell.xib in Resources */,
 				3BF8B7BE1B39478F00BBA346 /* MatchApplyViewController.xib in Resources */,
@@ -2424,6 +2446,7 @@
 				44C792041B41283C00EEF641 /* WYInputTextViewController.xib in Resources */,
 				076219201B15A0CB00D912A1 /* MessageListViewController.xib in Resources */,
 				44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */,
+				3BD4397D1B44D5C100CB47C0 /* MatchTeamsViewController.xib in Resources */,
 				44C6AE391B42679200746A54 /* InviteFriendsViewController.xib in Resources */,
 				0715C3AC1B09ECE000C37F82 /* WYCustomerWindow.xib in Resources */,
 				0715C3A61B09AD6F00C37F82 /* MapChooseViewController.xib in Resources */,
@@ -2547,6 +2570,7 @@
 				079493891B0D9C3D008152A6 /* base64.m in Sources */,
 				0791AB2E1AE89B960009A5A7 /* WYAlertView.m in Sources */,
 				3BD212151B3C43E6003FD10D /* BookDetailViewController.m in Sources */,
+				3BD439851B45268C00CB47C0 /* WYTeamInfo.m in Sources */,
 				07358A9A1AF760D000D546E5 /* SKSplashView.m in Sources */,
 				078EDBDC1AEF1EF800E93EE8 /* ASIHTTPRequest.m in Sources */,
 				07868DEF1AF8581100160070 /* WYTabBarView.m in Sources */,
@@ -2603,6 +2627,7 @@
 				073DBD511AE7712F009B49EB /* UIImageView+WebCache.m in Sources */,
 				077BF3B21B186BFD00450174 /* UIGestureRecognizer+GMGridViewAdditions.m in Sources */,
 				078FD0401B05FC8D00CBD699 /* LocationViewController.m in Sources */,
+				3BD439811B45072C00CB47C0 /* MatchTeamsCell.m in Sources */,
 				07115AA81B26C6A100582008 /* UIView+Genie.m in Sources */,
 				0777DFD51B01C7E100E1E314 /* QuickBookCell.m in Sources */,
 				079049461AEA15EB00E46795 /* WYQuery.m in Sources */,
@@ -2635,6 +2660,7 @@
 				078E5AF71B1BF00E0041C7D2 /* WYLinkerHandler.m in Sources */,
 				077D837F1AF9AED800AAF31F /* MBProgressHUD.m in Sources */,
 				077D83891AF9C3BC00AAF31F /* NSString+Value.m in Sources */,
+				3BD4397C1B44D5C100CB47C0 /* MatchTeamsViewController.m in Sources */,
 				076219341B15BDC900D912A1 /* GameCollectViewCell.m in Sources */,
 				076F828F1B05E0CB00CACF0D /* NetbarMapViewController.m in Sources */,
 				073DBDF81AE7A1B0009B49EB /* UIImageExtras.m in Sources */,
