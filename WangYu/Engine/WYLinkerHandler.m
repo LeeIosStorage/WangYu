@@ -17,6 +17,7 @@
 #import "BookDetailViewController.h"
 #import "OrderDetailViewController.h"
 #import "WYMessageInfo.h"
+#import "MatchWarDetailViewController.h"
 
 @implementation WYLinkerHandler
 
@@ -69,6 +70,20 @@
             //会员消息
         }
         return nil;
+        
+    }else if ([scheme isEqualToString:@"wydsopen"]){
+        NSDictionary *paramDic = [WYCommonUtils getParamDictFrom:realUrl.query];
+        NSLog(@"query dict = %@", paramDic);
+        
+        NSString *action = [[realUrl.host lowercaseString] description];
+        if ([action isEqualToString:@"showmatch"]) {
+            //约战详情
+            MatchWarDetailViewController *matchDetailVc = [[MatchWarDetailViewController alloc] init];
+            WYMatchWarInfo *matchWarInfo = [[WYMatchWarInfo alloc] init];
+            matchWarInfo.mId = [[paramDic objectForKey:@"matchId"] description];
+            matchDetailVc.matchWarInfo = matchWarInfo;
+            return matchDetailVc;
+        }
         
     }else if([scheme hasPrefix:@"http"]){
         //        NSString *lastCompment = [[realUrl path] lastPathComponent];

@@ -216,7 +216,11 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)cancelApplyMatchWarWithUid:(NSString*)uid matchId:(NSString*)matchId tag:(int)tag;
 //取消约战
 - (BOOL)closeMatchWarWithUid:(NSString *)uid matchId:(NSString*)matchId tag:(int)tag;
+//约战管理报名人列表
+- (BOOL)manageMatchAppliersWithUid:(NSString*)uid matchId:(NSString *)matchId page:(int)page pageSize:(int)pageSize tag:(int)tag;
 //移除约战报名成员
 - (BOOL)removeApplyMatchWarPeopleWithMatchId:(NSString*)matchId uid:(NSString *)uid applyId:(NSString*)applyId tag:(int)tag;
+//邀请人员
+- (BOOL)invitedPbPeopleWithUid:(NSString *)uid matchId:(NSString*)matchId invitedPhones:(NSArray *)invitedPhones tag:(int)tag;
 
 @end

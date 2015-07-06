@@ -326,6 +326,12 @@ static bool dateFormatterOFUSInvalid ;
     return ts;
 }
 
++ (NSString*)documentOfInviteMsg:(int)type {
+    
+    NSString *templates = @"";
+    return templates;
+}
+
 + (NSString*)documentOfCameraDenied
 {
     return @"请检查设备是否有相机功能";

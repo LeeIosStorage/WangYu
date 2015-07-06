@@ -44,6 +44,8 @@
 + (NSDate*)dateFromUSDateString:(NSString*)string;
 + (NSDateComponents *) dateComponentsFromDate:(NSDate *) date;
 
++ (NSString*)documentOfInviteMsg:(int)type;
+
 + (NSString*)documentOfCameraDenied;
 + (NSString*)documentOfAVCaptureDenied;
 + (NSString*)documentOfAssetsLibraryDenied;

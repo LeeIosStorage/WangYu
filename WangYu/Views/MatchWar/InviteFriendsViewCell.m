@@ -15,6 +15,9 @@
     
     self.phoneNameLabel.textColor = SKIN_TEXT_COLOR1;
     self.phoneNameLabel.font = SKIN_FONT_FROMNAME(14);
+    self.phoneLabel.textColor = SKIN_TEXT_COLOR2;
+    self.phoneLabel.font = SKIN_FONT_FROMNAME(13);
+    
     self.avatarImageView.layer.masksToBounds = YES;
     self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width/2;
     self.avatarImageView.clipsToBounds = YES;
@@ -62,6 +65,8 @@
     if (!_pbUserInfo.name) {
         self.phoneNameLabel.text = _pbUserInfo.phoneNUm;
     }
+    self.phoneLabel.text = _pbUserInfo.phoneNUm;
+    
     self.stateImageView.highlighted = _pbUserInfo.selected;
 }
 @end

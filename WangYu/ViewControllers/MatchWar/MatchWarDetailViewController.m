@@ -509,8 +509,8 @@
 }
 -(IBAction)manageAction:(id)sender{
     
-    [self manageMatchWar];
-    return;
+//    [self manageMatchWar];
+//    return;
     if ([[WYEngine shareInstance] needUserLogin:@"登录后才能报名约战"]) {
         return;
     }
@@ -519,7 +519,13 @@
     }else if (_matchWarInfo.userStatus == 2){
         [self exitMatchWar];
     }else if (_matchWarInfo.userStatus == 3){
-        [self applyJoinMatch];
+        WS(weakSelf);
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"报名约战，您的手机号码会显示给发起者，便于联络。" cancelButtonTitle:@"取消" cancelBlock:^{
+            
+        } okButtonTitle:@"确定" okBlock:^{
+            [weakSelf applyJoinMatch];
+        }];
+        [alertView show];
     }else if (_matchWarInfo.userStatus == -1){
         if ([[WYEngine shareInstance] needUserLogin:@"登录后才能报名约战"]) {
             return;
@@ -1133,7 +1139,7 @@
 #pragma mark GMGridViewActionDelegate
 - (void)GMGridView:(GMGridView *)gridView didTapOnItemAtIndex:(NSInteger)position
 {
-    NSLog(@"Did tap at index %ld", position);
+//    NSLog(@"Did tap at index %d", position);
 }
 
 #pragma mark - scrollViewDelegat
@@ -1169,6 +1175,11 @@ static CGFloat beginImageH = 0;
     _bkImageView.frame = frame;
     
     [self setTitleNavBarAlpha:scrollView point:offset];
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    if ([_growingTextView isFirstResponder]) {
+        [_growingTextView resignFirstResponder];
+    }
 }
 
 - (void)setTitleNavBarAlpha:(UIScrollView *)scrollView point:(CGPoint)offset{

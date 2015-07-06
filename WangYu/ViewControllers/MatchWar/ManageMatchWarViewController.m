@@ -13,18 +13,31 @@
 #import "SettingViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "WYActionSheet.h"
+#import "WYAlertView.h"
+#import <MessageUI/MessageUI.h>
+#import "InviteFriendsViewController.h"
+#import "PbUserInfo.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
-@interface ManageMatchWarViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface ManageMatchWarViewController ()<UITableViewDataSource,UITableViewDelegate,MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *applyPeoples;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UIButton *cancelMatchButton;
+
+@property (assign, nonatomic) SInt64  applyNextCursor;
+@property (assign, nonatomic) BOOL applyCanLoadMore;
 
 - (IBAction)cancelMatchWar:(id)sender;
 
 @end
 
 @implementation ManageMatchWarViewController
+
+- (void)dealloc{
+    _tableView.delegate = nil;
+    _tableView.dataSource = nil;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,6 +46,11 @@
     UIEdgeInsets inset = UIEdgeInsetsMake(self.titleNavBar.frame.size.height + 12, 0, 0, 0);
     [self setContentInsetForScrollView:self.tableView inset:inset];
     
+    self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.tableView];
+    self.pullRefreshView.delegate = self;
+    [self.tableView addSubview:self.pullRefreshView];
+    
+    
     _applyPeoples = [[NSMutableArray alloc] initWithArray:_applys];
     [self.tableView reloadData];
     
@@ -40,6 +58,58 @@
     
     [self getCacheApplys];
     [self refreshApplyPeople];
+    
+    
+    WS(weakSelf);
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.applyCanLoadMore) {
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            weakSelf.tableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] manageMatchAppliersWithUid:[WYEngine shareInstance].uid matchId:weakSelf.matchWarInfo.mId page:(int)weakSelf.applyNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                if ([dic isKindOfClass:[NSDictionary class]]) {
+                    WYMatchApplyInfo *applyInfo = [[WYMatchApplyInfo alloc] init];
+                    [applyInfo setApplyInfoByDic:dic];
+                    [weakSelf.applyPeoples addObject:applyInfo];
+                }
+            }
+            
+            weakSelf.applyCanLoadMore = [[jsonRet dictionaryObjectForKey:@"object"] boolValueForKey:@"isLast"];
+            if (weakSelf.applyCanLoadMore) {
+                weakSelf.tableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.tableView.showsInfiniteScrolling = YES;
+                //可以加载更多
+                weakSelf.applyNextCursor ++;
+            }
+            
+            [weakSelf.tableView reloadData];
+            
+        } tag:tag];
+    }];
+    self.tableView.showsInfiniteScrolling = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,9 +132,38 @@
 }
 */
 
+-(void)refreshViewUI{
+    self.cancelMatchButton.titleLabel.font = SKIN_FONT_FROMNAME(15);
+    [self.cancelMatchButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
+    [self.cancelMatchButton.layer setMasksToBounds:YES];
+    [self.cancelMatchButton.layer setCornerRadius:4.0];
+    self.cancelMatchButton.backgroundColor = SKIN_COLOR;
+}
+
 #pragma custom
+-(void)inviteAction:(id)sender{
+    
+    WS(weakSelf);
+    InviteFriendsViewController *inviteFriendsVc = [[InviteFriendsViewController alloc] init];
+    inviteFriendsVc.sendInviteFriendsCallBack = ^(NSArray *array){
+        
+        [weakSelf invitePeopleToMSM:array];
+    };
+    [self.navigationController pushViewController:inviteFriendsVc animated:YES];
+    
+}
 - (IBAction)cancelMatchWar:(id)sender{
     
+    WS(weakSelf);
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"你确定要取消该约战" cancelButtonTitle:@"取消" cancelBlock:^{
+        
+    } okButtonTitle:@"确定" okBlock:^{
+        [weakSelf ownerCancelMatchWar];
+    }];
+    [alertView show];
+}
+
+- (void)ownerCancelMatchWar{
     self.cancelMatchButton.enabled = NO;
     __weak ManageMatchWarViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
@@ -80,39 +179,182 @@
             return;
         }
         [WYProgressHUD AlertSuccess:@"取消约战成功" At:weakSelf.view];
-        [weakSelf performSelector:@selector(cancelFinished) withObject:nil afterDelay:1.5];
-        
+        [weakSelf performSelector:@selector(cancelFinished) withObject:nil afterDelay:1.0];
     } tag:tag];
 }
--(void)cancelFinished{
-//    if (self.navigationController.viewControllers.count > 2) {
-//        UIViewController *vc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 3];
-//        if ([vc isKindOfClass:[PublishMatchWarViewController class]]) {
-//            [self.navigationController popToViewController:vc animated:YES];
-//        }
-//    }
+
+-(void)removeApplyPeopleWith:(WYMatchApplyInfo*)info{
+    if ([[WYEngine shareInstance] needUserLogin:nil]) {
+        return;
+    }
+    __weak ManageMatchWarViewController *weakSelf = self;
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] removeApplyMatchWarPeopleWithMatchId:_matchWarInfo.mId uid:[WYEngine shareInstance].uid applyId:info.applyId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        NSInteger index = [weakSelf.applyPeoples indexOfObject:info];
+        if (index == NSNotFound || index < 0 || index >= weakSelf.applyPeoples.count) {
+            return;
+        }
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+        [weakSelf.applyPeoples removeObjectAtIndex:indexPath.row];
+        [weakSelf.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }tag:tag];
 }
 
--(void)inviteAction:(id)sender{
+-(void)invitePeopleToMSM:(NSArray *)applys{
+    
+    NSMutableArray *invitedPhones = nil;
+    if (applys.count > 0) {
+        invitedPhones = [NSMutableArray array];
+        for (PbUserInfo *pbUserInfo in applys) {
+            if (pbUserInfo.phoneNUm.length > 0) {
+                [invitedPhones addObject:pbUserInfo.phoneNUm];
+            }
+        }
+    }
+    if (!invitedPhones || invitedPhones.count == 0) {
+        return;
+    }
+    
+    [WYProgressHUD AlertLoading:@"邀请中..." At:self.view];
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] invitedPbPeopleWithUid:[WYEngine shareInstance].uid matchId:_matchWarInfo.mId invitedPhones:invitedPhones tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        NSString * pidsString = @"邀请成功";
+        if (invitedPhones != nil && invitedPhones.count > 0) {
+            pidsString = [WYCommonUtils stringSplitWithCommaForIds:invitedPhones];
+            pidsString = [NSString stringWithFormat:@"手机联系人 %@ 邀请成功",pidsString];
+        }
+        [WYProgressHUD AlertSuccess:pidsString At:weakSelf.view];
+    } tag:tag];
     
 }
 
--(void)refreshViewUI{
-    self.cancelMatchButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
-    [self.cancelMatchButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
-    [self.cancelMatchButton.layer setMasksToBounds:YES];
-    [self.cancelMatchButton.layer setCornerRadius:4.0];
-    self.cancelMatchButton.backgroundColor = SKIN_COLOR;
+-(void)cancelFinished{
+    if (self.navigationController.viewControllers.count > 2) {
+        UIViewController *vc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 3];
+        if (vc) {
+            [self.navigationController popToViewController:vc animated:YES];
+        }
+    }
 }
 
 -(void)getCacheApplys{
-    
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] addGetCacheTag:tag];
+    [[WYEngine shareInstance] manageMatchAppliersWithUid:[WYEngine shareInstance].uid matchId:_matchWarInfo.mId page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+        if (jsonRet == nil) {
+            //...
+        }else{
+            
+            weakSelf.applyPeoples = [[NSMutableArray alloc] init];
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                if ([dic isKindOfClass:[NSDictionary class]]) {
+                    WYMatchApplyInfo *applyInfo = [[WYMatchApplyInfo alloc] init];
+                    [applyInfo setApplyInfoByDic:dic];
+                    [weakSelf.applyPeoples addObject:applyInfo];
+                }
+            }
+            [weakSelf.tableView reloadData];
+        }
+    }];
 }
 -(void)refreshApplyPeople{
     
+    self.applyNextCursor = 1;
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] manageMatchAppliersWithUid:[WYEngine shareInstance].uid matchId:_matchWarInfo.mId page:(int)self.applyNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        [self.pullRefreshView finishedLoading];
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        weakSelf.applyPeoples = [[NSMutableArray alloc] init];
+        NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+        for (NSDictionary *dic in object) {
+            if ([dic isKindOfClass:[NSDictionary class]]) {
+                WYMatchApplyInfo *applyInfo = [[WYMatchApplyInfo alloc] init];
+                [applyInfo setApplyInfoByDic:dic];
+                [weakSelf.applyPeoples addObject:applyInfo];
+            }
+        }
+        
+        weakSelf.applyCanLoadMore = [[jsonRet dictionaryObjectForKey:@"object"] boolValueForKey:@"isLast"];
+        if (weakSelf.applyCanLoadMore) {
+            weakSelf.tableView.showsInfiniteScrolling = NO;
+        }else{
+            weakSelf.tableView.showsInfiniteScrolling = YES;
+            //可以加载更多
+            weakSelf.applyNextCursor ++;
+        }
+        
+        [weakSelf.tableView reloadData];
+        
+    }tag:tag];
+    
+}
+
+#pragma mark PullToRefreshViewDelegate
+- (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {
+    if (view == self.pullRefreshView) {
+        [self refreshApplyPeople];
+    }
+}
+
+- (NSDate *)pullToRefreshViewLastUpdated:(PullToRefreshView *)view {
+    return [NSDate date];
 }
 
 #pragma mark - Table view data source
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        if (tableView == self.tableView) {
+            WS(weakSelf);
+            WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:@"是否要删除该成员" cancelButtonTitle:@"取消" cancelBlock:^{
+                
+            } okButtonTitle:@"确定" okBlock:^{
+                WYMatchApplyInfo *applyInfo = _applyPeoples[indexPath.row];
+                [weakSelf removeApplyPeopleWith:applyInfo];
+            }];
+            [alertView show];
+        }
+    }
+}
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"删除";
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -141,6 +383,9 @@
     
     if (indexPath.row == 0) {
         [cell setLineImageViewWithType:0];
+        if (indexPath.row == self.applyPeoples.count-1) {
+            [cell setLineImageViewWithType:-1];
+        }
     }else if (indexPath.row == self.applyPeoples.count-1){
         [cell setLineImageViewWithType:2];
     }else{
@@ -188,10 +433,45 @@
         if (buttonIndex == 0) {
             [WYCommonUtils usePhoneNumAction:applyInfo.telephone];
         }else if (buttonIndex == 1){
-            
+            [self displaySMSComposerSheet:applyInfo];
         }
     } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"电话联系", @"短信联系", nil];
     [sheet showInView:self.view];
+}
+
+-(void)displaySMSComposerSheet:(WYMatchApplyInfo*)applyInfo{
+    
+    Class smsClass = (NSClassFromString(@"MFMessageComposeViewController"));
+    if (smsClass != nil && [MFMessageComposeViewController canSendText]) {
+        MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+        controller.body = [WYUIUtils documentOfInviteMsg:0];
+        NSMutableArray* phones = [[NSMutableArray alloc] initWithCapacity:1];
+        [phones addObject:applyInfo.telephone];
+        controller.recipients = phones;
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:YES completion:^{
+            
+        }];
+    }
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
+    switch (result) {
+        case MessageComposeResultCancelled:
+            
+            break;
+        case MessageComposeResultFailed:
+            
+            break;
+        case MessageComposeResultSent:{
+            [WYProgressHUD AlertSuccess:@"短信已发送" At:self.view];
+        }
+            break;
+        default:
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end
