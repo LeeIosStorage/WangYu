@@ -27,6 +27,9 @@
     if ([dic objectForKey:@"is_join"]) {
         _isJoin = [dic boolValueForKey:@"is_join"];
     }
+    if ([dic objectForKey:@"is_monitor"]) {
+        _isLeader = [dic boolValueForKey:@"is_monitor"];
+    }
 }
 
 - (void)setTeamInfoByJsonDic:(NSDictionary*)dic{

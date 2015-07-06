@@ -16,6 +16,7 @@
 @property (nonatomic, assign) int totalNum;                    //约战最大人数
 @property (nonatomic, strong) NSString *teamLeader;            //队长
 @property (nonatomic, assign) BOOL isJoin;                     //是否参加
+@property (nonatomic, assign) BOOL isLeader;
 
 @property (nonatomic, strong) NSDictionary* teamInfoByJsonDic; //资讯字典
 

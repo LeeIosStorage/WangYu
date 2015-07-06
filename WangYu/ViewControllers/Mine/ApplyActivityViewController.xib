@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C2055" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -9,7 +9,8 @@
             <connections>
                 <outlet property="activityBlankTipLabel" destination="iLO-br-Fyk" id="ANj-BP-Me2"/>
                 <outlet property="activityBlankTipView" destination="d7d-1d-xcA" id="4S1-zm-OTT"/>
-                <outlet property="tableView" destination="vNI-ML-rcM" id="P1g-pG-tZE"/>
+                <outlet property="activityTableView" destination="vNI-ML-rcM" id="vVt-6s-QrA"/>
+                <outlet property="teamTableView" destination="Fn9-d6-2iC" id="BYg-xa-ujQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -25,6 +26,15 @@
                     <connections>
                         <outlet property="dataSource" destination="-1" id="BVh-iP-USh"/>
                         <outlet property="delegate" destination="-1" id="G4T-UQ-6ui"/>
+                    </connections>
+                </tableView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Fn9-d6-2iC">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="1jd-QE-Cwe"/>
+                        <outlet property="delegate" destination="-1" id="0Pl-Sv-t3h"/>
                     </connections>
                 </tableView>
             </subviews>

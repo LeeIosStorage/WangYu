@@ -9,9 +9,16 @@
 #import "WYSuperViewController.h"
 #import "WYMatchInfo.h"
 
+typedef enum ApplyViewType_ {
+    ApplyViewTypeNormal = 0,      // 普通的
+    ApplyViewTypeTeam,            // 队伍
+    ApplyViewTypeSol,             // 个人
+}ApplyViewType;
+
 @interface MatchApplyViewController : WYSuperViewController
 
 @property (nonatomic, strong) NSString *activityId;
 @property (nonatomic, strong) WYMatchInfo *matchInfo;
+@property (nonatomic, assign) ApplyViewType applyType;
 
 @end

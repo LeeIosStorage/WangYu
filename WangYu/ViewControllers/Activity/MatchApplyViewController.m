@@ -48,21 +48,48 @@
 }
 
 - (void)initNormalTitleNavBarSubviews {
-    [self setTitle:@"创建战队"];
+    if (self.applyType == ApplyViewTypeTeam) {
+        [self setTitle:@"创建战队"];
+    }else if (self.applyType == ApplyViewTypeSol) {
+        [self setTitle:@"个人报名"];
+    }
 }
 
 - (void)refreshUI {
+    if (self.applyType == ApplyViewTypeTeam) {
+        [self.commitButton setTitle:@"完成并添加队员" forState:UIControlStateNormal];
+    }else if (self.applyType == ApplyViewTypeSol){
+        [self.commitButton setTitle:@"提交报名信息" forState:UIControlStateNormal];
+    }
     self.commitButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
     self.commitButton.backgroundColor = SKIN_COLOR;
     self.commitButton.layer.cornerRadius = 4;
     self.commitButton.layer.masksToBounds = YES;
 }
 
+- (void)applyMatch {
+    WS(weakSelf);
+    [WYProgressHUD AlertLoading:@"报名中..." At:weakSelf.view];
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] applyMatchWithUid:[WYEngine shareInstance].uid activityId:self.activityId netbarId:self.netbarInfo.nid name:_myName telephone:_telephone idcard:_idCard qqNum:_qqStr labor:_laborStr round:self.matchInfo.round tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"报名成功" At:weakSelf.view];
+    }tag:tag];
+}
+
 - (void)createTeam {
     WS(weakSelf);
     [WYProgressHUD AlertLoading:@"创建中..." At:weakSelf.view];
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] createMatchTeamWithUid:[WYEngine shareInstance].uid activityId:self.activityId netbarId:self.netbarInfo.nid name:_myName telephone:_telephone idcard:_idCard qqNum:_qqStr labor:_laborStr round:self.matchInfo.round server:_serviceName tag:tag];
+    [[WYEngine shareInstance] createMatchTeamWithUid:[WYEngine shareInstance].uid activityId:self.activityId netbarId:self.netbarInfo.nid teamName:_teamName name:_myName telephone:_telephone idcard:_idCard qqNum:_qqStr labor:_laborStr round:self.matchInfo.round server:_serviceName tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
@@ -83,17 +110,30 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if (self.applyType == ApplyViewTypeTeam) {
+        return 3;
+    } else if (self.applyType == ApplyViewTypeSol) {
+        return 2;
+    }
     return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 1;
-    }else if (section == 1){
-        return 2;
-    }else if (section == 2){
-        return 5;
+    if (self.applyType == ApplyViewTypeTeam) {
+        if (section == 0) {
+            return 1;
+        }else if (section == 1){
+            return 2;
+        }else if (section == 2){
+            return 5;
+        }
+    }else if (self.applyType == ApplyViewTypeSol) {
+        if (section == 0) {
+            return 1;
+        }else if (section == 1){
+            return 5;
+        }
     }
     return 0;
 }
@@ -120,10 +160,16 @@
         indexLabel.backgroundColor = [UIColor clearColor];
         indexLabel.textColor = SKIN_TEXT_COLOR2;
         indexLabel.font = SKIN_FONT_FROMNAME(12);
-        if (section == 1) {
-            indexLabel.text = @"战队资料";
-        }else if(section == 2){
-            indexLabel.text = @"个人资料";
+        if (self.applyType == ApplyViewTypeTeam) {
+            if (section == 1) {
+                indexLabel.text = @"战队资料";
+            }else if(section == 2){
+                indexLabel.text = @"个人资料";
+            }
+        }else if (self.applyType == ApplyViewTypeSol) {
+            if (section == 1) {
+                indexLabel.text = @"个人资料";
+            }
         }
         [view addSubview:indexLabel];
     }
@@ -143,9 +189,8 @@
     }
     cell.rightImageView.hidden = YES;
     cell.delegate = self;
-    
-    switch (indexPath.section) {
-        case 0:{
+    if (self.applyType == ApplyViewTypeTeam) {
+        if (indexPath.section == 0) {
             if (indexPath.row == 0){
                 cell.titleLabel.text = @"参赛网吧";
                 [cell setbottomLineWithType:1];
@@ -153,9 +198,7 @@
                 cell.textField.enabled = NO;
                 cell.textField.text = _netbarName;
             }
-        }
-            break;
-        case 1:{
+        }else if (indexPath.section == 1){
             if (indexPath.row == 0){
                 cell.titleLabel.text = @"战队名";
                 cell.textField.text = _teamName;
@@ -165,9 +208,7 @@
                 cell.textField.text = _serviceName;
                 [cell setbottomLineWithType:1];
             }
-        }
-            break;
-        case 2:{
+        }else if (indexPath.section == 2){
             if (indexPath.row == 0){
                 cell.titleLabel.text = @"姓名";
                 cell.textField.text = _myName;
@@ -190,9 +231,38 @@
                 [cell setbottomLineWithType:1];
             }
         }
-            break;
-        default:
-            break;
+    }else if (self.applyType == ApplyViewTypeSol) {
+        if (indexPath.section == 0) {
+            if (indexPath.row == 0){
+                cell.titleLabel.text = @"参赛网吧";
+                [cell setbottomLineWithType:1];
+                cell.rightImageView.hidden = NO;
+                cell.textField.enabled = NO;
+                cell.textField.text = _netbarName;
+            }
+        }else if (indexPath.section == 1){
+            if (indexPath.row == 0){
+                cell.titleLabel.text = @"姓名";
+                cell.textField.text = _myName;
+                [cell setbottomLineWithType:0];
+            }else if (indexPath.row == 1) {
+                cell.titleLabel.text = @"身份证";
+                cell.textField.text = _idCard;
+                [cell setbottomLineWithType:0];
+            }else if (indexPath.row == 2) {
+                cell.titleLabel.text = @"手机";
+                cell.textField.text = _telephone;
+                [cell setbottomLineWithType:0];
+            }else if (indexPath.row == 3) {
+                cell.titleLabel.text = @"QQ";
+                cell.textField.text = _qqStr;
+                [cell setbottomLineWithType:0];
+            }else if (indexPath.row == 4) {
+                cell.titleLabel.text = @"擅长位置";
+                cell.textField.text = _laborStr;
+                [cell setbottomLineWithType:1];
+            }
+        }
     }
     
     if (indexPath.row == 0) {
@@ -227,13 +297,27 @@
 {
     NSLog(@"textFiledChanged");
     NSIndexPath *indexPath = [self.applyTableView indexPathForCell:cell];
-    if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-            _teamName = content;
-        }else if (indexPath.row == 1){
-            _serviceName = content;
+    if (self.applyType == ApplyViewTypeTeam) {
+        if (indexPath.section == 1) {
+            if (indexPath.row == 0) {
+                _teamName = content;
+            }else if (indexPath.row == 1){
+                _serviceName = content;
+            }
+        } else if (indexPath.section == 2) {
+            if (indexPath.row == 0){
+                _myName = content;
+            }else if (indexPath.row == 1) {
+                _idCard = content;
+            }else if (indexPath.row == 2) {
+                _telephone = content;
+            }else if (indexPath.row == 3) {
+                _qqStr = content;
+            }else if (indexPath.row == 4) {
+                _laborStr = content;
+            }
         }
-    } else if (indexPath.section == 2) {
+    }else if (self.applyType == ApplyViewTypeSol){
         if (indexPath.row == 0){
             _myName = content;
         }else if (indexPath.row == 1) {
@@ -294,14 +378,6 @@
         [WYProgressHUD lightAlert:@"请选择参赛网吧"];
         return;
     }
-    if (_teamName.length == 0) {
-        [WYProgressHUD lightAlert:@"请输入战队名"];
-        return;
-    }
-    if (_serviceName.length == 0) {
-        [WYProgressHUD lightAlert:@"请输入大区名"];
-        return;
-    }
     if (_myName.length == 0) {
         [WYProgressHUD lightAlert:@"请输入姓名"];
         return;
@@ -322,7 +398,19 @@
         [WYProgressHUD lightAlert:@"请确定擅长位置"];
         return;
     }
-    [self createTeam];
+    if (self.applyType == ApplyViewTypeTeam) {
+        if (_serviceName.length == 0) {
+            [WYProgressHUD lightAlert:@"请输入大区名"];
+            return;
+        }
+        if (_teamName.length == 0) {
+            [WYProgressHUD lightAlert:@"请输入战队名"];
+            return;
+        }
+        [self createTeam];
+    }else if (self.applyType == ApplyViewTypeSol) {
+        [self applyMatch];
+    }
 }
 
 -(void)dealloc

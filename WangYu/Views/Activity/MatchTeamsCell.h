@@ -20,6 +20,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *applyCountLabel;
 @property (strong, nonatomic) IBOutlet UILabel *totalCountLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *hotImageView;
+@property (strong, nonatomic) IBOutlet UIButton *exitButton;
+@property (strong, nonatomic) IBOutlet UIButton *editButton;
+@property (assign, nonatomic) BOOL isMine;
 
 @property (strong, nonatomic) WYTeamInfo *teamInfo;
 
@@ -28,6 +31,9 @@
 @protocol MatchTeamsCellDelegate <NSObject>
 
 @optional
+
 - (void)MatchTeamsCellJoinClickWithCell:(id)cell;
+- (void)MatchTeamsCellExitClickWithCell:(id)cell;
+- (void)MatchTeamsCellEditClickWithCell:(id)cell;
 
 @end

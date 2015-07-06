@@ -1312,6 +1312,23 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
+//我的战队
+- (BOOL)getMatchTeamListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    [params setObject:uid forKey:@"userId"];
+    if (page > 0) {
+        [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    }
+    if (pageSize > 0) {
+        [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"rows"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/myTeamList",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 #pragma mark - 活动
 - (BOOL)getActivityListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
@@ -1429,14 +1446,39 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
+//个人报名
+- (BOOL)applyMatchWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId name:(NSString *)name
+                telephone:(NSString *)telephone idcard:(NSString *)idcard qqNum:(NSString *)qqNum labor:(NSString *)labor round:(int)round tag:(int)tag {
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    
+    [params setObject:uid forKey:@"userId"];
+    [params setObject:aId forKey:@"activityId"];
+    [params setObject:nId forKey:@"netbarId"];
+    [params setObject:name forKey:@"name"];
+    [params setObject:telephone forKey:@"telephone"];
+    [params setObject:idcard forKey:@"idcard"];
+    [params setObject:qqNum forKey:@"qq"];
+    [params setObject:labor forKey:@"labor"];
+    if (round > 0) {
+        [params setObject:[NSNumber numberWithInt:round] forKey:@"round"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/submitPersonalApply",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 //战队报名(创建战队)
-- (BOOL)createMatchTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId name:(NSString *)name telephone:(NSString *)telephone idcard:(NSString *)idcard qqNum:(NSString *)qqNum labor:(NSString *)labor round:(int)round server:(NSString *)server tag:(int)tag
+- (BOOL)createMatchTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId teamName:(NSString *)teamName name:(NSString *)name telephone:(NSString *)telephone idcard:(NSString *)idcard qqNum:(NSString *)qqNum labor:(NSString *)labor round:(int)round server:(NSString *)server tag:(int)tag
 {
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
 
     [params setObject:uid forKey:@"userId"];
     [params setObject:aId forKey:@"activityId"];
     [params setObject:nId forKey:@"netbarId"];
+    [params setObject:teamName forKey:@"teamName"];
     [params setObject:name forKey:@"name"];
     [params setObject:telephone forKey:@"telephone"];
     [params setObject:idcard forKey:@"idcard"];
@@ -1477,6 +1519,18 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:_token forKey:@"token"];
     }
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/alreadyAppliedTeam",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+//退出战队
+- (BOOL)exitMatchTeamWithUid:(NSString *)uid teamId:(NSString *)teamId tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    [params setObject:uid forKey:@"userId"];
+    [params setObject:teamId forKey:@"teamId"];
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/exitTeam",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 

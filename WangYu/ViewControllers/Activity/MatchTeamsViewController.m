@@ -374,7 +374,7 @@ static int filterLabel_Tag = 202, filterLineImg_Tag = 203;
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
 
-#pragma mark - PayOrderViewCellDelegate
+#pragma mark - MatchTeamsCellDelegate
 - (void)MatchTeamsCellJoinClickWithCell:(id)cell{
     NSIndexPath* indexPath = [self.teamTableView indexPathForCell:cell];
     if (indexPath == nil) {

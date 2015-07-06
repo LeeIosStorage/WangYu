@@ -26,6 +26,18 @@
     [self.joinButton.layer setMasksToBounds:YES];
     [self.joinButton.layer setCornerRadius:4.0];
     [self.joinButton.layer setBorderWidth:0.5];
+    
+    [self.exitButton.layer setMasksToBounds:YES];
+    [self.exitButton.layer setCornerRadius:4.0];
+    [self.exitButton.layer setBorderWidth:0.5];
+    [self.exitButton.layer setBorderColor:UIColorToRGB(0Xadadad).CGColor];
+    [self.exitButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
+    
+    [self.editButton.layer setMasksToBounds:YES];
+    [self.editButton.layer setCornerRadius:4.0];
+    [self.editButton.layer setBorderWidth:0.5];
+    [self.editButton.layer setBorderColor:UIColorToRGB(0Xadadad).CGColor];
+    [self.editButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
    
 }
 
@@ -45,22 +57,47 @@
     self.applyCountLabel.text = applyCount;
     self.totalCountLabel.text = totalCount;
     
-    if (teamInfo.isJoin) {
-        self.joinButton.enabled = NO;
-        [self.joinButton.layer setBorderColor:SKIN_TEXT_COLOR2.CGColor];
-        self.joinButton.titleLabel.text = @"我已加入";
-        [self.joinButton setTitleColor:SKIN_TEXT_COLOR2 forState:UIControlStateNormal];
+    if (self.isMine) {
+        self.joinButton.hidden = YES;
+        self.exitButton.hidden = NO;
+        if (teamInfo.isLeader) {
+            self.editButton.hidden = NO;
+        }else {
+            self.editButton.hidden = YES;
+        }
     }else {
-        self.joinButton.enabled = YES;
-        [self.joinButton.layer setBorderColor:SKIN_TEXT_COLORRED.CGColor];
-        self.joinButton.titleLabel.text = @"我要加入";
-        [self.joinButton setTitleColor:SKIN_TEXT_COLORRED forState:UIControlStateNormal];
+        self.joinButton.hidden = NO;
+        self.exitButton.hidden = YES;
+        self.editButton.hidden = YES;
+        if (teamInfo.isJoin) {
+            self.joinButton.enabled = NO;
+            [self.joinButton.layer setBorderColor:SKIN_TEXT_COLOR2.CGColor];
+            self.joinButton.titleLabel.text = @"我已加入";
+            [self.joinButton setTitleColor:SKIN_TEXT_COLOR2 forState:UIControlStateNormal];
+        }else {
+            self.joinButton.enabled = YES;
+            [self.joinButton.layer setBorderColor:SKIN_TEXT_COLORRED.CGColor];
+            self.joinButton.titleLabel.text = @"我要加入";
+            [self.joinButton setTitleColor:SKIN_TEXT_COLORRED forState:UIControlStateNormal];
+        }
     }
 }
 
 - (IBAction)joinAction:(id)sender {
     if ([self.delegate respondsToSelector:@selector(MatchTeamsCellJoinClickWithCell:)]) {
         [self.delegate MatchTeamsCellJoinClickWithCell:self];
+    }
+}
+
+- (IBAction)exitAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(MatchTeamsCellExitClickWithCell:)]) {
+        [self.delegate MatchTeamsCellExitClickWithCell:self];
+    }
+}
+
+- (IBAction)editAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(MatchTeamsCellEditClickWithCell:)]) {
+        [self.delegate MatchTeamsCellEditClickWithCell:self];
     }
 }
 

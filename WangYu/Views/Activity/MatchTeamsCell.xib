@@ -9,6 +9,8 @@
             <string>HiraginoSansGB-W3</string>
             <string>HiraginoSansGB-W3</string>
             <string>HiraginoSansGB-W3</string>
+            <string>HiraginoSansGB-W3</string>
+            <string>HiraginoSansGB-W3</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -88,6 +90,32 @@
                                     <action selector="joinAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="I8E-vt-LkC"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IiA-Q0-HRg">
+                                <rect key="frame" x="249" y="14" width="59" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="14"/>
+                                <state key="normal" title="解散">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="exitAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uNj-Bb-uO1"/>
+                                    <action selector="joinAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="x7I-IZ-C7T"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="d3i-Hl-8Qk">
+                                <rect key="frame" x="178" y="14" width="59" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="14"/>
+                                <state key="normal" title="编辑">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="editAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="H7p-ht-fQJ"/>
+                                    <action selector="joinAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ziJ-AH-rgm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -96,6 +124,8 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="applyCountLabel" destination="e5M-qf-Da5" id="DM9-SW-YND"/>
+                <outlet property="editButton" destination="d3i-Hl-8Qk" id="asz-Wu-PWk"/>
+                <outlet property="exitButton" destination="IiA-Q0-HRg" id="etd-Af-tgG"/>
                 <outlet property="hotImageView" destination="gjz-Q1-46R" id="d8z-Js-Njq"/>
                 <outlet property="joinButton" destination="yye-8i-KfT" id="tKO-xI-HLG"/>
                 <outlet property="teamLeaderLabel" destination="Qmp-fn-mtG" id="h3y-RH-ewY"/>
