@@ -412,7 +412,7 @@
 #pragma mark GMGridViewActionDelegate
 - (void)GMGridView:(GMGridView *)gridView didTapOnItemAtIndex:(NSInteger)position
 {
-    WYLog(@"Did tap at index %ld", position);
+//    WYLog(@"Did tap at index %ld", position);
     if (_coverGridView == gridView) {
         
         return;

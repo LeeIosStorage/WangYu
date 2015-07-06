@@ -184,7 +184,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //战队报名(创建战队)
 - (BOOL)createMatchTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId name:(NSString *)name telephone:(NSString *)telephone idcard:(NSString *)idcard qqNum:(NSString *)qqNum labor:(NSString *)labor round:(int)round server:(NSString *)server tag:(int)tag;
 //已报名战队
-- (BOOL)getMatchJoinedTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId page:(int)page pageSize:(int)pageSize tag:(int)tag;
+- (BOOL)getMatchJoinedTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId areaCode:(NSString *)areaCode page:(int)page pageSize:(int)pageSize tag:(int)tag;
 
 #pragma mark - 手游
 //手游列表

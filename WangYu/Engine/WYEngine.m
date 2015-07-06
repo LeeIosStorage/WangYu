@@ -1455,7 +1455,7 @@ static WYEngine* s_ShareInstance = nil;
 }
 
 //已报名战队
-- (BOOL)getMatchJoinedTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId page:(int)page pageSize:(int)pageSize tag:(int)tag{
+- (BOOL)getMatchJoinedTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId areaCode:(NSString *)areaCode page:(int)page pageSize:(int)pageSize tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (uid) {
         [params setObject:uid forKey:@"userId"];
@@ -1463,6 +1463,9 @@ static WYEngine* s_ShareInstance = nil;
     [params setObject:aId forKey:@"activityId"];
     if (nId) {
         [params setObject:nId forKey:@"netbarId"];
+    }
+    if (areaCode) {
+        [params setObject:areaCode forKey:@"areaCode"];
     }
     if (page > 0) {
         [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];

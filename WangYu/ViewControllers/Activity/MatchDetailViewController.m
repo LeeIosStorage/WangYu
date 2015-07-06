@@ -358,6 +358,7 @@
             }else if (indexPath.row == 1) {
                 MatchTeamsViewController *mtVc = [[MatchTeamsViewController alloc] init];
                 mtVc.activityId = self.activityInfo.aId;
+                mtVc.showFilter = YES;
                 [self.navigationController pushViewController:mtVc animated:YES];
             }
         }

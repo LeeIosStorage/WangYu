@@ -1139,7 +1139,7 @@
 #pragma mark GMGridViewActionDelegate
 - (void)GMGridView:(GMGridView *)gridView didTapOnItemAtIndex:(NSInteger)position
 {
-    NSLog(@"Did tap at index %ld", position);
+//    NSLog(@"Did tap at index %d", position);
 }
 
 #pragma mark - scrollViewDelegat

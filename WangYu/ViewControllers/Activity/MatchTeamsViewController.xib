@@ -7,15 +7,17 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MatchTeamsViewController">
             <connections>
+                <outlet property="filterAreaButton" destination="CV8-vF-jkX" id="50u-Js-tWL"/>
+                <outlet property="filterAreaImgView" destination="WZm-Xm-2QW" id="eLO-NM-AIt"/>
+                <outlet property="filterAreaLabel" destination="qbh-2m-xPn" id="9Vh-zw-XI5"/>
                 <outlet property="filterBottomImgView" destination="USi-Nr-Q5W" id="U8h-nf-f11"/>
-                <outlet property="filterCityButton" destination="CV8-vF-jkX" id="g54-I3-Q4N"/>
-                <outlet property="filterCityImgView" destination="WZm-Xm-2QW" id="uV6-M2-KUs"/>
-                <outlet property="filterCityLabel" destination="qbh-2m-xPn" id="8ke-As-U7e"/>
                 <outlet property="filterContainerView" destination="lQo-iP-pnJ" id="KWF-sb-i6r"/>
                 <outlet property="filterMiddleImgView" destination="yRt-Pt-5Je" id="UBw-r6-abU"/>
                 <outlet property="filterNetbarButton" destination="jq8-JN-BXE" id="8NV-WL-g8Z"/>
                 <outlet property="filterNetbarImgView" destination="X52-pI-hy1" id="rQi-GG-znP"/>
                 <outlet property="filterNetbarLabel" destination="hcU-Xt-YNG" id="aRg-zT-lHN"/>
+                <outlet property="filterTableContainerView" destination="LFW-4j-IR2" id="Gcp-KY-cia"/>
+                <outlet property="filterTableView" destination="7Mf-2v-0YU" id="KJH-H7-ZrE"/>
                 <outlet property="teamTableView" destination="Fay-0O-wB8" id="rUV-h9-ual"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -25,6 +27,15 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Fay-0O-wB8">
+                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="LC2-fG-syX"/>
+                        <outlet property="delegate" destination="-1" id="s7I-oc-820"/>
+                    </connections>
+                </tableView>
                 <view contentMode="scaleToFill" id="lQo-iP-pnJ">
                     <rect key="frame" x="0.0" y="64" width="320" height="36"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -51,7 +62,7 @@
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <action selector="filterCityAction:" destination="-1" eventType="touchUpInside" id="uTj-WE-y26"/>
+                                        <action selector="filterAreaAction:" destination="-1" eventType="touchUpInside" id="SOH-cu-Ohw"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -95,15 +106,6 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Fay-0O-wB8">
-                    <rect key="frame" x="0.0" y="101" width="320" height="467"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="LC2-fG-syX"/>
-                        <outlet property="delegate" destination="-1" id="s7I-oc-820"/>
-                    </connections>
-                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="410" y="203"/>
@@ -116,6 +118,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="8RF-fw-pG8"/>
+                        <outlet property="delegate" destination="-1" id="aVt-Nl-aEs"/>
+                    </connections>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

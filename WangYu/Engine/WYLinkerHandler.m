@@ -14,6 +14,8 @@
 #import "OrdersViewController.h"
 #import "RedPacketViewController.h"
 #import "MessageDetailsViewController.h"
+#import "BookDetailViewController.h"
+#import "OrderDetailViewController.h"
 #import "WYMessageInfo.h"
 #import "MatchWarDetailViewController.h"
 
@@ -34,7 +36,7 @@
             //系统消息
             MessageDetailsViewController *mdVc = [[MessageDetailsViewController alloc] init];
             WYMessageInfo *messageInfo = [[WYMessageInfo alloc] init];
-            messageInfo.msgId = [[paramDic objectForKey:@"msgId"] description];;
+            messageInfo.msgId = [[paramDic objectForKey:@"msgId"] description];
             mdVc.messageInfo = messageInfo;
             return mdVc;
         }else if ([[realUrl host] isEqualToString:@"redbag"]){
@@ -43,13 +45,18 @@
             return rpVc;
         }else if ([[realUrl host] isEqualToString:@"reservation"]){
             //预定订单消息
-            OrdersViewController *oVc = [[OrdersViewController alloc] init];
-            return oVc;
+            BookDetailViewController *bdVc = [[BookDetailViewController alloc] init];
+            WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
+            orderInfo.reserveId = [[paramDic objectForKey:@"objId"] description];
+            bdVc.orderInfo = orderInfo;
+            return bdVc;
         }else if ([[realUrl host] isEqualToString:@"pay"]){
             //支付消息
-            OrdersViewController *oVc = [[OrdersViewController alloc] init];
-            oVc.isShowPayPage = YES;
-            return oVc;
+            OrderDetailViewController *odVc = [[OrderDetailViewController alloc] init];
+            WYOrderInfo *orderInfo = [[WYOrderInfo alloc] init];
+            orderInfo.orderId = [[paramDic objectForKey:@"objId"] description];
+            odVc.orderInfo = orderInfo;
+            return odVc;
         }else if ([[realUrl host] isEqualToString:@"activity"]){
             //活动赛事消息
             
