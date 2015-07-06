@@ -192,7 +192,8 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)getMatchJoinedTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId areaCode:(NSString *)areaCode page:(int)page pageSize:(int)pageSize tag:(int)tag;
 //退出战队
 - (BOOL)exitMatchTeamWithUid:(NSString *)uid teamId:(NSString *)teamId tag:(int)tag;
-
+//我的队友
+- (BOOL)getMatchTeamMemberWithUid:(NSString *)uid teamId:(NSString *)teamId tag:(int)tag;
 
 #pragma mark - 手游
 //手游列表

@@ -10,4 +10,6 @@
 
 @interface MatchMemberViewController : WYSuperViewController
 
+@property (nonatomic, strong) NSString *teamId;
+
 @end

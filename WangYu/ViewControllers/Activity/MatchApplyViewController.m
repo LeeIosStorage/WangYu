@@ -99,10 +99,11 @@
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
             return;
         }
-        NSDictionary *dic = [jsonRet objectForKey:@"object"];
-        NSLog(@"=========%@",dic);
         [WYProgressHUD AlertSuccess:@"创建成功" At:weakSelf.view];
+        NSString *teamStr = [[jsonRet objectForKey:@"object"] objectForKey:@"teamId"];
+        NSLog(@"=========%@",teamStr);
         MatchMemberViewController *mmVc = [[MatchMemberViewController alloc] init];
+        mmVc.teamId = teamStr;
         [self.navigationController pushViewController:mmVc animated:YES];
     }tag:tag];
 }

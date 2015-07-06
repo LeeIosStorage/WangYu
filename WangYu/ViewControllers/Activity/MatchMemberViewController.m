@@ -9,6 +9,8 @@
 #import "MatchMemberViewController.h"
 #import "MatchMemberCell.h"
 #import "InviteMemberViewController.h"
+#import "WYEngine.h"
+#import "WYProgressHUD.h"
 
 @interface MatchMemberViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -21,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self refreshTeamMembers];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,6 +34,22 @@
 - (void)initNormalTitleNavBarSubviews {
     [self setTitle:@"我的队友"];
      [self setRightButtonWithImageName:@"match_invite_icon" selector:@selector(inviteAction)];
+}
+
+- (void)refreshTeamMembers {
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getMatchTeamMemberWithUid:[WYEngine shareInstance].uid teamId:self.teamId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+    }tag:tag];
 }
 
 #pragma mark - Table view data source
