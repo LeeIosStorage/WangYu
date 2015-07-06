@@ -21,6 +21,7 @@
 @property (nonatomic, assign) int way;                      //方式：1-线上;2-线下;
 @property (nonatomic, assign) int applyCount;               //报名人数
 @property (nonatomic, assign) int peopleNum;                //约战最大人数
+@property (nonatomic, assign) int commentsCount;            //评论数
 @property (nonatomic, assign) int isStart;                  //约战是否开始 1已开始 0未开始
 @property (nonatomic, assign) int userStatus;               //-1 未登录状态 1发起者 2已报名 3未报名
 @property (nonatomic, strong) NSString *itemServer;         //项目服务器
@@ -33,8 +34,8 @@
 @property (nonatomic, strong) NSString *netbarId;
 @property (nonatomic, strong) NSString *netbarName;
 
-@property(nonatomic, readonly) NSMutableArray* applys;      //加入人
-@property(nonatomic, readonly) NSMutableArray* comments;    //评论
+@property (nonatomic, strong) NSMutableArray* applys;      //加入人
+@property (nonatomic, readonly) NSMutableArray* comments;    //评论
 
 @property(nonatomic, strong) NSDictionary* matchWarInfoByJsonDic;
 

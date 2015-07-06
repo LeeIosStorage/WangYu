@@ -83,6 +83,9 @@
     if ([dic intValueForKey:@"people_num"]) {
         _peopleNum = [dic intValueForKey:@"people_num"];
     }
+    if ([dic intValueForKey:@"commentsCount"]) {
+        _commentsCount = [dic intValueForKey:@"commentsCount"];
+    }
     
     if ([dic stringObjectForKey:@"netbar_id"]) {
         _netbarId = [dic stringObjectForKey:@"netbar_id"];

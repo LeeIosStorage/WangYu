@@ -198,7 +198,17 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 #pragma mark - Match
 //约战竞技项目
 - (BOOL)getMatchGameItemsWithUid:(NSString *)uid tag:(int)tag;
-- (BOOL)matchPublishWithUid:(NSString *)uid title:(NSString *)title itemId:(NSString *)itemId server:(NSString *)server way:(int)way netbarId:(NSString *)netbarId beginTime:(NSString *)beginTime num:(int)num contactWay:(NSString *)contactWay intro:(NSString *)intro invitedPhones:(NSArray *)invitedPhones tag:(int)tag;
+- (BOOL)matchPublishWithUid:(NSString *)uid title:(NSString *)title itemId:(NSString *)itemId server:(NSString *)server way:(int)way netbarId:(NSString *)netbarId netbarName:(NSString*)netbarName beginTime:(NSString *)beginTime num:(int)num contactWay:(NSString *)contactWay intro:(NSString *)intro invitedPhones:(NSArray *)invitedPhones tag:(int)tag;
 - (BOOL)getMatchDetailsWithMatchId:(NSString*)matchId uid:(NSString*)uid tag:(int)tag;
+- (BOOL)commitCommentMatchWithMatchId:(NSString*)matchId uid:(NSString*)uid content:(NSString*)content tag:(int)tag;
+- (BOOL)getMatchCommentInfoWithMatchId:(NSString *)matchId page:(int)page pageSize:(int)pageSize tag:(int)tag;
+//报名约战
+- (BOOL)applyMatchWarWithUid:(NSString*)uid matchId:(NSString*)matchId tag:(int)tag;
+//退出约战
+- (BOOL)cancelApplyMatchWarWithUid:(NSString*)uid matchId:(NSString*)matchId tag:(int)tag;
+//取消约战
+- (BOOL)closeMatchWarWithUid:(NSString *)uid matchId:(NSString*)matchId tag:(int)tag;
+//移除约战报名成员
+- (BOOL)removeApplyMatchWarPeopleWithMatchId:(NSString*)matchId uid:(NSString *)uid applyId:(NSString*)applyId tag:(int)tag;
 
 @end

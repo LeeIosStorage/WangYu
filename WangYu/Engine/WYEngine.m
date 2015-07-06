@@ -1550,7 +1550,7 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
-- (BOOL)matchPublishWithUid:(NSString *)uid title:(NSString *)title itemId:(NSString *)itemId server:(NSString *)server way:(int)way netbarId:(NSString *)netbarId beginTime:(NSString *)beginTime num:(int)num contactWay:(NSString *)contactWay intro:(NSString *)intro invitedPhones:(NSArray *)invitedPhones tag:(int)tag{
+- (BOOL)matchPublishWithUid:(NSString *)uid title:(NSString *)title itemId:(NSString *)itemId server:(NSString *)server way:(int)way netbarId:(NSString *)netbarId netbarName:(NSString*)netbarName beginTime:(NSString *)beginTime num:(int)num contactWay:(NSString *)contactWay intro:(NSString *)intro invitedPhones:(NSArray *)invitedPhones tag:(int)tag{
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (uid) {
@@ -1582,6 +1582,9 @@ static WYEngine* s_ShareInstance = nil;
     if (netbarId) {
         [params setObject:netbarId forKey:@"netbarId"];
     }
+    if (netbarName) {
+        [params setObject:netbarName forKey:@"netbarName"];
+    }
     if (invitedPhones != nil && invitedPhones.count > 0) {
         NSString * pidsString;
         pidsString = [WYCommonUtils stringSplitWithCommaForIds:invitedPhones];
@@ -1604,6 +1607,101 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:matchId forKey:@"id"];
     }
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/detail",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)commitCommentMatchWithMatchId:(NSString*)matchId uid:(NSString*)uid content:(NSString*)content tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (matchId) {
+        [params setObject:matchId forKey:@"matchId"];
+    }
+    if (content) {
+        [params setObject:content forKey:@"content"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/sendComment",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)getMatchCommentInfoWithMatchId:(NSString *)matchId page:(int)page pageSize:(int)pageSize tag:(int)tag{
+    
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (matchId) {
+        [params setObject:matchId forKey:@"id"];
+    }
+    if (page > 0) {
+        [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    }
+    if (pageSize > 0) {
+        [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"rows"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/comments",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+- (BOOL)applyMatchWarWithUid:(NSString*)uid matchId:(NSString*)matchId tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (matchId) {
+        [params setObject:matchId forKey:@"id"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/applyMatch",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+- (BOOL)cancelApplyMatchWarWithUid:(NSString*)uid matchId:(NSString*)matchId tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (matchId) {
+        [params setObject:matchId forKey:@"id"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/cancelApplyMatch",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)closeMatchWarWithUid:(NSString *)uid matchId:(NSString*)matchId tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (matchId) {
+        [params setObject:matchId forKey:@"id"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/closeMatch",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)removeApplyMatchWarPeopleWithMatchId:(NSString*)matchId uid:(NSString *)uid applyId:(NSString*)applyId tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (matchId) {
+        [params setObject:matchId forKey:@"matchId"];
+    }
+    if (applyId) {
+        [params setObject:applyId forKey:@"applyId"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/removeApply",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 

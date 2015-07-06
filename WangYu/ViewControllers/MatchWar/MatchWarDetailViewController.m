@@ -15,13 +15,29 @@
 #import "NetbarDetailViewController.h"
 #import "WYProgressHUD.h"
 #import "WYShareActionSheet.h"
+#import "WYMatchApplyInfo.h"
+#import "WYMatchCommentInfo.h"
+#import "GMGridViewLayoutStrategies.h"
+#import "GMGridViewCell+Extended.h"
+#import "HPGrowingTextView.h"
+#import "WYAlertView.h"
+#import "WYProgressHUD.h"
+#import "ManageMatchWarViewController.h"
 
 #define MATCH_DETAIL_TYPE_INFO          0
 #define MATCH_DETAIL_TYPE_COMMENT       1
 
-@interface MatchWarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate>
+#define GRID_IMAGE_SIZE       31
+#define item_spacing          7
+
+#define growingTextViewMaxNumberOfLines 3
+
+@interface MatchWarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate,GMGridViewDataSource, GMGridViewActionDelegate,HPGrowingTextViewDelegate>
 {
     WYShareActionSheet *_shareAction;
+    
+    NSRange _textRange;
+    int _maxReplyTextLength;
 }
 @property (nonatomic, strong) IBOutlet UITableView *matchInfoTableView;
 @property (strong, nonatomic) NSMutableArray *commentInfos;
@@ -46,14 +62,26 @@
 @property (nonatomic, strong) IBOutlet UILabel *commentNumTipLabel;
 @property (nonatomic, strong) IBOutlet UIButton *commentTabButton;
 
+//自定义TitleBar
 @property (strong, nonatomic) IBOutlet UIView *customTitleBarView;
 @property (strong, nonatomic) IBOutlet UIButton *cusBackButton;
 @property (strong, nonatomic) IBOutlet UILabel *toobarTitleLabel;
+
+//报名view
+@property (strong, nonatomic) IBOutlet UIView *matchFooterContainerView;
+@property (strong, nonatomic) IBOutlet UIView *applyContainerView;
+@property (strong, nonatomic) IBOutlet UILabel *applyCountLabel;
+@property (strong, nonatomic) IBOutlet GMGridView *applyPeopleGridView;
+
+@property (strong, nonatomic) IBOutlet UIView *commentFooterView;
 
 @property (strong, nonatomic) IBOutlet UIView *shareBottomContainerView;
 @property (strong, nonatomic) IBOutlet UIButton *manageButton;
 
 @property (strong, nonatomic) IBOutlet UIView *commentBottomContainerView;
+@property (strong, nonatomic) IBOutlet UIImageView *inputViewBgImageView;
+@property (strong, nonatomic) IBOutlet HPGrowingTextView *growingTextView;
+@property (strong, nonatomic) IBOutlet UILabel *placeHolderLabel;
 @property (strong, nonatomic) IBOutlet UIButton *sendButton;
 
 -(IBAction)matchInfoAction:(id)sender;
@@ -65,6 +93,15 @@
 @end
 
 @implementation MatchWarDetailViewController
+
+- (void)dealloc{
+    _matchInfoTableView.delegate = nil;
+    _matchInfoTableView.dataSource = nil;
+    _commentTableView.delegate = nil;
+    _commentTableView.dataSource = nil;
+    _growingTextView.delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -79,6 +116,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
     self.supInfoHeadView = [[UIView alloc] init];
     self.supInfoHeadView.backgroundColor = [UIColor clearColor];
     self.supCommentHeadView = [[UIView alloc] init];
@@ -89,12 +138,98 @@
     [self setContentInsetForScrollView:self.commentTableView inset:inset];
     [self.view insertSubview:self.customTitleBarView aboveSubview:self.titleNavBar];
     
-    _selectedSegmentIndex = 0;
-    [self refreshHeadViewShow];
+    _applyPeopleGridView.backgroundColor = [UIColor clearColor];
+    _applyPeopleGridView.style = GMGridViewStyleSwap;
+    _applyPeopleGridView.itemSpacing = item_spacing;
+    _applyPeopleGridView.minEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    _applyPeopleGridView.centerGrid = NO;
+    _applyPeopleGridView.layoutStrategy = [GMGridViewLayoutStrategyFactory strategyFromType:GMGridViewLayoutVertical];
+    _applyPeopleGridView.actionDelegate = self;
+    _applyPeopleGridView.showsHorizontalScrollIndicator = NO;
+    _applyPeopleGridView.showsVerticalScrollIndicator = NO;
+    _applyPeopleGridView.dataSource = self;
     
+    
+    _maxReplyTextLength = 500;
+    _growingTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    _growingTextView.minNumberOfLines = 1;
+    _growingTextView.maxNumberOfLines = growingTextViewMaxNumberOfLines;
+    _growingTextView.returnKeyType = UIReturnKeySend; //just as an example
+    _growingTextView.font = [UIFont systemFontOfSize:14.0f];
+    _growingTextView.contentInset = UIEdgeInsetsMake(4, 0, 4, 0);
+    _growingTextView.delegate = self;
+    _growingTextView.backgroundColor = [UIColor clearColor];
+    _growingTextView.internalTextView.backgroundColor = [UIColor clearColor];
+    _growingTextView.textColor = SKIN_TEXT_COLOR1;
+    self.placeHolderLabel.font = SKIN_FONT_FROMNAME(14);
+    self.placeHolderLabel.textColor = UIColorToRGB(0xc7c7c7);
+    self.placeHolderLabel.hidden = NO;
+    self.inputViewBgImageView.backgroundColor = UIColorToRGB(0xf5f5f5);
+    [self.inputViewBgImageView.layer setMasksToBounds:YES];
+    [self.inputViewBgImageView.layer setCornerRadius:4.0];
+    [self.inputViewBgImageView.layer setBorderWidth:0.5]; //边框宽度
+    [self.inputViewBgImageView.layer setBorderColor:UIColorToRGB(0xadadad).CGColor];
+    
+    _selectedSegmentIndex = 0;
+    CGPoint center = self.segmentMoveImageView.center;
+    center.x = SCREEN_WIDTH/4;
+    self.segmentMoveImageView.center = center;
+    
+    
+    [self refreshHeadViewShow];
     [self feedsTypeSwitch:MATCH_DETAIL_TYPE_INFO needRefreshFeeds:YES];
     
     
+    self.commentCanLoadMore = YES;
+    WS(weakSelf);
+    [self.commentTableView addInfiniteScrollingWithActionHandler:^{
+        if (!weakSelf) {
+            return;
+        }
+        if (weakSelf.commentCanLoadMore) {
+            [weakSelf.commentTableView.infiniteScrollingView stopAnimating];
+            weakSelf.commentTableView.showsInfiniteScrolling = NO;
+            return ;
+        }
+        
+        int tag = [[WYEngine shareInstance] getConnectTag];
+        [[WYEngine shareInstance] getMatchCommentInfoWithMatchId:weakSelf.matchWarInfo.mId page:(int)weakSelf.commentNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+        [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+            if (!weakSelf) {
+                return;
+            }
+            [weakSelf.commentTableView.infiniteScrollingView stopAnimating];
+            NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+            if (!jsonRet || errorMsg) {
+                if (!errorMsg.length) {
+                    errorMsg = @"请求失败";
+                }
+                [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+                return;
+            }
+            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+            for (NSDictionary *dic in object) {
+                if ([dic isKindOfClass:[NSDictionary class]]) {
+                    WYMatchCommentInfo *commentInfo = [[WYMatchCommentInfo alloc] init];
+                    [commentInfo setCommentInfoByDic:dic];
+                    [weakSelf.commentInfos addObject:commentInfo];
+                }
+            }
+            
+            weakSelf.commentCanLoadMore = [[jsonRet dictionaryObjectForKey:@"object"] boolValueForKey:@"isLast"];
+            if (weakSelf.commentCanLoadMore) {
+                weakSelf.commentTableView.showsInfiniteScrolling = NO;
+            }else{
+                weakSelf.commentTableView.showsInfiniteScrolling = YES;
+                //可以加载更多
+                weakSelf.commentNextCursor ++;
+            }
+            
+//            [weakSelf refreshHeadViewShow];
+            [weakSelf.commentTableView reloadData];
+            
+        } tag:tag];
+    }];
     self.commentTableView.showsInfiniteScrolling = NO;
 }
 
@@ -192,7 +327,7 @@
     
     self.bkImageView.clipsToBounds = YES;
     self.bkImageView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.bkImageView sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"match_detail_bg_lol"]];
+    [self.bkImageView sd_setImageWithURL:_matchWarInfo.itemPicURL placeholderImage:[UIImage imageNamed:@"match_detail_bg_lol"]];
     
     self.statusView.alpha = 0.7;
     self.statusView.layer.cornerRadius = self.statusView.frame.size.width/2;
@@ -220,8 +355,9 @@
     [self.sendButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
     [self.sendButton.layer setMasksToBounds:YES];
     [self.sendButton.layer setCornerRadius:4.0];
-    self.sendButton.backgroundColor = SKIN_COLOR;
     [self.sendButton setTitle:@"发送" forState:0];
+    [_sendButton setBackgroundColor:UIColorToRGB(0xe4e4e4)];
+    _sendButton.enabled = NO;
     
     if (_matchWarInfo.isStart == 0) {
         self.statusLabel.text = @"未开始";
@@ -233,19 +369,77 @@
         self.statusLabel.text = @"";
     }
     
+    self.manageButton.enabled = YES;
     if (_matchWarInfo.userStatus == 1) {
         [self.manageButton setTitle:@"约战管理" forState:0];
     }else if (_matchWarInfo.userStatus == 2){
         [self.manageButton setTitle:@"退出约战" forState:0];
     }else if (_matchWarInfo.userStatus == 3){
         [self.manageButton setTitle:@"加入约战" forState:0];
+    }else{
+        self.manageButton.enabled = NO;
+    }
+    
+    self.commentNumTipLabel.text = [NSString stringWithFormat:@"评论(%d)",_matchWarInfo.commentsCount];
+    
+    //报名view
+    self.applyCountLabel.font = SKIN_FONT_FROMNAME(12);
+    self.applyCountLabel.textColor = SKIN_TEXT_COLOR1;
+    self.applyCountLabel.text = [NSString stringWithFormat:@"%d人报名了",_matchWarInfo.applyCount];
+    //GridView
+    CGFloat applyContainerViewHeight = 85;
+    self.applyPeopleGridView.hidden = YES;
+    if (self.matchWarInfo.applys.count > 0) {
+        self.applyPeopleGridView.hidden = NO;
+        int peopleCount = (int)self.matchWarInfo.applys.count;
+        int lineCount = (SCREEN_WIDTH - 12*2)/(GRID_IMAGE_SIZE+item_spacing);
+        int rowCount = 0;
+        if (peopleCount%lineCount == 0) {
+            rowCount = peopleCount/lineCount;
+        }else{
+            rowCount = peopleCount/lineCount + 1;
+        }
+        if (rowCount > 3) {
+            rowCount = 3;
+        }
+        
+        CGRect frame1 = self.applyPeopleGridView.frame;
+        frame1.size.width = (GRID_IMAGE_SIZE+item_spacing)*peopleCount;
+        if (frame1.size.width > (SCREEN_WIDTH - 12*2)) {
+            frame1.size.width = (SCREEN_WIDTH - 12*2)+7;
+        }
+        frame1.size.height = (GRID_IMAGE_SIZE+item_spacing)*rowCount-3;
+        if (frame1.size.height < GRID_IMAGE_SIZE) {
+            frame1.size.height = GRID_IMAGE_SIZE;
+        }
+        self.applyPeopleGridView.frame = frame1;
+        
+        applyContainerViewHeight = self.applyPeopleGridView.frame.origin.y + self.applyPeopleGridView.frame.size.height +12;
+    }
+    [self.applyPeopleGridView reloadData];
+    
+    CGRect frame = self.applyContainerView.frame;
+    frame.size.height = applyContainerViewHeight;
+    self.applyContainerView.frame = frame;
+    
+    frame = self.matchFooterContainerView.frame;
+    frame.size.height = self.applyContainerView.frame.origin.y + self.applyContainerView.frame.size.height;
+    self.matchFooterContainerView.frame = frame;
+    
+    self.matchInfoTableView.tableFooterView = self.matchFooterContainerView;
+    if (!_commentInfos || _commentInfos.count == 0) {
+        self.commentFooterView.backgroundColor = self.view.backgroundColor;
+        self.commentTableView.tableFooterView = self.commentFooterView;
+    }else{
+        self.commentTableView.tableFooterView = nil;
     }
     
     
-    CGPoint center = self.segmentMoveImageView.center;
-    center.x = SCREEN_WIDTH/4;
-    self.segmentMoveImageView.center = center;
-    
+    if (_selectedSegmentIndex == MATCH_DETAIL_TYPE_INFO) {
+        [self refreshSegmentViewUI:self.infoTabButton];
+    }else if (_selectedSegmentIndex == MATCH_DETAIL_TYPE_COMMENT){
+        [self refreshSegmentViewUI:self.commentTabButton];
+    }
 }
 
 -(void)refreshSegmentViewUI:(UIButton *)sender{
@@ -262,7 +456,7 @@
         self.commentNumTipLabel.textColor = UIColorToRGB(0xf03f3f);
         self.infoTipLabel.textColor = SKIN_TEXT_COLOR1;
         _selectedSegmentIndex = MATCH_DETAIL_TYPE_COMMENT;
-        [self feedsTypeSwitch:(int)_selectedSegmentIndex needRefreshFeeds:YES];
+        [self feedsTypeSwitch:(int)_selectedSegmentIndex needRefreshFeeds:NO];
     }
     [UIView animateWithDuration:0.2 animations:^{
         CGPoint center = self.segmentMoveImageView.center;
@@ -315,15 +509,17 @@
 }
 -(IBAction)manageAction:(id)sender{
     
+    [self manageMatchWar];
+    return;
     if ([[WYEngine shareInstance] needUserLogin:@"登录后才能报名约战"]) {
         return;
     }
     if (_matchWarInfo.userStatus == 1) {
-        
+        [self manageMatchWar];
     }else if (_matchWarInfo.userStatus == 2){
-        
+        [self exitMatchWar];
     }else if (_matchWarInfo.userStatus == 3){
-        
+        [self applyJoinMatch];
     }else if (_matchWarInfo.userStatus == -1){
         if ([[WYEngine shareInstance] needUserLogin:@"登录后才能报名约战"]) {
             return;
@@ -331,10 +527,24 @@
     }
 }
 -(IBAction)sendAction:(id)sender{
-    if ([[WYEngine shareInstance] needUserLogin:@"登录后才能评论"]) {
-        return;
-    }
+    
+    [self commitComment];
 }
+
+-(void)manageMatchWar{
+    ManageMatchWarViewController *manageMatchVc = [[ManageMatchWarViewController alloc] init];
+    manageMatchVc.matchWarInfo = _matchWarInfo;
+    manageMatchVc.applys = self.matchWarInfo.applys;
+    [self.navigationController pushViewController:manageMatchVc animated:YES];
+}
+
+-(void)growingTextViewResignFirstResponder{
+    if ([_growingTextView isFirstResponder]) {
+        [_growingTextView resignFirstResponder];
+    }
+    _growingTextView.text = nil;
+}
+
 #pragma mark - request
 -(void)getCacheMatchWarInfo{
     WS(weakSelf);
@@ -352,11 +562,16 @@
             }
             [weakSelf refreshHeadViewShow];
             [weakSelf.matchInfoTableView reloadData];
+            
+            weakSelf.commentInfos = [[NSMutableArray alloc] init];
+            for (WYMatchCommentInfo *commentInfo in weakSelf.matchWarInfo.comments) {
+                [weakSelf.commentInfos addObject:commentInfo];
+            }
         }
     }];
 }
 -(void)refreshMatchWarInfo{
-    self.commentNextCursor = 2;
+    self.commentNextCursor = 1;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] getMatchDetailsWithMatchId:_matchWarInfo.mId uid:[WYEngine shareInstance].uid tag:tag];
@@ -383,21 +598,170 @@
             weakSelf.commentNextCursor ++;
         }
         
+        weakSelf.commentInfos = [[NSMutableArray alloc] init];
+        for (WYMatchCommentInfo *commentInfo in weakSelf.matchWarInfo.comments) {
+            [weakSelf.commentInfos addObject:commentInfo];
+        }
         [weakSelf refreshHeadViewShow];
         [weakSelf.matchInfoTableView reloadData];
+        [weakSelf.commentTableView reloadData];
         
     }tag:tag];
 }
 
 -(void)getCacheCommentInfos{
-    
+//    WS(weakSelf);
+//    int tag = [[WYEngine shareInstance] getConnectTag];
+//    [[WYEngine shareInstance] addGetCacheTag:tag];
+//    [[WYEngine shareInstance] getMatchCommentInfoWithMatchId:_matchWarInfo.mId page:2 pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+//    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+//        if (jsonRet == nil) {
+//            //...
+//        }else{
+//            
+//            weakSelf.commentInfos = [[NSMutableArray alloc] init];
+//            NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+//            for (NSDictionary *dic in object) {
+//                if ([dic isKindOfClass:[NSDictionary class]]) {
+//                    WYMatchCommentInfo *commentInfo = [[WYMatchCommentInfo alloc] init];
+//                    [commentInfo setCommentInfoByDic:dic];
+//                    [weakSelf.commentInfos addObject:commentInfo];
+//                }
+//            }
+//            [weakSelf refreshHeadViewShow];
+//            [weakSelf.commentTableView reloadData];
+//        }
+//    }];
 }
 -(void)refreshCommentInfos{
-    _commentInfos = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 100; i++) {
-        [_commentInfos addObject:@(0)];
-    }
+    
     [self.commentTableView reloadData];
+    
+//    self.commentNextCursor = 2;
+//    WS(weakSelf);
+//    int tag = [[WYEngine shareInstance] getConnectTag];
+//    [[WYEngine shareInstance] getMatchCommentInfoWithMatchId:_matchWarInfo.mId page:(int)self.commentNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+//    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+//        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+//        if (!jsonRet || errorMsg) {
+//            if (!errorMsg.length) {
+//                errorMsg = @"请求失败";
+//            }
+//            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+//            return;
+//        }
+//        
+//        weakSelf.commentInfos = [[NSMutableArray alloc] init];
+//        NSArray *object = [[jsonRet dictionaryObjectForKey:@"object"] arrayObjectForKey:@"list"];
+//        for (NSDictionary *dic in object) {
+//            if ([dic isKindOfClass:[NSDictionary class]]) {
+//                WYMatchCommentInfo *commentInfo = [[WYMatchCommentInfo alloc] init];
+//                [commentInfo setCommentInfoByDic:dic];
+//                [weakSelf.commentInfos addObject:commentInfo];
+//            }
+//        }
+//        
+//        weakSelf.commentCanLoadMore = [[jsonRet dictionaryObjectForKey:@"object"] boolValueForKey:@"isLast"];
+//        if (weakSelf.commentCanLoadMore) {
+//            weakSelf.commentTableView.showsInfiniteScrolling = NO;
+//        }else{
+//            weakSelf.commentTableView.showsInfiniteScrolling = YES;
+//            //可以加载更多
+//            weakSelf.commentNextCursor ++;
+//        }
+//        
+//        [weakSelf refreshHeadViewShow];
+//        [weakSelf.commentTableView reloadData];
+//        
+//    }tag:tag];
+}
+
+-(void)commitComment{
+    if ([[WYEngine shareInstance] needUserLogin:@"登录后才能评论"]) {
+        return;
+    }
+    NSString *content = _growingTextView.text;
+    if (content.length == 0) {
+        return;
+    }
+    self.sendButton.enabled = NO;
+    __weak MatchWarDetailViewController *weakSelf = self;
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] commitCommentMatchWithMatchId:_matchWarInfo.mId uid:[WYEngine shareInstance].uid content:content tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        self.sendButton.enabled = YES;
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"评论成功" At:weakSelf.view];
+        
+        NSDictionary *dic = [jsonRet objectForKey:@"object"];
+        WYMatchCommentInfo *commentInfo = [[WYMatchCommentInfo alloc] init];
+        [commentInfo setCommentInfoByDic:dic];
+        [weakSelf.commentInfos insertObject:commentInfo atIndex:0];
+        weakSelf.matchWarInfo.commentsCount ++;
+        
+        [weakSelf refreshHeadViewShow];
+        [weakSelf.commentTableView reloadData];
+        [weakSelf growingTextViewResignFirstResponder];
+        
+        [self.commentTableView setContentOffset:CGPointMake(0, 0 - self.commentTableView.contentInset.top) animated:YES];
+        
+    } tag:tag];
+    
+}
+
+-(void)exitMatchWar{
+    
+    self.manageButton.enabled = NO;
+    __weak MatchWarDetailViewController *weakSelf = self;
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] cancelApplyMatchWarWithUid:[WYEngine shareInstance].uid matchId:_matchWarInfo.mId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        self.manageButton.enabled = YES;
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"已退出约战" At:weakSelf.view];
+        weakSelf.matchWarInfo.userStatus = 3;
+        weakSelf.matchWarInfo.applyCount --;
+        [weakSelf refreshHeadViewShow];
+        
+    } tag:tag];
+}
+
+-(void)applyJoinMatch{
+    
+    self.manageButton.enabled = NO;
+    __weak MatchWarDetailViewController *weakSelf = self;
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] applyMatchWarWithUid:[WYEngine shareInstance].uid matchId:_matchWarInfo.mId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        self.manageButton.enabled = YES;
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"报名成功" At:weakSelf.view];
+        weakSelf.matchWarInfo.userStatus = 2;
+        weakSelf.matchWarInfo.applyCount ++;
+        [weakSelf refreshHeadViewShow];
+        
+    } tag:tag];
 }
 
 #pragma mark - dataModule
@@ -498,7 +862,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.commentTableView) {
-        return 54;
+        WYMatchCommentInfo *commentInfo = _commentInfos[indexPath.row];
+        return [MatchCommentViewCell heightForCommentInfo:commentInfo];
     }
     return [self heightWithRowAtIndexPath:indexPath];
 }
@@ -511,7 +876,10 @@
         if (cell == nil) {
             NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
             cell = [cells objectAtIndex:0];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+        WYMatchCommentInfo *commentInfo = _commentInfos[indexPath.row];
+        cell.commentInfo = commentInfo;
         return cell;
     }
     static NSString *CellIdentifier = @"SettingViewCell";
@@ -576,13 +944,196 @@
         
     }else{
         if (indexPath.row == 3) {
-            NetbarDetailViewController *netbarDetailVc = [[NetbarDetailViewController alloc] init];
-            [self.navigationController pushViewController:netbarDetailVc animated:YES];
+            if (_matchWarInfo.way == 2 && _matchWarInfo.netbarId.length > 0) {
+                WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
+                netbarInfo.nid = _matchWarInfo.netbarId;
+                netbarInfo.netbarName = _matchWarInfo.netbarName;
+                NetbarDetailViewController *netbarDetailVc = [[NetbarDetailViewController alloc] init];
+                netbarDetailVc.netbarInfo = netbarInfo;
+                [self.navigationController pushViewController:netbarDetailVc animated:YES];
+            }
         }
     }
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+}
+
+#pragma mark -HPGrowingTextViewDelegate
+- (BOOL)growingTextViewShouldBeginEditing:(HPGrowingTextView *)growingTextView{
+    
+    [self refreshCommentBottomView];
+    return YES;
+}
+- (void)growingTextViewDidEndEditing:(HPGrowingTextView *)growingTextView{
+    
+    [self refreshCommentBottomView];
+    _textRange = growingTextView.selectedRange;
+}
+
+- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height{
+    float diff = (growingTextView.frame.size.height - height);
+    CGRect r = _commentBottomContainerView.frame;
+    r.size.height -= diff;
+    r.origin.y += diff;
+    _commentBottomContainerView.frame = r;
+}
+- (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView{
+    _textRange = growingTextView.selectedRange;
+    
+    [self refreshCommentBottomView];
+    
+    if ([WYCommonUtils getHanziTextNum:growingTextView.text] > _maxReplyTextLength && growingTextView.internalTextView.markedTextRange == nil) {
+        growingTextView.text = [WYCommonUtils getHanziTextWithText:growingTextView.text maxLength:_maxReplyTextLength];
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"评论文字不可以超过%d个字符,已截断", _maxReplyTextLength] cancelButtonTitle:@"确定"];
+        
+        [alertView show];
+    }
+}
+
+
+- (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if([WYCommonUtils getHanziTextNum:growingTextView.text] > _maxReplyTextLength) {
+        
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"评论文字不可以超过%d个字符", _maxReplyTextLength] cancelButtonTitle:@"确定"];
+        [alertView show];
+        
+        return NO;
+    }
+    if ([text isEqualToString:@"\n"]) {
+        [self sendAction:nil];
+        return NO;
+        
+    }
+    return YES;
+}
+
+- (void)growingTextViewDidChangeSelection:(HPGrowingTextView *)growingTextView{
+    _textRange = growingTextView.selectedRange;
+}
+- (BOOL)growingTextViewShouldReturn:(HPGrowingTextView *)growingTextView{
+    [self sendAction:nil];
+    return YES;
+}
+-(void)refreshCommentBottomView{
+    if (_growingTextView.text.length > 0) {
+        self.placeHolderLabel.hidden = YES;
+        [_sendButton setBackgroundColor:SKIN_COLOR];
+        _sendButton.enabled = YES;
+    } else {
+        self.placeHolderLabel.hidden = NO;
+        [_sendButton setBackgroundColor:UIColorToRGB(0xe4e4e4)];
+        _sendButton.enabled = NO;
+    }
+}
+
+#pragma mark - NSNotification
+-(void) keyboardWillShow:(NSNotification *)note{
+    
+    // get keyboard size and loctaion
+    CGRect keyboardBounds;
+    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // Need to translate the bounds to account for rotation.
+    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+    
+    // get a rect for the textView frame
+    CGRect toolbarFrame = _commentBottomContainerView.frame;
+    
+//    CGRect tableViewFrame = _commentTableView.frame;
+//    tableViewFrame.size.height = self.view.bounds.size.height - keyboardBounds.size.height - toolbarFrame.size.height;
+//    _commentTableView.frame = tableViewFrame;
+//    
+//    CGPoint offset = _commentTableView.contentOffset;
+    
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    toolbarFrame.origin.y = self.view.bounds.size.height - keyboardBounds.size.height - toolbarFrame.size.height;
+    _commentBottomContainerView.frame = toolbarFrame;
+    
+//    if (_commentTableView.contentSize.height > _commentTableView.frame.size.height) {
+//        offset = CGPointMake(0, _commentTableView.contentSize.height -  _tableView.frame.size.height);
+//        _commentTableView.contentOffset = offset;
+//    }
+    
+    // commit animations
+    [UIView commitAnimations];
+}
+
+-(void) keyboardWillHide:(NSNotification *)note{
+    
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // get a rect for the textView frame
+    
+    CGRect toolbarFrame = _commentBottomContainerView.frame;
+    
+//    CGRect tableViewFrame = _commentTableView.frame;
+//    tableViewFrame.size.height = self.view.bounds.size.height - toolbarFrame.size.height;
+    
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    toolbarFrame.origin.y = self.view.bounds.size.height - toolbarFrame.size.height;
+    _commentBottomContainerView.frame = toolbarFrame;
+    
+//    _commentTableView.frame = tableViewFrame;
+    
+    // commit animations
+    [UIView commitAnimations];
+}
+
+#pragma mark GMGridViewDataSource
+- (NSInteger)numberOfItemsInGMGridView:(GMGridView *)gridView
+{
+    return _matchWarInfo.applys.count;
+    
+}
+- (CGSize)GMGridView:(GMGridView *)gridView sizeForItemsInInterfaceOrientation:(UIInterfaceOrientation)orientation {
+    return CGSizeMake(GRID_IMAGE_SIZE, GRID_IMAGE_SIZE);
+}
+
+
+- (GMGridViewCell *)GMGridView:(GMGridView *)gridView cellForItemAtIndex:(NSInteger)index
+{
+    GMGridViewCell *cell = [gridView dequeueReusableCell];
+    
+    if (!cell)
+    {
+        cell = [[GMGridViewCell alloc] init];
+        UIImageView* imageview = [[UIImageView alloc] init];
+        imageview.contentMode = UIViewContentModeScaleAspectFill;
+        imageview.clipsToBounds = YES;
+        imageview.layer.masksToBounds = YES;
+        imageview.layer.cornerRadius = GRID_IMAGE_SIZE/2;
+        cell.contentView = imageview;
+    }
+    
+    UIImageView* imageiew = (UIImageView*)cell.contentView;
+    id info = [self.matchWarInfo.applys objectAtIndex:index];
+    if ([info isKindOfClass:[WYMatchApplyInfo class]]) {
+        WYMatchApplyInfo* applyInfo = (WYMatchApplyInfo*)info;
+        [imageiew sd_setImageWithURL:applyInfo.smallAvatarUrl placeholderImage:[UIImage imageNamed:@"personal_avatar_default_icon_small"]];
+    }else{
+        imageiew.image = [UIImage imageNamed:@"personal_avatar_default_icon_small"];
+    }
+    
+    return cell;
+}
+#pragma mark GMGridViewActionDelegate
+- (void)GMGridView:(GMGridView *)gridView didTapOnItemAtIndex:(NSInteger)position
+{
+    NSLog(@"Did tap at index %ld", position);
 }
 
 #pragma mark - scrollViewDelegat

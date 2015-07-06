@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WYMatchCommentInfo.h"
 
 @interface MatchCommentViewCell : UITableViewCell
+
+@property (nonatomic, strong) WYMatchCommentInfo *commentInfo;
+
+@property (nonatomic, strong) IBOutlet UIImageView *avatarImageView;
+@property (nonatomic, strong) IBOutlet UILabel *nickNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *dateLabel;
+@property (nonatomic, strong) IBOutlet UILabel *contentLabel;
+
++ (float)heightForCommentInfo:(WYMatchCommentInfo *)commentInfo;
 
 @end

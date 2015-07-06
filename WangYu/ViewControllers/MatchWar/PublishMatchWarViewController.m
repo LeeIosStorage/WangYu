@@ -193,7 +193,7 @@
     [WYProgressHUD AlertLoading:@"约战发布中..." At:self.view];
     __weak PublishMatchWarViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] matchPublishWithUid:[WYEngine shareInstance].uid title:_textField.text itemId:itemId server:server way:_matchWay netbarId:_netbarInfo.nid beginTime:_matchDateString num:_peopleNumber contactWay:_matchContactWayToServer intro:_matchIntro invitedPhones:invitedPhones tag:tag];
+    [[WYEngine shareInstance] matchPublishWithUid:[WYEngine shareInstance].uid title:_textField.text itemId:itemId server:server way:_matchWay netbarId:_netbarInfo.nid netbarName:_netbarInfo.netbarName beginTime:_matchDateString num:_peopleNumber contactWay:_matchContactWayToServer intro:_matchIntro invitedPhones:invitedPhones tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
