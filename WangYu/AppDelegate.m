@@ -208,6 +208,15 @@ void uncaughtExceptionHandler(NSException *exception) {
     WYLog(@"query=%@,scheme=%@,host=%@", url.query, url.scheme, url.host);
     NSString *scheme = [url scheme];
     
+    if([scheme isEqualToString:@"wydsopen"]){
+        UINavigationController* navController = self.mainTabViewController.navigationController;
+        UIViewController* pushVc = [WYLinkerHandler handleDealWithHref:url.absoluteString From:navController];
+        if (pushVc) {
+            [navController pushViewController:pushVc animated:YES];
+        }
+        return YES;
+    }
+    
     if ([[url absoluteString] hasPrefix:@"wxb10451ed2c4a6ce3://pay"]) {
         return [WXApi handleOpenURL:url delegate:[WYPayManager shareInstance]];
     }

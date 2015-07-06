@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) IBOutlet UIImageView *avatarImageView;
 @property (nonatomic, strong) IBOutlet UILabel *phoneNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *phoneLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *stateImageView;
 
 - (void)setPbUserInfo:(PbUserInfo*)userInfo withddressBookRef:(ABAddressBookRef)addressBook;

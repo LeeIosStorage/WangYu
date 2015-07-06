@@ -140,9 +140,9 @@ static WYEngine* s_ShareInstance = nil;
 
 - (void)serverInit{
     if (self.serverPlatform == TestPlatform) {
-        //API_URL = @"http://192.168.16.29";
+        API_URL = @"http://192.168.16.29";
         //zheng哥专用
-        API_URL = @"http://192.168.16.44";
+//        API_URL = @"http://192.168.16.44";
     } else {
         API_URL = @"http://api.wangyuhudong.com";
     }
@@ -1684,6 +1684,28 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
+- (BOOL)manageMatchAppliersWithUid:(NSString*)uid matchId:(NSString *)matchId page:(int)page pageSize:(int)pageSize tag:(int)tag{
+    
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    if (matchId) {
+        [params setObject:matchId forKey:@"id"];
+    }
+    if (page > 0) {
+        [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    }
+    if (pageSize > 0) {
+        [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"rows"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/appliers",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];   
+}
+
 - (BOOL)removeApplyMatchWarPeopleWithMatchId:(NSString*)matchId uid:(NSString *)uid applyId:(NSString*)applyId tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (matchId) {
@@ -1699,6 +1721,26 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:_token forKey:@"token"];
     }
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/removeApply",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)invitedPbPeopleWithUid:(NSString *)uid matchId:(NSString*)matchId invitedPhones:(NSArray *)invitedPhones tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (matchId) {
+        [params setObject:matchId forKey:@"id"];
+    }
+    if (invitedPhones != nil && invitedPhones.count > 0) {
+        NSString * pidsString;
+        pidsString = [WYCommonUtils stringSplitWithCommaForIds:invitedPhones];
+        [params setObject:pidsString forKey:@"phoneNums"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/match/invocation",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
