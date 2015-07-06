@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSString *activityId;
 
+@property (nonatomic, assign) BOOL showFilter;
+
 @end

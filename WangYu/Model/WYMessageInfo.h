@@ -27,6 +27,7 @@ typedef enum MessageType_{
 @property(nonatomic, assign) BOOL isRead;
 @property(nonatomic, strong) NSDate* createDate;
 @property(nonatomic, readonly) NSString* realUrlHost;
+@property(nonatomic, strong) NSString* objId;
 
 @property(nonatomic, strong) NSDictionary* messageInfoByJsonDic;
 

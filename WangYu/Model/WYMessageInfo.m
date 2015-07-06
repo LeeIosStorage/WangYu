@@ -22,6 +22,9 @@
         _isRead = [dic boolValueForKey:@"is_read"];
     }
     _type = [dic intValueForKey:@"type"];
+    if ([dic stringObjectForKey:@"obj_id"]) {
+        _objId = [dic objectForKey:@"obj_id"];
+    }
     
     NSDateFormatter *dateFormatter = [WYUIUtils dateFormatterOFUS];
     if ([dic stringObjectForKey:@"create_date"]) {

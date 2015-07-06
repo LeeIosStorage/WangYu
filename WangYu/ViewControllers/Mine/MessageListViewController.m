@@ -460,7 +460,7 @@
         messageInfo.isRead = YES;
         [weakSelf refreshMessageWith:tableView forRowAtIndexPath:indexPath];
         
-        NSString *wyHref = [NSString stringWithFormat:@"wycategory://%@?msgId=%@",messageInfo.realUrlHost,messageInfo.msgId];
+        NSString *wyHref = [NSString stringWithFormat:@"wycategory://%@?msgId=%@&objId=%@",messageInfo.realUrlHost,messageInfo.msgId,messageInfo.objId];
             
         id vc = [WYLinkerHandler handleDealWithHref:wyHref From:self.navigationController];
         if (vc) {
@@ -644,7 +644,7 @@
     if (!messageInfo.isRead) {
         [self setMessageRead:messageInfo tableView:tableView forRowAtIndexPath:indexPath];
     }else {
-        NSString *wyHref = [NSString stringWithFormat:@"wycategory://%@?msgId=%@",messageInfo.realUrlHost,messageInfo.msgId];
+        NSString *wyHref = [NSString stringWithFormat:@"wycategory://%@?msgId=%@&objId=%@",messageInfo.realUrlHost,messageInfo.msgId,messageInfo.objId];
         id vc = [WYLinkerHandler handleDealWithHref:wyHref From:self.navigationController];
         if (vc) {
             [self.navigationController pushViewController:vc animated:YES];
