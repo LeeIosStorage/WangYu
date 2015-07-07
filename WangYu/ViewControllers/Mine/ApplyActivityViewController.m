@@ -18,6 +18,7 @@
 #import "MatchTeamsCell.h"
 #import "WYSegmentedView.h"
 #import "WYAlertView.h"
+#import "MatchMemberViewController.h"
 
 #define MATCH_TYPE_ACTIVITY           0
 #define MATCH_TYPE_TEAM               1
@@ -426,7 +427,10 @@
     if (indexPath == nil) {
         return;
     }
-//    WYTeamInfo* teamInfo = _teamInfos[indexPath.row];
+    WYTeamInfo* teamInfo = _teamInfos[indexPath.row];
+    MatchMemberViewController *mmVc = [[MatchMemberViewController alloc] init];
+    mmVc.teamId = teamInfo.teamId;
+    [self.navigationController pushViewController:mmVc animated:YES];
 }
 
 - (void)exitMatchTeamWith:(WYTeamInfo *)teamInfo indexPath:(NSIndexPath *)indexPath{
