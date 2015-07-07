@@ -431,6 +431,7 @@
     WYTeamInfo* teamInfo = _teamInfos[indexPath.row];
     MatchMemberViewController *mmVc = [[MatchMemberViewController alloc] init];
     mmVc.teamId = teamInfo.teamId;
+    mmVc.activityId = teamInfo.activityId;
     [self.navigationController pushViewController:mmVc animated:YES];
 }
 

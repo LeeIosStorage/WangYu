@@ -44,6 +44,21 @@
     }
 }
 
+//设置获取焦点
+-(void) setIsFirstResponder:(BOOL)isFirstResponder
+{
+    if (isFirstResponder) {
+        [_textField becomeFirstResponder];
+    }else{
+        [_textField resignFirstResponder];
+    }
+}
+
+-(BOOL)isFirstResponder
+{
+    return _textField.isFirstResponder;
+}
+
 //加delegate ios7 对联想的不会进入delegate
 -(void) inputFieldDidChanged:(NSNotification *) noti
 {

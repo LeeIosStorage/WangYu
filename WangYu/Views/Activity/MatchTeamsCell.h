@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *joinButton;
 @property (strong, nonatomic) IBOutlet UILabel *applyCountLabel;
 @property (strong, nonatomic) IBOutlet UILabel *totalCountLabel;
+@property (strong, nonatomic) IBOutlet UILabel *roundLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *hotImageView;
 @property (strong, nonatomic) IBOutlet UIButton *exitButton;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;

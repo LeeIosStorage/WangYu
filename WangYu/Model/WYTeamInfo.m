@@ -30,6 +30,15 @@
     if ([dic objectForKey:@"is_monitor"]) {
         _isLeader = [dic boolValueForKey:@"is_monitor"];
     }
+    if ([dic objectForKey:@"activity_id"]) {
+        _activityId = [dic stringObjectForKey:@"activity_id"];
+    }
+    if ([dic objectForKey:@"round"]) {
+        _round = [dic intValueForKey:@"round"];
+    }
+    if ([dic objectForKey:@"title"]) {
+        _title = [dic stringObjectForKey:@"title"];
+    }
 }
 
 - (void)setTeamInfoByJsonDic:(NSDictionary*)dic{

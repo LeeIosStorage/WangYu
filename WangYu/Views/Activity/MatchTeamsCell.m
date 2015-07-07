@@ -18,10 +18,12 @@
     self.applyCountLabel.textColor = UIColorToRGB(0xf03f3f);
     self.applyCountLabel.font = SKIN_FONT_FROMNAME(12);
     
-    self.teamNameLabel.textColor = SKIN_TEXT_COLOR1;
     self.teamNameLabel.font = SKIN_FONT_FROMNAME(14);
     self.teamLeaderLabel.textColor = SKIN_TEXT_COLOR2;
     self.teamLeaderLabel.font = SKIN_FONT_FROMNAME(12);
+    
+    self.roundLabel.textColor = SKIN_TEXT_COLOR2;
+    self.roundLabel.font = SKIN_FONT_FROMNAME(14);
     
     [self.joinButton.layer setMasksToBounds:YES];
     [self.joinButton.layer setCornerRadius:4.0];
@@ -48,9 +50,7 @@
 }
 
 -(void)setTeamInfo:(WYTeamInfo *)teamInfo{
-    self.teamNameLabel.text = teamInfo.teamName;
-    self.teamLeaderLabel.text = [NSString stringWithFormat:@"发起者：%@",teamInfo.teamLeader];
-    
+    self.roundLabel.text = [NSString stringWithFormat:@"第%d场",teamInfo.round];
     NSString *applyCount = [NSString stringWithFormat:@"%d",teamInfo.applyNum];
     NSString *totalCount = [NSString stringWithFormat:@"/%d",teamInfo.totalNum];
     
@@ -58,6 +58,9 @@
     self.totalCountLabel.text = totalCount;
     
     if (self.isMine) {
+        self.teamNameLabel.textColor = SKIN_TEXT_COLOR2;
+        self.teamNameLabel.text = teamInfo.title;
+        self.teamLeaderLabel.text = [NSString stringWithFormat:@"战队名：%@",teamInfo.teamName];
         self.joinButton.hidden = YES;
         self.exitButton.hidden = NO;
         if (teamInfo.isLeader) {
@@ -66,6 +69,9 @@
             self.editButton.hidden = YES;
         }
     }else {
+        self.teamNameLabel.textColor = SKIN_TEXT_COLOR1;
+        self.teamNameLabel.text = teamInfo.teamName;
+        self.teamLeaderLabel.text = [NSString stringWithFormat:@"发起者：%@",teamInfo.teamLeader];
         self.joinButton.hidden = NO;
         self.exitButton.hidden = YES;
         self.editButton.hidden = YES;

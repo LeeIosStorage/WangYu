@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSString *memberId;                  //战队成员id
 @property (nonatomic, strong) NSString *telephone;                 //电话
 @property (nonatomic, assign) BOOL isCompleted;                    //是否完善资料
+@property (nonatomic, assign) BOOL isLeader;                       //是否当前队伍队长
 @property (nonatomic, strong) NSString *nickName;                  //昵称
 @property (nonatomic, strong) NSString *icon;                      //头像
 @property (nonatomic, readonly) NSURL* smallAvatarUrl;             //头像地址

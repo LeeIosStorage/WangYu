@@ -21,8 +21,11 @@
     if ([dic objectForKey:@"nickname"]) {
         _nickName = [dic stringObjectForKey:@"nickname"];
     }
-    if (([dic objectForKey:@"icon"])) {
+    if ([dic objectForKey:@"icon"]) {
         _icon = [dic stringObjectForKey:@"icon"];
+    }
+    if ([dic objectForKey:@"is_monitor"]) {
+        _isLeader = [dic boolValueForKey:@"is_monitor"];
     }
 }
 

@@ -24,6 +24,8 @@
 @property (nonatomic, strong) IBOutlet UIImageView *topline;
 @property (nonatomic, strong) IBOutlet UIImageView *sepline;
 @property (nonatomic, weak) id<MatchApplyCellDelegate> delegate;
+//是否获取着焦点
+@property (nonatomic, assign) BOOL isFirstResponder;
 
 - (void) setbottomLineWithType:(int)type;
 

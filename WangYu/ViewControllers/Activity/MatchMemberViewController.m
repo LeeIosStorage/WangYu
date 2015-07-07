@@ -58,7 +58,9 @@
             }
             WYMemberInfo *memberInfo = [[WYMemberInfo alloc] init];
             [memberInfo setMemberInfoByJsonDic:dic];
-            [weakSelf.memberInfos addObject:memberInfo];
+            if (!memberInfo.isLeader) {
+                [weakSelf.memberInfos addObject:memberInfo];
+            }
         }
         [weakSelf.memberTableView reloadData];
     }tag:tag];

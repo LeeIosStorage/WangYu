@@ -18,6 +18,8 @@
 @property (nonatomic, assign) BOOL isJoin;                     //是否参加
 @property (nonatomic, assign) BOOL isLeader;
 @property (nonatomic, strong) NSString *activityId;            //当前队伍所在赛事
+@property (nonatomic, assign) int round;                       //当前队伍所在赛事场次
+@property (nonatomic, strong) NSString *title;                 //所在赛事title
 
 
 @property (nonatomic, strong) NSDictionary* teamInfoByJsonDic; //资讯字典

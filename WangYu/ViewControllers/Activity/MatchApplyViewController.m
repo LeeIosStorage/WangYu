@@ -23,6 +23,7 @@
     NSString *_telephone;
     NSString *_qqStr;
     NSString *_laborStr;
+    NSIndexPath *_indexPath;
 }
 
 @property (strong, nonatomic) IBOutlet UIButton *commitButton;
@@ -321,6 +322,29 @@
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
 
+#pragma mark -UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self doforEndEdit];
+}
+
+- (void)doforEndEdit{
+    MatchApplyCell *cell = [self getFirstResponderCell:_indexPath];
+    if (cell.textField.isFirstResponder) {
+        [cell.textField resignFirstResponder];
+        self.applyTableView.contentOffset = CGPointMake(0, 0);
+    }
+}
+
+//获取当前有焦点的cell
+-(MatchApplyCell *) getFirstResponderCell:(NSIndexPath *)indexPath
+{
+    MatchApplyCell *cell = (MatchApplyCell *)[self.applyTableView cellForRowAtIndexPath:indexPath];
+    if (cell && cell.isFirstResponder) {
+        return cell;
+    }
+    return nil;
+}
+
 #pragma mark -- MatchApplyCellDelegate
 -(void) textDidChanged:(id) cell cellContent:(NSString *)content
 {
@@ -364,44 +388,45 @@
 }
 
 -(void) textDidEditing:(id)cell{
+    NSIndexPath *indexPath = [self.applyTableView indexPathForCell:cell];
+    _indexPath = indexPath;
     NSLog(@"textDidEditing");
 }
 
 - (void)keyboardWillShown:(NSNotification *) notification {
-    if ([WYCommonUtils isIphone4]) {
-        NSDictionary* userInfo = [notification userInfo];
-        NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    NSDictionary* userInfo = [notification userInfo];
+    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
         
-        CGRect keyboardRect = [aValue CGRectValue];
-        keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    CGRect keyboardRect = [aValue CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
         
-        CGFloat keyboardTop = keyboardRect.origin.y;
-        CGRect newTableViewFrame = self.applyTableView.bounds;
-        newTableViewFrame.size.height = keyboardTop - self.applyTableView.bounds.origin.y;
+    CGFloat keyboardTop = keyboardRect.origin.y;
+    CGRect newTableViewFrame = self.applyTableView.bounds;
+    newTableViewFrame.size.height = keyboardTop - self.applyTableView.bounds.origin.y;
         
-        NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-        NSTimeInterval animationDuration;
-        [animationDurationValue getValue:&animationDuration];
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
         
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:animationDuration];
-        _applyTableView.frame = newTableViewFrame;
-        [UIView commitAnimations];
-    }
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    _applyTableView.frame = newTableViewFrame;
+    [UIView commitAnimations];
 }
 
 - (void)keyboardWillBeHidden:(NSNotification *) notification{
-    if ([WYCommonUtils isIphone4]) {
-        NSDictionary* userInfo = [notification userInfo];
-        NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-        NSTimeInterval animationDuration;
-        [animationDurationValue getValue:&animationDuration];
+    
+    NSDictionary* userInfo = [notification userInfo];
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
         
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:animationDuration];
-        _applyTableView.frame = self.view.bounds;
-        [UIView commitAnimations];
-    }
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    _applyTableView.frame = self.view.bounds;
+    [UIView commitAnimations];
+    
 }
 
 - (IBAction)commitAction:(id)sender {

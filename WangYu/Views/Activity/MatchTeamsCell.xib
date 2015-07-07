@@ -11,6 +11,7 @@
             <string>HiraginoSansGB-W3</string>
             <string>HiraginoSansGB-W3</string>
             <string>HiraginoSansGB-W3</string>
+            <string>HiraginoSansGB-W3</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -32,8 +33,15 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="啊啊啊啊啊啊啊啊啊队" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XDg-sX-1Vk">
-                                <rect key="frame" x="12" y="12" width="292" height="17"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="12" y="12" width="239" height="17"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第二场" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nzM-py-BPg">
+                                <rect key="frame" x="251" y="12" width="56" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -128,6 +136,7 @@
                 <outlet property="exitButton" destination="IiA-Q0-HRg" id="etd-Af-tgG"/>
                 <outlet property="hotImageView" destination="gjz-Q1-46R" id="d8z-Js-Njq"/>
                 <outlet property="joinButton" destination="yye-8i-KfT" id="tKO-xI-HLG"/>
+                <outlet property="roundLabel" destination="nzM-py-BPg" id="W8p-aA-LsV"/>
                 <outlet property="teamLeaderLabel" destination="Qmp-fn-mtG" id="h3y-RH-ewY"/>
                 <outlet property="teamNameLabel" destination="XDg-sX-1Vk" id="2ED-uO-Hu6"/>
                 <outlet property="totalCountLabel" destination="DRo-7o-ftN" id="Cax-Nz-stH"/>
