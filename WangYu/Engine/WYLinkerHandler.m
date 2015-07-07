@@ -74,13 +74,14 @@
     }else if ([scheme isEqualToString:@"wydsopen"]){
         NSDictionary *paramDic = [WYCommonUtils getParamDictFrom:realUrl.query];
         NSLog(@"query dict = %@", paramDic);
+//        NSString *lastCompment = [[realUrl path] lastPathComponent];
         
         NSString *action = [[realUrl.host lowercaseString] description];
-        if ([action isEqualToString:@"showmatch"]) {
+        if ([action isEqualToString:@"matchdetail"]) {
             //约战详情
             MatchWarDetailViewController *matchDetailVc = [[MatchWarDetailViewController alloc] init];
             WYMatchWarInfo *matchWarInfo = [[WYMatchWarInfo alloc] init];
-            matchWarInfo.mId = [[paramDic objectForKey:@"matchId"] description];
+            matchWarInfo.mId = [[paramDic objectForKey:@"id"] description];
             matchDetailVc.matchWarInfo = matchWarInfo;
             return matchDetailVc;
         }

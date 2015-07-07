@@ -236,7 +236,7 @@
 -(void)refreshHeadViewShowUI{
     
     self.matchGameNameTipLabel.font = SKIN_FONT_FROMNAME(14);
-    self.matchGameNameTipLabel.textColor = SKIN_TEXT_COLOR1;
+    self.matchGameNameTipLabel.textColor = UIColorToRGB(0xe4be23);
     self.matchGameNameLabel.font = SKIN_FONT_FROMNAME(14);
     self.matchGameNameLabel.textColor = UIColorToRGB(0xc7c7c7);
     self.matchGameNameLabel.text = @"去选择";

@@ -378,6 +378,7 @@
         [self.manageButton setTitle:@"加入约战" forState:0];
     }else{
         self.manageButton.enabled = NO;
+        self.manageButton.backgroundColor = UIColorToRGB(0xe4e4e4);
     }
     
     self.commentNumTipLabel.text = [NSString stringWithFormat:@"评论(%d)",_matchWarInfo.commentsCount];
@@ -725,11 +726,13 @@
 -(void)exitMatchWar{
     
     self.manageButton.enabled = NO;
+    self.manageButton.backgroundColor = UIColorToRGB(0xe4e4e4);
     __weak MatchWarDetailViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] cancelApplyMatchWarWithUid:[WYEngine shareInstance].uid matchId:_matchWarInfo.mId tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         self.manageButton.enabled = YES;
+        self.manageButton.backgroundColor = SKIN_COLOR;
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -749,11 +752,13 @@
 -(void)applyJoinMatch{
     
     self.manageButton.enabled = NO;
+    self.manageButton.backgroundColor = UIColorToRGB(0xe4e4e4);
     __weak MatchWarDetailViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] applyMatchWarWithUid:[WYEngine shareInstance].uid matchId:_matchWarInfo.mId tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         self.manageButton.enabled = YES;
+        self.manageButton.backgroundColor = SKIN_COLOR;
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -929,6 +934,14 @@
     frame.size.width = SCREEN_WIDTH - frame.origin.x - 12;
     cell.rightLabel.frame = frame;
     cell.rightLabel.textAlignment = NSTextAlignmentRight;
+    
+    if (indexPath.row == 3 && _matchWarInfo.way == 2 && _matchWarInfo.netbarId.length > 0) {
+        cell.indicatorImage.hidden = NO;
+        frame = cell.rightLabel.frame;
+        frame.origin.x = 102;
+        frame.size.width = SCREEN_WIDTH - frame.origin.x - 28;
+        cell.rightLabel.frame = frame;
+    }
     
     NSDictionary *cellDicts = [[self tableDataModule] objectForKey:[NSString stringWithFormat:@"s%d", (int)indexPath.section]];
     NSDictionary *rowDicts = [cellDicts objectForKey:[NSString stringWithFormat:@"r%d", (int)indexPath.row]];
