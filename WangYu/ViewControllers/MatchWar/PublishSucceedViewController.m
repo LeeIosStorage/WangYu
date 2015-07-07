@@ -74,8 +74,8 @@
     [content addAttribute:NSUnderlineColorAttributeName value:labelColor range:contentRange];
     self.netbarLabel.attributedText = content;
     
-    self.orderNetbarButton.hidden = NO;
-    self.netbarLabel.hidden = NO;
+    self.orderNetbarButton.hidden = YES;
+    self.netbarLabel.hidden = YES;
     if (_matchWarInfo.netbarId.length > 0) {
         self.orderNetbarButton.hidden = NO;
         self.netbarLabel.hidden = NO;

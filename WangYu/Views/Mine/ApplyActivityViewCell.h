@@ -17,5 +17,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *activityImageView;
 @property (strong, nonatomic) IBOutlet TTTAttributedLabel *activityTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *activityIntroLabel;
+@property (strong, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end

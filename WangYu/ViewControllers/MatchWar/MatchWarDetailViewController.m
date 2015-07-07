@@ -175,6 +175,13 @@
     center.x = SCREEN_WIDTH/4;
     self.segmentMoveImageView.center = center;
     
+    WYMatchWarInfo* copyMatchWarInfo = [[WYMatchWarInfo alloc] init];
+    copyMatchWarInfo.mId = self.matchWarInfo.mId;
+    if (self.matchWarInfo.matchWarInfoByJsonDic) {
+        [copyMatchWarInfo setMatchWarInfoByJsonDic:self.matchWarInfo.matchWarInfoByJsonDic];
+    }
+    _matchWarInfo = copyMatchWarInfo;
+    
     
     [self refreshHeadViewShow];
     [self feedsTypeSwitch:MATCH_DETAIL_TYPE_INFO needRefreshFeeds:YES];
@@ -744,6 +751,7 @@
         [WYProgressHUD AlertSuccess:@"已退出约战" At:weakSelf.view];
         weakSelf.matchWarInfo.userStatus = 3;
         weakSelf.matchWarInfo.applyCount --;
+        [weakSelf addMendaciousApply:0];
         [weakSelf refreshHeadViewShow];
         
     } tag:tag];
@@ -770,9 +778,34 @@
         [WYProgressHUD AlertSuccess:@"报名成功" At:weakSelf.view];
         weakSelf.matchWarInfo.userStatus = 2;
         weakSelf.matchWarInfo.applyCount ++;
+        [weakSelf addMendaciousApply:1];
         [weakSelf refreshHeadViewShow];
         
     } tag:tag];
+}
+
+#pragma mark - mendaciousLiked
+- (void)addMendaciousApply:(int)type
+{
+    WYMatchApplyInfo *matchApplyInfo = [[WYMatchApplyInfo alloc] init];
+    WYUserInfo *tmpUser = [[WYEngine shareInstance] userInfo];
+    
+    if (type == 1) {
+        matchApplyInfo.userId = tmpUser.uid;
+        matchApplyInfo.nickName = tmpUser.nickName;
+        matchApplyInfo.userAvatar = tmpUser.avatar;
+        matchApplyInfo.telephone = tmpUser.telephone;
+        [_matchWarInfo.applys addObject:matchApplyInfo];
+    }else if (type == 0){
+        for (WYMatchApplyInfo *info in _matchWarInfo.applys) {
+            if ([info.userId isEqualToString:tmpUser.uid]) {
+                [_matchWarInfo.applys removeObject:info];
+                break;
+            }
+        }
+    }
+    
+    [self.applyPeopleGridView reloadData];
 }
 
 #pragma mark - dataModule

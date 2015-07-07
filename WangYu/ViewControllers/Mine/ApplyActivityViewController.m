@@ -255,6 +255,7 @@
         for (NSDictionary *dic in object) {
             WYActivityInfo *activityInfo = [[WYActivityInfo alloc] init];
             [activityInfo setActivityInfoByJsonDic:dic];
+//            activityInfo.title = @"炉石传说在杭州竞赛开始炉石传说在杭州竞赛开始炉石传说在杭州竞赛开始炉石传说在杭州竞赛开始炉石传说在杭州竞赛开始炉石传说在杭州竞赛开始";
             [weakSelf.applyActivityInfos addObject:activityInfo];
         }
         

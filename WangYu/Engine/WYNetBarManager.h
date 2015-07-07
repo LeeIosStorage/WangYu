@@ -20,4 +20,8 @@
 - (NSArray *)getAllCacheNetbars;
 - (void)removeAllCacheNetbars;
 
+- (void)saveRecommendCacheNetbars:(NSMutableArray *)netbarsArray;
+- (NSArray *)getRecommendCacheNetbars;
+- (void)removeRecommendCacheNetbars;
+
 @end
