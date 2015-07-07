@@ -380,8 +380,10 @@ static int filterLabel_Tag = 202, filterLineImg_Tag = 203;
     if (indexPath == nil) {
         return;
     }
-    //WYTeamInfo* teamInfo = _teamInfos[indexPath.row];
+    WYTeamInfo* teamInfo = _teamInfos[indexPath.row];
     MatchApplyViewController *maVc = [[MatchApplyViewController alloc] init];
+    maVc.applyType = ApplyViewTypeJoin;
+    maVc.teamInfo = teamInfo;
     [self.navigationController pushViewController:maVc animated:YES];
 }
 

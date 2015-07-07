@@ -52,19 +52,39 @@
         [self setTitle:@"创建战队"];
     }else if (self.applyType == ApplyViewTypeSol) {
         [self setTitle:@"个人报名"];
+    }else if (self.applyType == ApplyViewTypeJoin) {
+        [self setTitle:@"加入战队"];
     }
 }
 
 - (void)refreshUI {
     if (self.applyType == ApplyViewTypeTeam) {
         [self.commitButton setTitle:@"完成并添加队员" forState:UIControlStateNormal];
-    }else if (self.applyType == ApplyViewTypeSol){
+    }else if (self.applyType == ApplyViewTypeSol || self.applyType == ApplyViewTypeJoin){
         [self.commitButton setTitle:@"提交报名信息" forState:UIControlStateNormal];
     }
     self.commitButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
     self.commitButton.backgroundColor = SKIN_COLOR;
     self.commitButton.layer.cornerRadius = 4;
     self.commitButton.layer.masksToBounds = YES;
+}
+
+- (void)joinMatchTeam {
+    WS(weakSelf);
+    [WYProgressHUD AlertLoading:@"报名中..." At:weakSelf.view];
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] joinMatchTeamWithUid:[WYEngine shareInstance].uid teamId:_teamInfo.teamId name:_myName telephone:_telephone idCard:_idCard qqNum:_qqStr labor:_laborStr tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"报名成功" At:weakSelf.view];
+    }tag:tag];
 }
 
 - (void)applyMatch {
@@ -104,6 +124,7 @@
         NSLog(@"=========%@",teamStr);
         MatchMemberViewController *mmVc = [[MatchMemberViewController alloc] init];
         mmVc.teamId = teamStr;
+        mmVc.activityId = weakSelf.activityId;
         [self.navigationController pushViewController:mmVc animated:YES];
     }tag:tag];
 }
@@ -113,7 +134,7 @@
 {
     if (self.applyType == ApplyViewTypeTeam) {
         return 3;
-    } else if (self.applyType == ApplyViewTypeSol) {
+    } else if (self.applyType == ApplyViewTypeSol || self.applyType == ApplyViewTypeJoin) {
         return 2;
     }
     return 3;
@@ -129,7 +150,7 @@
         }else if (section == 2){
             return 5;
         }
-    }else if (self.applyType == ApplyViewTypeSol) {
+    }else if (self.applyType == ApplyViewTypeSol || self.applyType == ApplyViewTypeJoin) {
         if (section == 0) {
             return 1;
         }else if (section == 1){
@@ -232,14 +253,21 @@
                 [cell setbottomLineWithType:1];
             }
         }
-    }else if (self.applyType == ApplyViewTypeSol) {
+    }else if (self.applyType == ApplyViewTypeSol || self.applyType == ApplyViewTypeJoin) {
         if (indexPath.section == 0) {
             if (indexPath.row == 0){
-                cell.titleLabel.text = @"参赛网吧";
-                [cell setbottomLineWithType:1];
-                cell.rightImageView.hidden = NO;
-                cell.textField.enabled = NO;
-                cell.textField.text = _netbarName;
+                if (self.applyType == ApplyViewTypeSol) {
+                    cell.titleLabel.text = @"参赛网吧";
+                    [cell setbottomLineWithType:1];
+                    cell.rightImageView.hidden = NO;
+                    cell.textField.enabled = NO;
+                    cell.textField.text = _netbarName;
+                } else if (self.applyType == ApplyViewTypeJoin) {
+                    cell.titleLabel.text = @"战队名";
+                    cell.textField.text = self.teamInfo.teamName;
+                    cell.textField.enabled = NO;
+                    [cell setbottomLineWithType:1];
+                }
             }
         }else if (indexPath.section == 1){
             if (indexPath.row == 0){
@@ -275,7 +303,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     WS(weakSelf);
-    if(indexPath.section == 0) {
+    if(indexPath.section == 0 && self.applyType != ApplyViewTypeJoin) {
         if (indexPath.row == 0){
             SelectNetbarViewController *snVc = [[SelectNetbarViewController alloc] init];
             snVc.netbarInfos = self.matchInfo.netbars;
@@ -318,17 +346,19 @@
                 _laborStr = content;
             }
         }
-    }else if (self.applyType == ApplyViewTypeSol){
-        if (indexPath.row == 0){
-            _myName = content;
-        }else if (indexPath.row == 1) {
-            _idCard = content;
-        }else if (indexPath.row == 2) {
-            _telephone = content;
-        }else if (indexPath.row == 3) {
-            _qqStr = content;
-        }else if (indexPath.row == 4) {
-            _laborStr = content;
+    }else if (self.applyType == ApplyViewTypeSol || self.applyType == ApplyViewTypeJoin){
+        if (indexPath.section == 1) {
+            if (indexPath.row == 0){
+                _myName = content;
+            }else if (indexPath.row == 1) {
+                _idCard = content;
+            }else if (indexPath.row == 2) {
+                _telephone = content;
+            }else if (indexPath.row == 3) {
+                _qqStr = content;
+            }else if (indexPath.row == 4) {
+                _laborStr = content;
+            }
         }
     }
 }
@@ -375,10 +405,6 @@
 }
 
 - (IBAction)commitAction:(id)sender {
-    if (_netbarName.length == 0) {
-        [WYProgressHUD lightAlert:@"请选择参赛网吧"];
-        return;
-    }
     if (_myName.length == 0) {
         [WYProgressHUD lightAlert:@"请输入姓名"];
         return;
@@ -399,18 +425,26 @@
         [WYProgressHUD lightAlert:@"请确定擅长位置"];
         return;
     }
-    if (self.applyType == ApplyViewTypeTeam) {
-        if (_serviceName.length == 0) {
-            [WYProgressHUD lightAlert:@"请输入大区名"];
+    if (self.applyType == ApplyViewTypeJoin) {
+        [self joinMatchTeam];
+    }else {
+        if (_netbarName.length == 0) {
+            [WYProgressHUD lightAlert:@"请选择参赛网吧"];
             return;
         }
-        if (_teamName.length == 0) {
-            [WYProgressHUD lightAlert:@"请输入战队名"];
-            return;
+        if (self.applyType == ApplyViewTypeSol) {
+            [self applyMatch];
+        }else if (self.applyType == ApplyViewTypeTeam) {
+            if (_serviceName.length == 0) {
+                [WYProgressHUD lightAlert:@"请输入大区名"];
+                return;
+            }
+            if (_teamName.length == 0) {
+                [WYProgressHUD lightAlert:@"请输入战队名"];
+                return;
+            }
+            [self createTeam];
         }
-        [self createTeam];
-    }else if (self.applyType == ApplyViewTypeSol) {
-        [self applyMatch];
     }
 }
 
