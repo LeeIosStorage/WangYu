@@ -1522,6 +1522,23 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
+//加入战队
+- (BOOL)joinMatchTeamWithUid:(NSString *)uid teamId:(NSString *)teamId name:(NSString *)name telephone:(NSString *)telephone idCard:(NSString *)idCard qqNum:(NSString *)qqNum labor:(NSString *)labor tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    [params setObject:uid forKey:@"userId"];
+    [params setObject:teamId forKey:@"teamId"];
+    [params setObject:name forKey:@"name"];
+    [params setObject:telephone forKey:@"telephone"];
+    [params setObject:idCard forKey:@"idCard"];
+    [params setObject:qqNum forKey:@"qq"];
+    [params setObject:labor forKey:@"labor"];
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/joinTeam",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 //退出战队
 - (BOOL)exitMatchTeamWithUid:(NSString *)uid teamId:(NSString *)teamId tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
@@ -1543,6 +1560,33 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:_token forKey:@"token"];
     }
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/myTeammate",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+//添加队员
+- (BOOL)addTeamMemberWithUid:(NSString *)uid activityId:(NSString *)aId teamId:(NSString *)teamId round:(int)round telephone:(NSString *)telephone tag:(int)tag {
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    [params setObject:uid forKey:@"userId"];
+    [params setObject:aId forKey:@"activityId"];
+    [params setObject:teamId forKey:@"teamId"];
+    [params setObject:telephone forKey:@"telephone"];
+    [params setObject:[NSNumber numberWithInt:round] forKey:@"round"];
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/addTeammate",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+//移除队友
+- (BOOL)removeMemberWithUid:(NSString *)uid memberId:(NSString *)memberId tag:(int)tag {
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    [params setObject:uid forKey:@"userId"];
+    [params setObject:memberId forKey:@"memberId"];
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/activity/removeTeammate",API_URL] type:0 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 

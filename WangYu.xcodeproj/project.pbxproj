@@ -283,6 +283,7 @@
 		3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE462C1B0CE9AB009EAE02 /* WYPhotoBrowser.m */; };
 		3BBE46321B0CF44A009EAE02 /* WYWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46311B0CF44A009EAE02 /* WYWaitingView.m */; };
 		3BBE46351B0CF92A009EAE02 /* WYBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46341B0CF92A009EAE02 /* WYBrowserImageView.m */; };
+		3BCE851D1B4B69EE00093DFB /* WYMemberInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE851C1B4B69EE00093DFB /* WYMemberInfo.m */; };
 		3BCF86171B29659E006C289B /* WYPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF86161B29659E006C289B /* WYPageControl.m */; };
 		3BD212151B3C43E6003FD10D /* BookDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD212131B3C43E6003FD10D /* BookDetailViewController.m */; };
 		3BD212161B3C43E6003FD10D /* BookDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD212141B3C43E6003FD10D /* BookDetailViewController.xib */; };
@@ -932,6 +933,8 @@
 		3BBE46311B0CF44A009EAE02 /* WYWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYWaitingView.m; path = WYPhotoBrower/WYWaitingView.m; sourceTree = "<group>"; };
 		3BBE46331B0CF92A009EAE02 /* WYBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYBrowserImageView.h; path = WYPhotoBrower/WYBrowserImageView.h; sourceTree = "<group>"; };
 		3BBE46341B0CF92A009EAE02 /* WYBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYBrowserImageView.m; path = WYPhotoBrower/WYBrowserImageView.m; sourceTree = "<group>"; };
+		3BCE851B1B4B69EE00093DFB /* WYMemberInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYMemberInfo.h; sourceTree = "<group>"; };
+		3BCE851C1B4B69EE00093DFB /* WYMemberInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYMemberInfo.m; sourceTree = "<group>"; };
 		3BCF86151B29659E006C289B /* WYPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPageControl.h; sourceTree = "<group>"; };
 		3BCF86161B29659E006C289B /* WYPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPageControl.m; sourceTree = "<group>"; };
 		3BD212121B3C43E6003FD10D /* BookDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookDetailViewController.h; path = NetBar/BookDetailViewController.h; sourceTree = "<group>"; };
@@ -1384,6 +1387,8 @@
 				44C4FE691B453B2D00258CEA /* WYMatchApplyInfo.m */,
 				44C4FE6B1B453B4800258CEA /* WYMatchCommentInfo.h */,
 				44C4FE6C1B453B4800258CEA /* WYMatchCommentInfo.m */,
+				3BCE851B1B4B69EE00093DFB /* WYMemberInfo.h */,
+				3BCE851C1B4B69EE00093DFB /* WYMemberInfo.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2634,6 +2639,7 @@
 				07868DF11AF8581100160070 /* WYTabBarViewController.m in Sources */,
 				07695CDF1B03231000F4806C /* WYNetbarInfo.m in Sources */,
 				077E4AD21B146562009D1692 /* WYActivityInfo.m in Sources */,
+				3BCE851D1B4B69EE00093DFB /* WYMemberInfo.m in Sources */,
 				077D83811AF9AED800AAF31F /* ProgressHUD.m in Sources */,
 				3B357C6E1B20AA3B00AE30A0 /* WYUserGuideConfig.m in Sources */,
 				071691EE1B1C4E49006A832E /* GameDetailsViewController.m in Sources */,

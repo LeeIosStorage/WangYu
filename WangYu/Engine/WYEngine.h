@@ -184,16 +184,21 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //专题资讯列表
 - (BOOL)getTopicsListWithTid:(NSString *)tid page:(int)page pageSize:(int)pageSize tag:(int)tag;
 //个人报名
-- (BOOL)applyMatchWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId name:(NSString *)name
-                telephone:(NSString *)telephone idcard:(NSString *)idcard qqNum:(NSString *)qqNum labor:(NSString *)labor round:(int)round tag:(int)tag;
+- (BOOL)applyMatchWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId name:(NSString *)name telephone:(NSString *)telephone idcard:(NSString *)idcard qqNum:(NSString *)qqNum labor:(NSString *)labor round:(int)round tag:(int)tag;
 //战队报名(创建战队)
 - (BOOL)createMatchTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId teamName:(NSString *)teamName name:(NSString *)name telephone:(NSString *)telephone idcard:(NSString *)idcard qqNum:(NSString *)qqNum labor:(NSString *)labor round:(int)round server:(NSString *)server tag:(int)tag;
 //已报名战队
 - (BOOL)getMatchJoinedTeamWithUid:(NSString *)uid activityId:(NSString *)aId netbarId:(NSString *)nId areaCode:(NSString *)areaCode page:(int)page pageSize:(int)pageSize tag:(int)tag;
+//加入战队
+- (BOOL)joinMatchTeamWithUid:(NSString *)uid teamId:(NSString *)teamId name:(NSString *)name telephone:(NSString *)telephone idCard:(NSString *)idCard qqNum:(NSString *)qqNum labor:(NSString *)labor tag:(int)tag;
 //退出战队
 - (BOOL)exitMatchTeamWithUid:(NSString *)uid teamId:(NSString *)teamId tag:(int)tag;
 //我的队友
 - (BOOL)getMatchTeamMemberWithUid:(NSString *)uid teamId:(NSString *)teamId tag:(int)tag;
+//添加队员
+- (BOOL)addTeamMemberWithUid:(NSString *)uid activityId:(NSString *)aId teamId:(NSString *)teamId round:(int)round telephone:(NSString *)telephone tag:(int)tag;
+//移除队友
+- (BOOL)removeMemberWithUid:(NSString *)uid memberId:(NSString *)memberId tag:(int)tag;
 
 #pragma mark - 手游
 //手游列表

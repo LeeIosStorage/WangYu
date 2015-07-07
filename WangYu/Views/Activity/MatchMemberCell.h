@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "WYUserInfo.h"
+#import "WYMemberInfo.h"
 
 @interface MatchMemberCell : UITableViewCell
+
+@property (strong, nonatomic) WYMemberInfo *memberInfo;
 
 @property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UILabel *phoneLable;
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
-@property (strong, nonatomic) WYUserInfo *userInfo;
+
 
 @end

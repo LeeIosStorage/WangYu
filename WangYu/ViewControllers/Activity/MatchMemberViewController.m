@@ -11,10 +11,11 @@
 #import "InviteMemberViewController.h"
 #import "WYEngine.h"
 #import "WYProgressHUD.h"
+#import "WYMemberInfo.h"
 
 @interface MatchMemberViewController ()<UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) NSMutableArray *userInfos;
+@property (strong, nonatomic) NSMutableArray *memberInfos;
 @property (strong, nonatomic) IBOutlet UITableView *memberTableView;
 
 @end
@@ -49,6 +50,17 @@
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
             return;
         }
+        weakSelf.memberInfos = [NSMutableArray array];
+        NSArray *matchDicArray = [jsonRet arrayObjectForKey:@"object"];
+        for (NSDictionary *dic in matchDicArray) {
+            if (![dic isKindOfClass:[NSDictionary class]]) {
+                continue;
+            }
+            WYMemberInfo *memberInfo = [[WYMemberInfo alloc] init];
+            [memberInfo setMemberInfoByJsonDic:dic];
+            [weakSelf.memberInfos addObject:memberInfo];
+        }
+        [weakSelf.memberTableView reloadData];
     }tag:tag];
 }
 
@@ -60,11 +72,21 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return _memberInfos.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
+    return 49;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 12;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 12)];
+    view.backgroundColor = [UIColor clearColor];
+    return view;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -77,8 +99,8 @@
         NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
         cell = [cells objectAtIndex:0];
     }
-//    cell.rightImageView.hidden = YES;
-    
+    WYMemberInfo *memberInfo = _memberInfos[indexPath.row];
+    cell.memberInfo = memberInfo;
     return cell;
 }
 
@@ -94,13 +116,37 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        [_userInfos removeObjectAtIndex:indexPath.row];
-//        [self.memberTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        WYMemberInfo *memberInfo = [_memberInfos objectAtIndex:indexPath.row];
+        if (!memberInfo) {
+            return;
+        }
+        [self removeMember:memberInfo tableView:tableView forRowAtIndexPath:indexPath];
     }
+}
+
+- (void)removeMember:(WYMemberInfo *)memberInfo tableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] removeMemberWithUid:[WYEngine shareInstance].uid memberId:memberInfo.memberId tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        
+        [_memberInfos removeObjectAtIndex:indexPath.row];
+        [self.memberTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }tag:tag];
 }
 
 - (void)inviteAction {
     InviteMemberViewController *imVc = [[InviteMemberViewController alloc] init];
+    imVc.activityId = self.activityId;
+    imVc.teamId = self.teamId;
     [self.navigationController pushViewController:imVc animated:YES];
 }
 

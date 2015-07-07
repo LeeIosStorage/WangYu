@@ -7,6 +7,9 @@
 //
 
 #import "InviteMemberViewController.h"
+#import "WYEngine.h"
+#import "WYProgressHUD.h"
+#import "NSString+Value.h"
 
 @interface InviteMemberViewController ()
 
@@ -56,5 +59,29 @@
 }
 
 - (IBAction)addMemberAction:(id)sender {
+    if (_phoneTextField.text.length == 0) {
+        [WYProgressHUD lightAlert:@"请输入被邀请人手机号"];
+        return;
+    }
+    if (![_phoneTextField.text isPhone]) {
+        [WYProgressHUD lightAlert:@"请输入正确的手机号"];
+        return;
+    }
+    
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] addTeamMemberWithUid:[WYEngine shareInstance].uid activityId:self.activityId teamId:self.teamId round:1 telephone:self.phoneTextField.text tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"添加成功" At:weakSelf.view];
+    }tag:tag];
 }
+
 @end

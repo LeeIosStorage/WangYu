@@ -29,8 +29,16 @@
     [super setSelected:selected animated:animated];
 }
 
--(void)setUserInfo:(WYUserInfo *)userInfo {
-    [self.avatarImageView sd_setImageWithURL:userInfo.smallAvatarUrl placeholderImage:[UIImage imageNamed:@"wangyu_message_icon"]];
+-(void)setMemberInfo:(WYMemberInfo *)memberInfo{
+    [self.avatarImageView sd_setImageWithURL:memberInfo.smallAvatarUrl placeholderImage:[UIImage imageNamed:@"wangyu_message_icon"]];
+    self.phoneLable.text = memberInfo.telephone;
+    if (memberInfo.isCompleted) {
+        self.statusLabel.textColor = SKIN_TEXT_COLORRED;
+        self.statusLabel.text = @"已完善";
+    }else {
+        self.statusLabel.textColor = SKIN_TEXT_COLOR2;
+        self.statusLabel.text = @"未完善";
+    }
 }
 
 @end

@@ -104,6 +104,7 @@
         HUD.mode = MBProgressHUDModeText;
         HUD.labelText = Info;
         HUD.margin = 10.f;
+        HUD.labelFont = SKIN_FONT_FROMNAME(14);
         CGRect mFrame = [UIScreen mainScreen].bounds;
         HUD.yOffset = mFrame.size.height/2 - 68;
         HUD.removeFromSuperViewOnHide = YES;
