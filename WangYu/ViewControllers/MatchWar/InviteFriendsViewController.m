@@ -186,7 +186,7 @@
 
 #pragma mark - custom
 - (void)alertCanNotAccessPhoneBook{
-    [WYUIUtils showAlertWithMsg:@"请在iPhone的“设置-隐私-通讯录”选项中，选择允许微米访问你的通讯录"];
+    [WYUIUtils showAlertWithMsg:@"请在iPhone的“设置-隐私-通讯录”选项中，选择允许网娱大师访问你的通讯录"];
 }
 
 -(void)confirmAction:(id)sender{

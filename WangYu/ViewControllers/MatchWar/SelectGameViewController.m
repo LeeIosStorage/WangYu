@@ -156,8 +156,8 @@
     cell.rightLabel.hidden = YES;
     cell.avatarImageView.hidden = NO;
     cell.indicatorImage.hidden = NO;
-    cell.avatarImageView.clipsToBounds = YES;
-    cell.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
+//    cell.avatarImageView.clipsToBounds = YES;
+//    cell.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     CGRect frame = cell.avatarImageView.frame;
     frame.origin.y = (44-42)/2;
