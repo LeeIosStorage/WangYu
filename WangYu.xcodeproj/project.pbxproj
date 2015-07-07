@@ -348,6 +348,10 @@
 		44D55A9D1B2E6C7B0074D964 /* MessageDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */; };
 		44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */; };
 		44D55AA11B2EAD070074D964 /* WYWeakArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55AA01B2EAD070074D964 /* WYWeakArray.m */; };
+		44EC5F0A1B4BBF6300F0FA31 /* GameListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44EC5F081B4BBF6300F0FA31 /* GameListViewController.m */; };
+		44EC5F0B1B4BBF6300F0FA31 /* GameListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44EC5F091B4BBF6300F0FA31 /* GameListViewController.xib */; };
+		44EC5F101B4BC17C00F0FA31 /* GameListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44EC5F0E1B4BC17C00F0FA31 /* GameListViewCell.m */; };
+		44EC5F111B4BC17C00F0FA31 /* GameListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44EC5F0F1B4BC17C00F0FA31 /* GameListViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1036,6 +1040,12 @@
 		44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageDetailsViewController.xib; sourceTree = "<group>"; };
 		44D55A9F1B2EAD070074D964 /* WYWeakArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYWeakArray.h; sourceTree = "<group>"; };
 		44D55AA01B2EAD070074D964 /* WYWeakArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYWeakArray.m; sourceTree = "<group>"; };
+		44EC5F071B4BBF6300F0FA31 /* GameListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameListViewController.h; sourceTree = "<group>"; };
+		44EC5F081B4BBF6300F0FA31 /* GameListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameListViewController.m; sourceTree = "<group>"; };
+		44EC5F091B4BBF6300F0FA31 /* GameListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameListViewController.xib; sourceTree = "<group>"; };
+		44EC5F0D1B4BC17C00F0FA31 /* GameListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameListViewCell.h; sourceTree = "<group>"; };
+		44EC5F0E1B4BC17C00F0FA31 /* GameListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameListViewCell.m; sourceTree = "<group>"; };
+		44EC5F0F1B4BC17C00F0FA31 /* GameListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameListViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1127,6 +1137,9 @@
 		071691EA1B1C4E24006A832E /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				44EC5F071B4BBF6300F0FA31 /* GameListViewController.h */,
+				44EC5F081B4BBF6300F0FA31 /* GameListViewController.m */,
+				44EC5F091B4BBF6300F0FA31 /* GameListViewController.xib */,
 				071691EB1B1C4E49006A832E /* GameDetailsViewController.h */,
 				071691EC1B1C4E49006A832E /* GameDetailsViewController.m */,
 				071691ED1B1C4E49006A832E /* GameDetailsViewController.xib */,
@@ -1352,6 +1365,7 @@
 				07566CA71AFC663600F93B58 /* Setting */,
 				07203A101AF1D5EE0056A74B /* Main */,
 				44C6AE421B42782300746A54 /* MatchWar */,
+				44EC5F0C1B4BC14E00F0FA31 /* Game */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2344,6 +2358,16 @@
 			path = MatchWar;
 			sourceTree = "<group>";
 		};
+		44EC5F0C1B4BC14E00F0FA31 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				44EC5F0D1B4BC17C00F0FA31 /* GameListViewCell.h */,
+				44EC5F0E1B4BC17C00F0FA31 /* GameListViewCell.m */,
+				44EC5F0F1B4BC17C00F0FA31 /* GameListViewCell.xib */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2450,6 +2474,7 @@
 				07E96B8A1B15BB8B006ED6B7 /* MatchPlaceViewController.xib in Resources */,
 				071691EF1B1C4E49006A832E /* GameDetailsViewController.xib in Resources */,
 				077E4ACF1B14461D009D1692 /* ActivityViewCell.xib in Resources */,
+				44EC5F111B4BC17C00F0FA31 /* GameListViewCell.xib in Resources */,
 				076219351B15BDC900D912A1 /* GameCollectViewCell.xib in Resources */,
 				077F93C51B1DA89600BCF9AC /* PushConfig.plist in Resources */,
 				071923D81AF76C6C00432531 /* RetrievePwdViewController.xib in Resources */,
@@ -2506,6 +2531,7 @@
 				078FD0411B05FC8D00CBD699 /* LocationViewController.xib in Resources */,
 				07203A151AF1D63B0056A74B /* NetbarTabCell.xib in Resources */,
 				3BE090881B14CC7500DCAB3C /* MatchDetailViewController.xib in Resources */,
+				44EC5F0B1B4BBF6300F0FA31 /* GameListViewController.xib in Resources */,
 				446E1EC11B34129B005CE745 /* PersonalProfileViewController.xib in Resources */,
 				07868DF01AF8581100160070 /* WYTabBarView.xib in Resources */,
 				073DBDB41AE794C4009B49EB /* arrow.png in Resources */,
@@ -2554,6 +2580,7 @@
 				078E5AFA1B1BF0B90041C7D2 /* WYCommonWebVc.m in Sources */,
 				3BF8B7C71B3969B600BBA346 /* MatchMemberViewController.m in Sources */,
 				070DCBDF1B00762F00B27C19 /* OrdersViewController.m in Sources */,
+				44EC5F101B4BC17C00F0FA31 /* GameListViewCell.m in Sources */,
 				3BF8B7BD1B39478F00BBA346 /* MatchApplyViewController.m in Sources */,
 				07868DE71AF8581100160070 /* WYBaseSuperViewController.m in Sources */,
 				07868DE91AF8581100160070 /* WYSuperViewController.m in Sources */,
@@ -2606,6 +2633,7 @@
 				077D83861AF9AF3E00AAF31F /* WYProgressHUD.m in Sources */,
 				07868DED1AF8581100160070 /* WYTabBarItemView.m in Sources */,
 				07868DE81AF8581100160070 /* WYNavigationController.m in Sources */,
+				44EC5F0A1B4BBF6300F0FA31 /* GameListViewController.m in Sources */,
 				079493901B0D9C3D008152A6 /* RSADataVerifier.m in Sources */,
 				07868DE61AF8581100160070 /* SuperMainViewController.m in Sources */,
 				0791AB571AE8DE260009A5A7 /* AFHTTPSessionManager.m in Sources */,

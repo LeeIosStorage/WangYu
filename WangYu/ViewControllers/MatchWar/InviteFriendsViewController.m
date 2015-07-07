@@ -270,11 +270,11 @@
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
     
-    if (_selectedUserPbs.count > MAX_INVITE_COUNT) {
-        
-        [WYUIUtils showAlertWithMsg:[NSString stringWithFormat:@"最多可以邀请%d个战友",MAX_INVITE_COUNT]];
-        return;
-    }
+//    if (_selectedUserPbs.count > MAX_INVITE_COUNT) {
+//        
+//        [WYUIUtils showAlertWithMsg:[NSString stringWithFormat:@"最多可以邀请%d个战友",MAX_INVITE_COUNT]];
+//        return;
+//    }
     
     NSArray *array = [_indexAllContacts objectAtIndex:indexPath.section];
     PbUserInfo *pbUserInfo = array[indexPath.row];

@@ -393,7 +393,16 @@
     //报名view
     self.applyCountLabel.font = SKIN_FONT_FROMNAME(12);
     self.applyCountLabel.textColor = SKIN_TEXT_COLOR1;
-    self.applyCountLabel.text = [NSString stringWithFormat:@"%d人报名了",_matchWarInfo.applyCount];
+    NSString *string = [NSString stringWithFormat:@"报名成员  %d/%d",_matchWarInfo.applyCount,_matchWarInfo.peopleNum];
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string];
+    NSUInteger length = [[NSString stringWithFormat:@"%d",_matchWarInfo.applyCount] length];
+    UIColor *color = UIColorToRGB(0xf03f3f);
+    [attrString addAttribute:NSForegroundColorAttributeName
+                       value:color
+                       range:NSMakeRange(6, length)];
+    self.applyCountLabel.attributedText = attrString;
+    
+    
     //GridView
     CGFloat applyContainerViewHeight = 85;
     self.applyPeopleGridView.hidden = YES;

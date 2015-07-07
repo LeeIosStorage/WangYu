@@ -26,6 +26,7 @@
 #import "WYSettingConfig.h"
 #import "PersonalProfileViewController.h"
 #import "GameCommendViewController.h"
+#import "GameListViewController.h"
 
 enum TABLEVIEW_SECTION_INDEX {
     kMessage = 0,
@@ -358,7 +359,7 @@ enum TABLEVIEW_SECTION_INDEX {
 //            break;
         case kGames:{
             if (indexPath.row == 0){
-                GameCommendViewController *vc = [[GameCommendViewController alloc] init];
+                GameListViewController *vc = [[GameListViewController alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }
