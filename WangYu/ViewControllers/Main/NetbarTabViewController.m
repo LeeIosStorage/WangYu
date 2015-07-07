@@ -27,6 +27,7 @@
 #import "WYUserGuideConfig.h"
 #import "AppDelegate.h"
 #import "WYSettingConfig.h"
+#import "WYNetBarManager.h"
 
 @interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate,NetbarTabCellDelegate,LocationViewControllerDelegate>
 {
@@ -416,6 +417,14 @@
 }
 
 -(void)getCacheNetbarInfos{
+    
+    NSArray *allCacheNetbars = [[WYNetBarManager shareInstance] getRecommendCacheNetbars];
+    if (allCacheNetbars.count > 0) {
+        
+        self.netbarArray = [[NSMutableArray alloc] initWithArray:allCacheNetbars];
+        [self.netBarTable reloadData];
+        return;
+    }
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
@@ -466,6 +475,9 @@
             [weakSelf.netbarArray addObject:netbarInfo];
         }
         [weakSelf.netBarTable reloadData];
+        
+        [[WYNetBarManager shareInstance] saveRecommendCacheNetbars:weakSelf.netbarArray];
+        
     }tag:tag];
 }
 

@@ -167,7 +167,7 @@
     self.cancelMatchButton.enabled = NO;
     __weak ManageMatchWarViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] cancelApplyMatchWarWithUid:[WYEngine shareInstance].uid matchId:_matchWarInfo.mId tag:tag];
+    [[WYEngine shareInstance] closeMatchWarWithUid:[WYEngine shareInstance].uid matchId:_matchWarInfo.mId tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         self.cancelMatchButton.enabled = YES;
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
