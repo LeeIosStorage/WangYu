@@ -17,6 +17,8 @@
 @property (nonatomic, strong) NSString *teamLeader;            //队长
 @property (nonatomic, assign) BOOL isJoin;                     //是否参加
 @property (nonatomic, assign) BOOL isLeader;
+@property (nonatomic, strong) NSString *activityId;            //当前队伍所在赛事
+
 
 @property (nonatomic, strong) NSDictionary* teamInfoByJsonDic; //资讯字典
 

@@ -11,7 +11,6 @@
 #import "WYTabBarViewController.h"
 #import "WYTabBarItemView.h"
 #import "WYSettingConfig.h"
-#import "AppDelegate.h"
 
 @interface WYTabBarViewController ()<UINavigationControllerDelegate,WYTabBarDelegate>
 
@@ -110,39 +109,22 @@
             ((UINavigationController *)controller).delegate = self;
         }
         WYTabBarItemView *tabItem = [[[NSBundle mainBundle] loadNibNamed:@"WYTabBarItemView" owner:nil options:nil] objectAtIndex:0];
-        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        if(appDelegate.bHidden){
-            if (tagIndex == 0) {
+        if (tagIndex == 0) {
                 tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_netbar_icon"];
                 tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_netbar_icon_hover"];
                 tabItem.itemLabel.text = @"网吧";
-            }else if (tagIndex == 1){
+        }else if (tagIndex == 1){
                 tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_activity_icon"];
                 tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_activity_icon_hover"];
                 tabItem.itemLabel.text = @"活动";
-            }else if (tagIndex == 2){
-                tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_mine_icon"];
-                tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_mine_icon_hover"];
-                tabItem.itemLabel.text = @"我的";
-            }
-        }else {
-            if (tagIndex == 0) {
-                tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_netbar_icon"];
-                tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_netbar_icon_hover"];
-                tabItem.itemLabel.text = @"网吧";
-            }else if (tagIndex == 1){
-                tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_activity_icon"];
-                tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_activity_icon_hover"];
-                tabItem.itemLabel.text = @"活动";
-            }else if (tagIndex == 2){
+        }else if (tagIndex == 2){
                 tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_recomm_icon"];
                 tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_recomm_icon_hover"];
                 tabItem.itemLabel.text = @"约战";
-            }else if (tagIndex == 3){
+        }else if (tagIndex == 3){
                 tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_mine_icon"];
                 tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_mine_icon_hover"];
                 tabItem.itemLabel.text = @"我的";
-            }
         }
         
         [controllerTabs addObject:tabItem];
@@ -170,10 +152,9 @@
 //    }
 }
 - (void)handleFriendTimelineUreadEvent {
-    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     WYTabBarItemView* tabBarItemView = nil;
     if (self.tabBar.items.count > 0) {
-        tabBarItemView = [self.tabBar.items objectAtIndex:appDelegate.bHidden?TAB_INDEX_CHAT:TAB_INDEX_MINE];
+        tabBarItemView = [self.tabBar.items objectAtIndex:TAB_INDEX_MINE];
     }
     if (tabBarItemView == nil) {
         return;
