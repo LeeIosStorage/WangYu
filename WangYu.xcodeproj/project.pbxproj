@@ -2930,6 +2930,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/TencentOpenAPI",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/AliPay",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = "WangYu/WangYu-Prefx.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2969,6 +2970,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/TencentOpenAPI",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/AliPay",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = "WangYu/WangYu-Prefx.pch";
 				HEADER_SEARCH_PATHS = (

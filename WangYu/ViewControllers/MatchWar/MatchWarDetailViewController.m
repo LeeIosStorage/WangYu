@@ -57,6 +57,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *statusLabel;
 @property (nonatomic, strong) IBOutlet UIView *segmentView;
 @property (nonatomic, strong) IBOutlet UIImageView *segmentMoveImageView;
+@property (nonatomic, strong) IBOutlet UIImageView *typeShadowImageView;
 @property (nonatomic, strong) IBOutlet UILabel *infoTipLabel;
 @property (nonatomic, strong) IBOutlet UIButton *infoTabButton;
 @property (nonatomic, strong) IBOutlet UILabel *commentNumTipLabel;
@@ -174,6 +175,13 @@
     CGPoint center = self.segmentMoveImageView.center;
     center.x = SCREEN_WIDTH/4;
     self.segmentMoveImageView.center = center;
+    self.matchHeadContainerView.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+    self.matchHeadContainerView.layer.shadowOpacity = 0.3;
+    self.matchHeadContainerView.layer.shadowOffset = CGSizeMake(0, 1);
+    self.matchHeadContainerView.layer.shadowRadius = 2.0;
+    self.matchHeadContainerView.layer.shouldRasterize = YES;
+    self.matchHeadContainerView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    
     
     WYMatchWarInfo* copyMatchWarInfo = [[WYMatchWarInfo alloc] init];
     copyMatchWarInfo.mId = self.matchWarInfo.mId;
@@ -324,7 +332,7 @@
     self.commentNumTipLabel.textColor = SKIN_TEXT_COLOR1;
     self.matchTitleLabel.font = SKIN_FONT_FROMNAME(15);
     
-    [self.matchOwnerAvatarImgView.layer setBorderWidth:1]; //边框宽度
+    [self.matchOwnerAvatarImgView.layer setBorderWidth:1.5]; //边框宽度
     [self.matchOwnerAvatarImgView.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
     self.matchOwnerAvatarImgView.layer.masksToBounds = YES;
     self.matchOwnerAvatarImgView.layer.cornerRadius = self.matchOwnerAvatarImgView.frame.size.width/2;
@@ -460,7 +468,9 @@
 }
 
 -(void)refreshSegmentViewUI:(UIButton *)sender{
+    int MoM = 1;
     if (sender == self.infoTabButton) {
+        MoM = 1;
         self.infoTabButton.selected = YES;
         self.commentTabButton.selected = NO;
         self.infoTipLabel.textColor = UIColorToRGB(0xf03f3f);
@@ -468,6 +478,7 @@
         _selectedSegmentIndex = MATCH_DETAIL_TYPE_INFO;
         [self feedsTypeSwitch:(int)_selectedSegmentIndex needRefreshFeeds:NO];
     }else if (sender == self.commentTabButton){
+        MoM = 3;
         self.commentTabButton.selected = YES;
         self.infoTabButton.selected = NO;
         self.commentNumTipLabel.textColor = UIColorToRGB(0xf03f3f);
@@ -477,7 +488,7 @@
     }
     [UIView animateWithDuration:0.2 animations:^{
         CGPoint center = self.segmentMoveImageView.center;
-        center.x = sender.center.x;
+        center.x = (SCREEN_WIDTH/4)*MoM;
         self.segmentMoveImageView.center = center;
     }];
 }
@@ -945,6 +956,7 @@
     
     if (indexPath.row == 0) {
         [cell setLineImageViewWithType:0];
+        cell.topLineImage.hidden = YES;
     }else if (indexPath.row == [self newSectionPolicy:indexPath.section]-1){
         [cell setLineImageViewWithType:2];
     }else{
@@ -953,6 +965,7 @@
     
     cell.rightLabel.hidden = NO;
     cell.rightLabel.font = SKIN_FONT_FROMNAME(14);
+    cell.rightLabel.textColor = SKIN_TEXT_COLOR4;
     cell.avatarImageView.hidden = NO;
     cell.indicatorImage.hidden = YES;
     
