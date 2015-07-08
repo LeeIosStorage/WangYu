@@ -212,7 +212,8 @@
 }
 
 - (void)initSwitchView{
-    self.switcher = [DVSwitch switchWithStringsArray:@[@"赛事报名", @"赛事资讯", @"个人约战"]];
+//    self.switcher = [DVSwitch switchWithStringsArray:@[@"赛事报名", @"赛事资讯", @"个人约战"]];
+    self.switcher = [DVSwitch switchWithStringsArray:@[@"赛事报名", @"赛事资讯"]];
     self.switcher.frame = CGRectMake(12, 7, SCREEN_WIDTH - 12 * 2, 30);
     self.switcher.font = SKIN_FONT_FROMNAME(14);
     self.switcher.cornerRadius = 4;
@@ -243,7 +244,8 @@
     CGRect frame = _containerView.frame;
     frame.size.height = SCREEN_HEIGHT - 50 - CGRectGetHeight(self.titleNavBar.frame) - CGRectGetHeight(self.sectionView.frame);
     _containerView.frame = frame;
-    _containerView.contentSize = CGSizeMake(SCREEN_WIDTH * 3, _containerView.frame.size.height);
+//    _containerView.contentSize = CGSizeMake(SCREEN_WIDTH * 3, _containerView.frame.size.height);
+        _containerView.contentSize = CGSizeMake(SCREEN_WIDTH * 2, _containerView.frame.size.height);
     
     frame = self.newsTableView.frame;
     frame.origin.x = SCREEN_WIDTH;
