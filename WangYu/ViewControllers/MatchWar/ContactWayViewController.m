@@ -57,6 +57,7 @@
 }
 
 -(void)initNormalTitleNavBarSubviews{
+    
     [self setTitle:@"联系方式"];
     [self setRightButtonWithTitle:@"保存" selector:@selector(confirmAction:)];
 }

@@ -68,8 +68,8 @@
         }
     }
     if (self.gameInfo) {
-        self.shareTitle = [NSString stringWithFormat:@"网娱大师-%@|手游推荐",_gameInfo.gameName];
-        self.shareDescription = [NSString stringWithFormat:@"赶紧去下载 嗨起吧!!"];
+        self.shareTitle = [NSString stringWithFormat:@"网娱大师-最热手游,抢先推荐-%@",_gameInfo.gameName];
+        self.shareDescription = _gameInfo.gameDes;
         self.shareWebpageUrl = [NSString stringWithFormat:@"%@/share/game/%@",[WYEngine shareInstance].baseUrl,_gameInfo.gameId];
         
         if (![self.gameInfo.gameCoverUrl isEqual:[NSNull null]]) {

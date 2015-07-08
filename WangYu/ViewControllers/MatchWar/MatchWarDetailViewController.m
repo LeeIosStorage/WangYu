@@ -342,7 +342,7 @@
     self.statusView.backgroundColor = UIColorToRGB(0xfdd730);
     self.statusLabel.font = SKIN_FONT_FROMNAME(11);
     self.statusLabel.textColor = SKIN_TEXT_COLOR1;
-    self.statusLabel.text = @"进行中";
+//    self.statusLabel.text = @"进行中";
     
     self.toobarTitleLabel.font = SKIN_FONT_FROMNAME(18);
     self.toobarTitleLabel.textColor = [UIColor whiteColor];
