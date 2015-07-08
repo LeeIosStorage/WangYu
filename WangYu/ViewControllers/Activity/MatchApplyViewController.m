@@ -13,6 +13,7 @@
 #import "WYEngine.h"
 #import "MatchMemberViewController.h"
 #import "SelectNetbarViewController.h"
+#import "NSString+Value.h"
 
 @interface MatchApplyViewController ()<UITableViewDelegate, UITableViewDataSource,MatchApplyCellDelegate>{
     NSString *_netbarName;
@@ -39,6 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self refreshUI];
+    [self loadUserInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
@@ -68,6 +70,14 @@
     self.commitButton.backgroundColor = SKIN_COLOR;
     self.commitButton.layer.cornerRadius = 4;
     self.commitButton.layer.masksToBounds = YES;
+}
+
+- (void)loadUserInfo {
+    WYUserInfo *userInfo = [WYEngine shareInstance].userInfo;
+    _myName = userInfo.realName;
+    _idCard = userInfo.idCard;
+    _telephone = userInfo.telephone;
+    _qqStr = userInfo.qq;
 }
 
 - (void)joinMatchTeam {
@@ -189,14 +199,13 @@
             }else if(section == 2){
                 indexLabel.text = @"个人资料";
             }
-        }else if (self.applyType == ApplyViewTypeSol) {
+        }else if (self.applyType == ApplyViewTypeSol || self.applyType == ApplyViewTypeJoin) {
             if (section == 1) {
                 indexLabel.text = @"个人资料";
             }
         }
         [view addSubview:indexLabel];
     }
-    view.backgroundColor = [UIColor clearColor];
     return view;
 }
 
@@ -242,11 +251,13 @@
                 [cell setbottomLineWithType:0];
             }else if (indexPath.row == 2) {
                 cell.titleLabel.text = @"手机";
+                cell.textField.keyboardType = UIKeyboardTypeNumberPad;
                 cell.textField.text = _telephone;
                 [cell setbottomLineWithType:0];
             }else if (indexPath.row == 3) {
                 cell.titleLabel.text = @"QQ";
                 cell.textField.text = _qqStr;
+                cell.textField.keyboardType = UIKeyboardTypeNumberPad;
                 [cell setbottomLineWithType:0];
             }else if (indexPath.row == 4) {
                 cell.titleLabel.text = @"擅长位置";
@@ -281,10 +292,12 @@
                 [cell setbottomLineWithType:0];
             }else if (indexPath.row == 2) {
                 cell.titleLabel.text = @"手机";
+                cell.textField.keyboardType = UIKeyboardTypeNumberPad;
                 cell.textField.text = _telephone;
                 [cell setbottomLineWithType:0];
             }else if (indexPath.row == 3) {
                 cell.titleLabel.text = @"QQ";
+                cell.textField.keyboardType = UIKeyboardTypeNumberPad;
                 cell.textField.text = _qqStr;
                 [cell setbottomLineWithType:0];
             }else if (indexPath.row == 4) {
@@ -415,7 +428,7 @@
     [UIView commitAnimations];
 }
 
-- (void)keyboardWillBeHidden:(NSNotification *) notification{
+- (void)keyboardWillBeHidden:(NSNotification *) notification {
     
     NSDictionary* userInfo = [notification userInfo];
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -448,6 +461,14 @@
     }
     if (_laborStr.length == 0) {
         [WYProgressHUD lightAlert:@"请确定擅长位置"];
+        return;
+    }
+    if (![_telephone isPhone]) {
+        [WYProgressHUD lightAlert:@"请正确输入手机号"];
+        return;
+    }
+    if (![_idCard validateIdentityCard]) {
+        [WYProgressHUD lightAlert:@"请正确输入身份证号"];
         return;
     }
     if (self.applyType == ApplyViewTypeJoin) {

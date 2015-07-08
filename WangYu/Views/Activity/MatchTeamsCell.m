@@ -64,8 +64,10 @@
         self.joinButton.hidden = YES;
         self.exitButton.hidden = NO;
         if (teamInfo.isLeader) {
+            [self.exitButton setTitle:@"解散" forState:UIControlStateNormal];
             self.editButton.hidden = NO;
         }else {
+            [self.exitButton setTitle:@"退出" forState:UIControlStateNormal];
             self.editButton.hidden = YES;
         }
     }else {
@@ -78,12 +80,12 @@
         if (teamInfo.isJoin) {
             self.joinButton.enabled = NO;
             [self.joinButton.layer setBorderColor:SKIN_TEXT_COLOR2.CGColor];
-            self.joinButton.titleLabel.text = @"我已加入";
+            [self.joinButton setTitle:@"我已加入" forState:UIControlStateNormal];
             [self.joinButton setTitleColor:SKIN_TEXT_COLOR2 forState:UIControlStateNormal];
         }else {
             self.joinButton.enabled = YES;
             [self.joinButton.layer setBorderColor:SKIN_TEXT_COLORRED.CGColor];
-            self.joinButton.titleLabel.text = @"我要加入";
+            [self.joinButton setTitle:@"我要加入" forState:UIControlStateNormal];
             [self.joinButton setTitleColor:SKIN_TEXT_COLORRED forState:UIControlStateNormal];
         }
     }

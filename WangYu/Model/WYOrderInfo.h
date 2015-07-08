@@ -57,6 +57,7 @@ typedef enum RESERVESTATUS_{
 @property(nonatomic, strong) NSString* icon;                        //网吧图片
 @property(nonatomic, readonly) NSURL* netbarImageUrl;               //网吧图片地址
 @property(nonatomic, strong) NSString* netbarTel;                   //网吧联系电话
+@property(nonatomic, assign) BOOL netbarFav;                        //网吧是否被收藏
 
 @property(nonatomic, strong) NSString* userId;
 @property(nonatomic, strong) NSString* telephone;

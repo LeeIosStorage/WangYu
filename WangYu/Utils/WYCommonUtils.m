@@ -133,6 +133,17 @@
     [alertView show];
 }
 
++ (void)usePhoneNumAction:(NSString *)phone title:(NSString *)title{
+    if (phone.length == 0 || !phone) {
+        return;
+    }
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:title message:phone cancelButtonTitle:@"取消" cancelBlock:nil okButtonTitle:@"呼叫" okBlock:^{
+        NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", phone]];
+        [[UIApplication sharedApplication] openURL:URL];
+    }];
+    [alertView show];
+}
+
 +(UIImage *)getImageFromSDImageCache:(NSString *) imageUrl
 {
     if (!imageUrl) {
