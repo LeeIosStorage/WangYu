@@ -683,7 +683,7 @@ static WYEngine* s_ShareInstance = nil;
     if (areaCode) {
         [params setObject:areaCode forKey:@"areaCode"];
     }
-    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/list",API_URL] type:1 parameters:params];
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/recommend",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 

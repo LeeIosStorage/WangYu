@@ -348,6 +348,7 @@
 		44D55A9D1B2E6C7B0074D964 /* MessageDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55A9B1B2E6C7B0074D964 /* MessageDetailsViewController.m */; };
 		44D55A9E1B2E6C7B0074D964 /* MessageDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */; };
 		44D55AA11B2EAD070074D964 /* WYWeakArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D55AA01B2EAD070074D964 /* WYWeakArray.m */; };
+		44D6DCD01B4D00B1009B8FA6 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44D6DCCF1B4D00B1009B8FA6 /* Reveal.framework */; };
 		44EC5F0A1B4BBF6300F0FA31 /* GameListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44EC5F081B4BBF6300F0FA31 /* GameListViewController.m */; };
 		44EC5F0B1B4BBF6300F0FA31 /* GameListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44EC5F091B4BBF6300F0FA31 /* GameListViewController.xib */; };
 		44EC5F101B4BC17C00F0FA31 /* GameListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44EC5F0E1B4BC17C00F0FA31 /* GameListViewCell.m */; };
@@ -1040,6 +1041,7 @@
 		44D55A9C1B2E6C7B0074D964 /* MessageDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageDetailsViewController.xib; sourceTree = "<group>"; };
 		44D55A9F1B2EAD070074D964 /* WYWeakArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYWeakArray.h; sourceTree = "<group>"; };
 		44D55AA01B2EAD070074D964 /* WYWeakArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYWeakArray.m; sourceTree = "<group>"; };
+		44D6DCCF1B4D00B1009B8FA6 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		44EC5F071B4BBF6300F0FA31 /* GameListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameListViewController.h; sourceTree = "<group>"; };
 		44EC5F081B4BBF6300F0FA31 /* GameListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameListViewController.m; sourceTree = "<group>"; };
 		44EC5F091B4BBF6300F0FA31 /* GameListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameListViewController.xib; sourceTree = "<group>"; };
@@ -1058,6 +1060,7 @@
 				077E60921B0B2E6A0079BC9E /* Foundation.framework in Frameworks */,
 				077E60901B0B2E3A0079BC9E /* ImageIO.framework in Frameworks */,
 				07B48B3F1B0C4D1F0000857F /* libWeChatSDK.a in Frameworks */,
+				44D6DCD01B4D00B1009B8FA6 /* Reveal.framework in Frameworks */,
 				077E608E1B0B2E1A0079BC9E /* QuartzCore.framework in Frameworks */,
 				073DBDD61AE79F1D009B49EB /* libsqlite3.0.dylib in Frameworks */,
 				073DBDD81AE79F37009B49EB /* libz.dylib in Frameworks */,
@@ -1559,6 +1562,7 @@
 		073DBDE81AE79FF3009B49EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				44D6DCCF1B4D00B1009B8FA6 /* Reveal.framework */,
 				077E60911B0B2E6A0079BC9E /* Foundation.framework */,
 				077E608F1B0B2E3A0079BC9E /* ImageIO.framework */,
 				077E608D1B0B2E1A0079BC9E /* QuartzCore.framework */,
@@ -2930,6 +2934,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/TencentOpenAPI",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/AliPay",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = "WangYu/WangYu-Prefx.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2969,6 +2974,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/TencentOpenAPI",
 					"$(PROJECT_DIR)/WangYu/External/ThridApp/AliPay",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = "WangYu/WangYu-Prefx.pch";
 				HEADER_SEARCH_PATHS = (
