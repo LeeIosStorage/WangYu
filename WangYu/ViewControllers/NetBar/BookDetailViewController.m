@@ -302,11 +302,11 @@
 }
 
 - (IBAction)netbarContactAction:(id)sender {
-    [WYCommonUtils usePhoneNumAction:_orderInfo.netbarTel];
+    [WYCommonUtils usePhoneNumAction:_orderInfo.netbarTel title:@"联系客服"];
 }
 
 - (IBAction)serviceContactAction:(id)sender {
-    [WYCommonUtils usePhoneNumAction:@"0371-55336615"];
+    [WYCommonUtils usePhoneNumAction:@"0371-55336615" title:@"联系客服"];
 }
 
 - (IBAction)netbarAction:(id)sender {

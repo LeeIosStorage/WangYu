@@ -107,7 +107,7 @@
 -(void)refreshUI
 {
     self.netBarTable.tableHeaderView = self.headView;
-    self.orderLabel.font = SKIN_FONT_FROMNAME(15);
+    self.orderLabel.font = SKIN_FONT_FROMNAME(14);
     self.orderLabel.textColor = SKIN_TEXT_COLOR1;
     self.packetLabel.font = SKIN_FONT_FROMNAME(14);
     self.packetLabel.textColor = SKIN_TEXT_COLOR1;

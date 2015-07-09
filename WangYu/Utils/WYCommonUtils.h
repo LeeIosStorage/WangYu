@@ -53,6 +53,7 @@ dispatch_sync(dispatch_get_main_queue(), block);\
 
 //拨打电话
 + (void)usePhoneNumAction:(NSString *)phone;
++ (void)usePhoneNumAction:(NSString *)phone title:(NSString *)title;
 
 +(UIImage *)getImageFromSDImageCache:(NSString *) imageUrl;
 

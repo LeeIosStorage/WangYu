@@ -28,10 +28,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *createLabel;
 @property (strong, nonatomic) IBOutlet UILabel *colorLabel;
 @property (strong, nonatomic) IBOutlet UILabel *sectionLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *netbarCollectImage;
 
 
 @property (strong, nonatomic) NSDictionary *moduleDict;
 
+- (IBAction)collectNetbarAction:(id)sender;
 - (IBAction)serviceContactAction:(id)sender;
 - (IBAction)netbarAction:(id)sender;
 
@@ -126,6 +128,11 @@
     }else if (self.orderInfo.oStatus == 1) {
         self.statusLabel.text = @"支付成功";
     }
+    if (self.orderInfo.netbarFav) {
+        self.netbarCollectImage.image = [UIImage imageNamed:@"detail_netbar_collect_icon"];
+    }else {
+        self.netbarCollectImage.image = [UIImage imageNamed:@"detail_netbar_uncollect_icon"];
+    }
 }
 
 - (NSDictionary *)tableDataModule{
@@ -197,8 +204,43 @@
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
 
+- (IBAction)collectNetbarAction:(id)sender {
+    self.netbarCollectBtn.enabled = NO;
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    if (weakSelf.orderInfo.netbarFav) {
+        [[WYEngine shareInstance] unCollectionNetbarWithUid:[WYEngine shareInstance].uid netbarId:self.orderInfo.netbarId tag:tag];
+    }else{
+        [[WYEngine shareInstance] collectionNetbarWithUid:[WYEngine shareInstance].uid netbarId:self.orderInfo.netbarId tag:tag];
+    }
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        //        [WYProgressHUD AlertLoadDone];
+        self.netbarCollectBtn.enabled = YES;
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        int code = [jsonRet intValueForKey:@"code"];
+        if (code == 0) {
+            if (weakSelf.orderInfo.netbarFav) {
+                [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromTop ForView:self.netbarCollectImage];
+                [WYProgressHUD AlertSuccess:@"取消收藏成功" At:weakSelf.view];
+            }else{
+                [WYUIUtils transitionWithType:@"oglFlip" WithSubtype:kCATransitionFromBottom ForView:self.netbarCollectImage];
+                [WYProgressHUD AlertSuccess:@"收藏成功" At:weakSelf.view];
+            }
+            weakSelf.orderInfo.netbarFav = !weakSelf.orderInfo.netbarFav;
+            [weakSelf refreshOrderStatus];
+        }
+    }tag:tag];
+}
+
 - (IBAction)serviceContactAction:(id)sender {
-    [WYCommonUtils usePhoneNumAction:@"0371-55336615"];
+    [WYCommonUtils usePhoneNumAction:@"0371-55336615" title:@"联系客服"];
 }
 
 - (IBAction)netbarAction:(id)sender {

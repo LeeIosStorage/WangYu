@@ -89,6 +89,9 @@
     if ([dic objectForKey:@"rebate"]) {
         _rebate = [dic intValueForKey:@"rebate"];
     }
+    if ([dic objectForKey:@"netbar_fav_status"]) {
+        _netbarFav = [dic boolValueForKey:@"netbar_fav_status"];
+    }
 }
 
 - (void)setOrderInfoByJsonDic:(NSDictionary*)dic{

@@ -23,6 +23,7 @@
                 <outlet property="createLabel" destination="ces-Nf-vXb" id="kUx-nr-Fxd"/>
                 <outlet property="headerView" destination="XAu-Yf-CfY" id="AaH-28-GFc"/>
                 <outlet property="netbarCollectBtn" destination="5Eh-gH-UPT" id="sYs-lV-Abu"/>
+                <outlet property="netbarCollectImage" destination="QWA-wh-zUQ" id="UnF-Sd-bMM"/>
                 <outlet property="netbarCollectLabel" destination="F1W-LQ-fbO" id="klP-dz-UKw"/>
                 <outlet property="netbarImageView" destination="Qcf-NV-BK9" id="kZv-LL-ndO"/>
                 <outlet property="netbarName" destination="7Ju-b4-yq0" id="kKg-OB-Mb7"/>
@@ -148,6 +149,9 @@
                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="collectNetbarAction:" destination="-1" eventType="touchUpInside" id="sgz-6C-L5t"/>
+                                    </connections>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="detail_service_contact_icon" id="HO3-7u-RHB">
                                     <rect key="frame" x="192" y="8" width="14" height="14"/>

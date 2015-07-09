@@ -100,7 +100,7 @@
 - (void)refreshHeaderView {
     self.matchLabel.text = self.activityInfo.title;
     if (![self.activityInfo.activityImageUrl isEqual:[NSNull null]]) {
-        [self.matchImageView sd_setImageWithURL:self.activityInfo.smallImageURL placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
+        [self.matchImageView sd_setImageWithURL:self.activityInfo.smallImageURL placeholderImage:[UIImage imageNamed:@"activity_load_icon"]];
     }else{
         [self.matchImageView sd_setImageWithURL:nil];
         [self.matchImageView setImage:[UIImage imageNamed:@"activity_load_icon"]];
