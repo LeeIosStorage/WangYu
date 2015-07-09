@@ -102,37 +102,47 @@
     _netbarDistance.frame = frame;
     
     frame = _mapImage.frame;
-    frame.origin.x = SCREEN_WIDTH - 12 - distanceWidth - 7 - _mapImage.frame.size.width;
+    frame.origin.x = SCREEN_WIDTH - 12 - distanceWidth - 4 - _mapImage.frame.size.width;
     _mapImage.frame = frame;
     
-    frame = _bookImage.frame;
-    if (netbarInfo.isOrder) {
-        _bookImage.hidden = NO;
-    }else {
-        _bookImage.hidden = YES;
-    }
-    
-    CGFloat interval = 0.;
-    
-    if (netbarInfo.isPay) {
-        _payImage.hidden = NO;
-        frame = _payImage.frame;
-        interval = netbarInfo.isOrder?(CGRectGetWidth(_bookImage.frame) + CGRectGetWidth(_payImage.frame) + 7):CGRectGetWidth(_bookImage.frame);
-        frame.origin.x = SCREEN_WIDTH - 12 - interval;
-        _payImage.frame = frame;
-    }else {
-        _payImage.hidden = YES;
-    }
+    frame = _recommendImage.frame;
     if (netbarInfo.isRecommend) {
         _recommendImage.hidden = NO;
-        frame = _recommendImage.frame;
-        interval = (netbarInfo.isOrder?(CGRectGetWidth(_bookImage.frame) + CGRectGetWidth(_recommendImage.frame) + 7):CGRectGetWidth(_recommendImage.frame)) + (netbarInfo.isPay?(CGRectGetWidth(_payImage.frame) + 7):0);
-        frame.origin.x = SCREEN_WIDTH - 12 - interval;
-        _recommendImage.frame = frame;
     }else {
         _recommendImage.hidden = YES;
     }
     
+    CGFloat interval = 0.;
+    
+    if (netbarInfo.isOrder) {
+        _bookImage.hidden = NO;
+        frame = _bookImage.frame;
+        interval = netbarInfo.isRecommend?(CGRectGetWidth(_bookImage.frame) + CGRectGetWidth(_hotImage.frame) + 4):CGRectGetWidth(_bookImage.frame);
+        frame.origin.x = SCREEN_WIDTH - 12 - interval;
+        _bookImage.frame = frame;
+    }else {
+        _bookImage.hidden = YES;
+    }
+
+    if (netbarInfo.isHot) {
+        _hotImage.hidden = NO;
+        frame = _hotImage.frame;
+        interval = (netbarInfo.isOrder?(CGRectGetWidth(_hotImage.frame) + CGRectGetWidth(_bookImage.frame) + 4):CGRectGetWidth(_hotImage.frame)) + (netbarInfo.isRecommend?(CGRectGetWidth(_recommendImage.frame) + 4):0);
+        frame.origin.x = SCREEN_WIDTH - 12 - interval;
+        _hotImage.frame = frame;
+    }else {
+        _hotImage.hidden = YES;
+    }
+    
+    if (netbarInfo.isDiscount) {
+        _discountImage.hidden = NO;
+        frame = _discountImage.frame;
+        distanceWidth = [WYCommonUtils widthWithText:_netbarTime.text font:_netbarTime.font lineBreakMode:NSLineBreakByWordWrapping];
+        frame.origin.x = _netbarTime.frame.origin.x + distanceWidth + 5;
+        _discountImage.frame = frame;
+    }else {
+        _discountImage.hidden = YES;
+    }
     _netbarAddress.lineHeightMultiple = 0.8;
     _netbarAddress.text = (netbarInfo.address.length != 0)?netbarInfo.address:@"暂无详细地址";
 }

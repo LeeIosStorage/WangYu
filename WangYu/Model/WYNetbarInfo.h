@@ -20,11 +20,12 @@
 @property(nonatomic, strong) NSString* longitude;                   //经度
 @property(nonatomic, strong) NSMutableArray* picIds;                //图片信息
 @property(nonatomic, strong) NSMutableArray* matches;               //战队信息
-@property(nonatomic, assign) BOOL isOrder;                          //是否支持预订
-@property(nonatomic, assign) BOOL isPay;                            //是否支持支付
+@property(nonatomic, assign) BOOL isOrder;                          //是否支持预订和支付
+//@property(nonatomic, assign) BOOL isPay;                          //是否支持支付
 @property(nonatomic, assign) BOOL isRecommend;                      //是否被推荐
 @property(nonatomic, assign) BOOL isFaved;                          //是否收藏
 @property(nonatomic, assign) BOOL isDiscount;                       //是否打折
+@property(nonatomic, assign) BOOL isHot;                            //是否热门
 @property(nonatomic, assign) int rebate;                            //打折力度
 @property(nonatomic, assign) int algorithm;                         //1 先打折在减红包金额 2先减去红包金额再打折
 @property(nonatomic, assign) NSString *price;                       //上网价格

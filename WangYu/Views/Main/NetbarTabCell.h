@@ -19,10 +19,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *netbarPrice;
 @property (strong, nonatomic) IBOutlet UILabel *netbarTime;
 @property (strong, nonatomic) IBOutlet UIImageView *recommendImage;
-@property (strong, nonatomic) IBOutlet UIImageView *payImage;
+@property (strong, nonatomic) IBOutlet UIImageView *hotImage;
 @property (strong, nonatomic) IBOutlet UIImageView *bookImage;
 @property (strong, nonatomic) IBOutlet UIImageView *mapImage;
+@property (strong, nonatomic) IBOutlet UIImageView *discountImage;
 @property (strong, nonatomic) IBOutlet UIButton *mapButton;
+
 
 @property (strong, nonatomic) IBOutlet UILabel *netbarDistance;
 @property (assign, nonatomic) BOOL bSelected;

@@ -54,7 +54,7 @@
                         <rect key="frame" x="250" y="68" width="14" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_pay_tag_icon" id="EoD-xo-To3">
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_hot_tag_icon" id="EoD-xo-To3">
                         <rect key="frame" x="294" y="11" width="14" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -104,10 +104,16 @@
                             <action selector="mapAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bNk-kU-gcw"/>
                         </connections>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_discount_icon" id="e1T-GE-qWc">
+                        <rect key="frame" x="195" y="68" width="42" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="bookImage" destination="cHh-3d-IP4" id="m74-JB-Cmk"/>
+                <outlet property="discountImage" destination="e1T-GE-qWc" id="lqo-8X-Ibd"/>
+                <outlet property="hotImage" destination="EoD-xo-To3" id="nqB-mV-xPY"/>
                 <outlet property="mapButton" destination="7CL-fO-BV7" id="Kjl-eQ-EyC"/>
                 <outlet property="mapImage" destination="SIR-Gv-ZTC" id="Y8w-C4-3Yr"/>
                 <outlet property="netbarAddress" destination="Hkm-s6-Bfa" id="Rk0-mD-XZF"/>
@@ -116,7 +122,6 @@
                 <outlet property="netbarPrice" destination="JXm-Sj-c2Y" id="eTu-ab-Ref"/>
                 <outlet property="netbarTime" destination="Xlz-re-mct" id="PUf-GD-ut5"/>
                 <outlet property="netbarTitle" destination="g4H-AD-GnS" id="bS5-WZ-vIj"/>
-                <outlet property="payImage" destination="EoD-xo-To3" id="ehT-fM-6kh"/>
                 <outlet property="recommendImage" destination="q7f-9L-v7v" id="aRa-et-iIp"/>
             </connections>
             <point key="canvasLocation" x="475" y="-465"/>
@@ -124,8 +129,9 @@
     </objects>
     <resources>
         <image name="netbar_book_tag_icon" width="14" height="14"/>
+        <image name="netbar_discount_icon" width="42" height="17"/>
         <image name="netbar_distance_icon" width="14" height="14"/>
-        <image name="netbar_pay_tag_icon" width="14" height="14"/>
+        <image name="netbar_hot_tag_icon" width="14" height="14"/>
         <image name="netbar_recommend_tag_icon" width="14" height="14"/>
         <image name="s_n_set_line" width="320" height="1"/>
     </resources>

@@ -25,13 +25,15 @@
     }
     if ([dic objectForKey:@"is_order"]) {
         _isOrder = [dic boolValueForKey:@"is_order"];
-        _isPay = _isOrder;
     }
     if ([dic objectForKey:@"faved"]) {
         _isFaved = [dic boolValueForKey:@"faved"];
     }
     if ([dic objectForKey:@"is_recommend"]) {
         _isRecommend = [dic intValueForKey:@"is_recommend"];
+    }
+    if ([dic objectForKey:@"is_hot"]) {
+        _isHot = [dic boolValueForKey:@"is_hot"];
     }
     if ([dic objectForKey:@"price_per_hour"]) {
         _price = [dic stringObjectForKey:@"price_per_hour"];
