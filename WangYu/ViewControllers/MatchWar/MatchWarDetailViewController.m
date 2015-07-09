@@ -173,7 +173,7 @@
     
     _selectedSegmentIndex = 0;
     CGPoint center = self.segmentMoveImageView.center;
-    center.x = SCREEN_WIDTH/4;
+    center.x = SCREEN_WIDTH/4+self.infoTipLabel.frame.origin.x/2;
     self.segmentMoveImageView.center = center;
     self.matchHeadContainerView.layer.shadowColor = [UIColor darkGrayColor].CGColor;
     self.matchHeadContainerView.layer.shadowOpacity = 0.3;
@@ -181,12 +181,20 @@
     self.matchHeadContainerView.layer.shadowRadius = 2.0;
     self.matchHeadContainerView.layer.shouldRasterize = YES;
     self.matchHeadContainerView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    CGRect frame = self.matchHeadContainerView.frame;
+    frame.size.height = 238;
+    self.matchHeadContainerView.frame = frame;
+    
+    frame = self.infoTipLabel.frame;
+    frame.size.width = SCREEN_WIDTH/2-frame.origin.x;
+    self.infoTipLabel.frame = frame;
     
     
     WYMatchWarInfo* copyMatchWarInfo = [[WYMatchWarInfo alloc] init];
     copyMatchWarInfo.mId = self.matchWarInfo.mId;
     if (self.matchWarInfo.matchWarInfoByJsonDic) {
         [copyMatchWarInfo setMatchWarInfoByJsonDic:self.matchWarInfo.matchWarInfoByJsonDic];
+        copyMatchWarInfo.itemPicUrl = nil;
     }
     _matchWarInfo = copyMatchWarInfo;
     
@@ -342,7 +350,7 @@
     
     self.bkImageView.clipsToBounds = YES;
     self.bkImageView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.bkImageView sd_setImageWithURL:_matchWarInfo.itemPicURL placeholderImage:[UIImage imageNamed:@"match_detail_bg_lol"]];
+    [self.bkImageView sd_setImageWithURL:_matchWarInfo.itemPicURL placeholderImage:[UIImage imageNamed:@"activity_load_icon"]];
     
     self.statusView.alpha = 0.7;
     self.statusView.layer.cornerRadius = self.statusView.frame.size.width/2;
@@ -489,6 +497,9 @@
     [UIView animateWithDuration:0.2 animations:^{
         CGPoint center = self.segmentMoveImageView.center;
         center.x = (SCREEN_WIDTH/4)*MoM;
+        if (MoM == 1) {
+            center.x = SCREEN_WIDTH/4+self.infoTipLabel.frame.origin.x/2;
+        }
         self.segmentMoveImageView.center = center;
     }];
 }
@@ -867,8 +878,20 @@
                              @"intro": intro!=nil?intro:@"",
                              };
     intro = _matchWarInfo.remark;
+    NSArray *remarkArray = [_matchWarInfo.remark componentsSeparatedByString:@" "];
+    NSMutableString * remark = [[NSMutableString alloc] init];
+    for (NSString* num in remarkArray) {
+        if (remark.length > 0) {
+            [remark appendString:@"\n"];
+        }
+        [remark appendString:num.description];
+    }
+    if (remark.length > 0) {
+        intro = remark;
+    }
+    
     NSDictionary *dict04 = @{@"titleLabel": @"联系方式",
-                             @"icon": @"match_publish_intro_icon",
+                             @"icon": @"match_invite_telephone_icon",
                              @"intro": intro!=nil?intro:@"",
                              };
     intro = _matchWarInfo.spoils;
@@ -1251,7 +1274,7 @@ static CGFloat beginImageH = 0;
 }
 
 - (void)setTitleNavBarAlpha:(UIScrollView *)scrollView point:(CGPoint)offset{
-    CGFloat tmpHeight = 76;
+    CGFloat tmpHeight = self.matchTitleLabel.frame.origin.y-self.titleNavBar.frame.size.height;
     int type = 0;
     if (offset.y <= 0) {
         type = 0;

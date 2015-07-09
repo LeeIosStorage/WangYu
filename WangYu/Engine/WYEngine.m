@@ -343,6 +343,17 @@ static WYEngine* s_ShareInstance = nil;
     return NO;
 }
 
+-(void)needAgainLogin:(NSString*)message{
+    if (message == nil) {
+        message = @"登录已失效，请重新登录";
+    }
+    WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"温馨提示" message:message cancelButtonTitle:@"取消" cancelBlock:^{
+    } okButtonTitle:@"登录" okBlock:^{
+        [self gotoLogin];
+    }];
+    [alertView show];
+}
+
 -(void)gotoLogin{
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     WelcomeViewController *welcomeVc = [[WelcomeViewController alloc] init];
@@ -559,6 +570,7 @@ static WYEngine* s_ShareInstance = nil;
                 int code = [[WYEngine getErrorCodeWithReponseDic:jsonRet] intValue];
                 if (code == -1) {
                     [self gotoLogin];
+//                    [self needAgainLogin:nil];
 //                    return;
                 }else if (code == -4){
                     [self needUserLogin:@"亲，您还没登陆咯"];
