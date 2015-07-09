@@ -61,7 +61,7 @@
     self.showDetailsButton.titleLabel.textColor = UIColorToRGB(0xf03f3f);
     [self.showDetailsButton.layer setMasksToBounds:YES];
     [self.showDetailsButton.layer setCornerRadius:4.0];
-    [self.showDetailsButton.layer setBorderWidth:0.5];
+    [self.showDetailsButton.layer setBorderWidth:1.0];
     [self.showDetailsButton.layer setBorderColor:UIColorToRGB(0xf03f3f).CGColor];
     
     UIColor *labelColor = SKIN_TEXT_COLOR1;

@@ -19,6 +19,7 @@
     self.gameImageView.layer.cornerRadius = self.gameImageView.frame.size.width/2;
     self.gameImageView.clipsToBounds = YES;
     self.gameImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.gameImageView.backgroundColor = [UIColor blackColor];
     
     self.matchWarTitleLabel.textColor = SKIN_TEXT_COLOR1;
     self.matchWarTitleLabel.font = SKIN_FONT_FROMNAME(15);
@@ -56,7 +57,7 @@
     }else if (matchWarInfo.way == 2){
         self.matchWarWayLabel.text = @"线下";
     }
-    self.matchWarSpoilsLabel.text = matchWarInfo.spoils;
+    self.matchWarSpoilsLabel.text = matchWarInfo.itemServer;
     
     NSString *applyCount = [NSString stringWithFormat:@"%d",matchWarInfo.applyCount];
     NSString *totalCount = [NSString stringWithFormat:@"/%d",matchWarInfo.peopleNum];

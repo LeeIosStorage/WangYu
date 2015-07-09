@@ -60,12 +60,12 @@ enum TABLEVIEW_SECTION_INDEX {
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self refreshBadgeView];
-    [self getUnReadMessage];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTilteLeftViewHide:NO];
+    [self getUnReadMessage];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFriendTimelineUreadEvent) name:WY_MINEMESSAGE_UNREAD_EVENT_NOTIFICATION object:nil];
     
