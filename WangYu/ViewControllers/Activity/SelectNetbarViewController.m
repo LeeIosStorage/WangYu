@@ -55,6 +55,7 @@
         cell = [cells objectAtIndex:0];
     }
     WYNetbarInfo *netbarInfo = self.netbarInfos[indexPath.row];
+    cell.bSelected = YES;
     cell.netbarInfo = netbarInfo;
     return cell;
 }

@@ -1372,13 +1372,16 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
-- (BOOL)getActivityDetailWithUid:(NSString *)uid activityId:(NSString *)aId tag:(int)tag{
+- (BOOL)getActivityDetailWithUid:(NSString *)uid activityId:(NSString *)aId pageSize:(int)pageSize tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (uid) {
         [params setObject:uid forKey:@"userId"];
     }
     if (aId) {
         [params setObject:aId forKey:@"id"];
+    }
+    if (pageSize > 0) {
+        [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
     }
     if (_token) {
         [params setObject:_token forKey:@"token"];

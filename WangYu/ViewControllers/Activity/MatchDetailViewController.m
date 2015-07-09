@@ -18,6 +18,8 @@
 #import "WYLinkerHandler.h"
 #import "MatchTeamsViewController.h"
 
+#define MemberCount 24
+
 @interface MatchDetailViewController ()<UITableViewDelegate,UITableViewDataSource,WYShareActionSheetDelegate>{
     WYShareActionSheet *_shareAction;
     BOOL bFavor;
@@ -124,7 +126,7 @@
 }
 
 - (void)refreshFooterView {
-    self.joinLabel.text = [NSString stringWithFormat:@"%d人报名了",(int)self.activityInfo.members.count];
+    self.joinLabel.text = [NSString stringWithFormat:@"%@人报名了",self.activityInfo.memberCount];
     
     CGRect frame = self.membersView.frame;
     int index = 0;
@@ -174,7 +176,7 @@
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-     [[WYEngine shareInstance] getActivityDetailWithUid:[WYEngine shareInstance].uid activityId:self.activityInfo.aId tag:tag];
+     [[WYEngine shareInstance] getActivityDetailWithUid:[WYEngine shareInstance].uid activityId:self.activityInfo.aId pageSize:MemberCount tag:tag];
     
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
@@ -192,7 +194,7 @@
 - (void)getActivityInfo {
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getActivityDetailWithUid:[WYEngine shareInstance].uid activityId:self.activityInfo.aId tag:tag];
+    [[WYEngine shareInstance] getActivityDetailWithUid:[WYEngine shareInstance].uid activityId:self.activityInfo.aId pageSize:MemberCount tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [WYProgressHUD AlertLoadDone];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];

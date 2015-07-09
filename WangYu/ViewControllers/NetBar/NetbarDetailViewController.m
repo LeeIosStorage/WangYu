@@ -32,10 +32,14 @@
     WYShareActionSheet *_shareAction;
     BOOL _bHidden;
 }
+
 @property (strong, nonatomic) IBOutlet UIView *headerView;
+@property (strong, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) IBOutlet UIView *maskView;
 @property (strong, nonatomic) IBOutlet UIScrollView *imageScrollView;
 @property (strong, nonatomic) IBOutlet UIView *footerView;
+@property (strong, nonatomic) IBOutlet UIView *noticeView;
+@property (strong, nonatomic) IBOutlet UILabel *noticeLabel;
 
 @property (strong, nonatomic) IBOutlet UIImageView *netbarImage;
 @property (strong, nonatomic) IBOutlet UITableView *teamTable;
@@ -113,6 +117,9 @@
     self.sectionLabel.textColor = SKIN_TEXT_COLOR1;
     self.sectionLabel.font = SKIN_FONT_FROMNAME(15);
     
+    self.noticeLabel.textColor = UIColorToRGB(0xffffff);
+    self.noticeLabel.font = SKIN_FONT_FROMNAME(11);
+    
     [self.bookButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
     self.bookButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
     self.bookButton.layer.cornerRadius = 4.0;
@@ -152,6 +159,20 @@
 }
 
 - (void)refreshHeaderView {
+    if (self.netbarInfo.discountNotice.length != 0) {
+        self.noticeView.hidden = NO;
+        self.noticeLabel.text = self.netbarInfo.discountNotice;
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect frame = self.teamTable.frame;
+            frame.origin.y = 24;
+            self.noticeView.alpha = 1;
+            frame.size.height = SCREEN_HEIGHT - self.noticeView.frame.size.height - self.tabController.tabBar.frame.size.height;
+            self.teamTable.frame = frame;
+        }];
+    }else {
+        self.noticeView.hidden = YES;
+    }
+    
     if (![self.netbarInfo.smallImageUrl isEqual:[NSNull null]]) {
         [self.netbarImage sd_setImageWithURL:self.netbarInfo.smallImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
     }else{
@@ -186,9 +207,9 @@
     frame.origin.x = self.priceLabel2.frame.size.width + self.priceLabel2.frame.origin.x;
     self.timeLabel.frame = frame;
     self.timeLabel.text = [NSString stringWithFormat:@"/小时"];
-    
+
     [self.imageScrollView removeFromSuperview];
-    [self.headerView addSubview:self.imageScrollView];
+    [self.containerView addSubview:self.imageScrollView];
     if(self.netbarInfo.picIds.count > 0){
         self.picLabel.hidden = YES;
         if(self.netbarInfo.picIds.count > 3){

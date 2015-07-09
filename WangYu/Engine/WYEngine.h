@@ -172,7 +172,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //约战列表
 - (BOOL)getMatchListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag;
 //赛事详情
-- (BOOL)getActivityDetailWithUid:(NSString *)uid activityId:(NSString *)aId tag:(int)tag;
+- (BOOL)getActivityDetailWithUid:(NSString *)uid activityId:(NSString *)aId pageSize:(int)pageSize tag:(int)tag;
 //收藏/取消收藏 赛事
 - (BOOL)collectionActivityWithUid:(NSString *)uid activityId:(NSString *)aId tag:(int)tag;
 //赛事地点

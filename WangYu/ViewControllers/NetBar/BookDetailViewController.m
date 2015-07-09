@@ -133,7 +133,7 @@
     NSDictionary *dict0 = @{@"titleLabel":@"机位数量：",@"contentLabel":[NSString stringWithFormat:@"%d台",_orderInfo.seating]};
     NSDictionary *dict1 = @{@"titleLabel":@"时间：",@"contentLabel":[NSString stringWithFormat:@"%@－%@",[WYUIUtils dateYearToMinuteDiscriptionFromDate:_orderInfo.beginTime],[WYUIUtils dateYearToMinuteDiscriptionFromDate:_orderInfo.endTime]]};
     NSDictionary *dict2 = @{@"titleLabel":@"上网时长：",@"contentLabel":[NSString stringWithFormat:@"%d小时",_orderInfo.hours]};
-    NSDictionary *dict3 = @{@"titleLabel":@"小费：",@"contentLabel":[NSString stringWithFormat:@"%@元",_orderInfo.amount]};
+    NSDictionary *dict3 = @{@"titleLabel":@"小费：",@"contentLabel":[NSString stringWithFormat:@"%@元",_orderInfo.amount?_orderInfo.amount:@"0"]};
     NSDictionary *dict4 = @{@"titleLabel":@"下单时间：",@"contentLabel":[WYUIUtils dateYearToMinuteDiscriptionFromDate:_orderInfo.createDate]};
    
     [tmpMutDict setObject:dict0 forKey:[NSString stringWithFormat:@"r%d",(int)tmpMutDict.count]];
@@ -302,7 +302,7 @@
 }
 
 - (IBAction)netbarContactAction:(id)sender {
-    [WYCommonUtils usePhoneNumAction:_orderInfo.netbarTel title:@"联系客服"];
+    [WYCommonUtils usePhoneNumAction:_orderInfo.netbarTel title:@"联系网吧"];
 }
 
 - (IBAction)serviceContactAction:(id)sender {

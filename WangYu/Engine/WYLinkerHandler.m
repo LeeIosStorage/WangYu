@@ -18,6 +18,7 @@
 #import "OrderDetailViewController.h"
 #import "WYMessageInfo.h"
 #import "MatchWarDetailViewController.h"
+#import "MatchDetailViewController.h"
 
 @implementation WYLinkerHandler
 
@@ -59,10 +60,18 @@
             return odVc;
         }else if ([[realUrl host] isEqualToString:@"activity"]){
             //活动赛事消息
-            
+            MatchDetailViewController *mdVc = [[MatchDetailViewController alloc] init];
+            WYActivityInfo *activityInfo = [[WYActivityInfo alloc] init];
+            activityInfo.aId = [[paramDic objectForKey:@"objId"] description];
+            mdVc.activityInfo = activityInfo;
+            return mdVc;
         }else if ([[realUrl host] isEqualToString:@"match"]){
             //约战消息
-            
+            MatchWarDetailViewController *matchDetailVc = [[MatchWarDetailViewController alloc] init];
+            WYMatchWarInfo *matchWarInfo = [[WYMatchWarInfo alloc] init];
+            matchWarInfo.mId = [[paramDic objectForKey:@"objId"] description];
+            matchDetailVc.matchWarInfo = matchWarInfo;
+            return matchDetailVc;
         }else if ([[realUrl host] isEqualToString:@"redbag_weekly"]){
             //每周红包推送消息
             [[WYSettingConfig staticInstance] setWeekRedBagMessageUnreadEvent:YES];

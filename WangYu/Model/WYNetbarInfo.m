@@ -66,6 +66,9 @@
     if ([dic objectForKey:@"city"]) {
         _city = [dic stringObjectForKey:@"city"];
     }
+    if ([dic objectForKey:@"discount_info"]) {
+        _discountNotice = [dic stringObjectForKey:@"discount_info"];
+    }
     id objectForKey = [dic arrayObjectForKey:@"imgs"];
     if (objectForKey) {
         _picIds = [NSMutableArray array];

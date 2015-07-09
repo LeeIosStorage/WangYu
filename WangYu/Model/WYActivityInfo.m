@@ -47,6 +47,9 @@
     if ([dic objectForKey:@"info_id"]) {
         _newsId = [dic stringObjectForKey:@"info_id"];
     }
+    if ([dic objectForKey:@"memberCount"]) {
+        _memberCount = [dic stringObjectForKey:@"memberCount"];
+    }
     if ([dic arrayObjectForKey:@"members"]) {
         _members = [[NSMutableArray alloc] init];
         for (NSDictionary *memberDic in [dic arrayObjectForKey:@"members"]) {

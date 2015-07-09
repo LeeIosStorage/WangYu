@@ -55,6 +55,7 @@
     }
     
     _netbarTitle.text = netbarInfo.netbarName;
+        
     _netbarPrice.text = [NSString stringWithFormat:@"%@",netbarInfo.price];
     
     CGFloat priceLabelWidth = [WYCommonUtils widthWithText:_netbarPrice.text font:_netbarPrice.font lineBreakMode:NSLineBreakByWordWrapping];
@@ -133,7 +134,7 @@
     }
     
     _netbarAddress.lineHeightMultiple = 0.8;
-    _netbarAddress.text = netbarInfo.address;
+    _netbarAddress.text = (netbarInfo.address.length != 0)?netbarInfo.address:@"暂无详细地址";
 }
 
 - (IBAction)mapAction:(id)sender {

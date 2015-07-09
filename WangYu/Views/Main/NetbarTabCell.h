@@ -25,6 +25,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *mapButton;
 
 @property (strong, nonatomic) IBOutlet UILabel *netbarDistance;
+@property (assign, nonatomic) BOOL bSelected;
 
 @property(nonatomic, assign) id<NetbarTabCellDelegate> delegate;
 

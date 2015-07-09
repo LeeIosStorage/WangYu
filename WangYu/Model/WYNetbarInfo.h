@@ -28,6 +28,7 @@
 @property(nonatomic, assign) int rebate;                            //打折力度
 @property(nonatomic, assign) int algorithm;                         //1 先打折在减红包金额 2先减去红包金额再打折
 @property(nonatomic, assign) NSString *price;                       //上网价格
+@property(nonatomic, strong) NSString *discountNotice;              //网吧优惠通知
 @property(nonatomic, strong) NSString *areaCode;                    //城市code
 @property(nonatomic, strong) NSString *city;                        //城市
 @property(nonatomic, readonly) NSArray* picURLs;                    //图片信息地址
