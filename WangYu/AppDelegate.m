@@ -49,12 +49,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     //检测一下你懂的
-    NSInteger checkNum = [[NSUserDefaults standardUserDefaults] integerForKey:kAppCheckNumKey];
-    _bHidden = [[NSUserDefaults standardUserDefaults] boolForKey:kAppCheckBoolKey];
-    if (checkNum == 0) {
-        [[NSUserDefaults standardUserDefaults] setInteger:checkNum + 1 forKey:kAppCheckNumKey];
-        [self checkVersion];
-    }
+//    NSInteger checkNum = [[NSUserDefaults standardUserDefaults] integerForKey:kAppCheckNumKey];
+//    _bHidden = [[NSUserDefaults standardUserDefaults] boolForKey:kAppCheckBoolKey];
+//    if (checkNum == 0) {
+//        [[NSUserDefaults standardUserDefaults] setInteger:checkNum + 1 forKey:kAppCheckNumKey];
+//        [self checkVersion];
+//    }
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 //    
     application.statusBarHidden = NO;
