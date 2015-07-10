@@ -18,6 +18,7 @@
 @property(nonatomic, strong) NSString* idCard;//身份证号
 @property(nonatomic, strong) NSString* realName;//真实姓名
 @property(nonatomic, strong) NSString* qq;//qq号
+@property(nonatomic, strong) NSString* invitationCode;//邀请码
 
 @property(nonatomic, strong) NSString* avatar;
 @property(nonatomic, strong) NSString* cityCode;

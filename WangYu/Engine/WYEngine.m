@@ -1353,6 +1353,20 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
+- (BOOL)uploadMineInviteCodeWith:(NSString*)uid invitationCode:(NSString*)invitationCode tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (invitationCode) {
+        [params setObject:invitationCode forKey:@"invitationCode"];
+    }
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/my/invitation",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
 #pragma mark - 活动
 - (BOOL)getActivityListWithPage:(int)page pageSize:(int)pageSize tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];

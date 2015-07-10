@@ -83,9 +83,9 @@
     if ([dic objectForKey:@"state"]) {
         _rStatus = [dic intValueForKey:@"state"];
     }
-    if ([dic objectForKey:@""]) {
-        _oStatus = [dic intValueForKey:@"order_status"];
-    }
+//    if ([dic objectForKey:@""]) {
+//        _oStatus = [dic intValueForKey:@"order_status"];
+//    }
     if ([dic objectForKey:@"rebate"]) {
         _rebate = [dic intValueForKey:@"rebate"];
     }
