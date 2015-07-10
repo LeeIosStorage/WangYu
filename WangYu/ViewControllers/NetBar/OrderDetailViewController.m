@@ -140,11 +140,11 @@
 }
 
 - (void)refreshOrderStatus{
-    if (self.orderInfo.oStatus == -1) {
+    if (self.orderInfo.status == -1) {
         self.statusLabel.text = @"支付失败";
-    }else if (self.orderInfo.oStatus == 0) {
+    }else if (self.orderInfo.status == 0) {
         self.statusLabel.text = @"待支付";
-    }else if (self.orderInfo.oStatus == 1) {
+    }else if (self.orderInfo.status == 1) {
         self.statusLabel.text = @"支付成功";
     }
     if (self.orderInfo.netbarFav) {

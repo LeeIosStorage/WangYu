@@ -32,6 +32,9 @@
     if ([dic stringObjectForKey:@"qq"]) {
         _qq = [dic stringObjectForKey:@"qq"];
     }
+    if ([dic stringObjectForKey:@"invitationCode"]) {
+        _invitationCode = [dic stringObjectForKey:@"invitationCode"];
+    }
     
     if ([dic stringObjectForKey:@"icon"]) {
         _avatar = [dic stringObjectForKey:@"icon"];

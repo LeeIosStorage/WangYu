@@ -22,8 +22,10 @@
 #import "WYLinkerHandler.h"
 #import "WYCommonWebVc.h"
 
-@interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate,LocationViewControllerDelegate>
-
+@interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate,LocationViewControllerDelegate,UITextFieldDelegate>
+{
+    int _maxAddMessageLenght;
+}
 @property (strong, nonatomic) IBOutlet UITableView *setTableView;
 @property (strong, nonatomic) IBOutlet UIView *footerView;
 @property (strong, nonatomic) IBOutlet UIButton *exitButton;
@@ -31,6 +33,11 @@
 @property (strong, nonatomic) NSString *cityName;
 @property (strong, nonatomic) NSString *cityCode;
 @property (assign, nonatomic) unsigned long long cacheSize;
+
+@property (strong, nonatomic) NSString *inviteCode;
+@property (nonatomic, strong) UIAlertView *alertView;
+@property (nonatomic, strong) UITextField *textFiled;
+@property (nonatomic, assign) BOOL isInFieldDelegate;
 
 - (IBAction)exitAction:(id)sender;
 @end
@@ -41,6 +48,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 //    [self.view setBackgroundColor:UIColorRGB(234, 234, 234)];
+    
+    _maxAddMessageLenght = 20;
+    _inviteCode = [WYEngine shareInstance].userInfo.invitationCode;
     _cityCode = [WYEngine shareInstance].userInfo.cityCode;
     _cityName = [WYEngine shareInstance].userInfo.cityName;
     [self getCacheSize];
@@ -163,6 +173,8 @@
         case 2:{
             if (indexPath.row == 0) {
                 cell.titleLabel.text = @"填写邀请码";
+                cell.rightLabel.text = _inviteCode;
+                cell.rightLabel.hidden = NO;
                 [cell setLineImageViewWithType:-1];
                 break;
             }else if (indexPath.row == 1) {
@@ -238,7 +250,7 @@
         }
         case 2:{
             if (indexPath.row == 0) {
-                
+                [self showInviteCodeAlert];
                 break;
             }else if (indexPath.row == 1) {
                 [self showClearCacheAction];
@@ -407,5 +419,122 @@
         sheet.cancelButtonIndex = sheet.numberOfButtons -1;
         [sheet showInView:self.view];
     }
+}
+
+- (void)showInviteCodeAlert{
+    
+    if ([[WYEngine shareInstance] needUserLogin:nil]) {
+        return;
+    }
+    if (_inviteCode.length > 0) {
+        return;
+    }
+    [self removeInviteCodeAlert];
+    
+    _alertView = [[UIAlertView alloc] initWithTitle:nil message:@"填写邀请码" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    _alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    _textFiled = [_alertView textFieldAtIndex:0];
+    _textFiled.delegate = self;
+    _textFiled.font = [UIFont systemFontOfSize:15];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addPersonTextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+    [_alertView show];
+}
+-(void)removeInviteCodeAlert{
+    if (_alertView) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        _textFiled.delegate = nil;
+        _textFiled = nil;
+        _alertView.delegate = nil;
+        _alertView = nil;
+        ;
+    }
+}
+
+#pragma mark -- UIAlertViewDelegate
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self checkInviteCode];
+    }
+}
+
+
+#pragma mark --UITextFieldDelegate
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    return YES;
+}
+
+//ios 7监听文本变化的函数
+-(void) addPersonTextFieldDidChange:(NSNotification *) noti
+{
+    if (_isInFieldDelegate) {
+        _isInFieldDelegate = NO;
+        return;
+    }
+    
+    UITextField *textField = noti.object;
+    if (![textField isEqual:_textFiled]) {
+        return;
+    }
+    
+    int count = [WYCommonUtils getHanziTextNum:textField.text];
+    
+    if (count >= _maxAddMessageLenght) {
+//        [self showMaxInputLenghtNotice];
+        textField.text = [WYCommonUtils getHanziTextWithText:textField.text maxLength:_maxAddMessageLenght];
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    _isInFieldDelegate = YES;
+    if ([string isEqualToString:@"\n"]) {
+        return YES;
+    }
+    
+    //删除
+    if (!string.length && range.length > 0) {
+        return YES;
+    }
+    NSString *oldString = [textField.text copy];
+    NSString *newString = [oldString stringByReplacingCharactersInRange:range withString:string];
+    int count = [WYCommonUtils getHanziTextNum:newString];
+    if (count >= _maxAddMessageLenght) {
+//        [self showMaxInputLenghtNotice];
+        textField.text = [WYCommonUtils getHanziTextWithText:newString maxLength:_maxAddMessageLenght];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)checkInviteCode{
+    NSString *content = [_textFiled.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (content.length == 0) {
+        [WYProgressHUD AlertError:@"请填写正确邀请码" At:self.view];
+        return;
+    }
+    [WYProgressHUD AlertLoading:@"正在验证邀请码" At:self.view];
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] uploadMineInviteCodeWith:[WYEngine shareInstance].uid invitationCode:content tag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [WYProgressHUD AlertSuccess:@"验证成功." At:weakSelf.view];
+        weakSelf.inviteCode = content;
+        NSDictionary *dic = [jsonRet objectForKey:@"object"];
+        if ([dic isKindOfClass:[NSDictionary class]]) {
+            WYUserInfo *userInfo = [[WYUserInfo alloc] init];
+            [userInfo setUserInfoByJsonDic:dic];
+            [WYEngine shareInstance].userInfo = userInfo;
+        }
+        [weakSelf.setTableView reloadData];
+    }tag:tag];
 }
 @end
