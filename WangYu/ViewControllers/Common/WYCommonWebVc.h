@@ -7,6 +7,7 @@
 //
 
 #import "WYSuperViewController.h"
+#import "WYNewsInfo.h"
 
 enum {
     WebViewControllerAvailableActionsNone             = 0,
@@ -33,5 +34,7 @@ typedef NSUInteger WebViewControllerAvailableActions;
 
 //反馈按钮
 @property (nonatomic, assign) BOOL showFeedback;
+
+@property (nonatomic, strong) WYNewsInfo *newsInfo;
 
 @end

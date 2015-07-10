@@ -11,11 +11,15 @@
 #import "WYProgressHUD.h"
 #import "WYAlertView.h"
 #import "FeedBackViewController.h"
+#import "WYShareActionSheet.h"
 
 NSInteger const SGProgresstagId = 222122323;
 CGFloat const SGProgressBarHeight = 2.5;
 
-@interface WYCommonWebVc ()<UIGestureRecognizerDelegate>
+@interface WYCommonWebVc ()<UIGestureRecognizerDelegate,WYShareActionSheetDelegate>
+{
+    WYShareActionSheet *_shareAction;
+}
 
 @property (nonatomic, strong) NSURL *URL;
 
@@ -89,6 +93,9 @@ CGFloat const SGProgressBarHeight = 2.5;
     self.mainWebView.backgroundColor = UIColorToRGB(0xf1f1f1);
     [self loadURL:self.URL];
     [self.view insertSubview:self.mainWebView atIndex:0];
+    if (self.isShareViewOut) {
+        [self setRightButtonWithImageName:@"netbar_detail_share_icon" selector:@selector(actionButtonClicked:)];
+    }
 }
 
 -(void)initNormalTitleNavBarSubviews
@@ -384,6 +391,19 @@ CGFloat const SGProgressBarHeight = 2.5;
             [self viewUpdatesForPercentage:percentage andTintColor:tintColor];
         });
     }
+}
+
+
+- (void)actionButtonClicked:(id)sender {
+    _shareAction = [[WYShareActionSheet alloc] init];
+    _shareAction.owner = self;
+    _shareAction.newsInfo = self.newsInfo;
+    [_shareAction showShareAction];
+}
+
+#pragma mark - XEShareActionSheetDelegate
+-(void) deleteTopicAction:(id)info{
+    [super backAction:nil];
 }
 
 - (void)dealloc

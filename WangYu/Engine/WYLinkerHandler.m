@@ -103,6 +103,16 @@
         if (nav) {
             NSString *url = [realUrl description];
             WYCommonWebVc *webvc = [[WYCommonWebVc alloc] initWithAddress:url];
+            if ([url hasPrefix:[NSString stringWithFormat:@"%@/activity/info/web/detail",[WYEngine shareInstance].baseUrl]]) {
+                NSDictionary *paramDic = [WYCommonUtils getParamDictFrom:realUrl.query];
+                WYNewsInfo *newsInfo = [[WYNewsInfo alloc] init];
+                newsInfo.nid = [[paramDic stringObjectForKey:@"id"] description];
+                newsInfo.title = [[paramDic stringObjectForKey:@"title"] description];
+                newsInfo.brief = [[paramDic stringObjectForKey:@"brief"] description];
+                newsInfo.newsImageUrl = [[paramDic stringObjectForKey:@"imageUrl"] description];
+                webvc.newsInfo = newsInfo;
+                webvc.isShareViewOut = YES;
+            }
             [nav pushViewController:webvc animated:YES];
         }
         return nil;
