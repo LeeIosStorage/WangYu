@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSString *filterPriceType;
 @property (nonatomic, strong) NSMutableArray *filterAreaArray;
 @property (nonatomic, strong) NSMutableArray *filterNetbarArray;
+@property (nonatomic, strong) NSMutableArray *relateNetbarArray;       //和城市联动的网吧
 @property (nonatomic, strong) IBOutlet UIView *filterTableContainerView;
 @property (nonatomic, strong) IBOutlet UITableView *filterTableView;
 @property (nonatomic, strong) UIButton *bgMarkButtonView;
@@ -64,22 +65,26 @@
     if (_showFilter) {
         _filterAreaArray = [[NSMutableArray alloc] init];
         _filterNetbarArray = [[NSMutableArray alloc] init];
+        _relateNetbarArray = [[NSMutableArray alloc] init];
         _filterType = 0;
         _filterAreaName = @"选择市";
         _filterAreaCode = nil;
-        _filterNetbarName = @"排序";
+        _filterNetbarName = @"选择网吧";
         _filterPriceType = nil;
         self.filterContainerView.hidden = NO;
         CGRect frame = self.teamTableView.frame;
         frame.origin.y = self.filterContainerView.frame.origin.y + self.filterContainerView.frame.size.height;
         frame.size.height = self.view.bounds.size.height - frame.origin.y;
         self.teamTableView.frame = frame;
-//        [self refreshFilterAreaData];
-//        [self refreshFilterPriceData];
     }
     
     [self initControlUI];
+    [self getCacheTeamInfos];
     [self refreshTeamInfos];
+    
+    self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.teamTableView];
+    self.pullRefreshView.delegate = self;
+    [self.teamTableView addSubview:self.pullRefreshView];
     
     WS(weakSelf);
     [self.teamTableView addInfiniteScrollingWithActionHandler:^{
@@ -175,13 +180,48 @@
     self.filterNetbarImgView.frame = frame;
 }
 
+-(void)getCacheTeamInfos{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] addGetCacheTag:tag];
+    [[WYEngine shareInstance] getMatchJoinedTeamWithUid:[WYEngine shareInstance].uid activityId:_activityId netbarId:_filterNetbarId areaCode:_filterAreaCode page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
+    
+    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+        if (jsonRet == nil) {
+            //...
+        }else{
+            weakSelf.teamInfos = [NSMutableArray array];
+            weakSelf.netbarInfos = [NSMutableArray array];
+            
+            NSArray *teamDicArray = [[jsonRet objectForKey:@"object"] objectForKey:@"teams"];
+            for (NSDictionary *dic in teamDicArray) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                WYTeamInfo *teamInfo = [[WYTeamInfo alloc] init];
+                [teamInfo setTeamInfoByJsonDic:dic];
+                [weakSelf.teamInfos addObject:teamInfo];
+            }
+            [weakSelf.teamTableView reloadData];
+            
+            if (weakSelf.filterNetbarArray.count == 0 || weakSelf.filterAreaArray.count == 0) {
+                NSArray *netbarDicArray = [[jsonRet objectForKey:@"object"] objectForKey:@"condition"];
+                if (!netbarDicArray) {
+                    return;
+                }
+                [weakSelf refreshFilterDataSource:netbarDicArray];
+            }
+        }
+    }];
+}
+
 - (void)refreshTeamInfos {
     _teamCursor = 1;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] getMatchJoinedTeamWithUid:[WYEngine shareInstance].uid activityId:_activityId netbarId:_filterNetbarId areaCode:_filterAreaCode page:_teamCursor pageSize:DATA_LOAD_PAGESIZE_COUNT tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
-        [WYProgressHUD AlertLoadDone];
+        [self.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
             if (!errorMsg.length) {
@@ -214,50 +254,72 @@
         }
         if (weakSelf.filterNetbarArray.count == 0 || weakSelf.filterAreaArray.count == 0) {
             NSArray *netbarDicArray = [[jsonRet objectForKey:@"object"] objectForKey:@"condition"];
-            for (NSDictionary *dic in netbarDicArray) {
-                if (![dic isKindOfClass:[NSDictionary class]]) {
-                    continue;
-                }
-                WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
-                [netbarInfo setNetbarInfoByJsonDic:dic];
-                [weakSelf.netbarInfos addObject:netbarInfo];
+            if (!netbarDicArray) {
+                return;
             }
-            
-            [weakSelf refreshFilterDataSource:weakSelf.netbarInfos];
+            [weakSelf refreshFilterDataSource:netbarDicArray];
         }
     }tag:tag];
 }
 
-- (void)refreshFilterDataSource:(NSArray *)netbarDicArray
-{
-    //蛋疼的数据
-    for (WYNetbarInfo *info in netbarDicArray) {
-        NSMutableDictionary *netbarDic = [[NSMutableDictionary alloc] init];
-        [netbarDic setValue:info.netbarName forKey:@"netbarName"];
-        [netbarDic setValue:info.nid forKey:@"netbarId"];
-        [_filterNetbarArray addObject:netbarDic];
+- (void)refreshFilterDataSource:(NSArray *)array {
+    for (NSDictionary *dic in array) {
+        NSMutableDictionary *areaDic = [[NSMutableDictionary alloc] init];
+        [areaDic setValue:[dic stringObjectForKey:@"area_code"] forKey:@"areaCode"];
+        [areaDic setValue:[dic stringObjectForKey:@"city"] forKey:@"city"];
+        [_filterAreaArray addObject:areaDic];
         
-        if (_filterAreaArray.count == 0) {
-            NSMutableDictionary *areaDic = [[NSMutableDictionary alloc] init];
-            [areaDic setValue:info.areaCode forKey:@"areaCode"];
-            [areaDic setValue:info.city forKey:@"city"];
-            [_filterAreaArray addObject:areaDic];
-        }else {
-            BOOL flag = NO;
-            for (NSDictionary *dic in _filterAreaArray) {
-                if ([info.city isEqualToString:[dic objectForKey:@"city"]]) {
-                    flag = YES;
-                }
-            }
-            if (!flag) {
-                NSMutableDictionary *areaDic = [[NSMutableDictionary alloc] init];
-                [areaDic setValue:info.areaCode forKey:@"areaCode"];
-                [areaDic setValue:info.city forKey:@"city"];
-                [_filterAreaArray addObject:areaDic];
-            }
+        for (NSDictionary *netDic in [dic arrayObjectForKey:@"netbars"]) {
+            NSMutableDictionary *netbarDic = [[NSMutableDictionary alloc] init];
+            [netbarDic setValue:[netDic stringObjectForKey:@"netbar_name"] forKey:@"netbarName"];
+            [netbarDic setValue:[netDic stringObjectForKey:@"id"] forKey:@"netbarId"];
+            [netbarDic setValue:[dic stringObjectForKey:@"area_code"] forKey:@"areaCode"];
+            [netbarDic setValue:[dic stringObjectForKey:@"city"] forKey:@"city"];
+            [_filterNetbarArray addObject:netbarDic];
+        }
+    }
+    [_relateNetbarArray addObjectsFromArray:_filterNetbarArray];
+}
+
+- (void)getRelateNetbarArray:(NSString *)areaCode{
+    [_relateNetbarArray removeAllObjects];
+    for (NSDictionary *netDic in _filterNetbarArray) {
+        if ([[netDic stringObjectForKey:@"areaCode"] isEqualToString:areaCode]) {
+            [_relateNetbarArray addObject:netDic];
         }
     }
 }
+
+//- (void)refreshFilterDataSource:(NSArray *)netbarDicArray
+//{
+//    //蛋疼的数据
+//    for (WYNetbarInfo *info in netbarDicArray) {
+//        NSMutableDictionary *netbarDic = [[NSMutableDictionary alloc] init];
+//        [netbarDic setValue:info.netbarName forKey:@"netbarName"];
+//        [netbarDic setValue:info.nid forKey:@"netbarId"];
+//        [_filterNetbarArray addObject:netbarDic];
+//        
+//        if (_filterAreaArray.count == 0) {
+//            NSMutableDictionary *areaDic = [[NSMutableDictionary alloc] init];
+//            [areaDic setValue:info.areaCode forKey:@"areaCode"];
+//            [areaDic setValue:info.city forKey:@"city"];
+//            [_filterAreaArray addObject:areaDic];
+//        }else {
+//            BOOL flag = NO;
+//            for (NSDictionary *dic in _filterAreaArray) {
+//                if ([info.city isEqualToString:[dic objectForKey:@"city"]]) {
+//                    flag = YES;
+//                }
+//            }
+//            if (!flag) {
+//                NSMutableDictionary *areaDic = [[NSMutableDictionary alloc] init];
+//                [areaDic setValue:info.areaCode forKey:@"areaCode"];
+//                [areaDic setValue:info.city forKey:@"city"];
+//                [_filterAreaArray addObject:areaDic];
+//            }
+//        }
+//    }
+//}
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -271,7 +333,7 @@
         if (_filterType == 0) {
             return self.filterAreaArray.count;
         }else if (_filterType == 1) {
-            return self.filterNetbarArray.count;
+            return self.relateNetbarArray.count;
         }else {
             return 0;
         }
@@ -328,21 +390,21 @@ static int filterLabel_Tag = 202, filterLineImg_Tag = 203;
             NSDictionary *infoDic = _filterAreaArray[indexPath.row];
             nameLabel.text = [infoDic stringObjectForKey:@"city"];
             if ([[infoDic stringObjectForKey:@"areaCode"] isEqualToString:_filterAreaCode]) {
-                nameLabel.textColor = UIColorToRGB(0xa58600);
-                botImgView.backgroundColor = UIColorToRGB(0xa58600);
+                nameLabel.textColor = UIColorToRGB(0xf03f3f);
+                botImgView.backgroundColor = UIColorToRGB(0xf03f3f);
             }else{
                 nameLabel.textColor = SKIN_TEXT_COLOR2;
-                botImgView.backgroundColor = UIColorToRGB(0xe4e4e4);
+                botImgView.backgroundColor = UIColorToRGB(0xc7c7c7);
             }
         }else if (_filterType == 1){
-            NSDictionary *infoDic = _filterNetbarArray[indexPath.row];
+            NSDictionary *infoDic = _relateNetbarArray[indexPath.row];
             nameLabel.text = [infoDic stringObjectForKey:@"netbarName"];
             if ([[infoDic stringObjectForKey:@"netbarId"] isEqualToString:_filterNetbarId]) {
-                nameLabel.textColor = UIColorToRGB(0xa58600);
-                botImgView.backgroundColor = UIColorToRGB(0xa58600);
+                nameLabel.textColor = UIColorToRGB(0xf03f3f);
+                botImgView.backgroundColor = UIColorToRGB(0xf03f3f);
             }else{
                 nameLabel.textColor = SKIN_TEXT_COLOR2;
-                botImgView.backgroundColor = UIColorToRGB(0xe4e4e4);
+                botImgView.backgroundColor = UIColorToRGB(0xc7c7c7);
             }
         }
         return cell;
@@ -358,13 +420,21 @@ static int filterLabel_Tag = 202, filterLineImg_Tag = 203;
             NSDictionary *infoDic = _filterAreaArray[indexPath.row];
             _filterAreaName = [infoDic stringObjectForKey:@"city"];
             _filterAreaCode = [infoDic stringObjectForKey:@"areaCode"];
+            [self getRelateNetbarArray:_filterAreaCode];
+            _filterNetbarId = @"";
+            _filterNetbarName = @"选择网吧";
             [self showFilterViewWith:NO];
             [self refreshFilterViewShowUI];
             [self refreshTeamInfos];
         }else if (_filterType == 1){
-            NSDictionary *infoDic = _filterNetbarArray[indexPath.row];
+            NSDictionary *infoDic = _relateNetbarArray[indexPath.row];
             _filterNetbarName = [infoDic stringObjectForKey:@"netbarName"];
             _filterNetbarId = [infoDic stringObjectForKey:@"netbarId"];
+            _filterAreaName = [infoDic stringObjectForKey:@"city"];
+            if (!_filterAreaCode) {
+                _filterAreaCode = [infoDic stringObjectForKey:@"areaCode"];
+                [self getRelateNetbarArray:_filterAreaCode];
+            }
             [self showFilterViewWith:NO];
             [self refreshFilterViewShowUI];
             [self refreshTeamInfos];
@@ -387,11 +457,15 @@ static int filterLabel_Tag = 202, filterLineImg_Tag = 203;
     [self.navigationController pushViewController:maVc animated:YES];
 }
 
-- (void)dealloc {
-    _teamTableView.delegate = nil;
-    _teamTableView.dataSource = nil;
-    _filterTableView.delegate = nil;
-    _filterTableView.dataSource = nil;
+#pragma mark PullToRefreshViewDelegate
+- (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {
+    if (view == self.pullRefreshView) {
+        [self refreshTeamInfos];
+    }
+}
+
+- (NSDate *)pullToRefreshViewLastUpdated:(PullToRefreshView *)view {
+    return [NSDate date];
 }
 
 - (IBAction)filterAreaAction:(id)sender {
@@ -435,7 +509,7 @@ static int filterLabel_Tag = 202, filterLineImg_Tag = 203;
         if (self.filterAreaButton.selected) {
             filterContainerViewHeight = self.filterAreaArray.count*36+1;
         }else if (self.filterNetbarButton.selected){
-            filterContainerViewHeight = self.filterNetbarArray.count*36+1;
+            filterContainerViewHeight = self.relateNetbarArray.count*36+1;
         }
         if (filterContainerViewHeight>250) {
             filterContainerViewHeight = 250;
@@ -497,6 +571,13 @@ static int filterLabel_Tag = 202, filterLineImg_Tag = 203;
 
 -(void)hiddenFilterViewAction{
     [self showFilterViewWith:NO];
+}
+
+- (void)dealloc {
+    _teamTableView.delegate = nil;
+    _teamTableView.dataSource = nil;
+    _filterTableView.delegate = nil;
+    _filterTableView.dataSource = nil;
 }
 
 @end

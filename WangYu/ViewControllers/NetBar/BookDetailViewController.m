@@ -55,6 +55,7 @@
     [super viewDidLoad];
 //    self.moduleDict = [self tableDataModule];
     [self refreshUI];
+    [self getCacheBookDataSource];
     [self getBookDataSource];
 }
 
@@ -65,6 +66,25 @@
 
 - (void)initNormalTitleNavBarSubviews{
     [self setTitle:@"预定订单详情"];
+}
+
+-(void)getCacheBookDataSource{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] addGetCacheTag:tag];
+    [[WYEngine shareInstance] getReserveDetailWithUid:[WYEngine shareInstance].uid reserveId:self.orderInfo.reserveId tag:tag];
+    
+    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+        if (jsonRet == nil) {
+            //...
+        }else{
+            NSDictionary *dic = [jsonRet objectForKey:@"object"];
+            [weakSelf.orderInfo setOrderInfoByJsonDic:dic];
+            weakSelf.moduleDict = [weakSelf tableDataModule];
+            [weakSelf refreshOrderStatus];
+            [weakSelf.bookTableView reloadData];
+        }
+    }];
 }
 
 - (void)getBookDataSource{
@@ -115,17 +135,9 @@
     self.sectionLabel.textColor = SKIN_TEXT_COLOR1;
     self.sectionLabel.font = SKIN_FONT_FROMNAME(15);
     
-    if (![self.orderInfo.netbarImageUrl isEqual:[NSNull null]]) {
-        [self.netbarImageView sd_setImageWithURL:self.orderInfo.netbarImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
-    }else{
-        [self.netbarImageView sd_setImageWithURL:nil];
-        [self.netbarImageView setImage:[UIImage imageNamed:@"netbar_load_icon"]];
-    }
     self.netbarImageView.clipsToBounds = YES;
     [self.netbarImageView.layer setMasksToBounds:YES];
     [self.netbarImageView.layer setCornerRadius:self.netbarImageView.frame.size.width/2];
-    
-    self.netbarName.text = self.orderInfo.netbarName;
 }
 
 - (NSDictionary *)tableDataModule{
@@ -146,6 +158,14 @@
 }
 
 - (void)refreshOrderStatus{
+    self.netbarName.text = self.orderInfo.netbarName;
+    if (![self.orderInfo.netbarImageUrl isEqual:[NSNull null]]) {
+        [self.netbarImageView sd_setImageWithURL:self.orderInfo.netbarImageUrl placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
+    }else{
+        [self.netbarImageView sd_setImageWithURL:nil];
+        [self.netbarImageView setImage:[UIImage imageNamed:@"netbar_load_icon"]];
+    }
+    
     if (_orderInfo.rStatus < RESERVE_RECEIVE) {
         self.markerImage2.image = [UIImage imageNamed:@"detail_marker_hold_icon"];
         self.markerImage3.image = [UIImage imageNamed:@"detail_marker_hold_icon"];

@@ -949,21 +949,21 @@ static int historyLabel_Tag = 201, filterLabel_Tag = 202, filterLineImg_Tag = 20
             NSDictionary *infoDic = _filterAreaArray[indexPath.row];
             nameLabel.text = [infoDic stringObjectForKey:@"name"];
             if ([[infoDic stringObjectForKey:@"areaCode"] isEqualToString:_filterAreaCode]) {
-                nameLabel.textColor = UIColorToRGB(0xa58600);
-                botImgView.backgroundColor = UIColorToRGB(0xa58600);
+                nameLabel.textColor = UIColorToRGB(0xf03f3f);
+                botImgView.backgroundColor = UIColorToRGB(0xf03f3f);
             }else{
                 nameLabel.textColor = SKIN_TEXT_COLOR2;
-                botImgView.backgroundColor = UIColorToRGB(0xe4e4e4);
+                botImgView.backgroundColor = UIColorToRGB(0xc7c7c7);
             }
         }else if (_filterType == 1){
             NSDictionary *infoDic = _filterPriceArray[indexPath.row];
             nameLabel.text = [infoDic stringObjectForKey:price_name];
             if ([[infoDic stringObjectForKey:price_type] isEqualToString:_filterPriceType]) {
-                nameLabel.textColor = UIColorToRGB(0xa58600);
-                botImgView.backgroundColor = UIColorToRGB(0xa58600);
+                nameLabel.textColor = UIColorToRGB(0xf03f3f);
+                botImgView.backgroundColor = UIColorToRGB(0xf03f3f);
             }else{
                 nameLabel.textColor = SKIN_TEXT_COLOR2;
-                botImgView.backgroundColor = UIColorToRGB(0xe4e4e4);
+                botImgView.backgroundColor = UIColorToRGB(0xc7c7c7);
             }
         }
         return cell;

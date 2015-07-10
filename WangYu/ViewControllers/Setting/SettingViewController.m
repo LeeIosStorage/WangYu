@@ -155,8 +155,6 @@
         case 1:{
             if (indexPath.row == 0){
                 cell.titleLabel.text = @"客服中心";
-                cell.rightLabel.text = _cityName;
-                cell.rightLabel.hidden = NO;
                 [cell setLineImageViewWithType:-1];
                 break;
             }

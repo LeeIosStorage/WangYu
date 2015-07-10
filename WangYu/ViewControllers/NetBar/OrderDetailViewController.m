@@ -99,6 +99,25 @@
     self.createLabel.text = [WYUIUtils dateYearToMinuteDiscriptionFromDate:self.orderInfo.createDate];
 }
 
+-(void)getCacheOrderDataSource{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] addGetCacheTag:tag];
+    [[WYEngine shareInstance] getOrderDetailwithUid:[WYEngine shareInstance].uid orderId:self.orderInfo.orderId tag:tag];
+    
+    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+        if (jsonRet == nil) {
+            //...
+        }else{
+            NSDictionary *dic = [jsonRet objectForKey:@"object"];
+            [weakSelf.orderInfo setOrderInfoByJsonDic:dic];
+            weakSelf.moduleDict = [weakSelf tableDataModule];
+            [weakSelf refreshOrderStatus];
+            [weakSelf.orderTableView reloadData];
+        }
+    }];
+}
+
 - (void)getOrderDataSource{
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
