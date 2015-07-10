@@ -18,7 +18,7 @@
 #import "MatchApplyViewController.h"
 #import "WYActionSheet.h"
 
-@interface MatchPlaceViewController ()<UITableViewDelegate,UITableViewDataSource,MatchPlaceCellDelegate>
+@interface MatchPlaceViewController ()<UITableViewDelegate,UITableViewDataSource,MatchPlaceCellDelegate,MatchApplyViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *placeTableView;
 
@@ -185,6 +185,7 @@
             maVc.activityId = self.activityId;
             maVc.matchInfo = matchInfo;
             maVc.applyType = ApplyViewTypeSol;
+            maVc.delegate = self;
             [self.navigationController pushViewController:maVc animated:YES];
         }else if (buttonIndex == 1){
             MatchApplyViewController *maVc = [[MatchApplyViewController alloc] init];
@@ -195,6 +196,13 @@
         }
     } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"个人报名", @"创建战队", nil];
     [sheet showInView:self.view];
+}
+
+#pragma mark - MatchApplyViewDelegate
+- (void)refreshMatchPlaceInfo{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(refreshMatchDetailInfo)]) {
+        [self.delegate refreshMatchDetailInfo];
+    }
 }
 
 @end

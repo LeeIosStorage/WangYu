@@ -17,11 +17,22 @@ typedef enum ApplyViewType_ {
     ApplyViewTypeJoin,            // 加入战队
 }ApplyViewType;
 
+@protocol MatchApplyViewDelegate;
+
 @interface MatchApplyViewController : WYSuperViewController
 
 @property (nonatomic, strong) NSString *activityId;
 @property (nonatomic, strong) WYMatchInfo *matchInfo;
 @property (nonatomic, strong) WYTeamInfo *teamInfo;
 @property (nonatomic, assign) ApplyViewType applyType;
+@property (nonatomic, assign) id<MatchApplyViewDelegate> delegate;
+
+@end
+
+@protocol MatchApplyViewDelegate <NSObject>
+
+@optional
+- (void)refreshMatchTeam:(WYTeamInfo *)teamInfo;
+- (void)refreshMatchPlaceInfo;
 
 @end

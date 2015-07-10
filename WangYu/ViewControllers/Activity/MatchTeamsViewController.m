@@ -15,7 +15,7 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "MatchApplyViewController.h"
 
-@interface MatchTeamsViewController ()<UITableViewDelegate, UITableViewDataSource, MatchTeamsCellDelegate>{
+@interface MatchTeamsViewController ()<UITableViewDelegate, UITableViewDataSource, MatchTeamsCellDelegate,MatchApplyViewDelegate>{
     int _filterType;
     NSString *_filterAreaName;
     NSString *_filterNetbarName;
@@ -454,6 +454,7 @@ static int filterLabel_Tag = 202, filterLineImg_Tag = 203;
     MatchApplyViewController *maVc = [[MatchApplyViewController alloc] init];
     maVc.applyType = ApplyViewTypeJoin;
     maVc.teamInfo = teamInfo;
+    maVc.delegate = self;
     [self.navigationController pushViewController:maVc animated:YES];
 }
 
@@ -466,6 +467,20 @@ static int filterLabel_Tag = 202, filterLineImg_Tag = 203;
 
 - (NSDate *)pullToRefreshViewLastUpdated:(PullToRefreshView *)view {
     return [NSDate date];
+}
+
+#pragma mark MatchApplyViewDelegate
+- (void)refreshMatchTeam:(WYTeamInfo *)teamInfo {
+    for (WYTeamInfo *info in self.teamInfos) {
+        if ([info.teamId isEqualToString:teamInfo.teamId]) {
+            info.isJoin = YES;
+            info.applyNum += 1;
+            break;
+        }
+    }
+    NSUInteger index = [self.teamInfos indexOfObject:teamInfo];
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    [self.teamTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (IBAction)filterAreaAction:(id)sender {

@@ -77,6 +77,16 @@
         self.joinButton.hidden = NO;
         self.exitButton.hidden = YES;
         self.editButton.hidden = YES;
+        
+        if (teamInfo.applyNum == teamInfo.totalNum) {
+            self.joinButton.enabled = NO;
+            [self.joinButton.layer setBorderColor:SKIN_TEXT_COLOR2.CGColor];
+            [self.joinButton setTitle:@"队伍已满" forState:UIControlStateNormal];
+            [self.joinButton setTitleColor:SKIN_TEXT_COLOR2 forState:UIControlStateNormal];
+        }else{
+            self.joinButton.enabled = YES;
+        }
+        
         if (teamInfo.isJoin) {
             self.joinButton.enabled = NO;
             [self.joinButton.layer setBorderColor:SKIN_TEXT_COLOR2.CGColor];

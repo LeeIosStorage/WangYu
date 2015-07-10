@@ -81,7 +81,15 @@
             return;
         }
         [WYProgressHUD AlertSuccess:@"添加成功" At:weakSelf.view];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(refreshMatchMember)]) {
+            [self.delegate refreshMatchMember];
+        }
+        [weakSelf performSelector:@selector(pageGotoAction) withObject:nil afterDelay:0.5];
     }tag:tag];
+}
+
+- (void)pageGotoAction{
+    [self backAction:nil];
 }
 
 @end

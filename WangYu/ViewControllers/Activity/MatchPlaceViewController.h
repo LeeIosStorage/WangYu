@@ -8,8 +8,18 @@
 
 #import "WYSuperViewController.h"
 
+@protocol MatchPlaceViewDelegate;
+
 @interface MatchPlaceViewController : WYSuperViewController
 
 @property (nonatomic, strong) NSString *activityId;
+@property (nonatomic, assign) id<MatchPlaceViewDelegate> delegate;
+
+@end
+
+@protocol MatchPlaceViewDelegate <NSObject>
+
+@optional
+- (void)refreshMatchDetailInfo;
 
 @end

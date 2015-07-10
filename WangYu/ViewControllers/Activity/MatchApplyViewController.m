@@ -25,6 +25,7 @@
     NSString *_qqStr;
     NSString *_laborStr;
     NSIndexPath *_indexPath;
+    NSString *_teamID;
 }
 
 @property (strong, nonatomic) IBOutlet UIButton *commitButton;
@@ -95,7 +96,24 @@
             return;
         }
         [WYProgressHUD AlertSuccess:@"报名成功" At:weakSelf.view];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(refreshMatchTeam:)]) {
+            [self.delegate refreshMatchTeam:_teamInfo];
+        }
+        [weakSelf performSelector:@selector(pageGotoAction) withObject:nil afterDelay:0.5];
     }tag:tag];
+}
+
+- (void)pageGotoAction {
+    if (self.applyType == ApplyViewTypeJoin) {
+        [self backAction:nil];
+    }else if(self.applyType == ApplyViewTypeSol) {
+        [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
+    }else if (self.applyType == ApplyViewTypeTeam) {
+        MatchMemberViewController *mmVc = [[MatchMemberViewController alloc] init];
+        mmVc.teamId = _teamID;
+        mmVc.activityId = _activityId;
+        [self.navigationController pushViewController:mmVc animated:YES];
+    }
 }
 
 - (void)applyMatch {
@@ -113,6 +131,10 @@
             return;
         }
         [WYProgressHUD AlertSuccess:@"报名成功" At:weakSelf.view];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(refreshMatchPlaceInfo)]) {
+            [self.delegate refreshMatchPlaceInfo];
+        }
+        [weakSelf performSelector:@selector(pageGotoAction) withObject:nil afterDelay:0.5];
     }tag:tag];
 }
 
@@ -131,12 +153,8 @@
             return;
         }
         [WYProgressHUD AlertSuccess:@"创建成功" At:weakSelf.view];
-        NSString *teamStr = [[jsonRet objectForKey:@"object"] objectForKey:@"teamId"];
-        NSLog(@"=========%@",teamStr);
-        MatchMemberViewController *mmVc = [[MatchMemberViewController alloc] init];
-        mmVc.teamId = teamStr;
-        mmVc.activityId = weakSelf.activityId;
-        [self.navigationController pushViewController:mmVc animated:YES];
+        _teamID = [[jsonRet objectForKey:@"object"] objectForKey:@"teamId"];
+        [weakSelf performSelector:@selector(pageGotoAction) withObject:nil afterDelay:0.5];
     }tag:tag];
 }
 

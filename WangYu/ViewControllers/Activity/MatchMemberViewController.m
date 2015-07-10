@@ -13,7 +13,7 @@
 #import "WYProgressHUD.h"
 #import "WYMemberInfo.h"
 
-@interface MatchMemberViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface MatchMemberViewController ()<UITableViewDelegate, UITableViewDataSource, InviteMemberViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *memberInfos;
 @property (strong, nonatomic) IBOutlet UITableView *memberTableView;
@@ -149,7 +149,13 @@
     InviteMemberViewController *imVc = [[InviteMemberViewController alloc] init];
     imVc.activityId = self.activityId;
     imVc.teamId = self.teamId;
+    imVc.delegate = self;
     [self.navigationController pushViewController:imVc animated:YES];
+}
+
+#pragma mark - InviteMemberViewDelegate
+- (void)refreshMatchMember {
+    [self refreshTeamMembers];
 }
 
 @end

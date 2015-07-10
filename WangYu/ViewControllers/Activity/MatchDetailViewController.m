@@ -20,7 +20,7 @@
 
 #define MemberCount 24
 
-@interface MatchDetailViewController ()<UITableViewDelegate,UITableViewDataSource,WYShareActionSheetDelegate>{
+@interface MatchDetailViewController ()<UITableViewDelegate,UITableViewDataSource,WYShareActionSheetDelegate,MatchPlaceViewDelegate>{
     WYShareActionSheet *_shareAction;
     BOOL bFavor;
 }
@@ -425,10 +425,16 @@
 - (IBAction)joinAction:(id)sender {
     MatchPlaceViewController *mpVc = [[MatchPlaceViewController alloc] init];
     mpVc.activityId = self.activityInfo.aId;
+    mpVc.delegate = self;
     [self.navigationController pushViewController:mpVc animated:YES];
 }
 
--(void)dealloc{
+#pragma mark - MatchPlaceViewDelegate
+- (void)refreshMatchDetailInfo{
+    [self getActivityInfo];
+}
+
+- (void)dealloc{
     WYLog(@"MatchDetailViewController dealloc!!!");
     _matchTableView.delegate = nil;
     _matchTableView.dataSource = nil;
