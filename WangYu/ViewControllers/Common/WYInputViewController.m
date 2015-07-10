@@ -39,7 +39,7 @@
     [self.inputView.layer setBorderWidth:0.5]; //边框宽度
     [self.inputView.layer setBorderColor:UIColorToRGB(0xadadad).CGColor];//边框颜色
     self.placeHolderLabel.font = SKIN_FONT_FROMNAME(14);
-    self.placeHolderLabel.textColor = SKIN_TEXT_COLOR2;
+    self.placeHolderLabel.textColor = UIColorToRGB(0xc7c7c7);
     
 //    self.inputTextView.font = SKIN_FONT_FROMNAME(14);
 //    self.inputTextView.textColor = SKIN_TEXT_COLOR1;

@@ -163,6 +163,8 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)getApplyMatchWarListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
 //我的战队
 - (BOOL)getMatchTeamListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize tag:(int)tag;
+//意见反馈
+- (BOOL)feedBackMessageWithUid:(NSString*)uid content:(NSString*)content contact:(NSString*)contact tag:(int)tag;
 
 #pragma mark - 活动
 //赛事列表
