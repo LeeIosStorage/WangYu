@@ -10,6 +10,7 @@
 #import "WYEngine.h"
 #import "WYProgressHUD.h"
 #import "WYAlertView.h"
+#import "FeedBackViewController.h"
 
 NSInteger const SGProgresstagId = 222122323;
 CGFloat const SGProgressBarHeight = 2.5;
@@ -90,6 +91,13 @@ CGFloat const SGProgressBarHeight = 2.5;
     [self.view insertSubview:self.mainWebView atIndex:0];
 }
 
+-(void)initNormalTitleNavBarSubviews
+{
+    if (_showFeedback) {
+        [self setRightButtonWithTitle:@"反馈" selector:@selector(feedBackAction:)];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -135,6 +143,12 @@ CGFloat const SGProgressBarHeight = 2.5;
     //    }
     
     [self.mainWebView loadRequest:request];
+}
+
+#pragma mark - custom
+-(void)feedBackAction:(id)sender{
+    FeedBackViewController *feedBackVc = [[FeedBackViewController alloc] init];
+    [self.navigationController pushViewController:feedBackVc animated:YES];
 }
 
 #pragma mark -

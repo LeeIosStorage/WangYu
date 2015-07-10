@@ -315,6 +315,8 @@
 		4428CFC81B46854900B404D2 /* ManageMatchWarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4428CFC61B46854900B404D2 /* ManageMatchWarViewController.xib */; };
 		446E1EC01B34129B005CE745 /* PersonalProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */; };
 		446E1EC11B34129B005CE745 /* PersonalProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */; };
+		44C1F9D51B4F5FA5009CB2EB /* FeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C1F9D31B4F5FA5009CB2EB /* FeedBackViewController.m */; };
+		44C1F9D61B4F5FA5009CB2EB /* FeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C1F9D41B4F5FA5009CB2EB /* FeedBackViewController.xib */; };
 		44C4FE6A1B453B2D00258CEA /* WYMatchApplyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C4FE691B453B2D00258CEA /* WYMatchApplyInfo.m */; };
 		44C4FE6D1B453B4800258CEA /* WYMatchCommentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C4FE6C1B453B4800258CEA /* WYMatchCommentInfo.m */; };
 		44C4FE731B465F9D00258CEA /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C4FE701B465F9D00258CEA /* HPGrowingTextView.m */; };
@@ -989,6 +991,9 @@
 		446E1EBD1B34129B005CE745 /* PersonalProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProfileViewController.h; sourceTree = "<group>"; };
 		446E1EBE1B34129B005CE745 /* PersonalProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProfileViewController.m; sourceTree = "<group>"; };
 		446E1EBF1B34129B005CE745 /* PersonalProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalProfileViewController.xib; sourceTree = "<group>"; };
+		44C1F9D21B4F5FA5009CB2EB /* FeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackViewController.h; sourceTree = "<group>"; };
+		44C1F9D31B4F5FA5009CB2EB /* FeedBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackViewController.m; sourceTree = "<group>"; };
+		44C1F9D41B4F5FA5009CB2EB /* FeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedBackViewController.xib; sourceTree = "<group>"; };
 		44C4FE681B453B2D00258CEA /* WYMatchApplyInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYMatchApplyInfo.h; sourceTree = "<group>"; };
 		44C4FE691B453B2D00258CEA /* WYMatchApplyInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYMatchApplyInfo.m; sourceTree = "<group>"; };
 		44C4FE6B1B453B4800258CEA /* WYMatchCommentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYMatchCommentInfo.h; sourceTree = "<group>"; };
@@ -1965,6 +1970,9 @@
 				0791AB301AE8B7DD0009A5A7 /* AboutViewController.h */,
 				0791AB311AE8B7DD0009A5A7 /* AboutViewController.m */,
 				0791AB321AE8B7DD0009A5A7 /* AboutViewController.xib */,
+				44C1F9D21B4F5FA5009CB2EB /* FeedBackViewController.h */,
+				44C1F9D31B4F5FA5009CB2EB /* FeedBackViewController.m */,
+				44C1F9D41B4F5FA5009CB2EB /* FeedBackViewController.xib */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -2545,6 +2553,7 @@
 				078A043A1B1C2387008ADA76 /* TopicsViewController.xib in Resources */,
 				076195ED1B008FAC00397711 /* PayOrderViewCell.xib in Resources */,
 				44CF41E51B3D1BE200E1DBA5 /* NetbarDetailViewController.xib in Resources */,
+				44C1F9D61B4F5FA5009CB2EB /* FeedBackViewController.xib in Resources */,
 				0775704F1B16B982005C9DC7 /* ApplyActivityViewCell.xib in Resources */,
 				077570571B16E0A8005C9DC7 /* MineMatchWarViewController.xib in Resources */,
 				07203A1A1AF1FE8C0056A74B /* dqw3.otf in Resources */,
@@ -2689,6 +2698,7 @@
 				079D52541B01E48600DF4D6B /* HotUpButton.m in Sources */,
 				078EDBDF1AEF1EF800E93EE8 /* LSReachability.m in Sources */,
 				071923DC1AF7738900432531 /* SetPwdViewController.m in Sources */,
+				44C1F9D51B4F5FA5009CB2EB /* FeedBackViewController.m in Sources */,
 				071923E11AF7771A00432531 /* RegisterViewController.m in Sources */,
 				0799C8B61AF1D8C800E407BB /* ZLPanGestureRecognizer.m in Sources */,
 				073DBD4F1AE7712F009B49EB /* UIImage+WebP.m in Sources */,

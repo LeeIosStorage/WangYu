@@ -31,4 +31,7 @@ typedef NSUInteger WebViewControllerAvailableActions;
 @property (nonatomic, assign) BOOL isResult;
 @property (nonatomic, strong) NSString *openId;
 
+//反馈按钮
+@property (nonatomic, assign) BOOL showFeedback;
+
 @end

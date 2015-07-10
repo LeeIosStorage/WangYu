@@ -20,6 +20,7 @@
 #import "WYSettingConfig.h"
 #import "LocationViewController.h"
 #import "WYLinkerHandler.h"
+#import "WYCommonWebVc.h"
 
 @interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate,LocationViewControllerDelegate>
 
@@ -224,10 +225,15 @@
             break;
         }
         case 1:{
-            id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/cs/web/detail", [WYEngine shareInstance].baseUrl] From:self.navigationController];
-            if (vc) {
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+//            id vc = [WYLinkerHandler handleDealWithHref: From:self.navigationController];
+//            if (vc) {
+//                [self. pushViewController:vc animated:YES];
+//            }
+            NSString *url = [NSString stringWithFormat:@"%@/cs/web/detail", [WYEngine shareInstance].baseUrl];
+            WYCommonWebVc *webvc = [[WYCommonWebVc alloc] initWithAddress:url];
+            webvc.showFeedback = YES;
+            [self.navigationController pushViewController:webvc animated:YES];
+            
             break;
         }
         case 2:{
