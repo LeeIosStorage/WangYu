@@ -9,8 +9,17 @@
 #import "WYSuperViewController.h"
 #import "WYMatchWarInfo.h"
 
+@protocol MatchWarDetailViewControllerDelegate;
+
 @interface MatchWarDetailViewController : WYSuperViewController
 
+@property (nonatomic, assign) id<MatchWarDetailViewControllerDelegate>delegate;
 @property (nonatomic, strong) WYMatchWarInfo *matchWarInfo;
+
+@end
+
+@protocol MatchWarDetailViewControllerDelegate <NSObject>
+@optional
+- (void)matchWarDetailViewControllerWith:(MatchWarDetailViewController*)viewController withMatchWarInfo:(WYMatchWarInfo*)matchWarInfo applyCountAdd:(BOOL)add;
 
 @end

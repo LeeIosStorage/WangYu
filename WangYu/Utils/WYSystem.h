@@ -68,4 +68,7 @@
 #define WYLog(...)
 #endif
 
+
+#define WY_MATCHWAR_OWNER_CANCLE_NOTIFICATION @"WY_MATCHWAR_OWNER_CANCLE_NOTIFICATION" //取消约战通知
+
 #endif

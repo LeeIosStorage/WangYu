@@ -94,6 +94,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    if (!self.isBooked) {
+        UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(becomeGestureRecognizer:)];
+        [self.oriAmountContainerView addGestureRecognizer:gestureRecongnizer];
+    }
+    
     self.isAlipay = YES;
     self.isWeixin = NO;
     _discountRule = 0;
@@ -107,6 +113,10 @@
     [self refreshNewGuideView:NO];
     
     [self refreshNetbarInfo];
+}
+
+- (void)becomeGestureRecognizer:(UITapGestureRecognizer *)gestureRecognizer {
+    [self.amountField becomeFirstResponder];
 }
 
 - (void)keyboardWillShow:(NSNotification *)note

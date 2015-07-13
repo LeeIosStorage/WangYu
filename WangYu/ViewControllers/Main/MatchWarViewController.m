@@ -17,7 +17,7 @@
 #import "PublishMatchWarViewController.h"
 #import "MatchWarDetailViewController.h"
 
-@interface MatchWarViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface MatchWarViewController ()<UITableViewDataSource,UITableViewDelegate,PublishMatchWarViewControllerDelegate,MatchWarDetailViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *matchTableView;
 @property (strong, nonatomic) NSMutableArray *matchInfos;  //约战
@@ -30,14 +30,17 @@
 @implementation MatchWarViewController
 
 - (void)dealloc {
-    WYLog(@"MatchWarViewController dealloc!!!");
+    WYLog(@"%@ dealloc!!!",NSStringFromClass([self class]));
     _matchTableView.delegate = nil;
     _matchTableView.dataSource = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFinishCancelMatchWar:) name:WY_MATCHWAR_OWNER_CANCLE_NOTIFICATION object:nil];
     
     self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.matchTableView];
     self.pullRefreshView.delegate = self;
@@ -47,7 +50,7 @@
 //    [self setContentInsetForScrollView:self.matchTableView inset:inset];
     
     [self getCacheMatchInfoList];
-    [self getMatchInfoList];
+    [self refreshMatchInfoList];
     
     WS(weakSelf);
     [self.matchTableView addInfiniteScrollingWithActionHandler:^{
@@ -128,6 +131,7 @@
         return;
     }
     PublishMatchWarViewController *publishVc = [[PublishMatchWarViewController alloc] init];
+    publishVc.delegate = self;
     [self.navigationController pushViewController:publishVc animated:YES];
     
 }
@@ -156,7 +160,7 @@
     }];
 }
 
-- (void)getMatchInfoList{
+- (void)refreshMatchInfoList{
     self.matchCursor = 1;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
@@ -196,7 +200,7 @@
 #pragma mark PullToRefreshViewDelegate
 - (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {
     if (view == self.pullRefreshView) {
-        [self getMatchInfoList];
+        [self refreshMatchInfoList];
     }
 }
 
@@ -243,6 +247,7 @@
     WYMatchWarInfo *matchWarInfo = _matchInfos[indexPath.row];
     MatchWarDetailViewController *mVc = [[MatchWarDetailViewController alloc] init];
     mVc.matchWarInfo = matchWarInfo;
+    mVc.delegate = self;
     [self.navigationController pushViewController:mVc animated:YES];
     
 //    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/detail?id=%@&userId=%@&token=%@", [WYEngine shareInstance].baseUrl, matchWarInfo.mId, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
@@ -252,6 +257,34 @@
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+}
+
+#pragma mark - PublishMatchWarViewControllerDelegate
+- (void)publishMatchWarViewControllerWith:(PublishMatchWarViewController*)viewController withMatchWarInfo:(WYMatchWarInfo*)matchWarInfo{
+    [self refreshMatchInfoList];
+}
+
+#pragma mark - MatchWarDetailViewControllerDelegate
+- (void)matchWarDetailViewControllerWith:(MatchWarDetailViewController*)viewController withMatchWarInfo:(WYMatchWarInfo*)matchWarInfo applyCountAdd:(BOOL)add{
+    for (WYMatchWarInfo *info in _matchInfos) {
+        if ([info.mId isEqualToString:matchWarInfo.mId]) {
+            info.applyCount = matchWarInfo.applyCount;
+            [self.matchTableView reloadData];
+            break;
+        }
+    }
+}
+
+#pragma mark -NSNotification
+- (void)handleFinishCancelMatchWar:(NSNotification *)notification {
+    WYMatchWarInfo *matchWarInfo = notification.object;
+    for (WYMatchWarInfo *info in _matchInfos) {
+        if ([info.mId isEqualToString:matchWarInfo.mId]) {
+            [_matchInfos removeObject:info];
+            [self.matchTableView reloadData];
+            break;
+        }
+    }
 }
 
 @end

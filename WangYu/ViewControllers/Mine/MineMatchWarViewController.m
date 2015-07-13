@@ -21,7 +21,7 @@
 #define MATCHWAR_TYPE_PULISH        0
 #define MATCHWAR_TYPE_APPLY         1
 
-@interface MineMatchWarViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface MineMatchWarViewController ()<UITableViewDataSource,UITableViewDelegate,PublishMatchWarViewControllerDelegate,MatchWarDetailViewControllerDelegate>
 
 @property (strong, nonatomic) WYSegmentedView *segmentedView;
 
@@ -50,11 +50,14 @@
 
 - (void)dealloc{
     WYLog(@"%@ dealloc!!!",NSStringFromClass([self class]));
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFinishCancelMatchWar:) name:WY_MATCHWAR_OWNER_CANCLE_NOTIFICATION object:nil];
     
     _selectedSegmentIndex = 0;
     
@@ -256,6 +259,7 @@
             return;
         }
         PublishMatchWarViewController *publishVc = [[PublishMatchWarViewController alloc] init];
+        publishVc.delegate = self;
         [self.navigationController pushViewController:publishVc animated:YES];
     }else if (self.selectedSegmentIndex == 1){
         AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -517,6 +521,7 @@
     
     MatchWarDetailViewController *mVc = [[MatchWarDetailViewController alloc] init];
     mVc.matchWarInfo = matchWarInfo;
+    mVc.delegate = self;
     [self.navigationController pushViewController:mVc animated:YES];
     
 //    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/detail?id=%@&userId=%@&token=%@", [WYEngine shareInstance].baseUrl, matchWarInfo.mId, [WYEngine shareInstance].uid,[WYEngine shareInstance].token] From:self.navigationController];
@@ -526,6 +531,44 @@
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+}
+
+#pragma mark - PublishMatchWarViewControllerDelegate
+- (void)publishMatchWarViewControllerWith:(PublishMatchWarViewController*)viewController withMatchWarInfo:(WYMatchWarInfo*)matchWarInfo{
+    [self refreshPublishMatchWarList];
+}
+
+#pragma mark - MatchWarDetailViewControllerDelegate
+- (void)matchWarDetailViewControllerWith:(MatchWarDetailViewController*)viewController withMatchWarInfo:(WYMatchWarInfo*)matchWarInfo applyCountAdd:(BOOL)add{
+    
+    BOOL isExist = NO;
+    for (WYMatchWarInfo *info in _applyMatchList) {
+        if ([info.mId isEqualToString:matchWarInfo.mId]) {
+            isExist = YES;
+            if (!add) {
+                [_applyMatchList removeObject:info];
+                [self.applyTableView reloadData];
+            }
+            break;
+        }
+    }
+    if (!isExist && add) {
+        [_applyMatchList addObject:matchWarInfo];
+        [self.applyTableView reloadData];
+    }
+}
+
+#pragma mark -NSNotification
+- (void)handleFinishCancelMatchWar:(NSNotification *)notification {
+    WYMatchWarInfo *matchWarInfo = notification.object;
+    for (WYMatchWarInfo *info in _publishMatchList) {
+        if ([info.mId isEqualToString:matchWarInfo.mId]) {
+            [_publishMatchList removeObject:info];
+            [self.publishTableView reloadData];
+            [self refreshShowUI];
+            break;
+        }
+    }
 }
 
 @end

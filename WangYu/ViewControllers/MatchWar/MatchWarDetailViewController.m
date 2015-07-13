@@ -785,6 +785,10 @@
         [weakSelf addMendaciousApply:0];
         [weakSelf refreshHeadViewShow];
         
+        if (self.delegate && [self.delegate respondsToSelector:@selector(matchWarDetailViewControllerWith:withMatchWarInfo:applyCountAdd:)]) {
+            [self.delegate matchWarDetailViewControllerWith:self withMatchWarInfo:weakSelf.matchWarInfo applyCountAdd:NO];
+        }
+        
     } tag:tag];
 }
 
@@ -811,6 +815,10 @@
         weakSelf.matchWarInfo.applyCount ++;
         [weakSelf addMendaciousApply:1];
         [weakSelf refreshHeadViewShow];
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(matchWarDetailViewControllerWith:withMatchWarInfo:applyCountAdd:)]) {
+            [self.delegate matchWarDetailViewControllerWith:self withMatchWarInfo:weakSelf.matchWarInfo applyCountAdd:YES];
+        }
         
     } tag:tag];
 }
