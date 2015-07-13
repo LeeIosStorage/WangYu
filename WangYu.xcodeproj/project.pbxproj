@@ -276,6 +276,8 @@
 		07E96B8F1B15BD35006ED6B7 /* MatchPlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E96B8D1B15BD35006ED6B7 /* MatchPlaceCell.xib */; };
 		07EEF6C21B0C789000DBC511 /* WYPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EEF6C11B0C789000DBC511 /* WYPayManager.m */; };
 		3B357C6E1B20AA3B00AE30A0 /* WYUserGuideConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B357C6D1B20AA3B00AE30A0 /* WYUserGuideConfig.m */; };
+		3B42DA7F1B53C0170053822D /* WYAppCommentGuideVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B42DA7D1B53C0170053822D /* WYAppCommentGuideVc.m */; };
+		3B42DA801B53C0170053822D /* WYAppCommentGuideVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B42DA7E1B53C0170053822D /* WYAppCommentGuideVc.xib */; };
 		3B6554AB1B43BA2F008F4ED0 /* SelectNetbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B6554A91B43BA2F008F4ED0 /* SelectNetbarViewController.m */; };
 		3B6554AC1B43BA2F008F4ED0 /* SelectNetbarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B6554AA1B43BA2F008F4ED0 /* SelectNetbarViewController.xib */; };
 		3BBE46271B0CE79B009EAE02 /* WYPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46261B0CE79B009EAE02 /* WYPhotoItem.m */; };
@@ -926,6 +928,9 @@
 		07EEF6C11B0C789000DBC511 /* WYPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPayManager.m; sourceTree = "<group>"; };
 		3B357C6C1B20AA3B00AE30A0 /* WYUserGuideConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYUserGuideConfig.h; sourceTree = "<group>"; };
 		3B357C6D1B20AA3B00AE30A0 /* WYUserGuideConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYUserGuideConfig.m; sourceTree = "<group>"; };
+		3B42DA7C1B53C0170053822D /* WYAppCommentGuideVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYAppCommentGuideVc.h; sourceTree = "<group>"; };
+		3B42DA7D1B53C0170053822D /* WYAppCommentGuideVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYAppCommentGuideVc.m; sourceTree = "<group>"; };
+		3B42DA7E1B53C0170053822D /* WYAppCommentGuideVc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYAppCommentGuideVc.xib; sourceTree = "<group>"; };
 		3B6554A81B43BA2F008F4ED0 /* SelectNetbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectNetbarViewController.h; path = Activity/SelectNetbarViewController.h; sourceTree = "<group>"; };
 		3B6554A91B43BA2F008F4ED0 /* SelectNetbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectNetbarViewController.m; path = Activity/SelectNetbarViewController.m; sourceTree = "<group>"; };
 		3B6554AA1B43BA2F008F4ED0 /* SelectNetbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectNetbarViewController.xib; path = Activity/SelectNetbarViewController.xib; sourceTree = "<group>"; };
@@ -1549,6 +1554,9 @@
 				073DBD7D1AE77A3C009B49EB /* MineTabViewController.h */,
 				073DBD7E1AE77A3C009B49EB /* MineTabViewController.m */,
 				073DBD7F1AE77A3C009B49EB /* MineTabViewController.xib */,
+				3B42DA7C1B53C0170053822D /* WYAppCommentGuideVc.h */,
+				3B42DA7D1B53C0170053822D /* WYAppCommentGuideVc.m */,
+				3B42DA7E1B53C0170053822D /* WYAppCommentGuideVc.xib */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -2484,6 +2492,7 @@
 				073DBCEB1AE7492A009B49EB /* Main.storyboard in Resources */,
 				44C6AE411B42738400746A54 /* UnicodeToPinYin.dat in Resources */,
 				07E96B8A1B15BB8B006ED6B7 /* MatchPlaceViewController.xib in Resources */,
+				3B42DA801B53C0170053822D /* WYAppCommentGuideVc.xib in Resources */,
 				071691EF1B1C4E49006A832E /* GameDetailsViewController.xib in Resources */,
 				077E4ACF1B14461D009D1692 /* ActivityViewCell.xib in Resources */,
 				44EC5F111B4BC17C00F0FA31 /* GameListViewCell.xib in Resources */,
@@ -2582,6 +2591,7 @@
 				079D52571B01E52900DF4D6B /* WYSegmentedView.m in Sources */,
 				073DBD4A1AE7712F009B49EB /* SDWebImageManager.m in Sources */,
 				076E0DF91B147FD600E4363A /* AVCamRecorder.m in Sources */,
+				3B42DA7F1B53C0170053822D /* WYAppCommentGuideVc.m in Sources */,
 				3BD2121A1B3C643F003FD10D /* BookDetailCell.m in Sources */,
 				077BF3A01B1865E400450174 /* AvatarListViewController.m in Sources */,
 				073DBD741AE778CF009B49EB /* WYUserInfo.m in Sources */,
