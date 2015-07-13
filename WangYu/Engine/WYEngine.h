@@ -93,6 +93,8 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)getNetbarListWithUid:(NSString *)uid latitude:(float)latitude longitude:(float)longitude areaCode:(NSString *)areaCode tag:(int)tag;
 //网吧详情
 - (BOOL)getNetbarDetailWithUid:(NSString *)uid netbarId:(NSString *)nid tag:(int)tag;
+//一键预订网吧
+- (BOOL)getNetbarAllListForOrderWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize latitude:(float)latitude longitude:(float)longitude areaCode:(NSString *)areaCode type:(int)type tag:(int)tag;
 //网吧列表(全部)
 - (BOOL)getNetbarAllListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize latitude:(float)latitude longitude:(float)longitude areaCode:(NSString *)areaCode type:(int)type tag:(int)tag;
 //搜索网吧(网吧名称)

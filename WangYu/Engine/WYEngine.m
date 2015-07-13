@@ -928,6 +928,33 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 
+- (BOOL)getNetbarAllListForOrderWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize latitude:(float)latitude longitude:(float)longitude areaCode:(NSString *)areaCode type:(int)type tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (page > 0) {
+        [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    }
+    if (pageSize > 0) {
+        [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
+    }
+    if (latitude != 0 && longitude != 0) {
+        [params setObject:[[NSNumber numberWithFloat:longitude] description] forKey:@"longitude"];
+        [params setObject:[[NSNumber numberWithFloat:latitude] description] forKey:@"latitude"];
+    }
+    if (areaCode) {
+        [params setObject:areaCode forKey:@"areaCode"];
+    }
+    [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+    
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/listAllForOrder",API_URL] type:1 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
 - (BOOL)getNetbarAllListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize latitude:(float)latitude longitude:(float)longitude areaCode:(NSString *)areaCode type:(int)type tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (uid) {

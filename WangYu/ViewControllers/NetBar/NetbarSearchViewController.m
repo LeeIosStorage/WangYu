@@ -102,24 +102,24 @@
     [self.netBarTable addSubview:self.pullRefreshView];
     
     
+    //排序
     self.filterContainerView.hidden = YES;
-    if (_showFilter) {
-        _filterAreaArray = [[NSMutableArray alloc] init];
-        _filterPriceArray = [[NSMutableArray alloc] init];
-        _filterType = 0;
-        _filterAreaName = @"区域";
-        _filterAreaCode = _areaCode;
-        _filterPriceName = @"排序";
-        _filterPriceType = @"";
-        self.filterContainerView.hidden = NO;
-        CGRect frame = self.netBarTable.frame;
-        frame.origin.y = self.filterContainerView.frame.origin.y + self.filterContainerView.frame.size.height;
-        frame.size.height = self.view.bounds.size.height - frame.origin.y;
-        self.netBarTable.frame = frame;
-        
-        [self refreshFilterAreaData];
-        [self refreshFilterPriceData];
-    }
+    _filterAreaArray = [[NSMutableArray alloc] init];
+    _filterPriceArray = [[NSMutableArray alloc] init];
+    _filterType = 0;
+    _filterAreaName = @"区域";
+    _filterAreaCode = _areaCode;
+    _filterPriceName = @"排序";
+    _filterPriceType = @"";
+    self.filterContainerView.hidden = NO;
+    CGRect frame = self.netBarTable.frame;
+    frame.origin.y = self.filterContainerView.frame.origin.y + self.filterContainerView.frame.size.height;
+    frame.size.height = self.view.bounds.size.height - frame.origin.y;
+    self.netBarTable.frame = frame;
+    
+    [self refreshFilterAreaData];
+    [self refreshFilterPriceData];
+    
     
     
     [self initControlUI];
@@ -150,7 +150,13 @@
         }
         
         int tag = [[WYEngine shareInstance] getConnectTag];
-        [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:weakSelf.areaCode type:[weakSelf.filterPriceType intValue] tag:tag];
+        if (weakSelf.showFilter) {
+            //一键预订网吧
+            [[WYEngine shareInstance] getNetbarAllListForOrderWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:weakSelf.areaCode type:[weakSelf.filterPriceType intValue] tag:tag];
+        }else{
+            [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)weakSelf.netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:weakSelf.areaCode type:[weakSelf.filterPriceType intValue] tag:tag];
+        }
+
         [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
             if (!weakSelf) {
                 return;
@@ -440,7 +446,11 @@
     __weak NetbarSearchViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
     [[WYEngine shareInstance] addGetCacheTag:tag];
-    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode type:[_filterPriceType intValue] tag:tag];
+    if (self.showFilter) {
+        [[WYEngine shareInstance] getNetbarAllListForOrderWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode type:[_filterPriceType intValue] tag:tag];
+    }else{
+        [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode type:[_filterPriceType intValue] tag:tag];
+    }
     [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
         if (jsonRet == nil) {
             //...
@@ -465,7 +475,11 @@
     _netBarNextCursor = 1;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)_netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode type:[_filterPriceType intValue] tag:tag];
+    if (_showFilter) {
+        [[WYEngine shareInstance] getNetbarAllListForOrderWithUid:[WYEngine shareInstance].uid page:(int)_netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode type:[_filterPriceType intValue] tag:tag];
+    }else{
+        [[WYEngine shareInstance] getNetbarAllListWithUid:[WYEngine shareInstance].uid page:(int)_netBarNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude areaCode:_areaCode type:[_filterPriceType intValue] tag:tag];
+    }
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         [weakSelf.pullRefreshView finishedLoading];
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
@@ -658,9 +672,10 @@
         
     }];
     self.netBarTable.hidden = NO;
-    if (_showFilter) {
-        self.filterContainerView.hidden = NO;
-    }
+    self.filterContainerView.hidden = NO;
+//    if (_showFilter) {
+//        self.filterContainerView.hidden = NO;
+//    }
     if (self.historyContainerView.superview) {
         [self.historyContainerView removeFromSuperview];
     }
