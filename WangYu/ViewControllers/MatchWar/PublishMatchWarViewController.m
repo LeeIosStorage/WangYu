@@ -210,6 +210,9 @@
         if (_netbarInfo.nid.length > 0) {
             matchInfo.netbarId = _netbarInfo.nid;
         }
+        if (self.delegate && [self.delegate respondsToSelector:@selector(publishMatchWarViewControllerWith:withMatchWarInfo:)]) {
+            [self.delegate publishMatchWarViewControllerWith:self withMatchWarInfo:matchInfo];
+        }
         [weakSelf goToSucceedViewController:matchInfo];
         
     }tag:tag];

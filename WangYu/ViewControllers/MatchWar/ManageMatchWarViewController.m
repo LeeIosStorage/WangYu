@@ -179,6 +179,8 @@
             return;
         }
         [WYProgressHUD AlertSuccess:@"取消约战成功" At:weakSelf.view];
+        [[NSNotificationCenter defaultCenter] postNotificationName:WY_MATCHWAR_OWNER_CANCLE_NOTIFICATION object:weakSelf.matchWarInfo];
+        
         [weakSelf performSelector:@selector(cancelFinished) withObject:nil afterDelay:1.0];
     } tag:tag];
 }

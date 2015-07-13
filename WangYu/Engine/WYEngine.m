@@ -160,9 +160,8 @@ static WYEngine* s_ShareInstance = nil;
     
     if (removeAccout) {
         _account = nil;
+        _userPassword = nil;
     }
-
-    _userPassword = nil;
     _token = nil;
     [self saveAccount];
     _userInfo = [[WYUserInfo alloc] init];
@@ -292,12 +291,19 @@ static WYEngine* s_ShareInstance = nil;
     NSMutableDictionary* accountDic= [NSMutableDictionary dictionaryWithCapacity:1];
     if (_account)
         [accountDic setValue:_account forKey:@"account"];
+    if (_userPassword)
+        [accountDic setObject:_userPassword forKey:@"password"];
     [accountDic writeToFile:[self getLoginedAccountsStoragePath] atomically:NO];
 }
 - (NSString*)getMemoryLoginedAccout{
     NSDictionary * accountDic = [NSDictionary dictionaryWithContentsOfFile:[self getLoginedAccountsStoragePath]];
     NSString *account = [accountDic stringObjectForKey:@"account"];
     return account;
+}
+- (NSString*)getMemoryLoginedPassword{
+    NSDictionary * accountDic = [NSDictionary dictionaryWithContentsOfFile:[self getLoginedAccountsStoragePath]];
+    NSString *password = [accountDic stringObjectForKey:@"password"];
+    return password;
 }
 
 
@@ -919,6 +925,33 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:orderId forKey:@"orderId"];
     }
     NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/deleteOrder",API_URL] type:0 parameters:params];
+    return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
+}
+
+- (BOOL)getNetbarAllListForOrderWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize latitude:(float)latitude longitude:(float)longitude areaCode:(NSString *)areaCode type:(int)type tag:(int)tag{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    if (uid) {
+        [params setObject:uid forKey:@"userId"];
+    }
+    if (page > 0) {
+        [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    }
+    if (pageSize > 0) {
+        [params setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
+    }
+    if (latitude != 0 && longitude != 0) {
+        [params setObject:[[NSNumber numberWithFloat:longitude] description] forKey:@"longitude"];
+        [params setObject:[[NSNumber numberWithFloat:latitude] description] forKey:@"latitude"];
+    }
+    if (areaCode) {
+        [params setObject:areaCode forKey:@"areaCode"];
+    }
+    [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+    
+    if (_token) {
+        [params setObject:_token forKey:@"token"];
+    }
+    NSDictionary* formatDic = [self getRequestJsonWithUrl:[NSString stringWithFormat:@"%@/netbar/listAllForOrder",API_URL] type:1 parameters:params];
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 

@@ -521,6 +521,7 @@
 }
 
 -(void)dealloc {
+    WYLog(@"%@ dealloc!!!",NSStringFromClass([self class]));
     _teamTableView.delegate = nil;
     _teamTableView.dataSource = nil;
     _activityTableView.delegate = nil;

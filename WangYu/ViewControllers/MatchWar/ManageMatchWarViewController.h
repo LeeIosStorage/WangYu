@@ -8,6 +8,7 @@
 
 #import "WYSuperViewController.h"
 #import "WYMatchWarInfo.h"
+
 @interface ManageMatchWarViewController : WYSuperViewController
 
 @property (nonatomic, strong) WYMatchWarInfo *matchWarInfo;

@@ -13,6 +13,7 @@
 #import "DataSigner.h"
 #import "WYProgressHUD.h"
 #import "WYWeakArray.h"
+#import "WYEngine.h"
 
 #define APP_ID          @"wxb10451ed2c4a6ce3"
 //商户号
@@ -105,7 +106,8 @@ static WYPayManager* wy_payManager = nil;
     order.productName = [dictionary objectForKey:@"netbarName"]; //商品标题
     order.productDescription = @"上网费用"; //商品描述
     order.amount = [dictionary objectForKey:@"amount"]; //商品价格
-    order.notifyURL = @"http://api.wangyuhudong.com/pay/alipayNotify"; //回调URL
+    NSString *notifyURL = [NSString stringWithFormat:@"%@/pay/alipayNotify",[WYEngine shareInstance].baseUrl];
+    order.notifyURL = notifyURL; //回调URL
     
     order.service = @"mobile.securitypay.pay";
     order.paymentType = @"1";

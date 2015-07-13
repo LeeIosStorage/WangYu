@@ -74,6 +74,9 @@
     if ([dic intValueForKey:@"apply_count"]) {
         _applyCount = [dic intValueForKey:@"apply_count"];
     }
+    if ([dic intValueForKey:@"apply_num"]) {
+        _applyCount = [dic intValueForKey:@"apply_num"];
+    }
     if ([dic intValueForKey:@"is_start"]) {
         _isStart = [dic intValueForKey:@"is_start"];
     }

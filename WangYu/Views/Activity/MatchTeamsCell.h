@@ -15,6 +15,7 @@
 
 @property (assign, nonatomic) id<MatchTeamsCellDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UILabel *teamNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *teamLeaderTipLabel;
 @property (strong, nonatomic) IBOutlet UILabel *teamLeaderLabel;
 @property (strong, nonatomic) IBOutlet UIButton *joinButton;
 @property (strong, nonatomic) IBOutlet UILabel *applyCountLabel;

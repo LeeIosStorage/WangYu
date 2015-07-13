@@ -785,6 +785,10 @@
         [weakSelf addMendaciousApply:0];
         [weakSelf refreshHeadViewShow];
         
+        if (self.delegate && [self.delegate respondsToSelector:@selector(matchWarDetailViewControllerWith:withMatchWarInfo:applyCountAdd:)]) {
+            [self.delegate matchWarDetailViewControllerWith:self withMatchWarInfo:weakSelf.matchWarInfo applyCountAdd:NO];
+        }
+        
     } tag:tag];
 }
 
@@ -811,6 +815,10 @@
         weakSelf.matchWarInfo.applyCount ++;
         [weakSelf addMendaciousApply:1];
         [weakSelf refreshHeadViewShow];
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(matchWarDetailViewControllerWith:withMatchWarInfo:applyCountAdd:)]) {
+            [self.delegate matchWarDetailViewControllerWith:self withMatchWarInfo:weakSelf.matchWarInfo applyCountAdd:YES];
+        }
         
     } tag:tag];
 }
@@ -874,7 +882,7 @@
         intro = [NSString stringWithFormat:@"线下/%@",_matchWarInfo.netbarName];
     }
     NSDictionary *dict03 = @{@"titleLabel": @"地点",
-                             @"icon": @"book_wangba",
+                             @"icon": @"match_publish_address_icon",
                              @"intro": intro!=nil?intro:@"",
                              };
     intro = _matchWarInfo.remark;
@@ -891,7 +899,7 @@
     }
     
     NSDictionary *dict04 = @{@"titleLabel": @"联系方式",
-                             @"icon": @"match_invite_telephone_icon",
+                             @"icon": @"match_publish_contact_icon",
                              @"intro": intro!=nil?intro:@"",
                              };
     intro = _matchWarInfo.spoils;
