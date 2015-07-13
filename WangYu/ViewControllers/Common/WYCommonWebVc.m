@@ -12,6 +12,10 @@
 #import "WYAlertView.h"
 #import "FeedBackViewController.h"
 #import "WYShareActionSheet.h"
+#import "RedPacketViewController.h"
+#import "AppDelegate.h"
+#import "WelcomeViewController.h"
+#import "WYNavigationController.h"
 
 NSInteger const SGProgresstagId = 222122323;
 CGFloat const SGProgressBarHeight = 2.5;
@@ -172,7 +176,32 @@ CGFloat const SGProgressBarHeight = 2.5;
             return NO;
         }
         return YES;
-    }    
+    }
+    
+    NSRange rangeRedBag = [url.absoluteString rangeOfString:@"myredbag"];
+    if (rangeRedBag.length > 0) {
+        RedPacketViewController *vc = [[RedPacketViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+        return NO;
+    }
+    
+    NSRange rangeStatusError = [url.absoluteString rangeOfString:@"loginstatuserror"];
+    if (rangeStatusError.length > 0) {
+        WYAlertView *alertView = [[WYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录状态已失效" cancelButtonTitle:@"取消" cancelBlock:^{
+        } okButtonTitle:@"登录" okBlock:^{
+            AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            WelcomeViewController *welcomeVc = [[WelcomeViewController alloc] init];
+            welcomeVc.showBackButton = YES;
+            WYNavigationController* navigationController = [[WYNavigationController alloc] initWithRootViewController:welcomeVc];
+            navigationController.navigationBarHidden = YES;
+            [appDelegate.mainTabViewController.navigationController presentViewController:navigationController animated:YES completion:^{
+                
+            }];
+        }];
+        [alertView show];
+        return NO;
+    }
+    
     return YES;
 }
 

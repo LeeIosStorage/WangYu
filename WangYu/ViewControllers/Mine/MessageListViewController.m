@@ -22,7 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *containSwitcher;
 @property (weak, nonatomic) IBOutlet UIScrollView *containScroll;
-//@property (nonatomic, strong) IBOutlet UITableView *tableView;
+
 @property (weak, nonatomic) IBOutlet UITableView *orderTableView;
 @property (weak, nonatomic) IBOutlet UITableView *activityTableView;
 @property (weak, nonatomic) IBOutlet UITableView *systemTableView;
@@ -33,17 +33,12 @@
 @property (nonatomic, strong) NSMutableArray *orderInfos;
 @property (nonatomic, strong) NSMutableArray *activityInfos;
 @property (nonatomic, strong) NSMutableArray *systemInfos;
-@property (assign, nonatomic) SInt64 orderNextCursor;
-@property (assign, nonatomic) SInt64 activityNextCursor;
-@property (assign, nonatomic) SInt64 systemNextCursor;
+@property (assign, nonatomic) SInt32 orderNextCursor;
+@property (assign, nonatomic) SInt32 activityNextCursor;
+@property (assign, nonatomic) SInt32 systemNextCursor;
 @property (assign, nonatomic) BOOL orderLoadMore;
 @property (assign, nonatomic) BOOL activityLoadMore;
 @property (assign, nonatomic) BOOL systemLoadMore;
-
-//@property (assign, nonatomic) SInt64 messageNextCursor;
-//@property (assign, nonatomic) BOOL messageCanLoadMore;
-//
-//@property (nonatomic, strong) NSMutableArray *messageInfos;
 
 @property (strong, nonatomic) IBOutlet UIView *messageBlankTipView;
 @property (strong, nonatomic) IBOutlet UILabel *messageBlankTipLabel;
@@ -343,9 +338,11 @@
 
 - (void)refreshMessageWithIndex:(NSUInteger)index{
     _orderNextCursor = 1;
+    _activityNextCursor = 1;
+    _systemNextCursor = 1;
     __weak MessageListViewController *weakSelf = self;
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:(int)_orderNextCursor pageSize:DATA_LOAD_PAGESIZE_COUNT type:(int)index tag:tag];
+    [[WYEngine shareInstance] getMessageListWithUid:[WYEngine shareInstance].uid page:1 pageSize:DATA_LOAD_PAGESIZE_COUNT type:(int)index tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         if (index == 1) {
             [weakSelf.pullRefreshView finishedLoading];
