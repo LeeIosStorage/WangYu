@@ -11,6 +11,10 @@
 #define BGImageView_Tag        1001
 #define SelectedImageView_Tag  1002
 
+@interface WYSegmentedView ()
+
+@end
+
 @implementation WYSegmentedView
 
 /*
@@ -108,8 +112,11 @@
     selectedImageView.frame = frame;
     
     if (sender) {
-        _segmentedButtonClickBlock(tag);
+        if (_segmentedButtonClickBlock) {
+            _segmentedButtonClickBlock(tag);
+        }
     }
+    
 }
 
 @end

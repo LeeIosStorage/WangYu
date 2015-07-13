@@ -874,7 +874,7 @@
         intro = [NSString stringWithFormat:@"线下/%@",_matchWarInfo.netbarName];
     }
     NSDictionary *dict03 = @{@"titleLabel": @"地点",
-                             @"icon": @"book_wangba",
+                             @"icon": @"match_publish_address_icon",
                              @"intro": intro!=nil?intro:@"",
                              };
     intro = _matchWarInfo.remark;
@@ -891,7 +891,7 @@
     }
     
     NSDictionary *dict04 = @{@"titleLabel": @"联系方式",
-                             @"icon": @"match_invite_telephone_icon",
+                             @"icon": @"match_publish_contact_icon",
                              @"intro": intro!=nil?intro:@"",
                              };
     intro = _matchWarInfo.spoils;

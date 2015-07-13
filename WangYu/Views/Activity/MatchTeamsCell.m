@@ -19,8 +19,10 @@
     self.applyCountLabel.font = SKIN_FONT_FROMNAME(12);
     
     self.teamNameLabel.font = SKIN_FONT_FROMNAME(14);
-    self.teamLeaderLabel.textColor = SKIN_TEXT_COLOR2;
-    self.teamLeaderLabel.font = SKIN_FONT_FROMNAME(12);
+    self.teamLeaderTipLabel.textColor = SKIN_TEXT_COLOR2;
+    self.teamLeaderTipLabel.font = SKIN_FONT_FROMNAME(12);
+    self.teamLeaderLabel.textColor = SKIN_TEXT_COLOR1;
+    self.teamLeaderLabel.font = SKIN_FONT_FROMNAME(14);
     
     self.roundLabel.textColor = SKIN_TEXT_COLOR2;
     self.roundLabel.font = SKIN_FONT_FROMNAME(14);
@@ -60,7 +62,7 @@
     if (self.isMine) {
         self.teamNameLabel.textColor = SKIN_TEXT_COLOR2;
         self.teamNameLabel.text = teamInfo.title;
-        self.teamLeaderLabel.text = [NSString stringWithFormat:@"战队名：%@",teamInfo.teamName];
+        self.teamLeaderLabel.text = [NSString stringWithFormat:@"%@",teamInfo.teamName];
         self.joinButton.hidden = YES;
         self.exitButton.hidden = NO;
         if (teamInfo.isLeader) {

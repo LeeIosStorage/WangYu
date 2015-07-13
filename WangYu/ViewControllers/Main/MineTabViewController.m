@@ -130,6 +130,9 @@ enum TABLEVIEW_SECTION_INDEX {
     self.avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     self.userNameLabel.text = [WYEngine shareInstance].userInfo.nickName;
+    if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
+        self.userNameLabel.text = @"未登录";
+    }
     if ([WYEngine shareInstance].userInfo.smallAvatarUrl) {
         [self.avatarImageView sd_setImageWithURL:[WYEngine shareInstance].userInfo.smallAvatarUrl placeholderImage:[UIImage imageNamed:@"personal_avatar_default_icon_small"]];
     }else{
@@ -192,10 +195,16 @@ enum TABLEVIEW_SECTION_INDEX {
 //    [WYUIUtils transitionWithType:@"rippleEffect" WithSubtype:kCATransitionFromTop ForView:_badgeView];
 }
 - (void)messageAction:(id)sender{
+    if ([[WYEngine shareInstance] needUserLogin:nil]) {
+        return;
+    }
     MessageListViewController *messageVc = [[MessageListViewController alloc] init];
     [self.navigationController pushViewController:messageVc animated:YES];
 }
 - (IBAction)editAction:(id)sender{
+    if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
+        return;
+    }
     PersonalProfileViewController *vc = [[PersonalProfileViewController alloc] init];
     vc.userInfo = [WYEngine shareInstance].userInfo;
     [self.navigationController pushViewController:vc animated:YES];
@@ -326,6 +335,14 @@ enum TABLEVIEW_SECTION_INDEX {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
+    [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+    
+    if (indexPath.section != kGames) {
+        if ([[WYEngine shareInstance] needUserLogin:nil]) {
+            return;
+        }
+    }
     switch (indexPath.section) {
         case kMessage:{
             if (indexPath.row == 0){
@@ -374,9 +391,6 @@ enum TABLEVIEW_SECTION_INDEX {
         default:
             break;
     }
-    
-    NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
-    [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
 
 @end

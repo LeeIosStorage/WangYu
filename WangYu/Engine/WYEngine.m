@@ -160,9 +160,8 @@ static WYEngine* s_ShareInstance = nil;
     
     if (removeAccout) {
         _account = nil;
+        _userPassword = nil;
     }
-
-    _userPassword = nil;
     _token = nil;
     [self saveAccount];
     _userInfo = [[WYUserInfo alloc] init];
@@ -292,12 +291,19 @@ static WYEngine* s_ShareInstance = nil;
     NSMutableDictionary* accountDic= [NSMutableDictionary dictionaryWithCapacity:1];
     if (_account)
         [accountDic setValue:_account forKey:@"account"];
+    if (_userPassword)
+        [accountDic setObject:_userPassword forKey:@"password"];
     [accountDic writeToFile:[self getLoginedAccountsStoragePath] atomically:NO];
 }
 - (NSString*)getMemoryLoginedAccout{
     NSDictionary * accountDic = [NSDictionary dictionaryWithContentsOfFile:[self getLoginedAccountsStoragePath]];
     NSString *account = [accountDic stringObjectForKey:@"account"];
     return account;
+}
+- (NSString*)getMemoryLoginedPassword{
+    NSDictionary * accountDic = [NSDictionary dictionaryWithContentsOfFile:[self getLoginedAccountsStoragePath]];
+    NSString *password = [accountDic stringObjectForKey:@"password"];
+    return password;
 }
 
 

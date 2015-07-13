@@ -48,6 +48,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (void)saveAccount;
 - (NSString*)getCurrentAccoutDocDirectory;
 - (NSString*)getMemoryLoginedAccout;//获取记忆登录过的Account
+- (NSString*)getMemoryLoginedPassword;
 
 - (void)refreshUserInfo;
 - (BOOL)hasAccoutLoggedin;

@@ -100,9 +100,11 @@
     self.exitButton.layer.cornerRadius = 4;
     self.exitButton.layer.masksToBounds = YES;
     if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
-        self.exitButton.titleLabel.text = @"注册或登录";
+//        self.exitButton.titleLabel.text = @"注册或登录";
+        [self.exitButton setTitle:@"注册或登录" forState:UIControlStateNormal];
     }else{
-        self.exitButton.titleLabel.text = @"退出当前帐号";
+//        self.exitButton.titleLabel.text = @"退出当前帐号";
+        [self.exitButton setTitle:@"退出当前帐号" forState:UIControlStateNormal];
     }
 }
 
@@ -228,8 +230,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
+    [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+    
     switch (indexPath.section) {
         case 0:{
+            if ([[WYEngine shareInstance] needUserLogin:nil]) {
+                return;
+            }
             LocationViewController *locationChooseVc = [[LocationViewController alloc] init];
             locationChooseVc.isShowNoticeView = YES;
             locationChooseVc.delagte = self;
@@ -278,9 +286,6 @@
         default:
             break;
     }
-    
-    NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
-    [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
 }
 
 - (void)signOutAndLogin{

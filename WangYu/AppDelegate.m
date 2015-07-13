@@ -197,9 +197,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 #pragma mark - WYTabBarControllerDelegate
 -(BOOL) tabBarController:(WYTabBarViewController *)tabBarController shouldSelectViewController:(UIViewController *)viewController{
-    if ([viewController isKindOfClass:[MineTabViewController class]]) {
-        return [[WYEngine shareInstance] needUserLogin:nil];
-    }
+//    if ([viewController isKindOfClass:[MineTabViewController class]]) {
+//        return [[WYEngine shareInstance] needUserLogin:nil];
+//    }
     return NO;
 }
 

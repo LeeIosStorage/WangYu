@@ -694,6 +694,7 @@
 }
 
 - (void)dealloc {
+    WYLog(@"%@ dealloc!!!",NSStringFromClass([self class]));
     _orderTableView.delegate = nil;
     _orderTableView.dataSource = nil;
     _activityTableView.delegate = nil;
