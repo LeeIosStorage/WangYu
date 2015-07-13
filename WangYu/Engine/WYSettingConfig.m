@@ -263,14 +263,20 @@ static WYSettingConfig *s_instance = nil;
     }
     NSString *messageNum = nil;
     if(type == 1){
-        messageNum = [NSString stringWithFormat:@"%d",[messageDic intValueForKey:@"order"] - 1];
-        [messageDic setObject:messageNum forKey:@"order"];
+        if ([messageDic intValueForKey:@"order"] > 0) {
+            messageNum = [NSString stringWithFormat:@"%d",[messageDic intValueForKey:@"order"] - 1];
+            [messageDic setObject:messageNum forKey:@"order"];
+        }
     }else if(type == 2){
-        messageNum = [NSString stringWithFormat:@"%d",[messageDic intValueForKey:@"activity"] - 1];
-        [messageDic setObject:messageNum forKey:@"activity"];
+        if ([messageDic intValueForKey:@"activity"] > 0) {
+            messageNum = [NSString stringWithFormat:@"%d",[messageDic intValueForKey:@"activity"] - 1];
+            [messageDic setObject:messageNum forKey:@"activity"];
+        }
     }else if(type == 3){
-        messageNum = [NSString stringWithFormat:@"%d",[messageDic intValueForKey:@"sys"] - 1];
-        [messageDic setObject:messageNum forKey:@"sys"];
+        if ([messageDic intValueForKey:@"sys"] > 0) {
+            messageNum = [NSString stringWithFormat:@"%d",[messageDic intValueForKey:@"sys"] - 1];
+            [messageDic setObject:messageNum forKey:@"sys"];
+        }
     }
     [messageDic writeToFile:[self getMessagePath] atomically:YES];
 }

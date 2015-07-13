@@ -142,6 +142,7 @@
 }
 
 - (void)initControlUI{
+    self.filterTableContainerView.backgroundColor = self.view.backgroundColor;
     self.filterBottomImgView.backgroundColor = UIColorToRGB(0xe4e4e4);
     self.filterMiddleImgView.backgroundColor = UIColorToRGB(0xe4e4e4);
     CGRect frame = self.filterBottomImgView.frame;
