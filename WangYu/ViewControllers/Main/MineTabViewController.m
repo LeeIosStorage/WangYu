@@ -131,7 +131,7 @@ enum TABLEVIEW_SECTION_INDEX {
     
     self.userNameLabel.text = [WYEngine shareInstance].userInfo.nickName;
     if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
-        self.userNameLabel.text = @"未登录";
+        self.userNameLabel.text = @"点击注册登录";
     }
     if ([WYEngine shareInstance].userInfo.smallAvatarUrl) {
         [self.avatarImageView sd_setImageWithURL:[WYEngine shareInstance].userInfo.smallAvatarUrl placeholderImage:[UIImage imageNamed:@"personal_avatar_default_icon_small"]];
@@ -203,6 +203,7 @@ enum TABLEVIEW_SECTION_INDEX {
 }
 - (IBAction)editAction:(id)sender{
     if (![[WYEngine shareInstance] hasAccoutLoggedin]) {
+        [[WYEngine shareInstance] gotoLogin];
         return;
     }
     PersonalProfileViewController *vc = [[PersonalProfileViewController alloc] init];

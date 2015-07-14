@@ -23,6 +23,7 @@
 #import "WYAlertView.h"
 #import "WYProgressHUD.h"
 #import "ManageMatchWarViewController.h"
+#import "AppDelegate.h"
 
 #define MATCH_DETAIL_TYPE_INFO          0
 #define MATCH_DETAIL_TYPE_COMMENT       1
@@ -189,6 +190,8 @@
     frame.size.width = SCREEN_WIDTH/2-frame.origin.x;
     self.infoTipLabel.frame = frame;
     
+    UILongPressGestureRecognizer* longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(commentLongPressAction:)];
+    [self.matchInfoTableView addGestureRecognizer:longPressGesture];
     
     WYMatchWarInfo* copyMatchWarInfo = [[WYMatchWarInfo alloc] init];
     copyMatchWarInfo.mId = self.matchWarInfo.mId;
@@ -383,8 +386,8 @@
     _sendButton.enabled = NO;
     
     if (_matchWarInfo.isStart == 0) {
-        self.statusLabel.text = @"未开始";
-        self.statusView.backgroundColor = UIColorToRGB(0xf1f1f1);
+        self.statusLabel.text = @"报名中";
+        self.statusView.backgroundColor = UIColorToRGB(0xfdd730);
     }else if (_matchWarInfo.isStart == 1){
         self.statusLabel.text = @"已开始";
         self.statusView.backgroundColor = UIColorToRGB(0xfdd730);
@@ -1057,11 +1060,63 @@
                 netbarDetailVc.netbarInfo = netbarInfo;
                 [self.navigationController pushViewController:netbarDetailVc animated:YES];
             }
+        }else if (indexPath.row == 4){
+            
+            
         }
     }
     
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
+}
+
+- (void)commentLongPressAction:(UILongPressGestureRecognizer*)longPressGesture {
+    if (longPressGesture.state == UIGestureRecognizerStateBegan) {
+        
+        CGPoint point = [longPressGesture locationInView:_matchInfoTableView];
+        NSIndexPath *indexPath = [_matchInfoTableView indexPathForRowAtPoint:point];
+        SettingViewCell *cell = (SettingViewCell*)[_matchInfoTableView cellForRowAtIndexPath:indexPath];
+        
+        if (indexPath.row != 4) {
+            return;
+        }
+        if (_matchWarInfo.remark.length == 0) {
+            return;
+        }
+        
+        UIMenuController * menuCtl = ((AppDelegate *)[UIApplication sharedApplication].delegate).appMenu;
+        NSMutableArray *popMenuItems = nil;
+        
+        NSArray *remarkArray = [_matchWarInfo.remark componentsSeparatedByString:@" "];
+        if (remarkArray.count > 0) {
+            popMenuItems = [NSMutableArray array];
+            for (int i = 0; i < remarkArray.count; i++) {
+                NSString *remarkStr = [remarkArray objectAtIndex:i];
+                NSArray *contactArray = [remarkStr componentsSeparatedByString:@":"];
+                SEL action = nil;
+                if (i == 0)
+                    action = @selector(copyContactTextAction1);
+                else if (i == 1)
+                    action = @selector(copyContactTextAction2);
+                else if (i == 2)
+                    action = @selector(copyContactTextAction3);
+                
+                if (contactArray.count > 0) {
+                    [popMenuItems addObject:[[UIMenuItem alloc]initWithTitle:[NSString stringWithFormat:@"复制%@",[contactArray objectAtIndex:0]] action:action]];
+                }
+            }
+        }
+        
+        [menuCtl setMenuVisible:NO];
+        [menuCtl setMenuItems:popMenuItems];
+        [menuCtl setArrowDirection:UIMenuControllerArrowDown];
+        
+        CGRect showRect = cell.frame;
+        showRect.origin.x += 100;
+        showRect.origin.y += 20;
+        [menuCtl setTargetRect:showRect inView:self.matchInfoTableView];
+        [menuCtl setMenuVisible:YES animated:YES];
+    }
 }
 
 #pragma mark -HPGrowingTextViewDelegate
@@ -1314,6 +1369,53 @@ static CGFloat beginImageH = 0;
 }
 
 - (BOOL)prefersStatusBarHidden NS_AVAILABLE_IOS(7_0){
+    return NO;
+}
+
+#pragma mark - 复制联系方式
+-(void)copyContactTextAction:(NSInteger)index{
+    NSString *copyText = @"";
+    NSArray *remarkArray = [_matchWarInfo.remark componentsSeparatedByString:@" "];
+    if (remarkArray.count > index) {
+        NSString *remarkStr = [remarkArray objectAtIndex:index];
+        NSArray *contactArray = [remarkStr componentsSeparatedByString:@":"];
+        if (contactArray.count > 1) {
+            copyText = [[contactArray objectAtIndex:1] description];
+        }
+    }
+    if (copyText.length == 0) {
+        return;
+    }
+    UIPasteboard *copyBoard = [UIPasteboard generalPasteboard];
+    copyBoard.string = copyText;
+    [copyBoard setPersistent:YES];
+}
+
+-(void)copyContactTextAction1{
+    [self copyContactTextAction:0];
+}
+- (void)copyContactTextAction2{
+    [self copyContactTextAction:1];
+}
+- (void)copyContactTextAction3{
+    [self copyContactTextAction:2];
+}
+
+-(BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    UIMenuController * menuCtl = ((AppDelegate *)[UIApplication sharedApplication].delegate).appMenu;
+    BOOL bSameMenuInst = menuCtl == sender;
+    
+    if (action == @selector(copyContactTextAction3) || action == @selector(copyContactTextAction2) || action == @selector(copyContactTextAction1))
+    {
+        if (bSameMenuInst) {
+            return YES;
+        }
+    }
     return NO;
 }
 

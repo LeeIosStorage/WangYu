@@ -37,6 +37,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    if ([self.tableView respondsToSelector:@selector(setSectionIndexBackgroundColor:)]) {
+        [self.tableView setSectionIndexBackgroundColor:[UIColor clearColor]];
+    }
+    [self.tableView setSectionIndexColor:SKIN_TEXT_COLOR1];
+//    [self.tableView setSectionIndexMinimumDisplayRowCount:20];
+    
     [self doCheckPb];
 }
 
@@ -290,6 +296,23 @@
         [_selectedUserPbs addObject:pbUserInfo];
     }
     [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index{
+    
+//    if ([title isEqualToString:UITableViewIndexSearch]) {
+//        [tableView scrollRectToVisible:_searchBar.bounds animated:NO];
+//        return -1;
+//    }
+    
+    return index-1;
+}
+-(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
+    
+    NSMutableArray* keys = [[NSMutableArray alloc] initWithArray:_allIndexKeys];
+//    [keys insertObject:UITableViewIndexSearch atIndex:0];
+    
+    return keys;
 }
 
 @end

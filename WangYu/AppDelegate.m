@@ -35,6 +35,8 @@
 
 @property (nonatomic, strong) NewIntroViewController *introView;
 
+@property (assign, nonatomic) CFTimeInterval finishLaunchingTime;//程序加载完成的时间点，用来判断viewControllor加载的延时
+
 @end
 
 @implementation AppDelegate
@@ -59,7 +61,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 //    
     application.statusBarHidden = NO;
 ////    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-//    
+//
+    _appMenu = [[UIMenuController alloc] init];
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor clearColor];
     [WXApi registerApp:WX_ID withDescription:@"WY"];
@@ -120,6 +124,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 
     [self.window makeKeyAndVisible];
 
+    self.finishLaunchingTime = CACurrentMediaTime();
+    
     return YES;
 }
 
@@ -211,8 +217,22 @@ void uncaughtExceptionHandler(NSException *exception) {
     if([scheme isEqualToString:@"wydsopen"]){
         UINavigationController* navController = self.mainTabViewController.navigationController;
         UIViewController* pushVc = [WYLinkerHandler handleDealWithHref:url.absoluteString From:navController];
-        if (pushVc) {
-            [navController pushViewController:pushVc animated:YES];
+//        if (pushVc) {
+//            [navController pushViewController:pushVc animated:YES];
+//        }
+        //FIXME: 延时的方案有待优化
+        if (CACurrentMediaTime() - self.finishLaunchingTime < 0.5) {
+            double delayInSeconds = 0.5 - CACurrentMediaTime() - self.finishLaunchingTime;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                if (navController && pushVc) {
+                    [navController pushViewController:pushVc animated:YES];
+                }
+            });
+        } else {
+            if (navController && pushVc) {
+                [navController pushViewController:pushVc animated:YES];
+            }
         }
         return YES;
     }
