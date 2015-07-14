@@ -153,7 +153,7 @@
 }
 - (void)handleFriendTimelineUreadEvent {
     WYTabBarItemView* tabBarItemView = nil;
-    if (self.tabBar.items.count > 0) {
+    if (self.tabBar.items.count > 3) {
         tabBarItemView = [self.tabBar.items objectAtIndex:TAB_INDEX_MINE];
     }
     if (tabBarItemView == nil) {
