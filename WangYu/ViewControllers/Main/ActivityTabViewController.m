@@ -744,15 +744,15 @@
     return [NSDate date];
 }
 
-#pragma mark -XETabBarControllerSubVcProtocol
+#pragma mark - WYTabBarControllerSubVcProtocol 
 - (void)tabBarController:(WYTabBarViewController *)tabBarController reSelectVc:(UIViewController *)viewController {
     if (viewController == self) {
         if (_selectedIndex == 0) {
-            [self.leagueTableView setContentOffset:CGPointMake(0, 0 - self.leagueTableView.contentInset.top) animated:NO];
+            [self.leagueTableView setContentOffset:CGPointMake(0, 0 - self.leagueTableView.contentInset.top) animated:YES];
         }else if (_selectedIndex == 1) {
-            [self.newsTableView setContentOffset:CGPointMake(0, 0 - self.newsTableView.contentInset.top) animated:NO];
+            [self.newsTableView setContentOffset:CGPointMake(0, 0 - self.newsTableView.contentInset.top) animated:YES];
         }else if (_selectedIndex == 2) {
-            [self.matchTableView setContentOffset:CGPointMake(0, 0 - self.matchTableView.contentInset.top) animated:NO];
+            [self.matchTableView setContentOffset:CGPointMake(0, 0 - self.matchTableView.contentInset.top) animated:YES];
         }
     }
 }

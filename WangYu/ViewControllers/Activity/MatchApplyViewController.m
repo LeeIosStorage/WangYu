@@ -71,6 +71,11 @@
     self.commitButton.backgroundColor = SKIN_COLOR;
     self.commitButton.layer.cornerRadius = 4;
     self.commitButton.layer.masksToBounds = YES;
+    
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
+    footer.userInteractionEnabled = NO;
+    footer.backgroundColor = [UIColor clearColor];
+    _applyTableView.tableFooterView = footer;
 }
 
 - (void)loadUserInfo {

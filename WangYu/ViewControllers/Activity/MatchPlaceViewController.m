@@ -17,10 +17,13 @@
 #import "NetbarDetailViewController.h"
 #import "MatchApplyViewController.h"
 #import "WYActionSheet.h"
+#import <objc/message.h>
 
 @interface MatchPlaceViewController ()<UITableViewDelegate,UITableViewDataSource,MatchPlaceCellDelegate,MatchApplyViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *placeTableView;
+
+@property (nonatomic, strong) NSMutableDictionary *actionSheetIndexSelDic;
 
 @property (strong, nonatomic) NSMutableArray *matchInfos;
 
@@ -156,7 +159,7 @@
 //    if (vc) {
 //        [self.navigationController pushViewController:vc animated:YES];
 //    }
-    [self applyAction:matchInfo];
+    [self applyActionSheet:matchInfo];
 }
 
 - (void)matchPlaceCellClickNetbarWithCell:(id)cell netbarInfo:(WYNetbarInfo *)netbar {
@@ -175,27 +178,52 @@
     [self.navigationController pushViewController:ndVc animated:YES];
 }
 
--(void)applyAction:(WYMatchInfo *)matchInfo{
+- (void)doActionSheetSelectorWithButtonIndex:(NSInteger)buttonIndex matchInfo:(WYMatchInfo *)info{
+    if (!_actionSheetIndexSelDic || buttonIndex < 0 || buttonIndex >= _actionSheetIndexSelDic.allKeys.count) {
+        return;
+    }
+    SEL sel = NSSelectorFromString([_actionSheetIndexSelDic objectForKey:[NSNumber numberWithInteger:buttonIndex]]);
+    
+    if ([self respondsToSelector:sel]) {
+        objc_msgSend(self, sel, info);
+    }
+}
+
+- (void)solApplyAction:(WYMatchInfo *)matchInfo{
+    MatchApplyViewController *maVc = [[MatchApplyViewController alloc] init];
+    maVc.activityId = self.activityId;
+    maVc.matchInfo = matchInfo;
+    maVc.applyType = ApplyViewTypeSol;
+    maVc.delegate = self;
+    [self.navigationController pushViewController:maVc animated:YES];
+}
+
+- (void)teamApplyAction:(WYMatchInfo *)matchInfo{
+    MatchApplyViewController *maVc = [[MatchApplyViewController alloc] init];
+    maVc.activityId = self.activityId;
+    maVc.matchInfo = matchInfo;
+    maVc.applyType = ApplyViewTypeTeam;
+    [self.navigationController pushViewController:maVc animated:YES];
+}
+
+- (void)applyActionSheet:(WYMatchInfo *)matchInfo{
+    _actionSheetIndexSelDic = [[NSMutableDictionary alloc] init];
+    WS(weakSelf);
     WYActionSheet *sheet = [[WYActionSheet alloc] initWithTitle:nil actionBlock:^(NSInteger buttonIndex) {
-        if (2 == buttonIndex) {
-            return;
-        }
-        if (buttonIndex == 0) {
-            MatchApplyViewController *maVc = [[MatchApplyViewController alloc] init];
-            maVc.activityId = self.activityId;
-            maVc.matchInfo = matchInfo;
-            maVc.applyType = ApplyViewTypeSol;
-            maVc.delegate = self;
-            [self.navigationController pushViewController:maVc animated:YES];
-        }else if (buttonIndex == 1){
-            MatchApplyViewController *maVc = [[MatchApplyViewController alloc] init];
-            maVc.activityId = self.activityId;
-            maVc.matchInfo = matchInfo;
-            maVc.applyType = ApplyViewTypeTeam;
-            [self.navigationController pushViewController:maVc animated:YES];
-        }
-    } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"个人报名", @"创建战队", nil];
-    [sheet showInView:self.view];
+        [weakSelf doActionSheetSelectorWithButtonIndex:buttonIndex matchInfo:matchInfo];
+    }];
+    if(matchInfo.hasApply < 1){
+        [_actionSheetIndexSelDic setObject:@"solApplyAction:" forKey:[NSNumber numberWithInteger:sheet.numberOfButtons]];
+        [sheet addButtonWithTitle:@"个人报名"];
+    }
+    
+    [_actionSheetIndexSelDic setObject:@"teamApplyAction:" forKey:[NSNumber numberWithInteger:sheet.numberOfButtons]];
+    [sheet addButtonWithTitle:@"创建报名"];
+    
+    [sheet addButtonWithTitle:@"取消"];
+    sheet.cancelButtonIndex = sheet.numberOfButtons -1;
+    AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    [sheet showInView:appDelegate.window];
 }
 
 #pragma mark - MatchApplyViewDelegate

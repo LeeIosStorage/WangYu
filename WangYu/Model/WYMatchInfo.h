@@ -16,8 +16,8 @@
 @property (nonatomic, assign) int round;                    //比赛轮次
 @property (nonatomic, strong) NSString *areas;              //比赛地点
 @property (nonatomic, strong) NSMutableArray* netbars;      //比赛网吧
-@property (nonatomic, assign) BOOL isApply;                 //当前时间是否在报名中
-@property (nonatomic, assign) int hasApply;                 //是否报名该场次
+@property (nonatomic, assign) int isApply;                  //当前时间是否在报名中(0:未开始1:进行中2:已截止)
+@property (nonatomic, assign) int hasApply;                 //报名该场次比赛状态
 
 @property(nonatomic, strong) NSDictionary* matchInfoByJsonDic;     //比赛字典
 

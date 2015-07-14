@@ -646,10 +646,10 @@
     [self getNetbarInfos];
 }
 
-#pragma mark -XETabBarControllerSubVcProtocol
+#pragma mark - WYTabBarControllerSubVcProtocol
 - (void)tabBarController:(WYTabBarViewController *)tabBarController reSelectVc:(UIViewController *)viewController {
     if (viewController == self) {
-        [self.netBarTable setContentOffset:CGPointMake(0, 0 - self.netBarTable.contentInset.top) animated:NO];
+        [self.netBarTable setContentOffset:CGPointMake(0, 0 - self.netBarTable.contentInset.top) animated:YES];
     }
 }
 

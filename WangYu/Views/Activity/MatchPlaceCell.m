@@ -35,7 +35,11 @@
 }
 
 - (void)awakeFromNib {
-    // Initialization code
+
+    [self.applyButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
+    self.applyButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
+    self.applyButton.layer.cornerRadius = 4.0;
+    self.applyButton.layer.masksToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -48,7 +52,7 @@
     _matchInfo = matchInfo;
     self.roundLabel.text = [NSString stringWithFormat:@"第%d场",_matchInfo.round];
     if (_matchInfo.startTime.length > 0 && _matchInfo.endTime.length > 0) {
-        self.timeLabel.text = [NSString stringWithFormat:@"%@ ～ %@",_matchInfo.startTime,_matchInfo.endTime];
+        self.timeLabel.text = [NSString stringWithFormat:@"比赛开始时间：%@",_matchInfo.endTime];
     }else {
         self.timeLabel.text = @"暂无时间";
     }
@@ -74,24 +78,31 @@
         frame.size.height += (textSize.height - 15);
         self.frame = frame;
     }
-    
-    [self.applyButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
-    self.applyButton.titleLabel.font = SKIN_FONT_FROMNAME(14);
-    self.applyButton.layer.cornerRadius = 4.0;
-    self.applyButton.layer.masksToBounds = YES;
-    
-    if(_matchInfo.isApply){
-        self.applyButton.hidden = NO;
-    }else{
-        self.applyButton.hidden = YES;
-    }
-    
-    if (_matchInfo.hasApply == 1) {
-        self.applyButton.backgroundColor = UIColorToRGB(0xe4e4e4);
+
+    if(_matchInfo.isApply != 1){
+        if (_matchInfo.isApply == 0) {
+            [self.applyButton setTitle:@"报名未开始" forState:UIControlStateNormal];
+        }else if (_matchInfo.isApply == 2) {
+            [self.applyButton setTitle:@"报名已截止" forState:UIControlStateNormal];
+        }
         self.applyButton.enabled = NO;
-    }else {
-        self.applyButton.backgroundColor = SKIN_COLOR;
-        self.applyButton.enabled = YES;
+        [self.applyButton setTitleColor:SKIN_TEXT_COLOR2 forState:UIControlStateNormal];
+        self.applyButton.backgroundColor = UIColorToRGB(0xe4e4e4);
+    }else{
+        if (_matchInfo.hasApply == 2) {
+            [self.applyButton setTitle:@"战队已报名" forState:UIControlStateNormal];
+            [self.applyButton setTitleColor:SKIN_TEXT_COLOR2 forState:UIControlStateNormal];
+            self.applyButton.backgroundColor = UIColorToRGB(0xe4e4e4);
+            self.applyButton.enabled = NO;
+        }else {
+            if(_matchInfo.hasApply == 1){
+                [self.applyButton setTitle:@"个人已报名" forState:UIControlStateNormal];
+            }else if(_matchInfo.hasApply == 0){
+                [self.applyButton setTitle:@"报名" forState:UIControlStateNormal];
+            }
+            self.applyButton.backgroundColor = SKIN_COLOR;
+            self.applyButton.enabled = YES;
+        }
     }
 
     int index = 0;

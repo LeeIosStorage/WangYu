@@ -275,7 +275,7 @@
     }
 }
 
-#pragma mark -NSNotification
+#pragma mark - NSNotification
 - (void)handleFinishCancelMatchWar:(NSNotification *)notification {
     WYMatchWarInfo *matchWarInfo = notification.object;
     for (WYMatchWarInfo *info in _matchInfos) {
@@ -284,6 +284,13 @@
             [self.matchTableView reloadData];
             break;
         }
+    }
+}
+
+#pragma mark - WYTabBarControllerSubVcProtocol
+- (void)tabBarController:(WYTabBarViewController *)tabBarController reSelectVc:(UIViewController *)viewController {
+    if (viewController == self) {
+        [self.matchTableView setContentOffset:CGPointMake(0, 0 - self.matchTableView.contentInset.top) animated:YES];
     }
 }
 

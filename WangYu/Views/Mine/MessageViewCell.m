@@ -21,7 +21,7 @@
     self.titleLabel.textColor = SKIN_TEXT_COLOR1;
     self.titleLabel.font = SKIN_FONT_FROMNAME(15);
     self.descriptionLabel.textColor = SKIN_TEXT_COLOR2;
-    self.descriptionLabel.font = SKIN_FONT_FROMNAME(14);
+    self.descriptionLabel.font = SKIN_FONT_FROMNAME(12);
     self.timeLabel.textColor = SKIN_TEXT_COLOR2;
     self.timeLabel.font = SKIN_FONT_FROMNAME(12);
     self.descriptionLabel.lineHeightMultiple = 0.8;
