@@ -116,7 +116,7 @@
         }else if (tagIndex == 1){
                 tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_activity_icon"];
                 tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_activity_icon_hover"];
-                tabItem.itemLabel.text = @"活动";
+                tabItem.itemLabel.text = @"赛事";
         }else if (tagIndex == 2){
                 tabItem.itemIconImageView.image = [UIImage imageNamed:@"tabbar_recomm_icon"];
                 tabItem.itemIconImageView.highlightedImage = [UIImage imageNamed:@"tabbar_recomm_icon_hover"];
