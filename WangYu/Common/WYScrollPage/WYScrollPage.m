@@ -9,6 +9,7 @@
 #import "WYScrollPage.h"
 #import "UIImageView+WebCache.h"
 #import "WYNewsInfo.h"
+#import "WYThemeInfo.h"
 #import "ActivityTabViewController.h"
 
 #define WY_ADS_BASE_TAG 10010
@@ -71,23 +72,36 @@
 
 - (void)refreshWithFrame:(CGRect)frame{
     
+    if (!_dataArray) {
+        return;
+    }
     if (_adsType == AdsType_Theme) {
-        [_adsHideBtn setHidden:YES];
+        [_adsHideBtn setHidden:NO];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewShow:) name:WY_THEME_SHOW_ADS_VIEW_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewStop:) name:WY_THEME_STOP_ADS_VIEW_NOTIFICATION object:nil];
+        WYThemeInfo *themeInfo;
+        themeInfo = [_dataArray lastObject];
+        [self addSubviewToScrollView:_adsScrollView withURL:[themeInfo.thumbImageURL absoluteString] withTag:-1];
+        for (int i = 0; i < [_dataArray count]; i++) {
+            themeInfo = [_dataArray objectAtIndex:i];
+            [self addSubviewToScrollView:_adsScrollView withURL:[themeInfo.thumbImageURL absoluteString] withTag:i];
+        }
+        themeInfo = [_dataArray firstObject];
+        [self addSubviewToScrollView:_adsScrollView withURL:[themeInfo.thumbImageURL absoluteString] withTag:_dataArray.count];
+    }else if (_adsType == AdsType_News) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewShow:) name:WY_NEWS_SHOW_ADS_VIEW_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewStop:) name:WY_NEWS_STOP_ADS_VIEW_NOTIFICATION object:nil];
+        WYNewsInfo *newsInfo;
+        newsInfo = [_dataArray lastObject];
+        [self addSubviewToScrollView:_adsScrollView withURL:[newsInfo.hotImageURL absoluteString] withTag:-1];
+        for (int i = 0; i < [_dataArray count]; i++) {
+            newsInfo = [_dataArray objectAtIndex:i];
+            [self addSubviewToScrollView:_adsScrollView withURL:[newsInfo.hotImageURL absoluteString] withTag:i];
+        }
+        newsInfo = [_dataArray firstObject];
+        [self addSubviewToScrollView:_adsScrollView withURL:[newsInfo.hotImageURL absoluteString] withTag:_dataArray.count];
     }
 
-    WYNewsInfo *newsInfo;
-    newsInfo = [_dataArray lastObject];
-    [self addSubviewToScrollView:_adsScrollView withURL:[newsInfo.hotImageURL absoluteString] withTag:-1];
-    for (int i = 0; i < [_dataArray count]; i++) {
-        newsInfo = [_dataArray objectAtIndex:i];
-        [self addSubviewToScrollView:_adsScrollView withURL:[newsInfo.hotImageURL absoluteString] withTag:i];
-    }
-    
-    newsInfo = [_dataArray firstObject];
-    [self addSubviewToScrollView:_adsScrollView withURL:[newsInfo.hotImageURL absoluteString] withTag:_dataArray.count];
-    
     //多算两屏,默认第二屏
     _adsScrollView.contentSize = CGSizeMake((_dataArray.count + 2)*frame.size.width,frame.size.height);
     [_adsScrollView scrollRectToVisible:CGRectMake(frame.size.width, 0, frame.size.width, frame.size.height) animated:NO];
@@ -97,7 +111,7 @@
 
 - (void)addSubviewToScrollView:(UIScrollView *)scrollView withURL:(NSString *)url withTag:(NSInteger)tag{
     
-    UIImage *holderImage = [UIImage imageNamed:@"activity_load_icon"];
+    UIImage *holderImage = [UIImage imageNamed:@"theme_load_icon"];
     CGRect frame = scrollView.bounds;
     
     CGRect vFrame = frame;

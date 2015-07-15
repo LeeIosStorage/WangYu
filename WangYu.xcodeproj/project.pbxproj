@@ -280,6 +280,7 @@
 		3B42DA801B53C0170053822D /* WYAppCommentGuideVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B42DA7E1B53C0170053822D /* WYAppCommentGuideVc.xib */; };
 		3B6554AB1B43BA2F008F4ED0 /* SelectNetbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B6554A91B43BA2F008F4ED0 /* SelectNetbarViewController.m */; };
 		3B6554AC1B43BA2F008F4ED0 /* SelectNetbarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B6554AA1B43BA2F008F4ED0 /* SelectNetbarViewController.xib */; };
+		3BA816211B55FF31006CB016 /* WYThemeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA816201B55FF31006CB016 /* WYThemeInfo.m */; };
 		3BBE46271B0CE79B009EAE02 /* WYPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46261B0CE79B009EAE02 /* WYPhotoItem.m */; };
 		3BBE462A1B0CE8BA009EAE02 /* WYPhotoGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46291B0CE8BA009EAE02 /* WYPhotoGroup.m */; };
 		3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE462C1B0CE9AB009EAE02 /* WYPhotoBrowser.m */; };
@@ -934,6 +935,8 @@
 		3B6554A81B43BA2F008F4ED0 /* SelectNetbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectNetbarViewController.h; path = Activity/SelectNetbarViewController.h; sourceTree = "<group>"; };
 		3B6554A91B43BA2F008F4ED0 /* SelectNetbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectNetbarViewController.m; path = Activity/SelectNetbarViewController.m; sourceTree = "<group>"; };
 		3B6554AA1B43BA2F008F4ED0 /* SelectNetbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectNetbarViewController.xib; path = Activity/SelectNetbarViewController.xib; sourceTree = "<group>"; };
+		3BA8161F1B55FF31006CB016 /* WYThemeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYThemeInfo.h; sourceTree = "<group>"; };
+		3BA816201B55FF31006CB016 /* WYThemeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYThemeInfo.m; sourceTree = "<group>"; };
 		3BBE46251B0CE79B009EAE02 /* WYPhotoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYPhotoItem.h; path = WYPhotoBrower/WYPhotoItem.h; sourceTree = "<group>"; };
 		3BBE46261B0CE79B009EAE02 /* WYPhotoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYPhotoItem.m; path = WYPhotoBrower/WYPhotoItem.m; sourceTree = "<group>"; };
 		3BBE46281B0CE8BA009EAE02 /* WYPhotoGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYPhotoGroup.h; path = WYPhotoBrower/WYPhotoGroup.h; sourceTree = "<group>"; };
@@ -1410,6 +1413,8 @@
 				07DE269F1B16F846007667DB /* WYNewsInfo.m */,
 				3BD439831B45268B00CB47C0 /* WYTeamInfo.h */,
 				3BD439841B45268C00CB47C0 /* WYTeamInfo.m */,
+				3BA8161F1B55FF31006CB016 /* WYThemeInfo.h */,
+				3BA816201B55FF31006CB016 /* WYThemeInfo.m */,
 				44C4FE681B453B2D00258CEA /* WYMatchApplyInfo.h */,
 				44C4FE691B453B2D00258CEA /* WYMatchApplyInfo.m */,
 				44C4FE6B1B453B4800258CEA /* WYMatchCommentInfo.h */,
@@ -2665,6 +2670,7 @@
 				3BD212151B3C43E6003FD10D /* BookDetailViewController.m in Sources */,
 				3BD439851B45268C00CB47C0 /* WYTeamInfo.m in Sources */,
 				07358A9A1AF760D000D546E5 /* SKSplashView.m in Sources */,
+				3BA816211B55FF31006CB016 /* WYThemeInfo.m in Sources */,
 				078EDBDC1AEF1EF800E93EE8 /* ASIHTTPRequest.m in Sources */,
 				07868DEF1AF8581100160070 /* WYTabBarView.m in Sources */,
 				071923CF1AF74D8400432531 /* LoginViewController.m in Sources */,

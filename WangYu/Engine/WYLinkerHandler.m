@@ -19,6 +19,8 @@
 #import "WYMessageInfo.h"
 #import "MatchWarDetailViewController.h"
 #import "MatchDetailViewController.h"
+#import "NetbarDetailViewController.h"
+#import "GameDetailsViewController.h"
 
 @implementation WYLinkerHandler
 
@@ -77,9 +79,22 @@
             [[WYSettingConfig staticInstance] setWeekRedBagMessageUnreadEvent:YES];
         }else if ([[realUrl host] isEqualToString:@"member"]){
             //会员消息
+        }else if ([[realUrl host] isEqualToString:@"netbar"]){
+            //网吧
+            NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
+            WYNetbarInfo *netbarInfo = [[WYNetbarInfo alloc] init];
+            netbarInfo.nid = [[paramDic objectForKey:@"objId"] description];
+            ndVc.netbarInfo = netbarInfo;
+            return ndVc;
+        }else if ([[realUrl host] isEqualToString:@"game"]){
+            GameDetailsViewController *gdVc = [[GameDetailsViewController alloc] init];
+            WYGameInfo *gameInfo = [[WYGameInfo alloc] init];
+            gameInfo.gameId = [[paramDic objectForKey:@"objId"] description];
+            gdVc.gameInfo = gameInfo;
+            return gdVc;
         }
         return nil;
-        
+
     }else if ([scheme isEqualToString:@"wydsopen"]){
         NSDictionary *paramDic = [WYCommonUtils getParamDictFrom:realUrl.query];
         NSLog(@"query dict = %@", paramDic);

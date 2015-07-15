@@ -28,8 +28,10 @@
 #import "AppDelegate.h"
 #import "WYSettingConfig.h"
 #import "WYNetBarManager.h"
+#import "WYThemeInfo.h"
+#import "WYScrollPage.h"
 
-@interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate,NetbarTabCellDelegate,LocationViewControllerDelegate>
+@interface NetbarTabViewController ()<UITableViewDataSource,UITableViewDelegate,SKSplashDelegate,NetbarTabCellDelegate,LocationViewControllerDelegate,WYScrollPageDelegate>
 {
     NSString *_chooseCityName;
     NSString *_chooseAreaCode;
@@ -41,6 +43,7 @@
     BOOL _isOpen;
     UIButton *_bgMarkButtonView;
     LocationViewController *_locationChooseVc;
+    WYScrollPage *scrollPageView;
 }
 @property (strong, nonatomic) IBOutlet UILabel *orderLabel;
 @property (strong, nonatomic) IBOutlet UILabel *packetLabel;
@@ -59,9 +62,13 @@
 
 @property (strong, nonatomic) IBOutlet UIView *footerView;
 @property (strong, nonatomic) IBOutlet UIButton *moreButton;
+@property (strong, nonatomic) IBOutlet UIView *adsViewContainer;
 
-@property (nonatomic, assign) CLLocationCoordinate2D currentLocation;
+@property (assign, nonatomic) CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic) NSMutableArray *netbarArray;
+@property (strong, nonatomic) NSMutableArray *adsThemeArray;
+
+@property (nonatomic, assign) BOOL bHideAds;
 
 - (IBAction)orderAction:(id)sender;
 - (IBAction)packetAction:(id)sender;
@@ -93,6 +100,8 @@
     
     [self refreshLeftIconViewUI];
     [self refreshUI];
+    [self getCacheThemeAdsInfo];
+    [self getThemeAdsInfo];
     [self getCacheNetbarInfos];
     [self getNetbarInfos];
     
@@ -102,6 +111,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWeekRedBagMessageUreadEvent) name:WY_WEEKREDBAG_UNREAD_EVENT_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 -(void)refreshUI
@@ -416,7 +427,89 @@
     }tag:tag];
 }
 
--(void)getCacheNetbarInfos{
+- (void)getCacheThemeAdsInfo{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] addGetCacheTag:tag];
+    [[WYEngine shareInstance] getAdvertsWithTag:tag];
+    [[WYEngine shareInstance] getCacheReponseDicForTag:tag complete:^(NSDictionary *jsonRet){
+        if (jsonRet == nil) {
+            //...
+        }else{
+            //解析数据
+            weakSelf.adsThemeArray = [NSMutableArray array];
+            NSArray *themeDicArray = [jsonRet arrayObjectForKey:@"object"];
+            for (NSDictionary *dic  in themeDicArray) {
+                if (![dic isKindOfClass:[NSDictionary class]]) {
+                    continue;
+                }
+                WYThemeInfo *themeInfo = [[WYThemeInfo alloc] init];
+                [themeInfo setThemeInfoByJsonDic:dic];
+                [weakSelf.adsThemeArray addObject:themeInfo];
+            }
+            if (weakSelf.adsThemeArray.count) {
+                [weakSelf refreshAdsScrollView];
+            }
+        }
+    }];
+}
+
+- (void)getThemeAdsInfo{
+    WS(weakSelf);
+    int tag = [[WYEngine shareInstance] getConnectTag];
+    [[WYEngine shareInstance] getAdvertsWithTag:tag];
+    [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
+        NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
+        if (!jsonRet || errorMsg) {
+            if (!errorMsg.length) {
+                errorMsg = @"请求失败";
+            }
+            [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            return;
+        }
+        [weakSelf.adsThemeArray removeAllObjects];
+        //解析数据
+        weakSelf.adsThemeArray = [NSMutableArray array];
+        
+        NSArray *themeDicArray = [jsonRet arrayObjectForKey:@"object"];
+        for (NSDictionary *dic  in themeDicArray) {
+            if (![dic isKindOfClass:[NSDictionary class]]) {
+                continue;
+            }
+            
+            WYThemeInfo *themeInfo = [[WYThemeInfo alloc] init];
+            [themeInfo setThemeInfoByJsonDic:dic];
+            [weakSelf.adsThemeArray addObject:themeInfo];
+        }
+        
+        //刷新广告
+        if (weakSelf.adsThemeArray.count) {
+            [weakSelf refreshAdsScrollView];
+        }
+        
+    }tag:tag];
+}
+
+///刷新广告位adsViewContainer
+- (void)refreshAdsScrollView {
+    [[NSNotificationCenter defaultCenter] postNotificationName:WY_THEME_STOP_ADS_VIEW_NOTIFICATION object:[NSNumber numberWithBool:YES]];
+    //移除老view
+    for (UIView *view in _adsViewContainer.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    CGRect frame = _adsViewContainer.bounds;
+    scrollPageView = [[WYScrollPage alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+    scrollPageView.duration = 4;
+    scrollPageView.adsType = AdsType_Theme;
+    scrollPageView.dataArray = _adsThemeArray;
+    scrollPageView.delegate = self;
+    [_adsViewContainer addSubview:scrollPageView];
+    
+    [self.netBarTable reloadData];
+}
+
+- (void)getCacheNetbarInfos{
     
     NSArray *allCacheNetbars = [[WYNetBarManager shareInstance] getRecommendCacheNetbars];
     if (allCacheNetbars.count > 0) {
@@ -656,12 +749,60 @@
 #pragma mark PullToRefreshViewDelegate
 - (void)pullToRefreshViewShouldRefresh:(PullToRefreshView *)view {
     if (view == self.pullRefreshView) {
+        if (!_bHideAds) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:WY_THEME_STOP_ADS_VIEW_NOTIFICATION object:[NSNumber numberWithBool:YES]];
+            [self getThemeAdsInfo];
+        }
         [self getNetbarInfos];
     }
 }
 
 - (NSDate *)pullToRefreshViewLastUpdated:(PullToRefreshView *)view {
     return [NSDate date];
+}
+
+#pragma mark WYScrollPageDelegate
+- (void)didTouchPageView:(NSInteger)index {
+    if (index < 0) {
+        return;
+    }
+    WYThemeInfo *themeInfo = [_adsThemeArray objectAtIndex:index];
+    if (!themeInfo) {
+        return;
+    }
+    NSString *wyHref = [NSString stringWithFormat:@"wycategory://%@?objId=%@",themeInfo.realUrlHost,themeInfo.targetId];
+    id vc = [WYLinkerHandler handleDealWithHref:wyHref From:self.navigationController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
+- (void)didTouchHideButton {
+    _bHideAds = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:WY_THEME_STOP_ADS_VIEW_NOTIFICATION object:[NSNumber numberWithBool:YES]];
+    [self resetTableHeaderView];
+}
+
+- (void)resetTableHeaderView {
+    NSLog(@"==================================刷新头部");
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] postNotificationName:WY_THEME_SHOW_ADS_VIEW_NOTIFICATION object:[NSNumber numberWithBool:YES]];
+    [super viewDidAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] postNotificationName:WY_THEME_STOP_ADS_VIEW_NOTIFICATION object:[NSNumber numberWithBool:YES]];
+    [super viewDidDisappear:animated];
+}
+
+- (void)applicationWillResignActive:(NSNotification *)notification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:WY_THEME_STOP_ADS_VIEW_NOTIFICATION object:[NSNumber numberWithBool:YES]];
+}
+
+- (void)appWillEnterForeground:(NSNotification *)notification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:WY_THEME_SHOW_ADS_VIEW_NOTIFICATION object:[NSNumber numberWithBool:YES]];
 }
 
 @end
