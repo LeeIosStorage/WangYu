@@ -142,10 +142,10 @@ static WYEngine* s_ShareInstance = nil;
 - (void)serverInit{
     if (self.serverPlatform == TestPlatform) {
         API_URL = @"http://192.168.16.29";
-//        API_URL = @"http://192.168.16.44";
+//      API_URL = @"http://192.168.16.44";
     } else {
-      API_URL = @"http://api.wangyuhudong.com";
-//        API_URL = @"http://test.api.wangyuhudong.com";
+//      API_URL = @"http://api.wangyuhudong.com";
+        API_URL = @"http://test.api.wangyuhudong.com";
     }
 }
 
