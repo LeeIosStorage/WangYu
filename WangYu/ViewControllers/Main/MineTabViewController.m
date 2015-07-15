@@ -253,6 +253,7 @@ enum TABLEVIEW_SECTION_INDEX {
     return view;
 }
 
+static int RedImageView_tag = 201;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"SettingViewCell";
@@ -262,7 +263,13 @@ enum TABLEVIEW_SECTION_INDEX {
     if (cell == nil) {
         NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
         cell = [cells objectAtIndex:0];
+        UIImageView *red_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 15 -20 , (44-10)/2, 10, 10)];
+        red_imageView.image = [UIImage imageNamed:@"s_n_round_red"];
+        red_imageView.tag = RedImageView_tag;
+        [cell addSubview:red_imageView];
     }
+    UIImageView *red_imageView = (UIImageView *)[cell viewWithTag:RedImageView_tag];
+    red_imageView.hidden = YES;
     cell.rightLabel.hidden = YES;
     cell.avatarImageView.hidden = NO;
     CGRect frame = cell.titleLabel.frame;
@@ -310,6 +317,7 @@ enum TABLEVIEW_SECTION_INDEX {
 //            break;
         case kGames:{
             if (indexPath.row == 0){
+                red_imageView.hidden = NO;
                 cell.titleLabel.text = @"手游中心";
                 cell.avatarImageView.image = [UIImage imageNamed:@"personal_game_icon"];
                 [cell setLineImageViewWithType:-1];
