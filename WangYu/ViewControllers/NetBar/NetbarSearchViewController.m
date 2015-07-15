@@ -110,7 +110,10 @@
     _filterAreaName = @"区域";
     _filterAreaCode = _areaCode;
     _filterPriceName = @"排序";
-    _filterPriceType = @"";
+    _filterPriceType = @"0";
+    if (!_showFilter) {
+        _filterPriceType = @"1";
+    }
     self.filterContainerView.hidden = NO;
     CGRect frame = self.netBarTable.frame;
     frame.origin.y = self.filterContainerView.frame.origin.y + self.filterContainerView.frame.size.height;

@@ -973,7 +973,9 @@ static WYEngine* s_ShareInstance = nil;
     if (areaCode) {
         [params setObject:areaCode forKey:@"areaCode"];
     }
-    [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+    if (type > 0) {
+        [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+    }
     
     if (_token) {
         [params setObject:_token forKey:@"token"];

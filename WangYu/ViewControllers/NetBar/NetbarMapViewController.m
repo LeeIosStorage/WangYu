@@ -135,6 +135,10 @@
         
 //        frame = CGRectMake(SCREEN_WIDTH - 70, self.mapView.bounds.size.height - 74, 36, 36);
 //        _currentLocationBtn.frame = frame;
+        
+        UILongPressGestureRecognizer* longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(locationLongPressAction:)];
+        [self.mapView addGestureRecognizer:longPressGesture];
+        
     }
 }
 
@@ -259,6 +263,89 @@
 }
 
 #pragma mark - custom
+
+- (void)locationLongPressAction:(UILongPressGestureRecognizer*)longPressGesture {
+    if (longPressGesture.state == UIGestureRecognizerStateBegan) {
+        //坐标转换
+        CGPoint touchPoint = [longPressGesture locationInView:_mapView];
+        CLLocationCoordinate2D touchMapCoordinate =
+        [_mapView convertPoint:touchPoint toCoordinateFromView:_mapView];
+        
+        if (_mRgeo) {
+            [_mRgeo cancelGeocode];
+            [self setMRgeo:nil];
+        }
+        
+        _mRgeo = [[CLGeocoder alloc] init];
+        _reseverLocation = touchMapCoordinate;
+        CLLocation *clocation = [[CLLocation alloc] initWithCoordinate:touchMapCoordinate altitude:0 horizontalAccuracy:kCLLocationAccuracyNearestTenMeters verticalAccuracy:kCLLocationAccuracyNearestTenMeters timestamp:nil];
+        __weak NetbarMapViewController *weakSelf = self;
+        [_mRgeo reverseGeocodeLocation:clocation completionHandler:^(NSArray *placemarks, NSError *error) {
+            if (placemarks.count && !error) {
+                [WYProgressHUD AlertLoadDone];
+            }else {
+                //            [weakSelf addCustomMark:location];
+                _reseverLocation = CLLocationCoordinate2DMake(-180, -180);
+                NSLog(@"did not FindPlacemark, error = %@",error);
+                [WYProgressHUD AlertError:@"位置获取失败" At:weakSelf.view];
+                return;
+            }
+            weakSelf.location = [[clocation locationBearPawFromMars] coordinate];
+            [weakSelf refreshData];
+            [weakSelf showLongPressAnnotationAt:[placemarks objectAtIndex:0]];
+        }];
+    }
+}
+
+-(void)showLongPressAnnotationAt:(CLPlacemark*) place
+{
+    if (-180 == _reseverLocation.latitude && -180 == _reseverLocation.longitude) {
+        return;
+    }
+    
+    CLLocationCoordinate2D location = _reseverLocation;  //place.location.coordinate (0,0)
+    for (id<MKAnnotation> annotion in [self.mapView annotations]) {
+        if (annotion == nil) {
+            return;
+        }
+        if (![annotion isKindOfClass:[MKUserLocation class]]) {
+            [self.mapView removeAnnotation:annotion];
+        }
+    }
+    
+    MapChooseAnnotationView *annotation = [[MapChooseAnnotationView alloc] init];
+    annotation.isShowIndicator = NO;
+    [annotation setCoordinate:location];
+    annotation.title = @"位置信息";
+    
+    NSString *detail = place.name;
+    if ([detail rangeOfString:@","].length) {
+        annotation.subtitle = [detail substringFromIndex:[detail rangeOfString:@","].location + 1];
+    }else{
+        annotation.subtitle = detail;
+    }
+    
+    //    NSLog(@"annotation.subTitle = %@", annotation.subtitle);
+    
+    //	annotation.subtitle = [NSString	stringWithFormat:@"%f %f", annotation.coordinate.latitude, annotation.coordinate.longitude];
+    [self.mapView addAnnotation:annotation];
+    MKCoordinateRegion region = self.mapView.region;
+    region.center = location;
+    region.span.longitudeDelta = 0.1;
+    region.span.latitudeDelta = 0.1;
+    
+    [self.mapView setRegion:region animated:YES];
+    [self.mapView selectAnnotation:annotation animated:YES];
+    if (!_showMode) {
+        self.titleNavBarRightBtn.hidden = NO;
+    }else{
+        self.titleNavBarRightBtn.hidden = NO;
+        [self.titleNavBarRightBtn setTitle:@"导航" forState:UIControlStateNormal];
+    }
+    [self hideProgressBar];
+}
+
+
 -(void)backTOCurrentLocation{
     [self.currentLocationBtn setBackgroundImage:[UIImage imageNamed:@"s_location_back"] forState:UIControlStateNormal];
     if (_currentLocation.longitude != 0 && _currentLocation.latitude != 0) {
@@ -443,8 +530,8 @@
     region.span.longitudeDelta = 0.01;
     region.span.latitudeDelta = 0.01;
     
-    [self.mapView setRegion:region animated:NO];
-    [self.mapView selectAnnotation:annotation animated:NO];
+    [self.mapView setRegion:region animated:YES];
+    [self.mapView selectAnnotation:annotation animated:YES];
     if (!_showMode) {
         self.titleNavBarRightBtn.hidden = NO;
     }else{
@@ -768,6 +855,20 @@
         }
         
         return annotationView;
+    }else if ([annotation isKindOfClass:[MapChooseAnnotationView class]]){
+        static NSString * const kPinAnnotationIdentifier = @"PinIdentifier";
+        MKAnnotationView *draggablePinView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:kPinAnnotationIdentifier];
+        if (draggablePinView) {
+            draggablePinView.annotation = annotation;
+        } else {
+            draggablePinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPinAnnotationIdentifier];
+            draggablePinView.canShowCallout = YES;
+            draggablePinView.userInteractionEnabled = NO;
+            draggablePinView.draggable = NO;
+            draggablePinView.image=[UIImage imageNamed:@"netbar_irea_icon"];
+        }
+        
+        return draggablePinView;
     }
     return nil;
 }
