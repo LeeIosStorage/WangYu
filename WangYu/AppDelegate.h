@@ -13,8 +13,8 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (readwrite, nonatomic) WYTabBarViewController* mainTabViewController;
-@property (strong, nonatomic)UIMenuController *appMenu;
-@property (assign, nonatomic) BOOL bHidden;
+@property (strong, nonatomic) UIMenuController *appMenu;
+@property (assign, nonatomic) BOOL bShowGame;
 
 - (void)signIn;
 - (void)signOut;

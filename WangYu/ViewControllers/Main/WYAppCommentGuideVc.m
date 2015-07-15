@@ -36,12 +36,14 @@
 }
 
 - (void)refreshUI {
+    self.contentContainerView.layer.cornerRadius = 4;
+    
     self.starButton.backgroundColor = SKIN_COLOR;
     self.starButton.layer.cornerRadius = 4;
     self.starButton.layer.masksToBounds = YES;
     [self.starButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
     
-    self.complainButton.backgroundColor = SKIN_TEXT_COLOR1;
+    self.complainButton.backgroundColor = UIColorToRGB(0xe4e4e4);
     self.complainButton.layer.cornerRadius = 4;
     self.complainButton.layer.masksToBounds = YES;
     [self.complainButton setTitleColor:SKIN_TEXT_COLOR1 forState:UIControlStateNormal];
@@ -68,13 +70,7 @@
 }
 
 - (IBAction)goToAppStoreAction:(id)sender {
-
-    if ([[[[[WYEngine shareInstance] globalDefaultConfig] objectForKey:@"switchs"] objectForKey:@"appstore_comment_page_access"] boolValue]) {
-            [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=986749236"]];
-    } else {
-        [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id986749236"]];
-    }
-    
+    [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id986749236"]];
     if (self.delegate) {
         [self.delegate cancelAppCommentGuideVc:self];
     }

@@ -27,11 +27,15 @@
 #import "APService.h"
 #import "WYLinkerHandler.h"
 #import "MobClick.h"
+#import "WYAppCommentGuideVc.h"
 
-#define kAppCheckNumKey @"kAppCheckNumKey"
-#define kAppCheckBoolKey @"kAppCheckBoolKey"
+#define kAppNewCheckNumKey @"kAppNewCheckNumKey"
+#define kAppNewCheckBoolKey @"kAppNewCheckBoolKey"
+#define kHasLoginCountKey @"kHasLoginCountKey"
 
-@interface AppDelegate () <WYTabBarControllerDelegate,WXApiDelegate>
+@interface AppDelegate () <WYTabBarControllerDelegate,WXApiDelegate,WYAppCommentGuideVcDelegate>{
+    WYAppCommentGuideVc * _appCommentGuideVc;
+}
 
 @property (nonatomic, strong) NewIntroViewController *introView;
 
@@ -51,12 +55,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     //检测一下你懂的
-//    NSInteger checkNum = [[NSUserDefaults standardUserDefaults] integerForKey:kAppCheckNumKey];
-//    _bHidden = [[NSUserDefaults standardUserDefaults] boolForKey:kAppCheckBoolKey];
-//    if (checkNum == 0) {
-//        [[NSUserDefaults standardUserDefaults] setInteger:checkNum + 1 forKey:kAppCheckNumKey];
-//        [self checkVersion];
-//    }
+    NSInteger checkNum = [[NSUserDefaults standardUserDefaults] integerForKey:kAppNewCheckNumKey];
+    _bShowGame = [[NSUserDefaults standardUserDefaults] boolForKey:kAppNewCheckBoolKey];
+    if (checkNum == 0) {
+        [[NSUserDefaults standardUserDefaults] setInteger:checkNum + 1 forKey:kAppNewCheckNumKey];
+        [self checkVersion];
+    }
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 //    
     application.statusBarHidden = NO;
@@ -159,20 +163,14 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     WYTabBarViewController* tabViewController = [[WYTabBarViewController alloc] init];
     tabViewController.delegate = self;
-    if (_bHidden) {
-        tabViewController.viewControllers = [NSArray arrayWithObjects:
-                                             [[NetbarTabViewController alloc] init],
-                                             [[ActivityTabViewController alloc] init],
-                                             [[MineTabViewController alloc] init],
-                                             nil];
-    }else{
-        tabViewController.viewControllers = [NSArray arrayWithObjects:
+   
+    tabViewController.viewControllers = [NSArray arrayWithObjects:
                                              [[NetbarTabViewController alloc] init],
                                              [[ActivityTabViewController alloc] init],
                                              [[MatchWarViewController alloc] init],
                                              [[MineTabViewController alloc] init],
                                              nil];
-    }
+    
     _mainTabViewController = tabViewController;
     
     WYNavigationController* tabNavVc = [[WYNavigationController alloc] initWithRootViewController:tabViewController];
@@ -181,6 +179,31 @@ void uncaughtExceptionHandler(NSException *exception) {
     _mainTabViewController.initialIndex = 0;
     
     self.window.rootViewController = tabNavVc;
+    
+    NSInteger hasLoginCount = [[NSUserDefaults standardUserDefaults] integerForKey:kHasLoginCountKey];
+    //第5次登录的时候提醒评价
+    if (hasLoginCount == 5)
+    {
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            if (_mainTabViewController) {
+                [[UIApplication sharedApplication].keyWindow endEditing:YES];
+                WYAppCommentGuideVc* commentGuideVc = [[WYAppCommentGuideVc alloc] init];
+                CGRect frame = _mainTabViewController.view.bounds;
+                frame.origin.y += frame.size.height;
+                commentGuideVc.view.frame = frame;
+                [self.window addSubview:commentGuideVc.view];
+                _appCommentGuideVc = commentGuideVc;
+                commentGuideVc.delegate = self;
+                [UIView animateWithDuration:.3 animations:^{
+                    commentGuideVc.view.frame = self.window.bounds;
+                }];
+            }
+        });
+    }
+    hasLoginCount++;
+    [[NSUserDefaults standardUserDefaults] setInteger:hasLoginCount forKey:kHasLoginCountKey];
 }
 
 - (void)signOut{
@@ -379,9 +402,23 @@ void uncaughtExceptionHandler(NSException *exception) {
         if (!jsonRet || err){
             return ;
         }
-        _bHidden = [[jsonRet objectForKey:@"object"] boolValueForKey:@"hiddenElement"];
-        [[NSUserDefaults standardUserDefaults] setBool:_bHidden forKey:kAppCheckBoolKey];
+        _bShowGame = [[jsonRet objectForKey:@"object"] boolValueForKey:@"hiddenElement"];
+        [[NSUserDefaults standardUserDefaults] setBool:_bShowGame forKey:kAppNewCheckBoolKey];
     } tag:tag];
+}
+
+#pragma mark - WYAppCommentGuideVcDelegate
+- (void)cancelAppCommentGuideVc:(WYAppCommentGuideVc *)vc {
+    if (_appCommentGuideVc == vc) {
+        [UIView animateWithDuration:.3 animations:^{
+            CGRect frame = vc.view .frame;
+            frame.origin.y = frame.size.height;
+            vc.view .frame = frame;
+        } completion:^(BOOL finished) {
+            [vc.view removeFromSuperview];
+            _appCommentGuideVc = nil;
+        }];
+    }
 }
 
 @end
