@@ -66,7 +66,10 @@
         _itemServer = [dic stringObjectForKey:@"server"];
     }
     if ([dic stringObjectForKey:@"item_pic"]) {
-        _itemPicUrl = [dic stringObjectForKey:@"item_pic"];
+        _bgAvatar = [dic stringObjectForKey:@"item_pic"];
+    }
+    if ([dic stringObjectForKey:@"icon"]) {
+        _itemPicUrl = [dic stringObjectForKey:@"icon"];
     }
     if ([dic intValueForKey:@"way"]) {
         _way = [dic intValueForKey:@"way"];
@@ -133,6 +136,13 @@
         return nil;
     }
     return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _itemPicUrl]];
+}
+
+- (NSURL *)bgAvatarUrl {
+    if (_bgAvatar == nil) {
+        return nil;
+    }
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _bgAvatar]];
 }
 
 @end

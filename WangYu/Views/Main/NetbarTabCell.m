@@ -107,11 +107,20 @@
     
     
     CGFloat interval = 0.;
+    if (netbarInfo.isRecommend) {
+        _recommendImage.hidden = NO;
+        frame = _recommendImage.frame;
+        interval = CGRectGetWidth(_recommendImage.frame);
+        frame.origin.x = SCREEN_WIDTH - 12 - interval;
+        _recommendImage.frame = frame;
+    }else {
+        _recommendImage.hidden = YES;
+    }
     
     if (netbarInfo.isOrder) {
         _bookImage.hidden = NO;
         frame = _bookImage.frame;
-        interval = CGRectGetWidth(_bookImage.frame);
+        interval = (netbarInfo.isRecommend?(CGRectGetWidth(_recommendImage.frame) + CGRectGetWidth(_bookImage.frame) + 4):CGRectGetWidth(_bookImage.frame));
         frame.origin.x = SCREEN_WIDTH - 12 - interval;
         _bookImage.frame = frame;
     }else {
@@ -121,27 +130,17 @@
     if (netbarInfo.isHot) {
         _hotImage.hidden = NO;
         frame = _hotImage.frame;
-        interval = (netbarInfo.isOrder?(CGRectGetWidth(_hotImage.frame) + CGRectGetWidth(_bookImage.frame) + 4):CGRectGetWidth(_hotImage.frame));
+        interval = CGRectGetWidth(_hotImage.frame);
+        if (netbarInfo.isOrder) {
+            interval += CGRectGetWidth(_bookImage.frame) + 4;
+        }
+        if (netbarInfo.isRecommend) {
+            interval += CGRectGetWidth(_recommendImage.frame) + 4;
+        }
         frame.origin.x = SCREEN_WIDTH - 12 - interval;
         _hotImage.frame = frame;
     }else {
         _hotImage.hidden = YES;
-    }
-    
-    if (netbarInfo.isRecommend) {
-        _recommendImage.hidden = NO;
-        frame = _recommendImage.frame;
-        interval = CGRectGetWidth(_recommendImage.frame);
-        if (netbarInfo.isOrder) {
-            interval += CGRectGetWidth(_bookImage.frame) + 4;
-        }
-        if (netbarInfo.isHot) {
-            interval += CGRectGetWidth(_hotImage.frame) + 4;
-        }
-        frame.origin.x = SCREEN_WIDTH - 12 - interval;
-        _recommendImage.frame = frame;
-    }else {
-        _recommendImage.hidden = YES;
     }
     
     if (netbarInfo.isDiscount) {

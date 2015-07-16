@@ -27,7 +27,9 @@
 @property (nonatomic, strong) NSString *itemServer;         //项目服务器
 @property (nonatomic, strong) NSString *itemName;           //约战项目名称
 @property (nonatomic, strong) NSString *itemPicUrl;         //约战项目图片
-@property (nonatomic, readonly) NSURL* itemPicURL;          //图片网络地址
+@property (nonatomic, readonly) NSURL* itemPicURL;          //约战项目图片地址
+@property (nonatomic, strong) NSString* bgAvatar;           //背景图
+@property (nonatomic, readonly) NSURL* bgAvatarUrl;         //背景图地址
 
 @property (nonatomic, strong) WYUserInfo *userInfo;
 

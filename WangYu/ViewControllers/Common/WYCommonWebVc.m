@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
 #import "WYNavigationController.h"
+#import "URLHelper.h"
 
 NSInteger const SGProgresstagId = 222122323;
 CGFloat const SGProgressBarHeight = 2.5;
@@ -87,9 +88,46 @@ CGFloat const SGProgressBarHeight = 2.5;
     
 }
 
+- (void)handleUserInfoChanged:(NSNotification *)notification{
+    [self getNewURLAndLoad];
+}
+
+- (void)getNewURLAndLoad{
+    NSURL *oldURL = self.URL;
+    NSString *urlPath = self.URL.path;
+    NSDictionary *paramDic = [WYCommonUtils getParamDictFrom:self.URL.query];
+    NSMutableDictionary *newParamMutDic = [NSMutableDictionary dictionary];
+    for (NSString *key in [paramDic allKeys]) {
+        NSString *value = [paramDic objectForKey:key];
+        if ([key isEqualToString:@"userId"]) {
+            if ([WYEngine shareInstance].uid) {
+                [newParamMutDic setObject:[WYEngine shareInstance].uid forKey:key];
+                continue;
+            }
+        }
+        if ([key isEqualToString:@"token"]) {
+            if ([WYEngine shareInstance].token) {
+                [newParamMutDic setObject:[WYEngine shareInstance].token forKey:key];
+                continue;
+            }
+        }
+        if (value) {
+            [newParamMutDic setObject:value forKey:key];
+        }
+    }
+    NSString *newParam = [URLHelper getURL:nil queryParameters:newParamMutDic prefixed:NO];
+    NSString *fullUrlStr = [NSString stringWithFormat:@"%@%@?%@",[WYEngine shareInstance].baseUrl, urlPath, newParam];
+    oldURL = [NSURL URLWithString:fullUrlStr];
+    self.URL = oldURL;
+    [self loadURL:self.URL];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
+    
     self.mainWebView = [[UIWebView alloc] init];
     self.mainWebView.delegate = self;
     self.mainWebView.scalesPageToFit = YES;
@@ -437,6 +475,7 @@ CGFloat const SGProgressBarHeight = 2.5;
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.mainWebView stopLoading];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     self.mainWebView.delegate = nil;

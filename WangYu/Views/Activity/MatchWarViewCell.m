@@ -46,7 +46,7 @@
 -(void)setMatchWarInfo:(WYMatchWarInfo *)matchWarInfo{
     _matchWarInfo = matchWarInfo;
     
-    [self.gameImageView sd_setImageWithURL:matchWarInfo.itemPicURL placeholderImage:[UIImage imageNamed:@"wangyu_message_icon"]];
+    [self.gameImageView sd_setImageWithURL:matchWarInfo.bgAvatarUrl placeholderImage:[UIImage imageNamed:@"wangyu_message_icon"]];
     self.gameNameLabel.text = matchWarInfo.itemName;
     
     self.matchWarTitleLabel.text = matchWarInfo.title;

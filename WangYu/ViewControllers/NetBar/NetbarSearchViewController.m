@@ -77,8 +77,13 @@
 @property (strong, nonatomic) IBOutlet UITableView *searchTableView;
 @property (nonatomic, strong) NSMutableArray *searchNetBarInfos;
 
+//搜索结果空白页
 @property (strong, nonatomic) IBOutlet UIView *searchBlankTipView;
 @property (strong, nonatomic) IBOutlet UILabel *searchBlankTipLabel;
+
+//预定空白页
+@property (strong, nonatomic) IBOutlet UIView *netbarBlankTipView;
+@property (strong, nonatomic) IBOutlet UILabel *netbarBlankTipLabel;
 
 -(IBAction)removeSearchRecordAction:(id)sender;
 -(IBAction)filterAreaAction:(id)sender;
@@ -271,6 +276,29 @@
     self.filterPriceIconImgView.frame = frame;
     
     
+}
+
+- (void)refreshNetBarBlankShowUI{
+    
+    self.netbarBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
+    self.netbarBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
+    if (_showFilter) {
+        self.netbarBlankTipLabel.text = @"本区域暂无支持预订的网吧";
+    }else{
+        self.netbarBlankTipLabel.text = @"本区域暂无网吧记录";
+    }
+    if (self.netBarInfos && self.netBarInfos.count == 0) {
+        CGRect frame = self.netbarBlankTipView.frame;
+        frame.origin.y = 0;
+        frame.size.width = SCREEN_WIDTH;
+        self.netbarBlankTipView.frame = frame;
+        [self.netBarTable addSubview:self.netbarBlankTipView];
+        
+    }else{
+        if (self.netbarBlankTipView.superview) {
+            [self.netbarBlankTipView removeFromSuperview];
+        }
+    }
 }
 
 - (void)refreshSearchBlankShowUI:(int)type{
@@ -515,7 +543,7 @@
         }
         
         [weakSelf.netBarTable reloadData];
-        
+        [weakSelf refreshNetBarBlankShowUI];
         [[WYNetBarManager shareInstance] saveAllCacheNetbars:weakSelf.netBarInfos];
         
     }tag:tag];

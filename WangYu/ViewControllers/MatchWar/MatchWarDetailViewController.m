@@ -197,7 +197,7 @@
     copyMatchWarInfo.mId = self.matchWarInfo.mId;
     if (self.matchWarInfo.matchWarInfoByJsonDic) {
         [copyMatchWarInfo setMatchWarInfoByJsonDic:self.matchWarInfo.matchWarInfoByJsonDic];
-        copyMatchWarInfo.itemPicUrl = nil;
+        copyMatchWarInfo.bgAvatar = nil;
     }
     _matchWarInfo = copyMatchWarInfo;
     
@@ -353,7 +353,7 @@
     
     self.bkImageView.clipsToBounds = YES;
     self.bkImageView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.bkImageView sd_setImageWithURL:_matchWarInfo.itemPicURL placeholderImage:[UIImage imageNamed:@"activity_load_icon"]];
+    [self.bkImageView sd_setImageWithURL:_matchWarInfo.bgAvatarUrl placeholderImage:[UIImage imageNamed:@"activity_load_icon"]];
     
     self.statusView.alpha = 0.7;
     self.statusView.layer.cornerRadius = self.statusView.frame.size.width/2;

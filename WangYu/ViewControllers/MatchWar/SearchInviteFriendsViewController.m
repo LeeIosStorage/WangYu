@@ -10,7 +10,7 @@
 #import "InviteFriendsViewCell.h"
 #import "PbUserInfo.h"
 
-@interface SearchInviteFriendsViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface SearchInviteFriendsViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 {
     ABAddressBookRef _addressBook;
     
@@ -205,6 +205,11 @@
         [_selectedUserPbs addObject:pbUserInfo];
     }
     [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    [self.searchBar resignFirstResponder];
 }
 
 @end

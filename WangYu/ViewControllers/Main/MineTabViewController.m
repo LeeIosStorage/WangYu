@@ -263,7 +263,7 @@ static int RedImageView_tag = 201;
     if (cell == nil) {
         NSArray* cells = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:nil options:nil];
         cell = [cells objectAtIndex:0];
-        UIImageView *red_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 15 -20 , (44-6)/2, 6, 6)];
+        UIImageView *red_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 18 -20 , (44-8)/2, 8, 8)];
         red_imageView.image = [UIImage imageNamed:@"s_n_round_red"];
         red_imageView.tag = RedImageView_tag;
         [cell addSubview:red_imageView];
