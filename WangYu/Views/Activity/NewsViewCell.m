@@ -37,7 +37,7 @@
 
 -(void)setNewsInfo:(WYNewsInfo *)newsInfo{
     _newsInfo = newsInfo;
-    [self.newsImageView sd_setImageWithURL:newsInfo.smallImageURL placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
+    [self.newsImageView sd_setImageWithURL:newsInfo.middleImageURL placeholderImage:[UIImage imageNamed:@"netbar_load_icon"]];
     self.newsTitleLabel.lineHeightMultiple = 0.8;
     self.newsTitleLabel.text = newsInfo.title;
     //self.newsBriefLabel.text = newsInfo.brief;

@@ -88,6 +88,9 @@
                             <state key="normal">
                                 <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="alertPrompt:" destination="-1" eventType="touchUpInside" id="7tc-nd-dxM"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.94901960784313721" green="0.36862745098039218" blue="0.36862745098039218" alpha="1" colorSpace="calibratedRGB"/>
@@ -225,7 +228,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Krr-om-aEZ">
-                    <rect key="frame" x="238.00000005221082" y="7" width="74" height="30"/>
+                    <rect key="frame" x="238.00000007932451" y="7" width="74" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HiraginoSansGB-W3" family="Hiragino Sans GB" pointSize="14"/>
                     <state key="normal" title="发布">

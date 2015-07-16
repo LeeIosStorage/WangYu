@@ -286,6 +286,8 @@
 		3BBE462D1B0CE9AB009EAE02 /* WYPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE462C1B0CE9AB009EAE02 /* WYPhotoBrowser.m */; };
 		3BBE46321B0CF44A009EAE02 /* WYWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46311B0CF44A009EAE02 /* WYWaitingView.m */; };
 		3BBE46351B0CF92A009EAE02 /* WYBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE46341B0CF92A009EAE02 /* WYBrowserImageView.m */; };
+		3BCE54561B57A0F300579923 /* WYCustomerAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE54551B57A0F300579923 /* WYCustomerAlert.m */; };
+		3BCE54581B57A27500579923 /* WYCustomerAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCE54571B57A27500579923 /* WYCustomerAlert.xib */; };
 		3BCE851D1B4B69EE00093DFB /* WYMemberInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE851C1B4B69EE00093DFB /* WYMemberInfo.m */; };
 		3BCF86171B29659E006C289B /* WYPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCF86161B29659E006C289B /* WYPageControl.m */; };
 		3BD212151B3C43E6003FD10D /* BookDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD212131B3C43E6003FD10D /* BookDetailViewController.m */; };
@@ -950,6 +952,9 @@
 		3BBE46311B0CF44A009EAE02 /* WYWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYWaitingView.m; path = WYPhotoBrower/WYWaitingView.m; sourceTree = "<group>"; };
 		3BBE46331B0CF92A009EAE02 /* WYBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYBrowserImageView.h; path = WYPhotoBrower/WYBrowserImageView.h; sourceTree = "<group>"; };
 		3BBE46341B0CF92A009EAE02 /* WYBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYBrowserImageView.m; path = WYPhotoBrower/WYBrowserImageView.m; sourceTree = "<group>"; };
+		3BCE54541B57A0F300579923 /* WYCustomerAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYCustomerAlert.h; path = WYCustomerAlert/WYCustomerAlert.h; sourceTree = "<group>"; };
+		3BCE54551B57A0F300579923 /* WYCustomerAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYCustomerAlert.m; path = WYCustomerAlert/WYCustomerAlert.m; sourceTree = "<group>"; };
+		3BCE54571B57A27500579923 /* WYCustomerAlert.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYCustomerAlert.xib; sourceTree = "<group>"; };
 		3BCE851B1B4B69EE00093DFB /* WYMemberInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYMemberInfo.h; sourceTree = "<group>"; };
 		3BCE851C1B4B69EE00093DFB /* WYMemberInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYMemberInfo.m; sourceTree = "<group>"; };
 		3BCF86151B29659E006C289B /* WYPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPageControl.h; sourceTree = "<group>"; };
@@ -1328,6 +1333,7 @@
 		073DBD091AE77058009B49EB /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3BCE54531B57A08B00579923 /* WYCustomerAlert */,
 				07A427A51B186AF4009197D5 /* WYScrollPage */,
 				3BBE46241B0CE720009EAE02 /* WYPhotoBrower */,
 				077D83831AF9AF1200AAF31F /* WYProgressHUD */,
@@ -2267,6 +2273,16 @@
 			name = WYPhotoBrower;
 			sourceTree = "<group>";
 		};
+		3BCE54531B57A08B00579923 /* WYCustomerAlert */ = {
+			isa = PBXGroup;
+			children = (
+				3BCE54541B57A0F300579923 /* WYCustomerAlert.h */,
+				3BCE54551B57A0F300579923 /* WYCustomerAlert.m */,
+				3BCE54571B57A27500579923 /* WYCustomerAlert.xib */,
+			);
+			name = WYCustomerAlert;
+			sourceTree = "<group>";
+		};
 		3BD58F8C1B275150007D8F0B /* UMAnalytics */ = {
 			isa = PBXGroup;
 			children = (
@@ -2571,6 +2587,7 @@
 				07868DF01AF8581100160070 /* WYTabBarView.xib in Resources */,
 				073DBDB41AE794C4009B49EB /* arrow.png in Resources */,
 				073DBDB51AE794C4009B49EB /* arrow@2x.png in Resources */,
+				3BCE54581B57A27500579923 /* WYCustomerAlert.xib in Resources */,
 				076E0DEC1B1475FE00E4363A /* PersonalEditViewController.xib in Resources */,
 				07B48B4A1B0C6E9D0000857F /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				078A043A1B1C2387008ADA76 /* TopicsViewController.xib in Resources */,
@@ -2832,6 +2849,7 @@
 				0723DDFE1B0F19830040295B /* BasicMapAnnotation.m in Sources */,
 				074DDC871B0080140081AFA4 /* NetbarDetailViewController.m in Sources */,
 				44C6AE3F1B42728A00746A54 /* PinyinUtils.m in Sources */,
+				3BCE54561B57A0F300579923 /* WYCustomerAlert.m in Sources */,
 				073DBD4D1AE7712F009B49EB /* UIImage+GIF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,6 +26,7 @@
 #import "TTTAttributedLabel.h"
 #import "PublishMatchWarViewController.h"
 #import "MatchWarDetailViewController.h"
+#import "WYCustomerAlert.h"
 
 @interface NetbarDetailViewController ()<UITableViewDataSource,UITableViewDelegate,WYShareActionSheetDelegate,WYPhotoGroupDelegate>
 {
@@ -62,6 +63,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *publicButton;
 @property (strong, nonatomic) IBOutlet UIButton *publicButton2;
 @property (strong, nonatomic) IBOutlet UILabel *picLabel;
+@property (strong, nonatomic) WYCustomerAlert *customerAlert;
 
 - (IBAction)bookAction:(id)sender;
 - (IBAction)payAction:(id)sender;
@@ -71,6 +73,7 @@
 - (IBAction)phoneAction:(id)sender;
 - (IBAction)publicAction:(id)sender;
 - (IBAction)detailAction:(id)sender;
+- (IBAction)alertPrompt:(id)sender;
 
 @end
 
@@ -504,5 +507,28 @@
     return [NSDate date];
 }
 
+- (IBAction)alertPrompt:(id)sender {
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];
+    animation.delegate = self;
+    animation.duration = 0.6;
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    NSMutableArray *values = [NSMutableArray array];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.1, 0.1, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.2, 1.2, 1.0)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.9, 0.9, 0.9)]];
+    [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
+    animation.values = values;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    
+    _customerAlert=[[WYCustomerAlert alloc]init];
+    _customerAlert.alertMessage = self.netbarInfo.discountNotice;
+    if (_customerAlert.superview != self.view) {
+        [_customerAlert setAlpha:1.0f];
+        [_customerAlert.layer addAnimation:animation forKey:@"transform"];
+        [self.view addSubview:_customerAlert];
+        [_customerAlert show];
+    }
+}
 
 @end

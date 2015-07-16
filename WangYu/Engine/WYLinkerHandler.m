@@ -125,7 +125,7 @@
                 newsInfo.nid = [[paramDic stringObjectForKey:@"id"] description];
                 newsInfo.title = [[paramDic stringObjectForKey:@"title"] description];
                 newsInfo.brief = [[paramDic stringObjectForKey:@"brief"] description];
-                newsInfo.newsImageUrl = [[paramDic stringObjectForKey:@"imageUrl"] description];
+                newsInfo.thumbImageUrl = [[paramDic stringObjectForKey:@"imageUrl"] description];
                 webvc.newsInfo = newsInfo;
                 webvc.isShareViewOut = YES;
             }

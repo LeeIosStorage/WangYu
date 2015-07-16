@@ -20,7 +20,13 @@
         _brief = [dic stringObjectForKey:@"brief"];
     }
     if ([dic objectForKey:@"icon"]) {
-        _newsImageUrl = [dic stringObjectForKey:@"icon"];
+        _originalImageUrl = [dic stringObjectForKey:@"icon"];
+    }
+    if ([dic objectForKey:@"icon_media"]) {
+        _middleImageUrl = [dic stringObjectForKey:@"icon"];
+    }
+    if ([dic objectForKey:@"icon_thumb"]) {
+        _thumbImageUrl = [dic stringObjectForKey:@"icon_thumb"];
     }
     if ([dic objectForKey:@"is_subject"]) {
         _isSubject = [dic boolValueForKey:@"is_subject"];
@@ -45,11 +51,25 @@
     }
 }
 
-- (NSURL *)smallImageURL {
-    if (_newsImageUrl == nil) {
+- (NSURL *)originalImageURL {
+    if (_originalImageUrl == nil) {
         return nil;
     }
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _newsImageUrl]];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _originalImageUrl]];
+}
+
+- (NSURL *)middleImageURL {
+    if (_middleImageUrl == nil) {
+        return nil;
+    }
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _middleImageUrl]];
+}
+
+- (NSURL *)thumbImageURL {
+    if (_thumbImageUrl == nil) {
+        return nil;
+    }
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], _thumbImageUrl]];
 }
 
 - (NSURL *)hotImageURL {

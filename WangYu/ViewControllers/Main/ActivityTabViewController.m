@@ -669,7 +669,7 @@
             tVc.newsInfo = newsInfo;
             [self.navigationController pushViewController:tVc animated:YES];
         }else {
-            id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/info/web/detail?id=%@&title=%@&imageUrl=%@&brief=%@", [WYEngine shareInstance].baseUrl, newsInfo.nid,newsInfo.title,newsInfo.newsImageUrl,newsInfo.brief] From:self.navigationController];
+            id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/info/web/detail?id=%@&title=%@&imageUrl=%@&brief=%@", [WYEngine shareInstance].baseUrl, newsInfo.nid,newsInfo.title,newsInfo.thumbImageUrl,newsInfo.brief] From:self.navigationController];
             if (vc) {
                 [self.navigationController pushViewController:vc animated:YES];
             }

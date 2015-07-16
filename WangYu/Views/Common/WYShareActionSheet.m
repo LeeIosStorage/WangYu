@@ -98,8 +98,8 @@
         self.shareTitle = [NSString stringWithFormat:@"网娱大师-电竞赛事独家报名,资讯直播-%@",_newsInfo.title];
         self.shareDescription = self.newsInfo.brief;
         self.shareWebpageUrl = [NSString stringWithFormat:@"%@/activity/info/web/detail?id=%@",[WYEngine shareInstance].baseUrl,_newsInfo.nid];
-        if (![self.newsInfo.newsImageUrl isEqual:[NSNull null]]) {
-            NSURL *smallImageURL = [NSURL URLWithString:[[NSString stringWithFormat:@"%@/%@", [[WYEngine shareInstance] baseImgUrl], self.newsInfo.newsImageUrl] stringByReplacingOccurrencesOfString:@".png" withString:@"_thumb.png"]];
+        if (![self.newsInfo.thumbImageUrl isEqual:[NSNull null]]) {
+            NSURL *smallImageURL = self.newsInfo.thumbImageURL;
             self.shareImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[smallImageURL absoluteString]];
         }
         if (!self.shareImage) {
