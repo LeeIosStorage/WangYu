@@ -68,4 +68,7 @@ dispatch_sync(dispatch_get_main_queue(), block);\
 + (NSArray*)getAllPbPhoneContacts;
 + (NSArray*)getPbPhoneContactsAffterDate:(NSDate*)date ids:(NSMutableArray*)ids;
 
+//统一处理搜索拼音的方法
++ (BOOL)searchPinYin:(NSString*)pinyin searchContent:(NSString*)searchContent;
+
 @end

@@ -9,17 +9,21 @@
 #import "InviteFriendsViewController.h"
 #import "PbUserInfo.h"
 #import "InviteFriendsViewCell.h"
+#import "SearchInviteFriendsViewController.h"
 
 #define MAX_INVITE_COUNT 19
 
-@interface InviteFriendsViewController ()
+@interface InviteFriendsViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,SearchInviteFriendsVCDelegate>
 {
     NSMutableArray* _notWangYuUserPbs;
     NSMutableArray* _selectedUserPbs;
     ABAddressBookRef _addressBook;
+    
+    SearchInviteFriendsViewController* _contactsSearchVc;
 }
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
 
 @property (nonatomic, strong) NSMutableArray *indexAllContacts;
 @property (nonatomic, strong) NSMutableArray *allIndexKeys;
@@ -82,6 +86,8 @@
 }
 
 -(void)doStartMatchPb{
+    
+    self.tableView.tableHeaderView = self.searchBar;
     
      CFErrorRef myError = NULL;
      _addressBook = ABAddressBookCreateWithOptions(NULL, &myError);
@@ -305,7 +311,7 @@
 //        return -1;
 //    }
     
-    return index-1;
+    return index;
 }
 -(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
     
@@ -315,4 +321,77 @@
     return keys;
 }
 
+#pragma mark - UISearchBarDelegate
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    
+    _contactsSearchVc = [[SearchInviteFriendsViewController alloc] init];
+    _contactsSearchVc.delegate = self;
+    _contactsSearchVc.notWangYuUserPbs = _notWangYuUserPbs;
+    _contactsSearchVc.slePbUserInfos = _slePbUserInfos;
+    _contactsSearchVc.view.backgroundColor = [UIColor clearColor];
+    if (searchBar == self.searchBar) {
+        _contactsSearchVc.view.frame = self.tableView.frame;
+        _contactsSearchVc.tableView.hidden = YES;
+        [self.view addSubview:_contactsSearchVc.view];
+        [_contactsSearchVc.searchBar becomeFirstResponder];
+        [_contactsSearchVc.searchBar setShowsCancelButton:YES animated:YES];
+        _contactsSearchVc.searchMaskVew.alpha = 0;
+        
+        //起始位置, 先把search的位置跟当前位置对齐，动画一起上去
+        CGRect oldFrame = _contactsSearchVc.view.frame;
+        oldFrame.origin.y = self.tableView.contentInset.top;
+        _contactsSearchVc.view.frame = oldFrame;
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect rect = self.titleNavBar.frame;
+            CGFloat delYPos = 20;
+            rect.origin.y = 0 - rect.size.height;
+            self.titleNavBar.frame = rect;
+            //            rect = self.contactsTableView.frame;
+            //            rect.origin.y = delYPos;
+            //            self.contactsTableView.frame = rect;
+            [self setContentInsetForScrollView:self.tableView inset:UIEdgeInsetsMake(delYPos, 0, 0, 0)];
+            rect = _contactsSearchVc.view.frame;
+            rect.origin.y = 0;
+            rect.size.height = self.view.bounds.size.height;
+            _contactsSearchVc.view.frame = rect;
+            _contactsSearchVc.searchMaskVew.alpha = 0.4;
+            
+        }];
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark - SearchInviteFriendsVCDelegate
+- (void)contactsSearchBarCancelButtonClicked:(NSMutableArray *)sleUserInfos{
+    [_contactsSearchVc.searchBar resignFirstResponder];
+    [_contactsSearchVc.searchBar setShowsCancelButton:NO animated:YES];
+    [self.view insertSubview:_contactsSearchVc.view belowSubview:self.titleNavBar];
+    CGRect rect = self.titleNavBar.frame;
+    rect.origin.y += 20;
+    self.titleNavBar.frame = rect;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect rect = self.titleNavBar.frame;
+        rect.origin.y = 0;
+        self.titleNavBar.frame = rect;
+        //        rect = self.contactsTableView.frame;
+        //        rect.origin.y = self.titleNavBar.frame.size.height-2;
+        //        self.contactsTableView.frame = rect;
+        rect = _contactsSearchVc.view.frame;
+        rect.origin.y = self.titleNavBar.frame.size.height-20;
+        _contactsSearchVc.view.frame = rect;
+        _contactsSearchVc.searchMaskVew.alpha = 0;
+        
+        [self setContentInsetForScrollView:self.tableView];
+        [self.tableView setContentOffset:CGPointMake(0, -self.titleNavBar.frame.size.height)];
+    } completion:^(BOOL finished) {
+        [_contactsSearchVc.view removeFromSuperview];
+    }];
+    
+    
+    _selectedUserPbs = [NSMutableArray arrayWithArray:sleUserInfos];
+    [self.tableView reloadData];
+}
 @end

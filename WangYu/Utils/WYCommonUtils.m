@@ -290,4 +290,24 @@
     return allContacts;
 }
 
++ (BOOL)searchPinYin:(NSString*)pinyin searchContent:(NSString*)searchContent {
+    if ([pinyin rangeOfString:searchContent options:NSCaseInsensitiveSearch].length > 0){
+        return YES;
+    } else {
+        NSMutableString* shengmuStr = [[NSMutableString alloc] init];
+        
+        for (int index = 0; index < pinyin.length; index++) {
+            unichar character = [pinyin characterAtIndex:index];
+            if (character >= 'A' && character <= 'Z') {
+                [shengmuStr appendFormat:@"%C", character];
+            }
+        }
+        if ([shengmuStr rangeOfString:searchContent options:NSCaseInsensitiveSearch].length > 0) {
+            return YES;
+        }
+        
+    }
+    return NO;
+}
+
 @end

@@ -117,7 +117,7 @@
         if (_location.longitude == 0 && _location.latitude == 0) {
             [self refreshLocation];
         } else {
-            [self refreshData];
+            [self refreshData:YES];
         }
         
         
@@ -179,7 +179,7 @@
 }
 */
 
-- (void)refreshData{
+- (void)refreshData:(BOOL)isChoose{
     
     if (_location.longitude == 0 && _location.latitude == 0) {
         _location = self.mapView.userLocation.coordinate;
@@ -256,7 +256,9 @@
         weakSelf.annotations = annotations;
         [weakSelf.mapView addAnnotations:annotations];
         if (annotations.count > 0) {
-            [self.mapView selectAnnotation:[annotations objectAtIndex:0] animated:YES];
+            if (isChoose) {
+                [self.mapView selectAnnotation:[annotations objectAtIndex:0] animated:YES];
+            }
         }
         
     } tag:tag];
@@ -290,8 +292,8 @@
                 [WYProgressHUD AlertError:@"位置获取失败" At:weakSelf.view];
                 return;
             }
-            weakSelf.location = [[clocation locationBearPawFromMars] coordinate];
-            [weakSelf refreshData];
+            weakSelf.location = [[[clocation locationMarsFromEarth] locationBearPawFromMars] coordinate];
+            [weakSelf refreshData:NO];
             [weakSelf showLongPressAnnotationAt:[placemarks objectAtIndex:0]];
         }];
     }
@@ -325,23 +327,15 @@
         annotation.subtitle = detail;
     }
     
-    //    NSLog(@"annotation.subTitle = %@", annotation.subtitle);
-    
-    //	annotation.subtitle = [NSString	stringWithFormat:@"%f %f", annotation.coordinate.latitude, annotation.coordinate.longitude];
     [self.mapView addAnnotation:annotation];
     MKCoordinateRegion region = self.mapView.region;
     region.center = location;
-    region.span.longitudeDelta = 0.1;
-    region.span.latitudeDelta = 0.1;
+//    region.span.longitudeDelta = 0.1;
+//    region.span.latitudeDelta = 0.1;
     
     [self.mapView setRegion:region animated:YES];
     [self.mapView selectAnnotation:annotation animated:YES];
-    if (!_showMode) {
-        self.titleNavBarRightBtn.hidden = NO;
-    }else{
-        self.titleNavBarRightBtn.hidden = NO;
-        [self.titleNavBarRightBtn setTitle:@"导航" forState:UIControlStateNormal];
-    }
+    
     [self hideProgressBar];
 }
 
@@ -401,7 +395,7 @@
         }
         weakself.location = [[location locationBearPawFromMars] coordinate];
 //        [weakself useNewReverseGeoLocation:location];
-        [weakself refreshData];
+        [weakself refreshData:YES];
     };
     [[WYLocationServiceUtil shareInstance] getUserCurrentLocation:^(NSString *errorString) {
         
@@ -860,6 +854,7 @@
         MKAnnotationView *draggablePinView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:kPinAnnotationIdentifier];
         if (draggablePinView) {
             draggablePinView.annotation = annotation;
+            draggablePinView.image=[UIImage imageNamed:@"netbar_irea_icon"];
         } else {
             draggablePinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPinAnnotationIdentifier];
             draggablePinView.canShowCallout = YES;

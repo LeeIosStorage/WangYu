@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InviteFriendsViewController">
             <connections>
+                <outlet property="searchBar" destination="Xbt-LQ-rqI" id="jwT-eQ-05T"/>
                 <outlet property="tableView" destination="Nai-0C-FEb" id="LIf-V2-Mpy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -29,6 +30,14 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="233" y="255"/>
         </view>
+        <searchBar contentMode="redraw" placeholder="搜索" id="Xbt-LQ-rqI">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <textInputTraits key="textInputTraits"/>
+            <connections>
+                <outlet property="delegate" destination="-1" id="wLk-3p-Lzh"/>
+            </connections>
+        </searchBar>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
