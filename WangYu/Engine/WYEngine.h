@@ -171,6 +171,8 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 - (BOOL)feedBackMessageWithUid:(NSString*)uid content:(NSString*)content contact:(NSString*)contact tag:(int)tag;
 //填写邀请码
 - (BOOL)uploadMineInviteCodeWith:(NSString*)uid invitationCode:(NSString*)invitationCode tag:(int)tag;
+//获取首页广告
+- (BOOL)getAdvertsWithTag:(int)tag;
 
 #pragma mark - 活动
 //赛事列表

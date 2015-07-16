@@ -11,6 +11,7 @@
 //广告位种类
 typedef enum AdsType_{
     AdsType_Theme,
+    AdsType_News,
 }AdsType;
 
 @protocol WYScrollPageDelegate<NSObject>
