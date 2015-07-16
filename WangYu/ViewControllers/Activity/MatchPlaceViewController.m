@@ -185,7 +185,7 @@
     SEL sel = NSSelectorFromString([_actionSheetIndexSelDic objectForKey:[NSNumber numberWithInteger:buttonIndex]]);
     
     if ([self respondsToSelector:sel]) {
-        objc_msgSend(self, sel, info);
+        objc_msgSend((id)self, sel, info);
     }
 }
 
@@ -206,24 +206,48 @@
     [self.navigationController pushViewController:maVc animated:YES];
 }
 
-- (void)applyActionSheet:(WYMatchInfo *)matchInfo{
-    _actionSheetIndexSelDic = [[NSMutableDictionary alloc] init];
+- (void)applyActionSheet:(WYMatchInfo *)info{
+//    _actionSheetIndexSelDic = [[NSMutableDictionary alloc] init];
     WS(weakSelf);
-    WYActionSheet *sheet = [[WYActionSheet alloc] initWithTitle:nil actionBlock:^(NSInteger buttonIndex) {
-        [weakSelf doActionSheetSelectorWithButtonIndex:buttonIndex matchInfo:matchInfo];
-    }];
-    if(matchInfo.hasApply < 1){
-        [_actionSheetIndexSelDic setObject:@"solApplyAction:" forKey:[NSNumber numberWithInteger:sheet.numberOfButtons]];
-        [sheet addButtonWithTitle:@"个人报名"];
+    WYActionSheet *sheet;
+    if (info.hasApply < 1) {
+        sheet = [[WYActionSheet alloc] initWithTitle:nil actionBlock:^(NSInteger buttonIndex) {
+            if (2 == buttonIndex) {
+                return;
+            }
+            if (buttonIndex == 0) {
+                [weakSelf solApplyAction:info];
+            }else if (buttonIndex == 1){
+                [weakSelf teamApplyAction:info];
+            }
+        } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"个人报名", @"创建报名", nil];
+    }else {
+        sheet = [[WYActionSheet alloc] initWithTitle:nil actionBlock:^(NSInteger buttonIndex) {
+            if (1 == buttonIndex) {
+                return;
+            }
+            if (buttonIndex == 0) {
+                [weakSelf teamApplyAction:info];
+            }
+        } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"创建报名", nil];
     }
+    [sheet showInView:self.view];
     
-    [_actionSheetIndexSelDic setObject:@"teamApplyAction:" forKey:[NSNumber numberWithInteger:sheet.numberOfButtons]];
-    [sheet addButtonWithTitle:@"创建报名"];
-    
-    [sheet addButtonWithTitle:@"取消"];
-    sheet.cancelButtonIndex = sheet.numberOfButtons -1;
-    AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-    [sheet showInView:appDelegate.window];
+//    WYActionSheet *sheet = [[WYActionSheet alloc] initWithTitle:nil actionBlock:^(NSInteger buttonIndex) {
+//        [weakSelf doActionSheetSelectorWithButtonIndex:buttonIndex matchInfo:info];
+//    }];
+//    if(info.hasApply < 1){
+//        [_actionSheetIndexSelDic setObject:@"solApplyAction:" forKey:[NSNumber numberWithInt:(int)sheet.numberOfButtons]];
+//        [sheet addButtonWithTitle:@"个人报名"];
+//    }
+//    
+//    [_actionSheetIndexSelDic setObject:@"teamApplyAction:" forKey:[NSNumber numberWithInt:(int)sheet.numberOfButtons]];
+//    [sheet addButtonWithTitle:@"创建报名"];
+//    
+//    [sheet addButtonWithTitle:@"取消"];
+//    sheet.cancelButtonIndex = sheet.numberOfButtons -1;
+//    AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+//    [sheet showInView:appDelegate.window];
 }
 
 #pragma mark - MatchApplyViewDelegate
