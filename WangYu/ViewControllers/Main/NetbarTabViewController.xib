@@ -21,6 +21,8 @@
                 <outlet property="guessLabel" destination="CSS-31-0NR" id="3co-Lt-Bgo"/>
                 <outlet property="guideImageView" destination="SpB-i4-QMu" id="6lc-Ri-Lje"/>
                 <outlet property="guideView" destination="mh9-JD-vF9" id="0DA-rE-LzM"/>
+                <outlet property="headSubBottomView" destination="HzK-oW-loA" id="h5a-z1-iH2"/>
+                <outlet property="headSubTopView" destination="j9g-5h-24s" id="fDX-OV-es3"/>
                 <outlet property="headView" destination="PWl-Z4-sv2" id="gpw-3z-YUG"/>
                 <outlet property="hotLabel" destination="IsH-MO-2U8" id="ltL-LZ-kRe"/>
                 <outlet property="moreButton" destination="Aq9-gp-Knb" id="Roz-ni-UxD"/>
@@ -61,7 +63,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="j9g-5h-24s">
-                    <rect key="frame" x="0.0" y="84" width="320" height="84"/>
+                    <rect key="frame" x="0.0" y="84" width="320" height="96"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的订单" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Dha-FS-8XH">
@@ -125,13 +127,13 @@
                             <rect key="frame" x="255" y="9" width="12" height="12"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_saw_icon" id="gUz-Ll-xcJ">
+                            <rect key="frame" x="0.0" y="84" width="320" height="12"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="netbar_saw_icon" id="gUz-Ll-xcJ">
-                    <rect key="frame" x="0.0" y="168" width="320" height="12"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                </imageView>
                 <view contentMode="scaleToFill" id="HzK-oW-loA">
                     <rect key="frame" x="0.0" y="180" width="320" height="64"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>

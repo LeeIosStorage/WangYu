@@ -63,6 +63,8 @@
 @property (strong, nonatomic) IBOutlet UIView *footerView;
 @property (strong, nonatomic) IBOutlet UIButton *moreButton;
 @property (strong, nonatomic) IBOutlet UIView *adsViewContainer;
+@property (strong, nonatomic) IBOutlet UIView *headSubTopView;
+@property (strong, nonatomic) IBOutlet UIView *headSubBottomView;
 
 @property (assign, nonatomic) CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic) NSMutableArray *netbarArray;
@@ -770,7 +772,13 @@
     if (!themeInfo) {
         return;
     }
-    NSString *wyHref = [NSString stringWithFormat:@"wycategory://%@?objId=%@",themeInfo.realUrlHost,themeInfo.targetId];
+    NSString *wyHref = nil;
+    if (themeInfo.themeType < Theme_Activity) {
+        wyHref = [NSString stringWithFormat:@"wycategory://%@?objId=%@",themeInfo.realUrlHost,themeInfo.targetId];
+    }else {
+        wyHref = themeInfo.themeActionUrl;
+    }
+    
     id vc = [WYLinkerHandler handleDealWithHref:wyHref From:self.navigationController];
     if (vc) {
         [self.navigationController pushViewController:vc animated:YES];
@@ -783,8 +791,27 @@
     [self resetTableHeaderView];
 }
 
+/**
+ *  重设headerView
+ */
 - (void)resetTableHeaderView {
-    NSLog(@"==================================刷新头部");
+    for (UIView *view in self.adsViewContainer.subviews) {
+        [view removeFromSuperview];
+    }
+    CGRect frame = self.headView.frame;
+    frame.size.height -= 84;
+    self.headView.frame = frame;
+    
+    frame = self.headSubTopView.frame;
+    frame.origin.y -= 84;
+    self.headSubTopView.frame = frame;
+    
+    frame = self.headSubBottomView.frame;
+    frame.origin.y -= 84;
+    self.headSubBottomView.frame = frame;
+    
+    self.netBarTable.tableHeaderView = self.headView;
+    [self.netBarTable reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

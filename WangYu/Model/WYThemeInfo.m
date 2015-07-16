@@ -12,8 +12,14 @@
 @implementation WYThemeInfo
 
 - (void)doSetThemeInfoByJsonDic:(NSDictionary*)dic {
+    if ([dic objectForKey:@"imgThumb"]) {
+        _thumbImageUrl = [dic stringObjectForKey:@"imgThumb"];
+    }
+    if ([dic objectForKey:@"imgMedia"]) {
+        _middelImageUrl = [dic stringObjectForKey:@"imgThumb"];
+    }
     if ([dic objectForKey:@"img"]) {
-        _thumbImageUrl = [dic stringObjectForKey:@"img"];
+        _originalImageUrl = [dic stringObjectForKey:@"img"];
     }
     if ([dic objectForKey:@"type"]) {
         _themeType = [dic intValueForKey:@"type"];
@@ -65,8 +71,6 @@
         realUrlHostString = @"netbar";
     }else if (_themeType == Theme_Game) {
         realUrlHostString = @"game";
-    }else if (_themeType == Theme_Activity) {
-        realUrlHostString = @"activity";
     }else if (_themeType == Theme_Match) {
         realUrlHostString = @"match";
     }

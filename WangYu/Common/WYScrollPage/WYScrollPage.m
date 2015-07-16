@@ -81,13 +81,13 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewStop:) name:WY_THEME_STOP_ADS_VIEW_NOTIFICATION object:nil];
         WYThemeInfo *themeInfo;
         themeInfo = [_dataArray lastObject];
-        [self addSubviewToScrollView:_adsScrollView withURL:[themeInfo.thumbImageURL absoluteString] withTag:-1];
+        [self addSubviewToScrollView:_adsScrollView withURL:[themeInfo.originalImageURL absoluteString] withTag:-1];
         for (int i = 0; i < [_dataArray count]; i++) {
             themeInfo = [_dataArray objectAtIndex:i];
-            [self addSubviewToScrollView:_adsScrollView withURL:[themeInfo.thumbImageURL absoluteString] withTag:i];
+            [self addSubviewToScrollView:_adsScrollView withURL:[themeInfo.originalImageURL absoluteString] withTag:i];
         }
         themeInfo = [_dataArray firstObject];
-        [self addSubviewToScrollView:_adsScrollView withURL:[themeInfo.thumbImageURL absoluteString] withTag:_dataArray.count];
+        [self addSubviewToScrollView:_adsScrollView withURL:[themeInfo.originalImageURL absoluteString] withTag:_dataArray.count];
     }else if (_adsType == AdsType_News) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewShow:) name:WY_NEWS_SHOW_ADS_VIEW_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setAdsViewStop:) name:WY_NEWS_STOP_ADS_VIEW_NOTIFICATION object:nil];

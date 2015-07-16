@@ -26,7 +26,7 @@
                         <action selector="pageControlValueChanged:" destination="iN0-l3-epB" eventType="valueChanged" id="MrM-CZ-bNo"/>
                     </connections>
                 </pageControl>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="f6z-hJ-gQZ">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="f6z-hJ-gQZ" customClass="HotUpButton">
                     <rect key="frame" x="296" y="8" width="14" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="theme_close_icon">
