@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NetbarTabViewController">
             <connections>
+                <outlet property="adsBottomImgView" destination="jGz-LE-lV7" id="iy1-L3-cz8"/>
                 <outlet property="adsViewContainer" destination="TJn-LG-R7n" id="naD-gy-eYP"/>
                 <outlet property="bookDecLabel" destination="peU-5j-a0L" id="oDg-SA-UpY"/>
                 <outlet property="bookLabel" destination="Hep-4m-2Qw" id="n9T-di-BYa"/>
@@ -66,6 +67,11 @@
                     <rect key="frame" x="0.0" y="84" width="320" height="96"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="jGz-LE-lV7">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的订单" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Dha-FS-8XH">
                             <rect key="frame" x="32" y="57" width="71" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>

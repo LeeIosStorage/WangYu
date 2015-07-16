@@ -72,7 +72,7 @@
     }else if (_themeType == Theme_Game) {
         realUrlHostString = @"game";
     }else if (_themeType == Theme_Match) {
-        realUrlHostString = @"match";
+        realUrlHostString = @"activity";
     }
     return realUrlHostString;
 }

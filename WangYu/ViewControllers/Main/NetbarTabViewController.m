@@ -65,6 +65,7 @@
 @property (strong, nonatomic) IBOutlet UIView *adsViewContainer;
 @property (strong, nonatomic) IBOutlet UIView *headSubTopView;
 @property (strong, nonatomic) IBOutlet UIView *headSubBottomView;
+@property (strong, nonatomic) IBOutlet UIImageView *adsBottomImgView;
 
 @property (assign, nonatomic) CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic) NSMutableArray *netbarArray;
@@ -145,6 +146,10 @@
     self.moreButton.titleLabel.textColor = SKIN_TEXT_COLOR1;
     self.netBarTable.tableFooterView = self.footerView;
     
+    self.adsBottomImgView.backgroundColor = UIColorToRGB(0xe4e4e4);
+    CGRect frame = self.adsBottomImgView.frame;
+    frame.size.height = 0.5;
+    self.adsBottomImgView.frame = frame;
 }
 
 - (void)viewSplash
@@ -795,6 +800,7 @@
  *  重设headerView
  */
 - (void)resetTableHeaderView {
+    self.adsBottomImgView.hidden = YES;
     for (UIView *view in self.adsViewContainer.subviews) {
         [view removeFromSuperview];
     }
