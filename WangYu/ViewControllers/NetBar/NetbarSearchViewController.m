@@ -20,6 +20,7 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "WYNavigationController.h"
 #import "WYAlertView.h"
+#import "QuickBookViewController.h"
 
 #define price_type @"price"
 #define price_name @"price_name"
@@ -564,8 +565,12 @@
     
     [WYProgressHUD AlertLoading:@"搜索中,请稍等."];
     WS(weakSelf);
+    int type = 0;
+    if (_showFilter) {
+        type = 1;
+    }
     int tag = [[WYEngine shareInstance] getConnectTag];
-    [[WYEngine shareInstance] searchNetbarWithUid:[WYEngine shareInstance].uid netbarName:self.searchContent latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude tag:tag];
+    [[WYEngine shareInstance] searchNetbarWithUid:[WYEngine shareInstance].uid netbarName:self.searchContent latitude:weakSelf.currentLocation.latitude longitude:weakSelf.currentLocation.longitude type:type tag:tag];
     [[WYEngine shareInstance] addOnAppServiceBlock:^(NSInteger tag, NSDictionary *jsonRet, NSError *err) {
         NSString* errorMsg = [WYEngine getErrorMsgWithReponseDic:jsonRet];
         if (!jsonRet || errorMsg) {
@@ -1023,6 +1028,13 @@ static int historyLabel_Tag = 201, filterLabel_Tag = 202, filterLineImg_Tag = 20
             }
             return;
         }
+        //一键预订
+        if (_showFilter && netbarInfo.isOrder) {
+            QuickBookViewController *qBVc = [[QuickBookViewController alloc] init];
+            qBVc.netbarInfo = netbarInfo;
+            [self.navigationController pushViewController:qBVc animated:YES];
+            return;
+        }
         NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
         ndVc.netbarInfo = netbarInfo;
         [self.navigationController pushViewController:ndVc animated:YES];
@@ -1033,6 +1045,13 @@ static int historyLabel_Tag = 201, filterLabel_Tag = 202, filterLineImg_Tag = 20
             if (self.delegate && [self.delegate respondsToSelector:@selector(searchViewControllerSelectWithNetbarInfo:)]) {
                 [self.delegate searchViewControllerSelectWithNetbarInfo:netbarInfo];
             }
+            return;
+        }
+        //一键预订
+        if (_showFilter && netbarInfo.isOrder) {
+            QuickBookViewController *qBVc = [[QuickBookViewController alloc] init];
+            qBVc.netbarInfo = netbarInfo;
+            [self.navigationController pushViewController:qBVc animated:YES];
             return;
         }
         NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];

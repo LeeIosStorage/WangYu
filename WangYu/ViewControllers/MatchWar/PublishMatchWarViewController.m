@@ -547,7 +547,7 @@
         intro = [NSString stringWithFormat:@"线下/%@",_netbarInfo.netbarName];
     }
     NSDictionary *dict02 = @{@"titleLabel": @"地点",
-                             @"icon": @"book_wangba",
+                             @"icon": @"match_publish_address_icon",
                              @"intro": intro!=nil?intro:@"请设置",
                              @"textcolor": intro!=nil?@(1):@(0),
                              };

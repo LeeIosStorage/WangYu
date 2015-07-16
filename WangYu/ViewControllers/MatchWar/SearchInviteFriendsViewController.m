@@ -38,8 +38,8 @@
     // Do any additional setup after loading the view from its nib.
     self.titleNavBar.hidden = YES;
     self.searchBar.tintColor = SKIN_TEXT_COLOR1;
-    self.searchBar.barTintColor = UIColorRGB(184, 184, 184);
-    self.topView.backgroundColor = UIColorRGB(184, 184, 184);
+//    self.searchBar.barTintColor = UIColorRGB(189, 189, 195);
+    self.topView.backgroundColor = UIColorRGB(201, 201, 206);
     
     CFErrorRef myError = NULL;
     _addressBook = ABAddressBookCreateWithOptions(NULL, &myError);
@@ -48,6 +48,7 @@
     _allUserInfoPbs = [[NSMutableArray alloc] initWithArray:_notWangYuUserPbs];
     _selectedUserPbs = [[NSMutableArray alloc] initWithArray:_slePbUserInfos];
     
+    [_allUserInfoPbs sortUsingSelector:@selector(compareByPinyinOfName:)];
     
     UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelGestureRecognizer:)];
     [self.searchMaskVew addGestureRecognizer:gestureRecongnizer];
@@ -76,7 +77,6 @@
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(contactsSearchBarCancelButtonClicked:)]) {
         _topView.hidden = YES;
-        _topView.backgroundColor = [UIColor redColor];
         [self.delegate contactsSearchBarCancelButtonClicked:_selectedUserPbs];
     }
 }
@@ -121,6 +121,7 @@
             [_searchedContacts addObject:userInfo];
         }
     }
+    
     [self.tableView reloadData];
 
 }
@@ -141,9 +142,11 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     [self doSearchAction];
     
-//    if (!searchText.length && !searchBar.isFirstResponder) {
-//        [searchBar performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:.1];
-//    }
+    if (searchText.length == 0) {
+        self.view.backgroundColor = [UIColor clearColor];
+    }else{
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
 }
 
 #pragma mark - tableViewDataSource

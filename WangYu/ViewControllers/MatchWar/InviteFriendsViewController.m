@@ -87,6 +87,7 @@
 
 -(void)doStartMatchPb{
     
+//    self.searchBar.barTintColor = UIColorRGB(189, 189, 195);
     self.tableView.tableHeaderView = self.searchBar;
     
      CFErrorRef myError = NULL;
@@ -327,7 +328,7 @@
     _contactsSearchVc = [[SearchInviteFriendsViewController alloc] init];
     _contactsSearchVc.delegate = self;
     _contactsSearchVc.notWangYuUserPbs = _notWangYuUserPbs;
-    _contactsSearchVc.slePbUserInfos = _slePbUserInfos;
+    _contactsSearchVc.slePbUserInfos = _selectedUserPbs;
     _contactsSearchVc.view.backgroundColor = [UIColor clearColor];
     if (searchBar == self.searchBar) {
         _contactsSearchVc.view.frame = self.tableView.frame;
@@ -339,7 +340,7 @@
         
         //起始位置, 先把search的位置跟当前位置对齐，动画一起上去
         CGRect oldFrame = _contactsSearchVc.view.frame;
-        oldFrame.origin.y = self.tableView.contentInset.top;
+        oldFrame.origin.y = self.tableView.contentInset.top-20;
         _contactsSearchVc.view.frame = oldFrame;
         
         [UIView animateWithDuration:0.3 animations:^{
@@ -355,7 +356,7 @@
             rect.origin.y = 0;
             rect.size.height = self.view.bounds.size.height;
             _contactsSearchVc.view.frame = rect;
-            _contactsSearchVc.searchMaskVew.alpha = 0.4;
+            _contactsSearchVc.searchMaskVew.alpha = 0.3;
             
         }];
         return NO;

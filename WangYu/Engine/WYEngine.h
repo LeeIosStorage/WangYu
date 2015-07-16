@@ -99,7 +99,7 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 //网吧列表(全部)
 - (BOOL)getNetbarAllListWithUid:(NSString *)uid page:(int)page pageSize:(int)pageSize latitude:(float)latitude longitude:(float)longitude areaCode:(NSString *)areaCode type:(int)type tag:(int)tag;
 //搜索网吧(网吧名称)
-- (BOOL)searchNetbarWithUid:(NSString *)uid netbarName:(NSString *)netbarName latitude:(float)latitude longitude:(float)longitude tag:(int)tag;
+- (BOOL)searchNetbarWithUid:(NSString *)uid netbarName:(NSString *)netbarName latitude:(float)latitude longitude:(float)longitude type:(int)type tag:(int)tag;
 //附近网吧(经纬度)
 - (BOOL)searchLocalNetbarWithUid:(NSString *)uid latitude:(float)latitude longitude:(float)longitude tag:(int)tag;
 //附近网吧(城市)

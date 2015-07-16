@@ -54,6 +54,9 @@
 @property (nonatomic, assign) CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic) UIButton* currentLocationBtn;
 
+@property (nonatomic, strong) NSString *chooseAddressStreet;
+@property (nonatomic, strong) IBOutlet UIView *longPressTipView;
+@property (nonatomic, strong) IBOutlet UILabel *longPressTipLabel;
 
 @property (nonatomic, assign) BOOL showMode;//YES 定位具体某个位置
 @property (nonatomic, assign) CLLocationCoordinate2D showLocation;
@@ -111,6 +114,7 @@
         frame.origin.y = self.titleNavBar.frame.size.height;
         frame.size.height = SCREEN_HEIGHT-frame.origin.y;
         self.mainContainerView.frame = frame;
+        self.longPressTipView.hidden = YES;
         
     }else{
 //        [WYProgressHUD AlertLoading:@"定位中..."];
@@ -138,6 +142,21 @@
         
         UILongPressGestureRecognizer* longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(locationLongPressAction:)];
         [self.mapView addGestureRecognizer:longPressGesture];
+        
+        frame = _currentLocationBtn.frame;
+        frame.origin.x = SCREEN_WIDTH - frame.size.width - 12;
+        frame.origin.y = self.view.bounds.size.height -self.longPressTipView.frame.size.height - frame.size.height-12;
+        _currentLocationBtn.frame = frame;
+        self.longPressTipView.hidden = NO;
+        self.longPressTipView.alpha = 0.8;
+        self.longPressTipLabel.font = SKIN_FONT_FROMNAME(15);
+        self.longPressTipLabel.textColor = SKIN_TEXT_COLOR1;
+        self.longPressTipView.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+        self.longPressTipView.layer.shadowOpacity = 0.3;
+        self.longPressTipView.layer.shadowOffset = CGSizeMake(0, -1);
+        self.longPressTipView.layer.shadowRadius = 2.0;
+        self.longPressTipView.layer.shouldRasterize = YES;
+        self.longPressTipView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
         
     }
 }
@@ -326,6 +345,12 @@
     }else{
         annotation.subtitle = detail;
     }
+//    _chooseAddressStreet = annotation.subtitle;
+//    NSDictionary *addressDictionary = place.addressDictionary;
+//    if ([addressDictionary stringObjectForKey:@"Street"].length > 0) {
+//        _chooseAddressStreet = [addressDictionary stringObjectForKey:@"Street"];
+//    }
+    self.longPressTipLabel.text = annotation.subtitle;
     
     [self.mapView addAnnotation:annotation];
     MKCoordinateRegion region = self.mapView.region;

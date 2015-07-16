@@ -984,7 +984,7 @@ static WYEngine* s_ShareInstance = nil;
     return [self reDirectXECommonWithFormatDic:formatDic withData:nil withTag:tag withTimeout:CONNECT_TIMEOUT error:nil];
 }
 //搜索网吧(网吧名称)
-- (BOOL)searchNetbarWithUid:(NSString *)uid netbarName:(NSString *)netbarName latitude:(float)latitude longitude:(float)longitude tag:(int)tag{
+- (BOOL)searchNetbarWithUid:(NSString *)uid netbarName:(NSString *)netbarName latitude:(float)latitude longitude:(float)longitude type:(int)type tag:(int)tag{
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     if (uid) {
         [params setObject:uid forKey:@"userId"];
@@ -996,6 +996,7 @@ static WYEngine* s_ShareInstance = nil;
         [params setObject:[[NSNumber numberWithFloat:longitude] description] forKey:@"longitude"];
         [params setObject:[[NSNumber numberWithFloat:latitude] description] forKey:@"latitude"];
     }
+    [params setObject:[NSNumber numberWithInt:type] forKey:@"type"];
     if (_token) {
         [params setObject:_token forKey:@"token"];
     }
