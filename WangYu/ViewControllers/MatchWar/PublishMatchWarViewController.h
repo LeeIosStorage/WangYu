@@ -8,11 +8,13 @@
 
 #import "WYSuperViewController.h"
 #import "WYMatchWarInfo.h"
+#import "WYNetbarInfo.h"
 
 @protocol PublishMatchWarViewControllerDelegate;
 
 @interface PublishMatchWarViewController : WYSuperViewController
 
+@property (nonatomic, strong) WYNetbarInfo *netbarInfo;
 @property (nonatomic, assign) id<PublishMatchWarViewControllerDelegate>delegate;
 @end
 

@@ -466,6 +466,7 @@
         return;
     }
     PublishMatchWarViewController *publishVc = [[PublishMatchWarViewController alloc] init];
+    publishVc.netbarInfo = _netbarInfo;
     [self.navigationController pushViewController:publishVc animated:YES];
 //    id vc = [WYLinkerHandler handleDealWithHref:[NSString stringWithFormat:@"%@/activity/match/web/release?userId=%@&token=%@&netbarId=%@", [WYEngine shareInstance].baseUrl, [WYEngine shareInstance].uid,[WYEngine shareInstance].token, self.netbarInfo.nid] From:self.navigationController];
 //    if (vc) {

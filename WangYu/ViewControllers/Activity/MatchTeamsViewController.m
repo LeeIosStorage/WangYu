@@ -47,6 +47,11 @@
 @property (strong, nonatomic) IBOutlet UIButton *filterAreaButton;
 @property (strong, nonatomic) IBOutlet UIButton *filterNetbarButton;
 
+
+@property (strong, nonatomic) IBOutlet UIView *applyTeamBlankTipView;
+@property (strong, nonatomic) IBOutlet UILabel *applyTeamBlankTipLabel;
+
+
 - (IBAction)filterAreaAction:(id)sender;
 - (IBAction)filterNetbarAction:(id)sender;
 
@@ -139,6 +144,24 @@
 
 - (void)initNormalTitleNavBarSubviews {
     [self setTitle:@"已报战队"];
+}
+
+- (void)refreshTeamBlankShowUI{
+    
+    self.applyTeamBlankTipLabel.font = SKIN_FONT_FROMNAME(14);
+    self.applyTeamBlankTipLabel.textColor = SKIN_TEXT_COLOR2;
+    if (self.teamInfos && self.teamInfos.count == 0) {
+        CGRect frame = self.applyTeamBlankTipView.frame;
+        frame.origin.y = 0;
+        frame.size.width = SCREEN_WIDTH;
+        self.applyTeamBlankTipView.frame = frame;
+        [self.teamTableView addSubview:self.applyTeamBlankTipView];
+        
+    }else{
+        if (self.applyTeamBlankTipView.superview) {
+            [self.applyTeamBlankTipView removeFromSuperview];
+        }
+    }
 }
 
 - (void)initControlUI{
@@ -260,6 +283,8 @@
             }
             [weakSelf refreshFilterDataSource:netbarDicArray];
         }
+        
+        [weakSelf refreshTeamBlankShowUI];
     }tag:tag];
 }
 
