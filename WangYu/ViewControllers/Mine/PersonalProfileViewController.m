@@ -406,7 +406,7 @@ static int avatarImageView_Tag = 201;
     }
     if (Tag == TAG_USER_QQ) {
         lvc.oldText = _newUserInfo.qq;
-        lvc.maxTextLength = 8;
+        lvc.maxTextLength = 7;
         lvc.keyboardType = UIKeyboardTypeNumberPad;
     }
     lvc.maxTextViewHight = 39.0f;
