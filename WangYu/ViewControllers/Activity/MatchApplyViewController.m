@@ -486,7 +486,7 @@
         [WYProgressHUD lightAlert:@"请确定擅长位置"];
         return;
     }
-    if (![_telephone isPhone]) {
+    if (![_telephone isPhone] || ![_telephone isValidatePhone]) {
         [WYProgressHUD lightAlert:@"请正确输入手机号"];
         return;
     }

@@ -21,6 +21,16 @@
     return NO;
 }
 
+- (BOOL)isValidatePhone{
+    NSString *regex = @"^((13[0-9])|(147)|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    BOOL isMatch = [pred evaluateWithObject:self];
+    if (!isMatch) {
+        return NO;
+    }
+    return YES;
+}
+
 - (BOOL)isEmail
 {
     if (self.length >= 5)

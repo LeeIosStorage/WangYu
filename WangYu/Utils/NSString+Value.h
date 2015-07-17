@@ -12,6 +12,8 @@
 
 - (BOOL)isPhone;
 - (BOOL)isEmail;
+//检测phone是否合法
+- (BOOL)isValidatePhone;
 //检测email是否合法
 - (BOOL)isValidateEmail;
 //身份证验证

@@ -116,7 +116,7 @@
 -(void)initNormalTitleNavBarSubviews{
     [self setTitle:@"用户注册"];
     [self setBarBackgroundColor:UIColorToRGB(0xf5f5f5) showLine:YES];
-    [self setRightButtonWithTitle:@"跳过" selector:@selector(officialRegisterAction:)];
+    //[self setRightButtonWithTitle:@"跳过" selector:@selector(officialRegisterAction:)];
     [self.titleNavBarRightBtn setTitleColor:UIColorToRGB(0x387cbc) forState:0];
 }
 
@@ -404,6 +404,10 @@
     _phoneTextField.text = [_phoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (_phoneTextField.text.length == 0) {
         [WYProgressHUD lightAlert:@"请输入手机号"];
+        return;
+    }
+    if(![_phoneTextField.text isValidatePhone]) {
+        [WYProgressHUD AlertError:@"请输入正确的手机号" At:self.view];
         return;
     }
     
