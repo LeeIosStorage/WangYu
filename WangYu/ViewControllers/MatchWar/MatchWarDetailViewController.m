@@ -114,11 +114,15 @@
     [super viewWillAppear:animated];
 }
 
+- (void)handleUserInfoChanged:(NSNotification *)notification{
+    [self refreshMatchWarInfo];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    self.view.backgroundColor = [UIColor whiteColor];
+    //!!!: 登录失效时 重新登录后通知页面刷新 此处用Notification不太合理 待优化
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -130,6 +134,7 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
+    self.view.backgroundColor = [UIColor whiteColor];
     self.supInfoHeadView = [[UIView alloc] init];
     self.supInfoHeadView.backgroundColor = [UIColor clearColor];
     self.supCommentHeadView = [[UIView alloc] init];

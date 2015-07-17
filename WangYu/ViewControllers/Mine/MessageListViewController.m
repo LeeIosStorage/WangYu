@@ -51,9 +51,15 @@
 
 @implementation MessageListViewController
 
+- (void)handleUserInfoChanged:(NSNotification *)notification{
+    [self refreshMessageWithIndex:_selectedIndex];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //!!!: 登录失效时 重新登录后通知页面刷新 此处用Notification感觉不太合理 待优化
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
+    
     [self initSwitchView];
     [self refreshBadgeView];
     [self initContainerScrollView];
@@ -705,6 +711,7 @@
 
 - (void)dealloc {
     WYLog(@"%@ dealloc!!!",NSStringFromClass([self class]));
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     _orderTableView.delegate = nil;
     _orderTableView.dataSource = nil;
     _activityTableView.delegate = nil;

@@ -26,6 +26,8 @@
     NSMutableArray* _selectedItems;
 }
 
+@property (strong, nonatomic) WYSegmentedView *segmentedView;
+
 @property (strong, nonatomic) NSMutableArray *freeRedPacketList;
 @property (nonatomic, strong) IBOutlet UITableView *freeRedPacketTableView;
 @property (strong, nonatomic) NSMutableArray *historyRedPacketList;
@@ -46,6 +48,9 @@
 
 @implementation RedPacketViewController
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
 }
@@ -58,9 +63,19 @@
     }
 }
 
+- (void)handleUserInfoChanged:(NSNotification *)notification{
+    if (_selectedSegmentIndex == 0) {
+        [self refreshFreeRedPacketList];
+    }else if (_selectedSegmentIndex == 1){
+        [self refreshHistoryRedPacketList];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //!!!: 登录失效时 重新登录后通知页面刷新 此处用Notification不太合理 待优化
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
     
     _selectedSegmentIndex = 0;
     
@@ -195,17 +210,17 @@
         [self setRightButtonWithImageName:@"redpacket_help_icon" selector:@selector(aboutRedPacketAction:)];
     }
     
-    WYSegmentedView *segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
-    segmentedView.items = @[@"可用红包",@"历史红包"];
+    _segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
+    _segmentedView.items = @[@"可用红包",@"历史红包"];
     WS(weakSelf);
-    segmentedView.segmentedButtonClickBlock = ^(NSInteger index){
+    _segmentedView.segmentedButtonClickBlock = ^(NSInteger index){
         if (index == weakSelf.selectedSegmentIndex) {
             return;
         }
         weakSelf.selectedSegmentIndex = index;
-        [self feedsTypeSwitch:(int)index needRefreshFeeds:NO];
+        [weakSelf feedsTypeSwitch:(int)index needRefreshFeeds:NO];
     };
-    [self.titleNavBar addSubview:segmentedView];
+    [self.titleNavBar addSubview:_segmentedView];
 }
 
 -(void)feedsTypeSwitch:(int)tag needRefreshFeeds:(BOOL)needRefresh

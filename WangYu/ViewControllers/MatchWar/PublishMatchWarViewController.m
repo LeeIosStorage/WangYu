@@ -204,7 +204,7 @@
                 errorMsg = @"发布失败";
             }
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
-//            return;
+            return;
         }
         NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
         WYMatchWarInfo *matchInfo = [[WYMatchWarInfo alloc] init];
