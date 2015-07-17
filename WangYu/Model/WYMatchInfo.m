@@ -28,8 +28,8 @@
     if ([dic objectForKey:@"round"]) {
         _round = [dic intValueForKey:@"round"];
     }
-    if ([dic objectForKey:@"inApply"]) {
-        _isApply = [dic boolValueForKey:@"inApply"];
+    if ([dic objectForKey:@"inApplyNew"]) {
+        _isApply = [dic boolValueForKey:@"inApplyNew"];
     }
     if ([dic objectForKey:@"hasApply"]) {
         _hasApply = [dic intValueForKey:@"hasApply"];
