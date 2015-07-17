@@ -73,6 +73,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     [WXApi registerApp:WX_ID withDescription:@"WY"];
     //友盟统计
     [MobClick startWithAppkey:UMS_APPKEY reportPolicy:BATCH channelId:@"AppStore"];
+    
     //JPush注册
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
@@ -402,7 +403,14 @@ void uncaughtExceptionHandler(NSException *exception) {
         if (!jsonRet || err){
             return ;
         }
-        _bShowGame = [[jsonRet objectForKey:@"object"] boolValueForKey:@"hiddenElement"];
+        NSString *localVserion = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+        NSString* version = nil;
+        version = [[jsonRet objectForKey:@"object"] stringObjectForKey:@"version"];
+        if ([WYCommonUtils isVersion:localVserion greaterThanVersion:version]) {
+            _bShowGame = NO;
+        }else {
+            _bShowGame = YES;
+        }
         [[NSUserDefaults standardUserDefaults] setBool:_bShowGame forKey:kAppNewCheckBoolKey];
     } tag:tag];
 }

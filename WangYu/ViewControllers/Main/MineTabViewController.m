@@ -217,7 +217,12 @@ enum TABLEVIEW_SECTION_INDEX {
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return kGames + 1;
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appDelegate.bShowGame) {
+        return kGames + 1;
+    }else{
+        return kGames;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

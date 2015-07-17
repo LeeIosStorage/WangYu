@@ -558,6 +558,11 @@
         [WYUIUtils showAlertWithMsg:@"微信支付失败！"];
         return;
     }
+    //友盟统计
+    NSMutableDictionary *Dictionary = [[NSMutableDictionary alloc] init];
+    [Dictionary setValue:self.amountField.text forKey:Pay_Amount];
+    [WYEngine umengEvent:UMS_Action_Info_Pay object:Pay_Amount result:Dictionary];
+
     self.payButton.enabled = NO;
     WS(weakSelf);
     int tag = [[WYEngine shareInstance] getConnectTag];

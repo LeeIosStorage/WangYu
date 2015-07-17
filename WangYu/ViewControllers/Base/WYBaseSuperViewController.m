@@ -8,6 +8,7 @@
 
 #import "WYBaseSuperViewController.h"
 #import "WYTitleNavBarView.h"
+#import "MobClick.h"
 
 @interface WYBaseSuperViewController ()
 
@@ -343,6 +344,18 @@
     
     [scrollview setContentInset:inset];
     [scrollview setScrollIndicatorInsets:inset];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [MobClick beginLogPageView:[NSString stringWithFormat:@"%@",NSStringFromClass([self class])]];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [MobClick endLogPageView:[NSString stringWithFormat:@"%@",NSStringFromClass([self class])]];
 }
 
 @end

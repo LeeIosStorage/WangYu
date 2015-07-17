@@ -22,6 +22,7 @@
 #import "WYNavigationController.h"
 #import "WYUserGuideConfig.h"
 #import "WYPayManager.h"
+#import "MobClick.h"
 
 #define CONNECT_TIMEOUT 8
 
@@ -102,6 +103,15 @@ static WYEngine* s_ShareInstance = nil;
         return [dic objectForKey:@"result"];
     }else{
         return nil;
+    }
+}
+
++ (void)umengEvent:(NSString *)eventID object:(NSString *)object result:(NSDictionary *)resultDic {
+    if (object)
+    {
+        NSMutableDictionary *Dictionary = [NSMutableDictionary dictionaryWithDictionary:resultDic];
+        [Dictionary setObject:object forKey:@"__ct__"];
+        [MobClick event:eventID attributes:Dictionary];
     }
 }
 
@@ -502,7 +512,7 @@ static WYEngine* s_ShareInstance = nil;
         }
         [_urlTagMap setObject:fullUrl forKey:[NSNumber numberWithInteger:tag]];
         [QHQnetworkingTool getWithURL:fullUrl params:nil success:^(id response) {
-            NSLog(@"getFullUrl===========%@ response%@",fullUrl,response);
+            //NSLog(@"getFullUrl===========%@ response%@",fullUrl,response);
             [self onResponse:response withTag:tag withError:errPtr];
         } failure:^(NSError *error) {
             [self onResponse:nil withTag:tag withError:error];
@@ -517,14 +527,14 @@ static WYEngine* s_ShareInstance = nil;
         }
         if (dataArray) {
             [QHQnetworkingTool postWithURL:fullUrl params:params formDataArray:dataArray success:^(id response) {
-                NSLog(@"postFullUrl===========%@ response%@",fullUrl,response);
+                //NSLog(@"postFullUrl===========%@ response%@",fullUrl,response);
                 [self onResponse:response withTag:tag withError:errPtr];
             } failure:^(NSError *error) {
                 [self onResponse:nil withTag:tag withError:error];
             }];
         }else{
             [QHQnetworkingTool postWithURL:fullUrl params:params success:^(id response) {
-                NSLog(@"postFullUrl===========%@ response%@",fullUrl,response);
+                //NSLog(@"postFullUrl===========%@ response%@",fullUrl,response);
                 [self onResponse:response withTag:tag withError:errPtr];
             } failure:^(NSError *error) {
                 [self onResponse:nil withTag:tag withError:error];

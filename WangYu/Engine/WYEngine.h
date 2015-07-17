@@ -11,6 +11,9 @@
 
 #define WY_USERINFO_CHANGED_NOTIFICATION @"WY_USERINFO_CHANGED_NOTIFICATION"
 
+#define UMS_Action_Info_Pay          @"Info_Pay"
+#define Pay_Amount                   @"Pay_Amount"
+
 //平台切换宏
 typedef enum {
     OnlinePlatform  = 1,    //线上平台
@@ -40,6 +43,9 @@ typedef void(^onAppServiceBlock)(NSInteger tag, NSDictionary* jsonRet, NSError* 
 + (NSString*)getErrorMsgWithReponseDic:(NSDictionary*)dic;
 + (NSString*)getErrorCodeWithReponseDic:(NSDictionary*)dic;
 + (NSString*)getSuccessMsgWithReponseDic:(NSDictionary*)dic;
+
+#pragma mark 友盟统计
++ (void)umengEvent:(NSString *)eventID object:(NSString *)object result:(NSDictionary *)resultDic;
 
 - (void)logout;
 - (void)logout:(BOOL)removeAccout;
