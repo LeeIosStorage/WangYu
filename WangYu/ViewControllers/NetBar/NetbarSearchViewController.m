@@ -21,6 +21,8 @@
 #import "WYNavigationController.h"
 #import "WYAlertView.h"
 #import "QuickBookViewController.h"
+#import "WYActionSheet.h"
+#import "QuickPayViewController.h"
 
 #define price_type @"price"
 #define price_name @"price_name"
@@ -1058,9 +1060,7 @@ static int historyLabel_Tag = 201, filterLabel_Tag = 202, filterLineImg_Tag = 20
         }
         //一键预订
         if (_showFilter && netbarInfo.isOrder) {
-            QuickBookViewController *qBVc = [[QuickBookViewController alloc] init];
-            qBVc.netbarInfo = netbarInfo;
-            [self.navigationController pushViewController:qBVc animated:YES];
+            [self bookAndPayAction:netbarInfo];
             return;
         }
         NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
@@ -1077,9 +1077,7 @@ static int historyLabel_Tag = 201, filterLabel_Tag = 202, filterLineImg_Tag = 20
         }
         //一键预订
         if (_showFilter && netbarInfo.isOrder) {
-            QuickBookViewController *qBVc = [[QuickBookViewController alloc] init];
-            qBVc.netbarInfo = netbarInfo;
-            [self.navigationController pushViewController:qBVc animated:YES];
+            [self bookAndPayAction:netbarInfo];
             return;
         }
         NetbarDetailViewController *ndVc = [[NetbarDetailViewController alloc] init];
@@ -1105,6 +1103,26 @@ static int historyLabel_Tag = 201, filterLabel_Tag = 202, filterLineImg_Tag = 20
             [self refreshNetbarInfos];
         }
     }
+}
+
+- (void)bookAndPayAction:(WYNetbarInfo *)netbarInfo{
+    
+    WS(weakSelf);
+    WYActionSheet *sheet = [[WYActionSheet alloc] initWithTitle:nil actionBlock:^(NSInteger buttonIndex) {
+        if (2 == buttonIndex) {
+            return;
+        }
+        if (buttonIndex == 0) {
+            QuickPayViewController *qpVc = [[QuickPayViewController alloc] init];
+            qpVc.netbarInfo = netbarInfo;
+            [weakSelf.navigationController pushViewController:qpVc animated:YES];
+        }else if (buttonIndex == 1){
+            QuickBookViewController *qBVc = [[QuickBookViewController alloc] init];
+            qBVc.netbarInfo = netbarInfo;
+            [weakSelf.navigationController pushViewController:qBVc animated:YES];
+        }
+    } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"一键支付", @"一键预订", nil];
+    [sheet showInView:self.view];
 }
 
 #pragma mark - NetbarTabCellDelegate
