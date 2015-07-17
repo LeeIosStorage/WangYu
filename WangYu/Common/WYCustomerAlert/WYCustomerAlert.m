@@ -60,7 +60,15 @@
     self.frame = frame;
     [_showWindow addSubview:self];
     _showWindow.windowLevel = UIWindowLevelAlert;
+    
+    UITapGestureRecognizer *gestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizer:)];
+    [_showWindow addGestureRecognizer:gestureRecongnizer];
+    
     [_showWindow makeKeyAndVisible];
+}
+
+- (void)gestureRecognizer:(UITapGestureRecognizer *)gestureRecognizer {
+    [self dismiss:nil];
 }
 
 - (IBAction)dismiss:(id)sender {
