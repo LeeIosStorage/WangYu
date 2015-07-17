@@ -395,7 +395,7 @@ static int avatarImageView_Tag = 201;
     if (Tag == TAG_USER_REALNAME) {
         lvc.oldText = _newUserInfo.realName;
 //        lvc.minTextLength = 2;
-//        lvc.maxTextLength = 16;
+        lvc.maxTextLength = 6;
     }
     if (Tag == TAG_USER_IDCARD) {
         lvc.oldText = _newUserInfo.idCard;

@@ -53,9 +53,19 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)handleUserInfoChanged:(NSNotification *)notification{
+    if (_selectedSegmentIndex == 0) {
+        [self refreshPublishMatchWarList];
+    }else if (_selectedSegmentIndex == 1){
+        [self refreshApplyMatchWarList];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //!!!: 登录失效时 重新登录后通知页面刷新 此处用Notification不太合理 待优化
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleFinishCancelMatchWar:) name:WY_MATCHWAR_OWNER_CANCLE_NOTIFICATION object:nil];
     

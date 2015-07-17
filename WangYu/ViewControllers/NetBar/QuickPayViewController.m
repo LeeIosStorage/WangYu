@@ -580,6 +580,7 @@
                 [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
                 return;
             }
+            [WYProgressHUD AlertLoadDone];
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             dic = (NSMutableDictionary *)[jsonRet dictionaryObjectForKey:@"object"];
             if (weakSelf.isWeixin) {

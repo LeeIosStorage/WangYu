@@ -26,6 +26,8 @@
 
 @interface OrdersViewController ()<UITableViewDataSource,UITableViewDelegate,ReserveOrderViewCellDelegate,PayOrderViewCellDelegate,WYPayManagerListener>
 
+@property (strong, nonatomic) WYSegmentedView *segmentedView;
+
 @property (strong, nonatomic) NSMutableArray *reserveOrderList;
 @property (nonatomic, strong) IBOutlet UITableView *reserveOrderTableView;
 @property (strong, nonatomic) NSMutableArray *payOrderList;
@@ -47,12 +49,25 @@
 @implementation OrdersViewController
 
 - (void)dealloc{
+    WYLog(@"%@ dealloc!!!",NSStringFromClass([self class]));
     [[WYPayManager shareInstance] removeListener:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)handleUserInfoChanged:(NSNotification *)notification{
+    if (_selectedSegmentIndex == 0) {
+        [self refreshReserveOrdersList];
+    }else if (_selectedSegmentIndex == 1){
+        [self refreshPayOrdersList];
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //!!!: 登录失效时 重新登录后通知页面刷新 此处用Notification感觉不太合理 待优化
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
+    
     self.view.backgroundColor = UIColorRGB(241, 241, 241);
     
     [[WYPayManager shareInstance] addListener:self];
@@ -174,22 +189,21 @@
 
 - (void)initNormalTitleNavBarSubviews{
 //    [self setSegmentedControlWithSelector:@selector(segmentedControlAction:) items:@[@"预订订单",@"支付订单"]];
-    WYSegmentedView *segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
-    segmentedView.items = @[@"预订订单",@"支付订单"];
-    segmentedView.selectIndex = 0;
+    _segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
+    _segmentedView.items = @[@"预订订单",@"支付订单"];
+    _segmentedView.selectIndex = 0;
     if (_isShowPayPage) {
-        segmentedView.selectIndex = 1;
+        _segmentedView.selectIndex = 1;
     }
     __weak OrdersViewController *weakSelf = self;
-    segmentedView.segmentedButtonClickBlock = ^(NSInteger index){
+    _segmentedView.segmentedButtonClickBlock = ^(NSInteger index){
         if (index == weakSelf.selectedSegmentIndex) {
             return;
         }
         weakSelf.selectedSegmentIndex = index;
-//        WYLog(@"selectedSegmentIndex = %d",(int)index);
-        [self feedsTypeSwitch:(int)index needRefreshFeeds:NO];
+        [weakSelf feedsTypeSwitch:(int)index needRefreshFeeds:NO];
     };
-    [self.titleNavBar addSubview:segmentedView];
+    [self.titleNavBar addSubview:_segmentedView];
 }
 
 -(void)feedsTypeSwitch:(int)tag needRefreshFeeds:(BOOL)needRefresh

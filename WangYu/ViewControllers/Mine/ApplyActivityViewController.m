@@ -25,6 +25,8 @@
 
 @interface ApplyActivityViewController ()<UITableViewDataSource,UITableViewDelegate,MatchTeamsCellDelegate>
 
+@property (strong, nonatomic) WYSegmentedView *segmentedView;
+
 @property (nonatomic, strong) IBOutlet UITableView *activityTableView;
 @property (strong, nonatomic) IBOutlet UITableView *teamTableView;
 
@@ -46,9 +48,20 @@
 
 @implementation ApplyActivityViewController
 
+- (void)handleUserInfoChanged:(NSNotification *)notification{
+    if (_selectedSegmentIndex == 0) {
+        [self refreshApplyActivityInfos];
+    }else if (_selectedSegmentIndex == 1){
+        [self refreshApplyTeamInfos];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    //!!!: 登录失效时 重新登录后通知页面刷新 此处用Notification不太合理 待优化
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
+    
     _selectedSegmentIndex = 0;
     self.pullRefreshView = [[PullToRefreshView alloc] initWithScrollView:self.activityTableView];
     self.pullRefreshView.delegate = self;
@@ -167,17 +180,17 @@
 }
 
 - (void)initNormalTitleNavBarSubviews{
-    WYSegmentedView *segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
-    segmentedView.items = @[@"报名赛事",@"我的战队"];
+    _segmentedView = [[WYSegmentedView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-220)/2, (self.titleNavBar.frame.size.height-30-7), 220, 30)];
+    _segmentedView.items = @[@"报名赛事",@"我的战队"];
     WS(weakSelf);
-    segmentedView.segmentedButtonClickBlock = ^(NSInteger index){
+    _segmentedView.segmentedButtonClickBlock = ^(NSInteger index){
         if (index == weakSelf.selectedSegmentIndex) {
             return;
         }
         weakSelf.selectedSegmentIndex = index;
-        [self feedsTypeSwitch:(int)index needRefreshFeeds:NO];
+        [weakSelf feedsTypeSwitch:(int)index needRefreshFeeds:NO];
     };
-    [self.titleNavBar addSubview:segmentedView];
+    [self.titleNavBar addSubview:_segmentedView];
 }
 
 /*

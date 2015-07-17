@@ -181,6 +181,7 @@
 }
 
 - (void)dealloc {
+    WYLog(@"%@ dealloc!!!",NSStringFromClass([self class]));
     if ([_glideAnimation1 isAnimating]) {
         [_glideAnimation1 stopAnimating];
     }
