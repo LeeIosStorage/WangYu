@@ -66,6 +66,7 @@
 @property (strong, nonatomic) IBOutlet UIView *headSubTopView;
 @property (strong, nonatomic) IBOutlet UIView *headSubBottomView;
 @property (strong, nonatomic) IBOutlet UIImageView *adsBottomImgView;
+@property (strong, nonatomic) IBOutlet UIImageView *guideTextImageView;
 
 @property (assign, nonatomic) CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic) NSMutableArray *netbarArray;
@@ -270,6 +271,11 @@
 
 - (void)refreshNewGuideView:(BOOL)isNext {
     self.guideView.frame = [UIScreen mainScreen].bounds;
+    if ([WYCommonUtils isIphone4]) {
+        CGRect frame = self.guideTextImageView.frame;
+        frame.origin.y -= 34;
+        self.guideTextImageView.frame = frame;
+    }
     BOOL isShow = [[WYUserGuideConfig shareInstance] newPeopleGuideShowForVcType:@"netbarTabView"];
     if (isShow) {
         AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
