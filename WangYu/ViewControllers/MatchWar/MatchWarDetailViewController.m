@@ -1219,7 +1219,7 @@
 //    tableViewFrame.size.height = self.view.bounds.size.height - keyboardBounds.size.height - toolbarFrame.size.height;
 //    _commentTableView.frame = tableViewFrame;
 //    
-//    CGPoint offset = _commentTableView.contentOffset;
+    CGPoint offset = _commentTableView.contentOffset;
     
     // animations settings
     [UIView beginAnimations:nil context:NULL];
@@ -1230,10 +1230,8 @@
     toolbarFrame.origin.y = self.view.bounds.size.height - keyboardBounds.size.height - toolbarFrame.size.height;
     _commentBottomContainerView.frame = toolbarFrame;
     
-//    if (_commentTableView.contentSize.height > _commentTableView.frame.size.height) {
-//        offset = CGPointMake(0, _commentTableView.contentSize.height -  _tableView.frame.size.height);
-//        _commentTableView.contentOffset = offset;
-//    }
+    offset = CGPointMake(0, offset.y+50);
+    _commentTableView.contentOffset = offset;
     
     // commit animations
     [UIView commitAnimations];
@@ -1251,6 +1249,8 @@
 //    CGRect tableViewFrame = _commentTableView.frame;
 //    tableViewFrame.size.height = self.view.bounds.size.height - toolbarFrame.size.height;
     
+    CGPoint offset = _commentTableView.contentOffset;
+    
     // animations settings
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
@@ -1259,6 +1259,9 @@
     
     toolbarFrame.origin.y = self.view.bounds.size.height - toolbarFrame.size.height;
     _commentBottomContainerView.frame = toolbarFrame;
+    
+    offset = CGPointMake(0, offset.y-50);
+    _commentTableView.contentOffset = offset;
     
 //    _commentTableView.frame = tableViewFrame;
     
