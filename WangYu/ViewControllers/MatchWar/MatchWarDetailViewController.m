@@ -329,6 +329,10 @@
     }
 }
 
+-(void)backAction:(id)sender{
+    [super backAction:sender];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -635,6 +639,10 @@
                 errorMsg = @"请求失败";
             }
             [WYProgressHUD AlertError:errorMsg At:weakSelf.view];
+            int code = [[WYEngine getErrorCodeWithReponseDic:jsonRet] intValue];
+            if (code == 1) {
+                [weakSelf performSelector:@selector(backAction:) withObject:nil afterDelay:1.0];
+            }
             return;
         }
         NSDictionary *object = [jsonRet dictionaryObjectForKey:@"object"];
