@@ -192,7 +192,7 @@
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
     
-    PbUserInfo *pbUserInfo = _allUserInfoPbs[indexPath.row];
+    PbUserInfo *pbUserInfo = _searchedContacts[indexPath.row];
     pbUserInfo.selected = !pbUserInfo.selected;
     
     for (PbUserInfo *info in _selectedUserPbs) {

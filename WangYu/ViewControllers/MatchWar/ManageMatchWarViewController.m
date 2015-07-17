@@ -335,6 +335,10 @@
 
 #pragma mark - Table view data source
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    WYMatchApplyInfo *applyInfo = _applyPeoples[indexPath.row];
+    if ([applyInfo.userId isEqualToString:[WYEngine shareInstance].uid]) {
+        return NO;
+    }
     return YES;
 }
 
@@ -427,7 +431,7 @@
     NSIndexPath* selIndexPath = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:selIndexPath animated:YES];
     WYMatchApplyInfo *applyInfo = _applyPeoples[indexPath.row];
-//    __weak ManageMatchWarViewController *weakSelf = self;
+    __weak ManageMatchWarViewController *weakSelf = self;
     WYActionSheet *sheet = [[WYActionSheet alloc] initWithTitle:nil actionBlock:^(NSInteger buttonIndex) {
         if (2 == buttonIndex) {
             return;
@@ -435,7 +439,7 @@
         if (buttonIndex == 0) {
             [WYCommonUtils usePhoneNumAction:applyInfo.telephone];
         }else if (buttonIndex == 1){
-            [self displaySMSComposerSheet:applyInfo];
+            [weakSelf displaySMSComposerSheet:applyInfo];
         }
     } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"电话联系", @"短信联系", nil];
     [sheet showInView:self.view];
