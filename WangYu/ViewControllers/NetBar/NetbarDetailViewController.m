@@ -79,9 +79,16 @@
 
 @implementation NetbarDetailViewController
 
+-(void)handleUserInfoChanged:(NSNotification *)notification{
+    [self getNetbarInfo];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //!!!: 登录失效时 重新登录后通知页面刷新 此处用Notification感觉不太合理 待优化
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoChanged:) name:WY_USERINFO_CHANGED_NOTIFICATION object:nil];
+    
     [self refreshUI];
     [self refreshHeaderView];
     [self getCacheNetbarInfo];
@@ -483,6 +490,7 @@
 
 -(void)dealloc{
     WYLog(@"NetbarDetailViewController dealloc!!!");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     _teamTable.delegate = nil;
     _teamTable.dataSource = nil;
 }

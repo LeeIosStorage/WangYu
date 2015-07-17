@@ -26,7 +26,6 @@
 
 @interface OrdersViewController ()<UITableViewDataSource,UITableViewDelegate,ReserveOrderViewCellDelegate,PayOrderViewCellDelegate,WYPayManagerListener>
 
-//创建需要@property 不然viewController 不会释放
 @property (strong, nonatomic) WYSegmentedView *segmentedView;
 
 @property (strong, nonatomic) NSMutableArray *reserveOrderList;
