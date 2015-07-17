@@ -10,7 +10,6 @@
 #import "SettingViewCell.h"
 #import "SelectGameViewController.h"
 #import "WYActionSheet.h"
-#import "WYNetbarInfo.h"
 #import "NetbarSearchViewController.h"
 #import "WYInputTextViewController.h"
 #import "ContactWayViewController.h"
@@ -48,7 +47,6 @@
     
     int _matchWay;//1线上2线下
     NSString *_matchAddress;
-    WYNetbarInfo *_netbarInfo;
     
     //联系方式
     NSDictionary *_matchContactDic;
@@ -127,6 +125,11 @@
 //    for (int i = 0; i < 100; i ++) {
 //        [_invitePeopleData addObject:@{@"phone":@"13803833466"}];
 //    }
+    
+    if (_netbarInfo && _netbarInfo.nid.length > 0 && _netbarInfo.netbarName.length > 0) {
+        _matchWay = 2;
+    }
+    
     
     //GridView
     _invitePeopleGridView.backgroundColor = [UIColor clearColor];

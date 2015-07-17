@@ -317,7 +317,7 @@
         }
     } else if (_selectedIndex == 2) {
         if (self.activityInfos && self.activityInfos.count == 0) {
-            frame.origin.x = SCREEN_WIDTH;
+            frame.origin.x = 0;
             [self.activityTableView addSubview:self.messageBlankTipView];
         }else {
             if (self.messageBlankTipView.superview) {
@@ -326,7 +326,7 @@
         }
     } else if (_selectedIndex == 3) {
         if (self.systemInfos && self.systemInfos.count == 0) {
-            frame.origin.x = 2*SCREEN_WIDTH;
+            frame.origin.x = 0;
             [self.systemTableView addSubview:self.messageBlankTipView];
         }else {
             if (self.messageBlankTipView.superview) {
@@ -334,6 +334,7 @@
             }
         }
     }
+    self.messageBlankTipView.frame = frame;
 }
 
 - (void)refreshMessageWithIndex:(NSUInteger)index{
