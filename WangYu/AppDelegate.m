@@ -403,7 +403,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         if (!jsonRet || err){
             return ;
         }
-        NSString *localVserion = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+//        NSString *localVserion = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleShortVersion];
+        NSString *localVserion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
         NSString* version = nil;
         version = [[jsonRet objectForKey:@"object"] stringObjectForKey:@"version"];
         if ([WYCommonUtils isVersion:localVserion greaterThanVersion:version]) {

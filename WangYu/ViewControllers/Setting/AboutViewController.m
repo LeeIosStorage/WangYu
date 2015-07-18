@@ -55,7 +55,7 @@
     self.aboutInformationLabel.font = SKIN_FONT_FROMNAME(14);
     self.aboutInformationLabel.textColor = SKIN_TEXT_COLOR2;
     
-    NSString *localVserion = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+    NSString *localVserion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     self.aboutVersionLabel.text = [NSString stringWithFormat:@"网娱大师%@",localVserion];
     
     self.aboutTipLabel.text = @"Copyright © 2015";
